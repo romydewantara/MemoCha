@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Kuntan</string>
+    <string name="hint_word">Word...</string>
+    <string name="button_save">Save</string>
+    <string name="button_retry">Retry</string>
+    <string name="empty_not_saved">Word not saved because it is empty.</string>
+    <string name="add_word">Add word</string>
+    <string name="webview_error_load">Please check your internet connection and reload the page.\nError code: %s - %s</string>
 </resources>

@@ -3,7 +3,4 @@
     android:padding="5dp">
     <solid android:color="@color/teal_700" />
     <corners android:topLeftRadius="25dp" />
-    <stroke
-        android:width="0.8dp"
-        android:color="@color/white" />
 </shape>

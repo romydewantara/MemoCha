@@ -14,6 +14,13 @@
         <!-- Customize your theme here. -->
     </style>
 
+    <!--  L O B S T E R | BLACK  -->
+    <style name="LobsterTextRegularTeal32">
+        <item name="android:fontFamily">@font/lobster_regular</item>
+        <item name="android:textColor">@color/teal_dark</item>
+        <item name="android:textSize">32sp</item>
+    </style>
+
     <!--  W H I T E  -->
     <style name="TextRegularWhite14">
         <item name="android:fontFamily">@font/abeezee_regular</item>
@@ -27,5 +34,66 @@
         <item name="android:textColor">@color/black</item>
         <item name="android:textSize">14sp</item>
     </style>
+
+    <style name="TextRegularBlack16">
+        <item name="android:fontFamily">@font/abeezee_regular</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="TextRegularBlack18">
+        <item name="android:fontFamily">@font/abeezee_regular</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="TextBoldBlack16">
+        <item name="android:fontFamily">@font/abeezee_regular</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="TextBoldBlack32">
+        <item name="android:fontFamily">@font/abeezee_regular</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">32sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <!--  T E A L  -->
+    <style name="TextRegularTeal18">
+        <item name="android:fontFamily">@font/abeezee_regular</item>
+        <item name="android:textColor">@color/teal_dark</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="TextRegularTeal16">
+        <item name="android:fontFamily">@font/abeezee_regular</item>
+        <item name="android:textColor">@color/teal_dark</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="TextBoldTeal16">
+        <item name="android:fontFamily">@font/abeezee_regular</item>
+        <item name="android:textColor">@color/teal_dark</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="TextBoldTeal18">
+        <item name="android:fontFamily">@font/abeezee_regular</item>
+        <item name="android:textColor">@color/teal_dark</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="TextBoldTeal26">
+        <item name="android:fontFamily">@font/abeezee_regular</item>
+        <item name="android:textColor">@color/teal_dark</item>
+        <item name="android:textSize">26sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
 
 </resources>

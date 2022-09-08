@@ -1,0 +1,330 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textViewCancel"
+            style="@style/TextRegularTeal16"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:text="Cancel"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textViewTitle"
+            style="@style/TextBoldBlack16"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="Edit Schedule"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textViewSave"
+            style="@style/TextBoldTeal16"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="20dp"
+            android:text="Save"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textViewTime"
+            style="@style/LobsterTextRegularTeal32"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:text="Time"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textViewTitle" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textViewStartTime"
+            style="@style/TextRegularBlack16"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Start Time"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textViewTime" />
+
+        <LinearLayout
+            android:id="@+id/layoutStartTime"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_margin="8dp"
+            android:orientation="horizontal"
+            app:layout_constraintHeight_percent=".15"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textViewStartTime"
+            app:layout_constraintWidth_percent=".7">
+
+            <EditText
+                android:id="@+id/editTextStartTimeHour"
+                style="@style/TextBoldBlack32"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/background_edit_text_number"
+                android:gravity="center"
+                android:enabled="false"
+                android:inputType="number"
+                android:text="00" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/linearButtonStartTimeHour"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:id="@+id/imageStartHourAdd"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:padding="10dp"
+                    android:src="@drawable/ic_add_black"
+                    android:background="@drawable/background_image_button"
+                    app:layout_constraintBottom_toTopOf="@id/imageStartHourSub"
+                    app:layout_constraintDimensionRatio="1:1"
+                    app:layout_constraintHeight_percent=".4"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/imageStartHourSub"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:padding="10dp"
+                    android:src="@drawable/ic_minus_black"
+                    android:background="@drawable/background_image_button"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintDimensionRatio="1:1"
+                    app:layout_constraintHeight_percent=".4"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/imageStartHourAdd" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <EditText
+                android:id="@+id/editTextStartTimeMinute"
+                style="@style/TextBoldBlack32"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/background_edit_text_number"
+                android:gravity="center"
+                android:inputType="number"
+                android:enabled="false"
+                android:text="00" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/linearButtonStartTimeMinute"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:id="@+id/imageStartMinuteAdd"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:padding="10dp"
+                    android:src="@drawable/ic_add_black"
+                    android:background="@drawable/background_image_button"
+                    app:layout_constraintBottom_toTopOf="@id/imageStartMinuteSub"
+                    app:layout_constraintDimensionRatio="1:1"
+                    app:layout_constraintHeight_percent=".4"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/imageStartMinuteSub"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:padding="10dp"
+                    android:src="@drawable/ic_minus_black"
+                    android:background="@drawable/background_image_button"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintDimensionRatio="1:1"
+                    app:layout_constraintHeight_percent=".4"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/imageStartMinuteAdd" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </LinearLayout>
+
+        <View
+            android:id="@+id/separator"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/pewter"
+            app:layout_constraintHeight_percent=".005"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/layoutStartTime"
+            app:layout_constraintWidth_percent=".8" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textViewEndTime"
+            style="@style/TextRegularBlack16"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:text="End Time"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/separator" />
+
+        <LinearLayout
+            android:id="@+id/layoutEndTime"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_margin="8dp"
+            android:orientation="horizontal"
+            app:layout_constraintHeight_percent=".15"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textViewEndTime"
+            app:layout_constraintWidth_percent=".7">
+
+            <EditText
+                android:id="@+id/editTextEndTimeHour"
+                style="@style/TextBoldBlack32"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/background_edit_text_number"
+                android:gravity="center"
+                android:enabled="false"
+                android:inputType="number"
+                android:text="00" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/linearButtonEndTimeHour"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:id="@+id/imageEndHourAdd"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:background="@drawable/background_image_button"
+                    android:padding="10dp"
+                    android:src="@drawable/ic_add_black"
+                    app:layout_constraintBottom_toTopOf="@id/imageEndHourSub"
+                    app:layout_constraintDimensionRatio="1:1"
+                    app:layout_constraintHeight_percent=".4"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/imageEndHourSub"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:background="@drawable/background_image_button"
+                    android:padding="10dp"
+                    android:src="@drawable/ic_minus_black"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintDimensionRatio="1:1"
+                    app:layout_constraintHeight_percent=".4"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/imageEndHourAdd" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <EditText
+                android:id="@+id/editTextEndTimeMinute"
+                style="@style/TextBoldBlack32"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/background_edit_text_number"
+                android:gravity="center"
+                android:enabled="false"
+                android:inputType="number"
+                android:text="00" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/linearButtonEndTimeMinute"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <ImageView
+                    android:id="@+id/imageEndMinuteAdd"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:background="@drawable/background_image_button"
+                    android:padding="10dp"
+                    android:src="@drawable/ic_add_black"
+                    app:layout_constraintBottom_toTopOf="@id/imageEndMinuteSub"
+                    app:layout_constraintDimensionRatio="1:1"
+                    app:layout_constraintHeight_percent=".4"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/imageEndMinuteSub"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:background="@drawable/background_image_button"
+                    android:padding="10dp"
+                    android:src="@drawable/ic_minus_black"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintDimensionRatio="1:1"
+                    app:layout_constraintHeight_percent=".4"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/imageEndMinuteAdd" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </LinearLayout>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textViewActionListTitle"
+            style="@style/TextBoldTeal16"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="Action List"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/layoutEndTime"
+            app:layout_constraintWidth_percent=".9" />
+
+        <EditText
+            android:id="@+id/editTextActions"
+            style="@style/TextRegularBlack16"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/background_edit_text_number"
+            android:hint="Type here…"
+            android:paddingTop="10dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textViewActionListTitle"
+            app:layout_constraintWidth_percent=".9" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</RelativeLayout>
