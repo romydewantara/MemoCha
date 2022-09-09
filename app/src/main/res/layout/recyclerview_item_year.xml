@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/layoutItemYear"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="6dp"
+    android:background="@drawable/selector_item_month">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/textViewMonthName"
+        style="@style/LobsterTextRegularWhite20"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="January"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/textViewTotalTitle"
+        style="@style/TextRegularWhite16"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Total Expenses In This Month:"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textViewMonthName" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/textViewTotal"
+        style="@style/TextBoldWhite18"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Rp2.550.000"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textViewTotalTitle" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

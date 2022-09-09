@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/background_popup_dialog">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/upper"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="20dp"
+        android:paddingBottom="20dp">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textViewPopupTitle"
+            style="@style/TextBoldDarkGrey16"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingStart="25dp"
+            android:paddingEnd="25dp"
+            android:text="Title"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textViewPopupSubtitle"
+            style="@style/TextRegularDarkGrey16"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:gravity="center"
+            android:paddingStart="25dp"
+            android:paddingEnd="25dp"
+            android:text="Subtitle"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textViewPopupTitle" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <View
+        android:id="@+id/popupUpperLine"
+        android:layout_width="match_parent"
+        android:layout_height=".8dp"
+        android:layout_below="@id/upper"
+        android:background="@color/grey_light_20" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/negativeButton"
+        style="@style/TextBoldRed16"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/popupUpperLine"
+        android:foreground="?android:selectableItemBackground"
+        android:gravity="center"
+        android:paddingStart="15dp"
+        android:paddingTop="10dp"
+        android:paddingEnd="15dp"
+        android:paddingBottom="10dp"
+        android:text="Negative" />
+
+    <View
+        android:id="@+id/negativeButtonLine"
+        android:layout_width="match_parent"
+        android:layout_height=".8dp"
+        android:layout_below="@id/negativeButton"
+        android:background="@color/grey_light_20" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/positiveButton"
+        style="@style/TextBoldTeal16"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/negativeButtonLine"
+        android:foreground="?android:selectableItemBackground"
+        android:gravity="center"
+        android:paddingStart="15dp"
+        android:paddingTop="10dp"
+        android:paddingEnd="15dp"
+        android:paddingBottom="10dp"
+        android:text="Positive" />
+
+</RelativeLayout>

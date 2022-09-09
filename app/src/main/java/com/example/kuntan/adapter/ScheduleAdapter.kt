@@ -22,6 +22,7 @@ class ScheduleAdapter(private val schedules: ArrayList<Schedule>, private val sc
         holder.itemView.textAction.text = schedule.action
         holder.itemView.edit.setOnClickListener {
             scheduleAdapterListener.onEditItemClicked(
+                schedule.id,
                 schedule.startTime.split(":")[0],
                 schedule.startTime.split(":")[1],
                 schedule.endTime.split(":")[0],
@@ -41,6 +42,6 @@ class ScheduleAdapter(private val schedules: ArrayList<Schedule>, private val sc
     }
 
     interface ScheduleAdapterListener {
-        fun onEditItemClicked(startHour: String, startMinute: String, endHour: String, endMinute: String)
+        fun onEditItemClicked(id: Int, startHour: String, startMinute: String, endHour: String, endMinute: String)
     }
 }

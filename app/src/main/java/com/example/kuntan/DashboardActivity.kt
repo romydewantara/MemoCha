@@ -27,8 +27,14 @@ class DashboardActivity : AppCompatActivity() {
     private val database by lazy { KuntanRoomDatabase(this) }
     private var isMenuShowing = false
     private var isAnimating = false
-    private var arrayTimes = arrayListOf("Subuh", "Dzuhur", "Ashar", "Maghrib", "Isya")
     private var index = 0
+    private var arrayTimes = arrayListOf(
+        Times.Subuh.name,
+        Times.Dzuhur.name,
+        Times.Ashar.name,
+        Times.Maghrib.name,
+        Times.Isya.name
+    )
 
     private lateinit var dashboardScheduleAdapter: DashboardScheduleAdapter
     private lateinit var constraintActivityMain: ConstraintLayout
@@ -108,7 +114,8 @@ class DashboardActivity : AppCompatActivity() {
             //goToCartPage
         }
         history.setOnClickListener {
-            //goToHistory
+            startActivity(Intent(this@DashboardActivity, HistoryActivity::class.java)
+                .setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP))
         }
         iconArrows.setOnClickListener {
             //show-hide Menu

@@ -25,6 +25,6 @@ interface ScheduleDao {
     @Query("DELETE FROM schedule_table WHERE id = :id")
     suspend fun deleteSchedule(id: Int)
 
-    @Query("UPDATE schedule_table SET startTime = :startTime, endTime = :endTime WHERE id = :id")
-    suspend fun updateSchedule(id: Int, startTime: String, endTime: String)
+    @Query("UPDATE schedule_table SET startTime = :startTime, endTime = :endTime, `action` = :actions WHERE id = :id")
+    suspend fun updateSchedule(id: Int, startTime: String, endTime: String, actions: String)
 }

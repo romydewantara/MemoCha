@@ -1,29 +1,35 @@
 package com.example.kuntan.lib
 
+import android.annotation.SuppressLint
 import android.app.Dialog
 import android.os.Bundle
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.FrameLayout
 import com.example.kuntan.R
+import com.example.kuntan.utility.AppUtil
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kotlinx.android.synthetic.main.bottom_sheet_schedule_editor.*
 
 class ScheduleEditorBottomSheet(
     private val time: String,
+    private val timeId: Int,
     private val sHour: String,
     private val sMinute: String,
     private val eHour: String,
     private val eMinute: String,
+    editorListener: ScheduleEditorListener
     ) : BottomSheetDialogFragment() {
 
     private var startHour = sHour.toInt()
     private var endHour = eHour.toInt()
     private var startMinute = sMinute.toInt()
     private var endMinute = eMinute.toInt()
+    private var mListener = editorListener
 
     companion object {
         const val TYPE_INCREASE = "increased"
@@ -40,18 +46,33 @@ class ScheduleEditorBottomSheet(
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        view.viewTreeObserver.addOnGlobalLayoutListener {
+            if (!AppUtil.isKeyboardVisible(view)) editTextActions.isFocusable = false
+        }
         textViewTime.text = time
         editTextStartTimeHour.setText(sHour)
         editTextStartTimeMinute.setText(sMinute)
         editTextEndTimeHour.setText(eHour)
         editTextEndTimeMinute.setText(eMinute)
 
+        initListener()
+    }
+
+    @SuppressLint("ClickableViewAccessibility")
+    private fun initListener() {
         textViewCancel.setOnClickListener {
             dismiss()
         }
         textViewSave.setOnClickListener {
-            //call update schedule
+            val startTime = "${editTextStartTimeHour.text}:${editTextStartTimeMinute.text}"
+            val endTime = "${editTextEndTimeHour.text}:${editTextEndTimeMinute.text}"
+            val actions = if (editTextActions.text.toString() != "") editTextActions.text.toString() else "Empty"
+            mListener.onEditSchedule(timeId, startTime, endTime, actions)
+            dismiss()
+        }
+        textViewDelete.setOnClickListener {
+            mListener.onDeleteSchedule(timeId)
+            dismiss()
         }
         imageStartHourAdd.setOnClickListener {
             updateNumber(TYPE_INCREASE, TYPE_START_HOUR, editTextStartTimeHour, 23, 0)
@@ -77,31 +98,39 @@ class ScheduleEditorBottomSheet(
         imageEndMinuteSub.setOnClickListener {
             updateNumber(TYPE_DECREASE, TYPE_END_MINUTE, editTextEndTimeMinute, 59, 0)
         }
+        editTextActions.setOnTouchListener { _, _ ->
+            editTextActions.isFocusableInTouchMode = true
+            false
+        }
+    }
+
+    private fun dpToPx(valueInDp: Float) : Float {
+        return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, valueInDp, requireContext().resources.displayMetrics)
     }
 
     private fun updateNumber(type: String, numberType: String, editText: EditText, max: Int, min: Int) {
-        var number = 0;
+        var number = 0
         when(type) {
             TYPE_INCREASE -> {
                 when(numberType) {
                     TYPE_START_HOUR -> {
                         startHour++
-                        if (startHour > max) startHour = max
+                        if (startHour > max) startHour = min
                         number = startHour
                     }
                     TYPE_END_HOUR -> {
                         endHour++
-                        if (endHour > max) endHour = max
+                        if (endHour > max) endHour = min
                         number = endHour
                     }
                     TYPE_START_MINUTE -> {
                         startMinute++
-                        if (startMinute > max) startMinute = max
+                        if (startMinute > max) startMinute = min
                         number = startMinute
                     }
                     TYPE_END_MINUTE -> {
                         endMinute++
-                        if (endMinute > max) endMinute = max
+                        if (endMinute > max) endMinute = min
                         number = endMinute
                     }
                 }
@@ -112,22 +141,22 @@ class ScheduleEditorBottomSheet(
                 when(numberType) {
                     TYPE_START_HOUR -> {
                         startHour--
-                        if (startHour < min) startHour = min
+                        if (startHour < min) startHour = max
                         number = startHour
                     }
                     TYPE_END_HOUR -> {
                         endHour--
-                        if (endHour < min) endHour = min
+                        if (endHour < min) endHour = max
                         number = endHour
                     }
                     TYPE_START_MINUTE -> {
                         startMinute--
-                        if (startMinute < min) startMinute = min
+                        if (startMinute < min) startMinute = max
                         number = startMinute
                     }
                     TYPE_END_MINUTE -> {
                         endMinute--
-                        if (endMinute < min) endMinute = min
+                        if (endMinute < min) endMinute = max
                         number = endMinute
                     }
                 }
@@ -150,4 +179,8 @@ class ScheduleEditorBottomSheet(
         return bottomSheetDialog
     }
 
+    interface ScheduleEditorListener {
+        fun onEditSchedule(id: Int, startTime: String, endTime: String, actions: String)
+        fun onDeleteSchedule(id: Int)
+    }
 }

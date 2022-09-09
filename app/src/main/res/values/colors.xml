@@ -9,5 +9,11 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="pewter">#B9B7BD</color>
+    <color name="grey_light">#D8FCFCFC</color>
+    <color name="grey_light_20">#BECACACA</color>
+    <color name="dark_grey">#5C5C5C</color>
     <color name="mesty_blue">#E3E8E9</color>
+    <color name="pink_light">#FFE6E7</color>
+    <color name="pink_dark">#ED9092</color>
+    <color name="red_dark">#970C10</color>
 </resources>
