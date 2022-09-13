@@ -5,13 +5,19 @@
       <map>
         <entry key="app/src/main/res/drawable-v24/ic_cart_white.xml" value="0.175" />
         <entry key="app/src/main/res/drawable-v24/ic_history_white.xml" value="0.175" />
+        <entry key="app/src/main/res/drawable/background_button_save_orange.xml" value="0.1805" />
+        <entry key="app/src/main/res/drawable/background_button_save_pressed.xml" value="0.1805" />
+        <entry key="app/src/main/res/drawable/background_dark_transparent.xml" value="0.1805" />
         <entry key="app/src/main/res/drawable/background_edit_text_number.xml" value="0.164" />
+        <entry key="app/src/main/res/drawable/background_edit_text_search.xml" value="0.164" />
         <entry key="app/src/main/res/drawable/background_image_button.xml" value="0.126" />
         <entry key="app/src/main/res/drawable/background_main_menu.xml" value="0.175" />
         <entry key="app/src/main/res/drawable/background_popup_dialog.xml" value="0.164" />
         <entry key="app/src/main/res/drawable/background_teal_rounded.xml" value="0.175" />
+        <entry key="app/src/main/res/drawable/background_text_category.xml" value="0.1805" />
         <entry key="app/src/main/res/drawable/background_text_delete.xml" value="0.164" />
         <entry key="app/src/main/res/drawable/background_text_delete_pressed.xml" value="0.164" />
+        <entry key="app/src/main/res/drawable/background_white_border.xml" value="0.1805" />
         <entry key="app/src/main/res/drawable/background_white_page_top_rounded.xml" value="0.164" />
         <entry key="app/src/main/res/drawable/background_white_rounded.xml" value="0.175" />
         <entry key="app/src/main/res/drawable/background_year_teal_dark_rounded.xml" value="0.164" />
@@ -19,41 +25,65 @@
         <entry key="app/src/main/res/drawable/foreground_year_teal_dark_transparent.xml" value="0.125" />
         <entry key="app/src/main/res/drawable/ic_add_black.xml" value="0.175" />
         <entry key="app/src/main/res/drawable/ic_add_teal.xml" value="0.164" />
+        <entry key="app/src/main/res/drawable/ic_app_logo.xml" value="0.1555" />
+        <entry key="app/src/main/res/drawable/ic_application.xml" value="0.1265" />
+        <entry key="app/src/main/res/drawable/ic_arrow_drop_down.xml" value="0.1805" />
         <entry key="app/src/main/res/drawable/ic_arrow_left.xml" value="0.164" />
         <entry key="app/src/main/res/drawable/ic_arrow_right.xml" value="0.164" />
         <entry key="app/src/main/res/drawable/ic_arrows.xml" value="0.175" />
         <entry key="app/src/main/res/drawable/ic_book.xml" value="0.175" />
         <entry key="app/src/main/res/drawable/ic_cart.xml" value="0.175" />
         <entry key="app/src/main/res/drawable/ic_cart_white.xml" value="0.175" />
+        <entry key="app/src/main/res/drawable/ic_cash.xml" value="0.164" />
+        <entry key="app/src/main/res/drawable/ic_dashboard_background.xml" value="0.1805" />
+        <entry key="app/src/main/res/drawable/ic_debit.xml" value="0.1805" />
+        <entry key="app/src/main/res/drawable/ic_dollar_tree.xml" value="0.2605" />
         <entry key="app/src/main/res/drawable/ic_edit.xml" value="0.213" />
+        <entry key="app/src/main/res/drawable/ic_expenses.xml" value="0.1805" />
+        <entry key="app/src/main/res/drawable/ic_export.xml" value="0.164" />
         <entry key="app/src/main/res/drawable/ic_history_white.xml" value="0.175" />
         <entry key="app/src/main/res/drawable/ic_minus_black.xml" value="0.164" />
         <entry key="app/src/main/res/drawable/ic_money.xml" value="0.164" />
+        <entry key="app/src/main/res/drawable/ic_note.xml" value="0.1555" />
+        <entry key="app/src/main/res/drawable/ic_notes_background.xml" value="0.1805" />
         <entry key="app/src/main/res/drawable/ic_question_white.xml" value="0.175" />
         <entry key="app/src/main/res/drawable/ic_schedule.xml" value="0.164" />
+        <entry key="app/src/main/res/drawable/ic_search.xml" value="0.1805" />
         <entry key="app/src/main/res/drawable/ic_settings.xml" value="0.175" />
+        <entry key="app/src/main/res/drawable/ic_transfer.xml" value="0.164" />
         <entry key="app/src/main/res/drawable/ic_trash.xml" value="0.126" />
+        <entry key="app/src/main/res/drawable/ic_wave.xml" value="0.164" />
+        <entry key="app/src/main/res/drawable/popup_spinner_background_rounded.xml" value="0.1805" />
         <entry key="app/src/main/res/drawable/selector_button_delete_schedule.xml" value="0.164" />
+        <entry key="app/src/main/res/drawable/selector_button_save_expenses.xml" value="0.1805" />
         <entry key="app/src/main/res/drawable/selector_button_update_number.xml" value="0.164" />
         <entry key="app/src/main/res/drawable/selector_item_month.xml" value="0.125" />
         <entry key="app/src/main/res/drawable/selector_text_delete_schedule.xml" value="0.164" />
         <entry key="app/src/main/res/drawable/selector_title_background_schedule.xml" value="0.175" />
         <entry key="app/src/main/res/drawable/selector_title_text_color_schedule.xml" value="0.175" />
-        <entry key="app/src/main/res/layout/activity_dashboard.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_dashboard.xml" value="0.335" />
         <entry key="app/src/main/res/layout/activity_history.xml" value="0.24134368896484376" />
+        <entry key="app/src/main/res/layout/activity_history_details.xml" value="0.30439300537109376" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.2774810791015625" />
         <entry key="app/src/main/res/layout/activity_new_word.xml" value="0.25677083333333334" />
         <entry key="app/src/main/res/layout/activity_schedule.xml" value="0.335" />
         <entry key="app/src/main/res/layout/activity_web_view.xml" value="0.25677083333333334" />
+        <entry key="app/src/main/res/layout/bottom_sheet_category.xml" value="0.17272727272727273" />
         <entry key="app/src/main/res/layout/bottom_sheet_schedule_editor.xml" value="0.335" />
-        <entry key="app/src/main/res/layout/layout_main_menu.xml" value="0.18766733805338542" />
+        <entry key="app/src/main/res/layout/layout_main_menu.xml" value="0.33762156168619795" />
+        <entry key="app/src/main/res/layout/layout_payment_method_drop_down_item.xml" value="0.25729166666666664" />
+        <entry key="app/src/main/res/layout/layout_payment_method_item_spinner.xml" value="0.375" />
         <entry key="app/src/main/res/layout/layout_start_time.xml" value="0.2557291666666667" />
         <entry key="app/src/main/res/layout/popup_dialog_kuntan.xml" value="0.3265782674153646" />
         <entry key="app/src/main/res/layout/recyclerview_item.xml" value="0.335" />
+        <entry key="app/src/main/res/layout/recyclerview_item_category.xml" value="0.25729166666666664" />
+        <entry key="app/src/main/res/layout/recyclerview_item_monthly_expenses.xml" value="0.25625" />
         <entry key="app/src/main/res/layout/recyclerview_item_schedule.xml" value="0.335" />
         <entry key="app/src/main/res/layout/recyclerview_item_schedule_options.xml" value="0.375" />
         <entry key="app/src/main/res/layout/recyclerview_item_year.xml" value="0.2528205128205128" />
         <entry key="app/src/main/res/layout/recyclerview_schedule.xml" value="0.24852752685546878" />
+        <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1265" />
+        <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.1265" />
       </map>
     </option>
   </component>

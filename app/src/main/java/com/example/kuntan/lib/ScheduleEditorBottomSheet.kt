@@ -104,10 +104,6 @@ class ScheduleEditorBottomSheet(
         }
     }
 
-    private fun dpToPx(valueInDp: Float) : Float {
-        return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, valueInDp, requireContext().resources.displayMetrics)
-    }
-
     private fun updateNumber(type: String, numberType: String, editText: EditText, max: Int, min: Int) {
         var number = 0
         when(type) {

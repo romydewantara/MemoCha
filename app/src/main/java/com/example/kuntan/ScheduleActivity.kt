@@ -58,6 +58,10 @@ class ScheduleActivity : AppCompatActivity(), ScheduleAdapter.ScheduleAdapterLis
                 database.scheduleDao().insert(Schedule(0, currentTab, "00:00", "00:00", "Empty"))
                 refreshSchedule(currentTab)
             }
+            /*val scheduleEditorBottomSheet = ScheduleEditorBottomSheet(
+                currentTab, 0, "0", "0", "0", "0", this)
+            scheduleEditorBottomSheet.isCancelable = false
+            scheduleEditorBottomSheet.show(supportFragmentManager, scheduleEditorBottomSheet.tag)*/
         }
         trash.setOnClickListener {
             isDelete = false //isDelete = !isDelete //not used yet… o_0

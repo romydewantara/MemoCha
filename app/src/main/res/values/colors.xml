@@ -1,13 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="transparent">#00000000</color>
+    <color name="transparent_50">#80FFFFFF</color>
     <color name="teal">#00C4CC</color>
     <color name="teal_light">#B6E2D3</color>
     <color name="teal_dark">#29A0B1</color>
+    <color name="teal_dark_5">#0D29A0B1</color>
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="white_soft">#EAEFF2</color>
+    <color name="white_10">#1AFFFFFF</color>
+    <color name="white_30">#4DFFFFFF</color>
     <color name="pewter">#B9B7BD</color>
     <color name="grey_light">#D8FCFCFC</color>
     <color name="grey_light_20">#BECACACA</color>
@@ -16,4 +21,6 @@
     <color name="pink_light">#FFE6E7</color>
     <color name="pink_dark">#ED9092</color>
     <color name="red_dark">#970C10</color>
+    <color name="red_orange">#FF4500</color>
+    <color name="blue">#0000FF</color>
 </resources>

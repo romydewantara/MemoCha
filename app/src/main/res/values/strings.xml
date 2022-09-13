@@ -6,4 +6,32 @@
     <string name="empty_not_saved">Word not saved because it is empty.</string>
     <string name="add_word">Add word</string>
     <string name="webview_error_load">Please check your internet connection and reload the page.\nError code: %s - %s</string>
+
+    <string name="method_cash">Cash</string>
+    <string name="method_debit">Debit</string>
+    <string name="method_transfer">Transfer</string>
+
+    <!-- C A T E G O R I E S -->
+    <string name="category_book">Buku</string>
+    <string name="category_kitchen">Dapur</string>
+    <string name="category_electro">Elektronik</string>
+    <string name="category_fashion">Baju</string>
+    <string name="category_child_fashion">Baju Khusus Anak</string>
+    <string name="category_film">Film dan Musik</string>
+    <string name="category_toys">Mainan Anak</string>
+    <string name="category_phone">Handphone dan Tablet</string>
+    <string name="category_skin_care">Kecantikan</string>
+    <string name="category_health">Kesehatan</string>
+    <string name="category_computer">Komputer dan Laptop</string>
+    <string name="category_gold">Logam Mulia</string>
+    <string name="category_food_and_drink">Makanan dan Minuman</string>
+    <string name="category_office_tools">Office dan Stationery</string>
+    <string name="category_sport">Olahraga</string>
+    <string name="category_automotive">Otomotif</string>
+    <string name="category_pet_care">Perawatan Hewan</string>
+    <string name="category_party">Perlengkapan Pesta dan Craft</string>
+    <string name="category_tools">Pertukangan</string>
+    <string name="category_property">Properti</string>
+    <string name="category_tour">Tour dan Travel</string>
+    <string name="category_others">Produk Lainnya</string>
 </resources>

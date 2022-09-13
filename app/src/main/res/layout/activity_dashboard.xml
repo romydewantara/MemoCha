@@ -8,12 +8,23 @@
     tools:context=".DashboardActivity">
 
     <ImageView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_dashboard_background"
+        app:layout_constraintBottom_toTopOf="@id/layoutExpenses"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
         android:id="@+id/setting"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:foreground="?android:selectableItemBackground"
         android:padding="10dp"
         android:src="@drawable/ic_settings"
+        android:visibility="gone"
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -28,11 +39,11 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintWidth_percent=".40" />
+        app:layout_constraintWidth_percent=".35" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/textDate"
-        style="@style/TextBoldBlack16"
+        style="@style/TextBoldDarkGrey16"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
@@ -44,7 +55,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/layoutExpenses"
         app:layout_constraintTop_toBottomOf="@id/textDate">
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -54,8 +65,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="25dp"
             android:foreground="?android:selectableItemBackground"
-            android:text="Time"
             android:padding="10dp"
+            android:text="Time"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -88,27 +99,217 @@
             app:layout_constraintTop_toTopOf="@id/time"
             app:layout_constraintWidth_percent=".1" />
 
+        <View
+            android:id="@+id/lineSchedule"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="12dp"
+            android:background="@color/pewter"
+            app:layout_constraintTop_toBottomOf="@id/time" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerviewSchedule"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginTop="16dp"
+            android:paddingTop="5dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/time"
+            app:layout_constraintTop_toBottomOf="@id/lineSchedule"
             tools:listitem="@layout/recyclerview_dashboard_schedule" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layoutExpenses"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white_soft"
+        android:padding="8dp"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:scaleType="fitXY"
+            android:src="@drawable/ic_notes_background"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textViewNotes"
+            style="@style/LobsterTextRegularTeal20"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Catatan Pengeluaran"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/iconExpenses"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="2dp"
+            android:scaleX="-1"
+            android:src="@drawable/ic_expenses"
+            app:layout_constraintBottom_toBottomOf="@id/textViewNotes"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintLeft_toRightOf="@id/textViewNotes"
+            app:layout_constraintTop_toTopOf="@id/textViewNotes"
+            app:layout_constraintWidth_percent=".05" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textViewGoods"
+            style="@style/TextRegularTeal14"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:text="Barang"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textViewNotes" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textViewGoodsAlert"
+            style="@style/TextRegularItalicRedOrange12"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:text="*kolom \'Barang\' harus diisi!"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@id/textViewGoods"
+            app:layout_constraintLeft_toRightOf="@id/textViewGoods"
+            app:layout_constraintTop_toTopOf="@id/textViewGoods" />
+
+        <EditText
+            android:id="@+id/editTextGoods"
+            style="@style/TextRegularDarkGrey16"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:background="@drawable/background_edit_text_number"
+            android:hint="Ex: TV"
+            android:inputType="textEmailAddress"
+            android:maxLines="1"
+            android:padding="8dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textViewGoods" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textViewAmount"
+            style="@style/TextRegularTeal14"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Harga"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/editTextGoods" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textViewAmountAlert"
+            style="@style/TextRegularItalicRedOrange12"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:text="*kolom \'Harga\' harus diisi!"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@id/textViewAmount"
+            app:layout_constraintLeft_toRightOf="@id/textViewAmount"
+            app:layout_constraintTop_toTopOf="@id/textViewAmount" />
+
+        <EditText
+            android:id="@+id/editTextAmount"
+            style="@style/TextRegularDarkGrey16"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:background="@drawable/background_edit_text_number"
+            android:hint="Ex: 20.000"
+            android:inputType="number"
+            android:maxLines="1"
+            android:padding="8dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textViewAmount" />
+
+        <EditText
+            android:id="@+id/editTextNote"
+            style="@style/TextRegularDarkGrey16"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/background_edit_text_number"
+            android:hint="Note (Optional)"
+            android:inputType="textEmailAddress"
+            android:maxLines="1"
+            android:padding="8dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/editTextAmount" />
+
+        <Spinner
+            android:id="@+id/layoutPaymentMethod"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/background_dark_transparent"
+            android:popupBackground="@drawable/popup_spinner_background_rounded"
+            android:spinnerMode="dropdown"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/editTextNote"
+            tools:listitem="@layout/layout_payment_method_item_spinner" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textViewCategoryTitle"
+            style="@style/TextBoldBlue14"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:padding="5dp"
+            android:text="Kategori >"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@id/textViewNotes" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textViewCategory"
+            style="@style/TextRegularDarkGrey12"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="end"
+            android:maxLines="1"
+            android:paddingStart="5dp"
+            android:paddingEnd="5dp"
+            android:text="Produk Lainnya"
+            app:autoSizeTextType="uniform"
+            app:layout_constraintRight_toRightOf="@id/textViewCategoryTitle"
+            app:layout_constraintTop_toBottomOf="@id/textViewCategoryTitle"
+            app:layout_constraintWidth_percent=".4" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textViewSave"
+            style="@style/TextBoldWhite16"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/selector_button_save_expenses"
+            android:paddingStart="12dp"
+            android:paddingTop="8dp"
+            android:paddingEnd="12dp"
+            android:paddingBottom="8dp"
+            android:text="Simpan"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/layoutPaymentMethod" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@id/layoutExpenses"
         app:layout_constraintRight_toRightOf="parent">
 
         <include layout="@layout/layout_main_menu" />
-
     </RelativeLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
