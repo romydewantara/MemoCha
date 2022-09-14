@@ -12,7 +12,10 @@ interface HistoryDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(history: History)
 
-    @Query("SELECT * FROM history_table WHERE month = :month ORDER BY id ASC")
-    suspend fun getHistory(month: String): List<History>
+    @Query("SELECT * FROM history_table WHERE year = :year AND month = :month ORDER BY id ASC")
+    suspend fun getHistory(year: String, month: String): List<History>
+
+    @Query("UPDATE history_table SET time = :time, goods = :goods, amount = :amount, description = :description, category = :category, method = :method WHERE id = :id")
+    suspend fun updateHistory(id: Int, time: String, goods: String, amount: String, description: String, category: String, method: String)
 
 }

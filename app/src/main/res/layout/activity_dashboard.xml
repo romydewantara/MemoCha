@@ -21,7 +21,7 @@
         android:id="@+id/setting"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:foreground="?android:selectableItemBackground"
+        android:background="?android:selectableItemBackground"
         android:padding="10dp"
         android:src="@drawable/ic_settings"
         android:visibility="gone"
@@ -160,15 +160,27 @@
             app:layout_constraintTop_toTopOf="@id/textViewNotes"
             app:layout_constraintWidth_percent=".05" />
 
+        <Spinner
+            android:id="@+id/layoutPaymentMethod"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/background_dark_transparent"
+            android:popupBackground="@drawable/popup_spinner_background_rounded"
+            android:spinnerMode="dropdown"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textViewCategory"
+            tools:listitem="@layout/layout_payment_method_item_spinner" />
+
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/textViewGoods"
             style="@style/TextRegularTeal14"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="15dp"
-            android:text="Barang"
+            android:text="Barang atau Jasa"
+            android:layout_marginTop="5dp"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/textViewNotes" />
+            app:layout_constraintTop_toBottomOf="@id/layoutPaymentMethod" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/textViewGoodsAlert"
@@ -176,7 +188,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            android:text="*kolom \'Barang\' harus diisi!"
+            android:text="*kolom \'Barang atau Jasa\' harus diisi!"
             android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="@id/textViewGoods"
             app:layout_constraintLeft_toRightOf="@id/textViewGoods"
@@ -189,7 +201,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="3dp"
             android:background="@drawable/background_edit_text_number"
-            android:hint="Ex: TV"
+            android:hint="Contoh: TV, Bumbu Dapur, Service, dll"
             android:inputType="textEmailAddress"
             android:maxLines="1"
             android:padding="8dp"
@@ -225,7 +237,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="3dp"
             android:background="@drawable/background_edit_text_number"
-            android:hint="Ex: 20.000"
+            android:hint="Contoh: 20.000"
             android:inputType="number"
             android:maxLines="1"
             android:padding="8dp"
@@ -239,24 +251,14 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:background="@drawable/background_edit_text_number"
-            android:hint="Note (Optional)"
+            android:hint="Catatan (Opsional)"
             android:inputType="textEmailAddress"
             android:maxLines="1"
             android:padding="8dp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@id/editTextAmount" />
 
-        <Spinner
-            android:id="@+id/layoutPaymentMethod"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/background_dark_transparent"
-            android:popupBackground="@drawable/popup_spinner_background_rounded"
-            android:spinnerMode="dropdown"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/editTextNote"
-            tools:listitem="@layout/layout_payment_method_item_spinner" />
+
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/textViewCategoryTitle"
@@ -265,7 +267,7 @@
             android:layout_height="0dp"
             android:clickable="true"
             android:focusable="true"
-            android:padding="5dp"
+            android:padding="8dp"
             android:text="Kategori >"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="@id/textViewNotes" />
@@ -286,7 +288,7 @@
             app:layout_constraintWidth_percent=".4" />
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/textViewSave"
+            android:id="@+id/textViewAdd"
             style="@style/TextBoldWhite16"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
@@ -296,9 +298,9 @@
             android:paddingTop="8dp"
             android:paddingEnd="12dp"
             android:paddingBottom="8dp"
-            android:text="Simpan"
+            android:text="Tambah"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/layoutPaymentMethod" />
+            app:layout_constraintTop_toBottomOf="@id/editTextNote" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

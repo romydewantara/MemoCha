@@ -22,6 +22,8 @@ class ScheduleEditorBottomSheet(
     private val sMinute: String,
     private val eHour: String,
     private val eMinute: String,
+    private val actions: String,
+    private val isEdit: Boolean,
     editorListener: ScheduleEditorListener
     ) : BottomSheetDialogFragment() {
 
@@ -29,6 +31,7 @@ class ScheduleEditorBottomSheet(
     private var endHour = eHour.toInt()
     private var startMinute = sMinute.toInt()
     private var endMinute = eMinute.toInt()
+    private var action = actions
     private var mListener = editorListener
 
     companion object {
@@ -55,6 +58,11 @@ class ScheduleEditorBottomSheet(
         editTextEndTimeHour.setText(eHour)
         editTextEndTimeMinute.setText(eMinute)
 
+        if (!isEdit) {
+            textViewSave.text = requireContext().getString(R.string.button_add)
+            textViewDelete.visibility = View.GONE
+        }
+
         initListener()
     }
 
@@ -67,7 +75,9 @@ class ScheduleEditorBottomSheet(
             val startTime = "${editTextStartTimeHour.text}:${editTextStartTimeMinute.text}"
             val endTime = "${editTextEndTimeHour.text}:${editTextEndTimeMinute.text}"
             val actions = if (editTextActions.text.toString() != "") editTextActions.text.toString() else "Empty"
-            mListener.onEditSchedule(timeId, startTime, endTime, actions)
+            if (isEdit) mListener.onEditSchedule(timeId, startTime, endTime, actions)
+            else mListener.onAddNewSchedule(timeId, startTime, endTime, actions)
+
             dismiss()
         }
         textViewDelete.setOnClickListener {
@@ -177,6 +187,7 @@ class ScheduleEditorBottomSheet(
 
     interface ScheduleEditorListener {
         fun onEditSchedule(id: Int, startTime: String, endTime: String, actions: String)
+        fun onAddNewSchedule(id: Int, startTime: String, endTime: String, actions: String)
         fun onDeleteSchedule(id: Int)
     }
 }

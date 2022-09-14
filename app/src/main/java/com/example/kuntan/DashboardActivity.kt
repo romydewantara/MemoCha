@@ -22,6 +22,7 @@ import com.example.kuntan.entity.History
 import com.example.kuntan.lib.CategoryBottomSheet
 import com.example.kuntan.utility.AppUtil
 import com.example.kuntan.utility.KuntanRoomDatabase
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_dashboard.*
 import kotlinx.android.synthetic.main.layout_main_menu.*
 import kotlinx.coroutines.CoroutineScope
@@ -147,6 +148,7 @@ class DashboardActivity : AppCompatActivity() {
         history.setOnClickListener {
             startActivity(Intent(this@DashboardActivity, HistoryActivity::class.java)
                 .setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP))
+            finish()
         }
         iconArrows.setOnClickListener {
             //show-hide Menu
@@ -154,7 +156,7 @@ class DashboardActivity : AppCompatActivity() {
             isMenuHidden = !isMenuHidden
             if (!isMenuHidden) showMenu() else hideMenu()
         }
-        textViewSave.setOnClickListener {
+        textViewAdd.setOnClickListener {
             val isGoodsFilled: Boolean
             val isAmountFilled: Boolean
             if (editTextGoods.text.toString().isEmpty()) {
@@ -185,9 +187,19 @@ class DashboardActivity : AppCompatActivity() {
                             editTextAmount.text.toString(),
                             editTextNote.text.toString(),
                             textViewCategory.text.toString(),
-                            paymentMethod, "20000"
+                            paymentMethod
                         )
                     )
+                    runOnUiThread {
+                        //Reset form
+                        editTextGoods.setText("")
+                        editTextAmount.setText("")
+                        editTextNote.setText("")
+                        textViewCategory.text = getString(R.string.category_others)
+                        layoutPaymentMethod.setSelection(0)
+                        Snackbar.make(constraintActivityMain, "Data pengeluaran telah ditambahkan ke riwayat.",
+                            Snackbar.LENGTH_INDEFINITE).setAction("DISMISS") {}.show()
+                    }
                 }
             }
         }

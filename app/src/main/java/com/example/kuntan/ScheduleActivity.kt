@@ -2,7 +2,6 @@ package com.example.kuntan
 
 import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -11,7 +10,6 @@ import com.example.kuntan.adapter.ScheduleAdapter
 import com.example.kuntan.entity.Schedule
 import com.example.kuntan.lib.KuntanPopupDialog
 import com.example.kuntan.lib.ScheduleEditorBottomSheet
-import com.example.kuntan.utility.AppUtil
 import com.example.kuntan.utility.KuntanRoomDatabase
 import kotlinx.android.synthetic.main.activity_schedule.*
 import kotlinx.coroutines.CoroutineScope
@@ -54,14 +52,7 @@ class ScheduleActivity : AppCompatActivity(), ScheduleAdapter.ScheduleAdapterLis
 
     private fun initListener() {
         add.setOnClickListener {
-            CoroutineScope(Dispatchers.IO).launch {
-                database.scheduleDao().insert(Schedule(0, currentTab, "00:00", "00:00", "Empty"))
-                refreshSchedule(currentTab)
-            }
-            /*val scheduleEditorBottomSheet = ScheduleEditorBottomSheet(
-                currentTab, 0, "0", "0", "0", "0", this)
-            scheduleEditorBottomSheet.isCancelable = false
-            scheduleEditorBottomSheet.show(supportFragmentManager, scheduleEditorBottomSheet.tag)*/
+            showScheduleEditorBottomSheet(0, "00", "00", "00", "00", "",false)
         }
         trash.setOnClickListener {
             isDelete = false //isDelete = !isDelete //not used yet… o_0
@@ -142,22 +133,42 @@ class ScheduleActivity : AppCompatActivity(), ScheduleAdapter.ScheduleAdapterLis
         refreshSchedule(currentTab)
     }
 
+    private fun showScheduleEditorBottomSheet(
+        id: Int,
+        startHour: String,
+        startMinute: String,
+        endHour: String,
+        endMinute: String,
+        actions: String,
+        isEdit: Boolean
+    ) {
+        val scheduleEditorBottomSheet =
+            ScheduleEditorBottomSheet(currentTab, id, startHour, startMinute, endHour, endMinute, actions, isEdit, this)
+        scheduleEditorBottomSheet.isCancelable = false
+        scheduleEditorBottomSheet.show(supportFragmentManager, scheduleEditorBottomSheet.tag)
+    }
+
     override fun onEditItemClicked(
         id: Int,
         startHour: String,
         startMinute: String,
         endHour: String,
-        endMinute: String
+        endMinute: String,
+        action: String
     ) {
-        val scheduleEditorBottomSheet =
-            ScheduleEditorBottomSheet(currentTab, id, startHour, startMinute, endHour, endMinute, this)
-        scheduleEditorBottomSheet.isCancelable = false
-        scheduleEditorBottomSheet.show(supportFragmentManager, scheduleEditorBottomSheet.tag)
+        showScheduleEditorBottomSheet(id, startHour, startMinute, endHour, endMinute, action, true)
     }
 
     override fun onEditSchedule(id: Int, startTime: String, endTime: String, actions: String) {
         CoroutineScope(Dispatchers.IO).launch {
             database.scheduleDao().updateSchedule(id, startTime, endTime, actions)
+            refreshSchedule(currentTab)
+        }
+    }
+
+    override fun onAddNewSchedule(id: Int, startTime: String, endTime: String, actions: String) {
+        CoroutineScope(Dispatchers.IO).launch {
+            database.scheduleDao().insert(Schedule(id, currentTab, startTime, endTime, actions))
             refreshSchedule(currentTab)
         }
     }

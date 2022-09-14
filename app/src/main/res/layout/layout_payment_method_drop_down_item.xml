@@ -34,7 +34,7 @@
         android:id="@+id/lineBottom"
         android:layout_width="match_parent"
         android:layout_height=".5dp"
-        android:background="@color/grey_light"
+        android:background="@color/dark_gray"
         app:layout_constraintTop_toBottomOf="@id/imageItemSelected" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

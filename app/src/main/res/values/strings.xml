@@ -1,11 +1,29 @@
 <resources>
     <string name="app_name">Kuntan</string>
     <string name="hint_word">Word...</string>
-    <string name="button_save">Save</string>
     <string name="button_retry">Retry</string>
     <string name="empty_not_saved">Word not saved because it is empty.</string>
     <string name="add_word">Add word</string>
     <string name="webview_error_load">Please check your internet connection and reload the page.\nError code: %s - %s</string>
+
+    <!-- M O N T H S -->
+    <string name="month_january">January</string>
+    <string name="month_february">February</string>
+    <string name="month_march">March</string>
+    <string name="month_april">April</string>
+    <string name="month_may">May</string>
+    <string name="month_june">June</string>
+    <string name="month_july">July</string>
+    <string name="month_august">August</string>
+    <string name="month_september">September</string>
+    <string name="month_october">October</string>
+    <string name="month_november">November</string>
+    <string name="month_december">December</string>
+
+    <!-- B U T T O N -->
+    <string name="button_add">Add</string>
+    <string name="button_save">Save</string>
+    <string name="button_cancel">Cancel</string>
 
     <string name="method_cash">Cash</string>
     <string name="method_debit">Debit</string>

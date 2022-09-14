@@ -2,40 +2,55 @@ package com.example.kuntan
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.kuntan.adapter.ExpensesDetailAdapter
+import com.example.kuntan.adapter.HistoryDetailAdapter
+import com.example.kuntan.entity.History
 import com.example.kuntan.utility.AppUtil
-import com.example.kuntan.utility.KuntanRoomDatabase
+import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_history_details.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import org.json.JSONArray
 
-class HistoryDetailsActivity : AppCompatActivity() {
+class HistoryDetailsActivity : AppCompatActivity(), HistoryDetailAdapter.HistoryDetailListener {
 
-    private val database by lazy { KuntanRoomDatabase(this) }
-    private lateinit var month: String
-    private lateinit var historyAdapter: ExpensesDetailAdapter
-    private var isHistoryEmpty = false
+    private val TAG = "HistoryDetailsActivity"
+    private var histories = ArrayList<History>()
+    private lateinit var historyDetailAdapter: HistoryDetailAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_history_details)
-        month = intent.getStringExtra("month")!!
-
         rootHistory.viewTreeObserver.addOnGlobalLayoutListener {
             if (!AppUtil.isKeyboardVisible(rootHistory)) editTextSearch.isFocusable = false
         }
 
+        init()
         setupRecyclerView()
         initListener()
     }
 
-    override fun onStart() {
-        super.onStart()
-        refreshHistories()
+    private fun init() {
+        val month = intent.extras?.getString("month").toString()
+        val history = intent.extras?.getString("history").toString()
+        Log.d(TAG, "onCreate - history: $history")
+
+        textViewMonthName.text = month
+        val array = JSONArray(history)
+        for (i in 0 until array.length()) {
+            val jsonObject = array.getJSONObject(i)
+            histories.add(Gson().fromJson(jsonObject.toString(), History::class.java))
+        }
+
+        if (histories.isNotEmpty()) {
+            var sum = 0
+            for (i in histories.indices) {
+                val amount = histories[i].amount.replace(",", "")
+                if (amount.isNotEmpty()) sum += amount.toInt()
+            }
+            val summary = "Rp ${String.format("%,d", sum)}"
+            textViewAmount.text = summary.replace(",", ".")
+        }
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -46,25 +61,16 @@ class HistoryDetailsActivity : AppCompatActivity() {
         }
     }
 
-    private fun refreshHistories() {
-        CoroutineScope(Dispatchers.IO).launch {
-            val history = database.historyDao().getHistory(month)
-            isHistoryEmpty = history.isEmpty()
-            runOnUiThread {
-                textViewMonthName.text = month
-                //if (isHistoryEmpty) textViewEmpty.visibility = View.VISIBLE  else textViewEmpty.visibility = View.GONE
-            }
-            withContext(Dispatchers.Main) {
-                historyAdapter.setData(history)
-            }
+    private fun setupRecyclerView() {
+        histories.reverse()
+        historyDetailAdapter = HistoryDetailAdapter(applicationContext, histories, this)
+        recyclerviewPaymentDetail.apply {
+            layoutManager = LinearLayoutManager(applicationContext)
+            adapter = historyDetailAdapter
         }
     }
 
-    private fun setupRecyclerView() {
-        historyAdapter = ExpensesDetailAdapter(applicationContext, arrayListOf())
-        recyclerviewPaymentDetail.apply {
-            layoutManager = LinearLayoutManager(applicationContext)
-            adapter = historyAdapter
-        }
+    override fun onItemExpensesClicked(history: History) {
+        Log.d("HDA", "onItemExpensesClicked - item selected: ${Gson().toJson(history)}")
     }
 }

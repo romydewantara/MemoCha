@@ -14,6 +14,5 @@ data class History(
     val amount: String,
     val description: String,
     val category: String,
-    val method: String,
-    val summary: String
+    val method: String
 )

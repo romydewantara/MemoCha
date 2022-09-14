@@ -1,5 +1,6 @@
 package com.example.kuntan.adapter
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -26,7 +27,8 @@ class ScheduleAdapter(private val schedules: ArrayList<Schedule>, private val sc
                 schedule.startTime.split(":")[0],
                 schedule.startTime.split(":")[1],
                 schedule.endTime.split(":")[0],
-                schedule.endTime.split(":")[1]
+                schedule.endTime.split(":")[1],
+                schedule.action
             )
         }
     }
@@ -35,6 +37,7 @@ class ScheduleAdapter(private val schedules: ArrayList<Schedule>, private val sc
 
     class ScheduleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
+    @SuppressLint("NotifyDataSetChanged")
     fun setData(list: List<Schedule>) {
         schedules.clear()
         schedules.addAll(list)
@@ -42,6 +45,6 @@ class ScheduleAdapter(private val schedules: ArrayList<Schedule>, private val sc
     }
 
     interface ScheduleAdapterListener {
-        fun onEditItemClicked(id: Int, startHour: String, startMinute: String, endHour: String, endMinute: String)
+        fun onEditItemClicked(id: Int, startHour: String, startMinute: String, endHour: String, endMinute: String, action: String)
     }
 }

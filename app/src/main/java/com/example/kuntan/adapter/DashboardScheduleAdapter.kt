@@ -1,5 +1,6 @@
 package com.example.kuntan.adapter
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -25,6 +26,7 @@ class DashboardScheduleAdapter(private val schedules: ArrayList<Schedule>) : Rec
 
     class ScheduleViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 
+    @SuppressLint("NotifyDataSetChanged")
     fun setData(list: List<Schedule>) {
         schedules.clear()
         schedules.addAll(list)

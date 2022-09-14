@@ -45,7 +45,7 @@
         android:layout_width="match_parent"
         android:layout_height=".8dp"
         android:layout_below="@id/upper"
-        android:background="@color/grey_light_20" />
+        android:background="@color/gray_light_20" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/negativeButton"
@@ -66,7 +66,7 @@
         android:layout_width="match_parent"
         android:layout_height=".8dp"
         android:layout_below="@id/negativeButton"
-        android:background="@color/grey_light_20" />
+        android:background="@color/gray_light_20" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/positiveButton"
