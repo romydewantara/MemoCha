@@ -5,6 +5,7 @@
       <map>
         <entry key="app/src/main/res/drawable-v24/ic_cart_white.xml" value="0.175" />
         <entry key="app/src/main/res/drawable-v24/ic_history_white.xml" value="0.175" />
+        <entry key="app/src/main/res/drawable/background_button_save_disabled.xml" value="0.1635" />
         <entry key="app/src/main/res/drawable/background_button_save_orange.xml" value="0.1805" />
         <entry key="app/src/main/res/drawable/background_button_save_pressed.xml" value="0.1805" />
         <entry key="app/src/main/res/drawable/background_dark_transparent.xml" value="0.1805" />
@@ -27,6 +28,7 @@
         <entry key="app/src/main/res/drawable/background_year_teal_dark_rounded.xml" value="0.164" />
         <entry key="app/src/main/res/drawable/background_year_teal_rounded.xml" value="0.164" />
         <entry key="app/src/main/res/drawable/foreground_year_teal_dark_transparent.xml" value="0.125" />
+        <entry key="app/src/main/res/drawable/ic_action_column.xml" value="0.1805" />
         <entry key="app/src/main/res/drawable/ic_add_black.xml" value="0.175" />
         <entry key="app/src/main/res/drawable/ic_add_teal.xml" value="0.164" />
         <entry key="app/src/main/res/drawable/ic_app_logo.xml" value="0.1555" />
@@ -39,13 +41,16 @@
         <entry key="app/src/main/res/drawable/ic_cart.xml" value="0.175" />
         <entry key="app/src/main/res/drawable/ic_cart_white.xml" value="0.175" />
         <entry key="app/src/main/res/drawable/ic_cash.xml" value="0.164" />
+        <entry key="app/src/main/res/drawable/ic_currency_column.xml" value="0.1805" />
         <entry key="app/src/main/res/drawable/ic_dashboard_background.xml" value="0.1805" />
         <entry key="app/src/main/res/drawable/ic_debit.xml" value="0.1805" />
+        <entry key="app/src/main/res/drawable/ic_dollar_column.xml" value="0.1805" />
         <entry key="app/src/main/res/drawable/ic_dollar_tree.xml" value="0.2605" />
         <entry key="app/src/main/res/drawable/ic_edit.xml" value="0.213" />
         <entry key="app/src/main/res/drawable/ic_emoji_people.xml" value="0.1805" />
         <entry key="app/src/main/res/drawable/ic_expenses.xml" value="0.1805" />
         <entry key="app/src/main/res/drawable/ic_export.xml" value="0.164" />
+        <entry key="app/src/main/res/drawable/ic_goods_column.xml" value="0.1805" />
         <entry key="app/src/main/res/drawable/ic_history_white.xml" value="0.175" />
         <entry key="app/src/main/res/drawable/ic_label.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/ic_leaf.xml" value="0.1805" />
@@ -74,17 +79,20 @@
         <entry key="app/src/main/res/drawable/selector_button_delete_schedule.xml" value="0.164" />
         <entry key="app/src/main/res/drawable/selector_button_save_expenses.xml" value="0.1805" />
         <entry key="app/src/main/res/drawable/selector_button_update_number.xml" value="0.164" />
+        <entry key="app/src/main/res/drawable/selector_custom_thumb.xml" value="0.1805" />
+        <entry key="app/src/main/res/drawable/selector_custom_track.xml" value="0.1805" />
         <entry key="app/src/main/res/drawable/selector_item_month.xml" value="0.125" />
         <entry key="app/src/main/res/drawable/selector_text_delete_schedule.xml" value="0.164" />
         <entry key="app/src/main/res/drawable/selector_text_general.xml" value="0.1805" />
         <entry key="app/src/main/res/drawable/selector_title_background_schedule.xml" value="0.175" />
         <entry key="app/src/main/res/drawable/selector_title_text_color_schedule.xml" value="0.175" />
-        <entry key="app/src/main/res/layout/activity_dashboard.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_dashboard.xml" value="0.3056894889103182" />
         <entry key="app/src/main/res/layout/activity_history.xml" value="0.20198935800894152" />
         <entry key="app/src/main/res/layout/activity_history_details.xml" value="0.21252796420581654" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.2774810791015625" />
         <entry key="app/src/main/res/layout/activity_new_word.xml" value="0.25677083333333334" />
         <entry key="app/src/main/res/layout/activity_schedule.xml" value="0.335" />
+        <entry key="app/src/main/res/layout/activity_settings.xml" value="0.3374302914268092" />
         <entry key="app/src/main/res/layout/activity_web_view.xml" value="0.25677083333333334" />
         <entry key="app/src/main/res/layout/bottom_sheet_category.xml" value="0.17272727272727273" />
         <entry key="app/src/main/res/layout/bottom_sheet_schedule_editor.xml" value="0.335" />
@@ -96,6 +104,7 @@
         <entry key="app/src/main/res/layout/recyclerview_dashboard_schedule.xml" value="0.335" />
         <entry key="app/src/main/res/layout/recyclerview_item.xml" value="0.335" />
         <entry key="app/src/main/res/layout/recyclerview_item_category.xml" value="0.25729166666666664" />
+        <entry key="app/src/main/res/layout/recyclerview_item_language.xml" value="0.29648386637369795" />
         <entry key="app/src/main/res/layout/recyclerview_item_monthly_expenses.xml" value="0.25625" />
         <entry key="app/src/main/res/layout/recyclerview_item_schedule.xml" value="0.335" />
         <entry key="app/src/main/res/layout/recyclerview_item_schedule_options.xml" value="0.375" />

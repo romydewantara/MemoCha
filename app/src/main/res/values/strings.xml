@@ -6,6 +6,13 @@
     <string name="add_word">Add word</string>
     <string name="webview_error_load">Please check your internet connection and reload the page.\nError code: %s - %s</string>
 
+    <!-- S E T T I N G S -->
+    <string name="setting_application_language">Application Language</string>
+    <string name="setting_language_english">English (United States)</string>
+    <string name="setting_language_bahasa">Bahasa Indonesia</string>
+    <string name="setting_background_animation_on">On</string>
+    <string name="setting_background_animation_off">Off</string>
+
     <!-- M O N T H S -->
     <string name="month_january">January</string>
     <string name="month_february">February</string>
@@ -30,6 +37,7 @@
     <string name="method_transfer">Transfer</string>
 
     <!-- C A T E G O R I E S -->
+    <string name="category_title">Kategori</string>
     <string name="category_book">Buku</string>
     <string name="category_kitchen">Dapur</string>
     <string name="category_electro">Elektronik</string>

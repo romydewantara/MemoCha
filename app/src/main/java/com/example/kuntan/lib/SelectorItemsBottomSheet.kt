@@ -7,15 +7,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.kuntan.R
-import com.example.kuntan.adapter.CategoryAdapter
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kotlinx.android.synthetic.main.bottom_sheet_category.*
 
-class CategoryBottomSheet : BottomSheetDialogFragment(), CategoryAdapter.CategoryAdapterListener {
+class SelectorItemsBottomSheet(private val title: String, private val any: Any) : BottomSheetDialogFragment() {
 
-    private lateinit var categoryListener: CategoryListener
+    private lateinit var categoryListener: CategoryBottomSheetListener
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.bottom_sheet_category, container, false)
@@ -23,11 +23,10 @@ class CategoryBottomSheet : BottomSheetDialogFragment(), CategoryAdapter.Categor
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        val categoryAdapter = CategoryAdapter(requireContext(), this)
-        recyclerviewCategory.apply {
+        textViewSelectorItemTitle.text = title
+        recyclerviewSelectorItems.apply {
             layoutManager = LinearLayoutManager(requireContext())
-            adapter = categoryAdapter
+            adapter = any as RecyclerView.Adapter<*>
         }
         textViewCancel.setOnClickListener { dismiss() }
     }
@@ -45,16 +44,12 @@ class CategoryBottomSheet : BottomSheetDialogFragment(), CategoryAdapter.Categor
         return bottomSheetDialog
     }
 
-    fun addCategoryListener(categoryListener: CategoryListener) : CategoryBottomSheet {
+    fun addCategoryListener(categoryListener: CategoryBottomSheetListener) : SelectorItemsBottomSheet {
         this.categoryListener = categoryListener
-        return this@CategoryBottomSheet
-    }
-    override fun onCategoryClicked(category: String) {
-        categoryListener.onCategorySelected(category)
-        dismiss()
+        return this@SelectorItemsBottomSheet
     }
 
-    interface CategoryListener {
+    interface CategoryBottomSheetListener {
         fun onCategorySelected(category: String)
     }
 }

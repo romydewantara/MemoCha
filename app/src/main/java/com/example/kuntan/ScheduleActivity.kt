@@ -11,6 +11,7 @@ import com.example.kuntan.entity.Schedule
 import com.example.kuntan.lib.KuntanPopupDialog
 import com.example.kuntan.lib.ScheduleEditorBottomSheet
 import com.example.kuntan.utility.KuntanRoomDatabase
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_schedule.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -164,6 +165,8 @@ class ScheduleActivity : AppCompatActivity(), ScheduleAdapter.ScheduleAdapterLis
             database.scheduleDao().updateSchedule(id, startTime, endTime, actions)
             refreshSchedule(currentTab)
         }
+        Snackbar.make(rootLayoutSchedule, "Jadwal telah diperbarui",
+            Snackbar.LENGTH_LONG).setAnimationMode(Snackbar.ANIMATION_MODE_SLIDE).setAction("DISMISS") {}.show()
     }
 
     override fun onAddNewSchedule(id: Int, startTime: String, endTime: String, actions: String) {
@@ -171,6 +174,8 @@ class ScheduleActivity : AppCompatActivity(), ScheduleAdapter.ScheduleAdapterLis
             database.scheduleDao().insert(Schedule(id, currentTab, startTime, endTime, actions))
             refreshSchedule(currentTab)
         }
+        Snackbar.make(rootLayoutSchedule, "Jadwal baru berhasil ditambahkan",
+            Snackbar.LENGTH_LONG).setAnimationMode(Snackbar.ANIMATION_MODE_SLIDE).setAction("DISMISS") {}.show()
     }
 
     override fun onDeleteSchedule(id: Int) {

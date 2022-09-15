@@ -57,6 +57,7 @@ class ScheduleEditorBottomSheet(
         editTextStartTimeMinute.setText(sMinute)
         editTextEndTimeHour.setText(eHour)
         editTextEndTimeMinute.setText(eMinute)
+        editTextActions.setText(action)
 
         if (!isEdit) {
             textViewSave.text = requireContext().getString(R.string.button_add)

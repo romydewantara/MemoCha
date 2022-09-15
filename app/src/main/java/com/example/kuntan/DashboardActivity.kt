@@ -16,10 +16,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.widget.TextViewCompat
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.kuntan.adapter.CategoryAdapter
 import com.example.kuntan.adapter.DashboardScheduleAdapter
 import com.example.kuntan.adapter.PaymentMethodSpinnerAdapter
 import com.example.kuntan.entity.History
-import com.example.kuntan.lib.CategoryBottomSheet
+import com.example.kuntan.entity.Settings
+import com.example.kuntan.lib.SelectorItemsBottomSheet
 import com.example.kuntan.utility.AppUtil
 import com.example.kuntan.utility.KuntanRoomDatabase
 import com.google.android.material.snackbar.Snackbar
@@ -39,7 +41,7 @@ class DashboardActivity : AppCompatActivity() {
     private val TAG = "DashboardActivity"
     private val database by lazy { KuntanRoomDatabase(this) }
     private var isMenuHidden = false
-    private var isAnimating = false
+    private var isMenuAnimating = false
     private var currentDate = ""
     private var paymentMethod = ""
     private var index = 0
@@ -55,16 +57,33 @@ class DashboardActivity : AppCompatActivity() {
     private lateinit var constraintActivityMain: ConstraintLayout
     private lateinit var constraintMainMenu: ConstraintLayout
     private lateinit var constraintMainMenuContainer: ConstraintLayout
+    private lateinit var selectorItemsBottomSheet: SelectorItemsBottomSheet
 
-    @SuppressLint("SimpleDateFormat")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dashboard)
 
+        init()
+        setupRecyclerView()
+        initListener()
+    }
+
+    override fun onStart() {
+        super.onStart()
+        refreshSchedule()
+        checkSettings()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        lottieDashboard.cancelAnimation()
+    }
+
+    @SuppressLint("SimpleDateFormat")
+    private fun init() {
         constraintActivityMain = findViewById(R.id.constraintActivityMain)
         constraintMainMenu = findViewById(R.id.constraintMainMenu)
         constraintMainMenuContainer = findViewById(R.id.constraintMainMenuContainer)
-
         constraintActivityMain.viewTreeObserver.addOnGlobalLayoutListener {
             if (AppUtil.isKeyboardVisible(constraintActivityMain)) {
                 iconArrows.isEnabled = false
@@ -78,21 +97,42 @@ class DashboardActivity : AppCompatActivity() {
             }
         }
 
-        TextViewCompat.setAutoSizeTextTypeUniformWithConfiguration(textViewCategory, 1,
-            14, 1, TypedValue.COMPLEX_UNIT_SP)
         val calendar = Calendar.getInstance()
         val date = SimpleDateFormat("EEEE, dd MMMM, yyyy").format(calendar.time)
         currentDate = SimpleDateFormat("dd-MMMM-yyyy").format(calendar.time)
         textDate.text = date
         time.text = arrayTimes[index]
-
-        setupRecyclerView()
-        initListener()
+        TextViewCompat.setAutoSizeTextTypeUniformWithConfiguration(textViewCategory, 1,
+            14, 1, TypedValue.COMPLEX_UNIT_SP)
     }
 
-    override fun onStart() {
-        super.onStart()
-        refreshSchedule()
+    private fun setupRecyclerView() {
+        dashboardScheduleAdapter = DashboardScheduleAdapter(arrayListOf())
+        recyclerviewSchedule.apply {
+            layoutManager = LinearLayoutManager(applicationContext)
+            adapter = dashboardScheduleAdapter
+        }
+    }
+
+    private fun checkSettings() {
+        CoroutineScope(Dispatchers.IO).launch {
+            val settings = database.settingsDao().getSettings()
+            if (settings == null) {
+                val setting = Settings(0, getString(R.string.setting_language_english), getString(R.string.setting_background_animation_off), "")
+                database.settingsDao().insertSetting(setting)
+            } else {
+                runOnUiThread {
+                    Log.d(TAG, "checkSettings - dashboardBackground: ${settings.dashboardBackground}")
+                    if (settings.backgroundAnimation == getString(R.string.setting_background_animation_on)) {
+                        lottieDashboard.visibility = VISIBLE
+                        lottieDashboard.setAnimation(settings.dashboardBackground)
+                        lottieDashboard.playAnimation()
+                    } else {
+                        lottieDashboard.visibility = GONE
+                    }
+                }
+            }
+        }
     }
 
     private fun refreshSchedule() {
@@ -105,18 +145,12 @@ class DashboardActivity : AppCompatActivity() {
         }
     }
 
-    private fun setupRecyclerView() {
-        dashboardScheduleAdapter = DashboardScheduleAdapter(arrayListOf())
-        recyclerviewSchedule.apply {
-            layoutManager = LinearLayoutManager(applicationContext)
-            adapter = dashboardScheduleAdapter
-        }
-    }
-
     @SuppressLint("ClickableViewAccessibility", "SimpleDateFormat")
     private fun initListener() {
         setting.setOnClickListener {
             //goToSettings
+            startActivity(Intent(this@DashboardActivity, SettingsActivity::class.java)
+                .setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP))
         }
         time.setOnClickListener {
             startActivity(Intent(this@DashboardActivity, ScheduleActivity::class.java)
@@ -198,25 +232,22 @@ class DashboardActivity : AppCompatActivity() {
                         textViewCategory.text = getString(R.string.category_others)
                         layoutPaymentMethod.setSelection(0)
                         Snackbar.make(constraintActivityMain, "Data pengeluaran telah ditambahkan ke riwayat.",
-                            Snackbar.LENGTH_INDEFINITE).setAction("DISMISS") {}.show()
+                            Snackbar.LENGTH_INDEFINITE).setAnimationMode(Snackbar.ANIMATION_MODE_SLIDE).setAction("DISMISS") {}.show()
                     }
                 }
             }
         }
         textViewCategoryTitle.setOnClickListener {
-            CategoryBottomSheet().addCategoryListener(object : CategoryBottomSheet.CategoryListener {
-                override fun onCategorySelected(category: String) {
+            selectorItemsBottomSheet = SelectorItemsBottomSheet(getString(R.string.category_title),
+                CategoryAdapter(applicationContext, object : CategoryAdapter.CategoryAdapterListener {
+                override fun onCategoryClicked(category: String) {
+                    selectorItemsBottomSheet.dismiss()
                     textViewCategory.text = category
                 }
-            }).show(supportFragmentManager, "category_bottom_sheet")
+            }))
+            selectorItemsBottomSheet.show(supportFragmentManager, "selector_bottom_sheet")
         }
-        editTextGoods.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(s: Editable?) {
-                if (s != null && s.isNotEmpty()) textViewGoodsAlert.visibility = GONE
-            }
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
-        })
+        editTextGoods.addTextChangedListener(onTextChangedListener(false))
         editTextGoods.setOnTouchListener { _, _ ->
             editTextGoods.isFocusableInTouchMode = true
             false
@@ -229,58 +260,57 @@ class DashboardActivity : AppCompatActivity() {
             editTextNote.isFocusableInTouchMode = true
             false
         }
-        editTextAmount.addTextChangedListener(onTextChangedListener())
+        editTextAmount.addTextChangedListener(onTextChangedListener(true))
 
         val sortType = arrayListOf(getString(R.string.method_cash), getString(R.string.method_debit), getString(R.string.method_transfer))
         val spinnerPaymentMethodAdapter = PaymentMethodSpinnerAdapter(applicationContext,
             sortType, object : PaymentMethodSpinnerAdapter.ItemSelectedListener {
                 override fun onItemSelected(selectedItem: String) {
-                    when (selectedItem) {
-                        sortType[0] -> {
-                            paymentMethod = getString(R.string.method_cash)
-                            Log.d(TAG, "onItemSelected cash")
-                        }
-                        sortType[1] -> {
-                            paymentMethod = getString(R.string.method_debit)
-                            Log.d(TAG, "onItemSelected debit")
-                        }
-                        sortType[2] -> {
-                            paymentMethod = getString(R.string.method_transfer)
-                            Log.d(TAG, "onItemSelected trf")
-                        }
-                    }
+                    paymentMethod = selectedItem
                 }
             })
         layoutPaymentMethod.adapter = spinnerPaymentMethodAdapter
 
     }
 
-    private fun onTextChangedListener() : TextWatcher {
+    @SuppressLint("UseCompatLoadingForDrawables")
+    private fun onTextChangedListener(isAmount: Boolean) : TextWatcher {
         return object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
             override fun afterTextChanged(s: Editable?) {
-                if (s != null && s.isNotEmpty()) textViewAmountAlert.visibility = GONE
-                editTextAmount.removeTextChangedListener(this)
-                try {
-                    var originalString = s.toString()
-                    if (originalString.contains(",")) originalString = originalString.replace(",", "")
-                    val longValue: Long = java.lang.Long.parseLong(originalString)
-                    val formatter = NumberFormat.getInstance(Locale.US) as DecimalFormat
-                    formatter.applyPattern("#,###,###,###")
-                    val formattedString = formatter.format(longValue)
-                    editTextAmount.setText(formattedString)
-                    editTextAmount.setSelection(editTextAmount.text.length)
+                if (isAmount) {
+                    if (s != null && s.isNotEmpty()) textViewAmountAlert.visibility = GONE
+                    editTextAmount.removeTextChangedListener(this)
+                    try {
+                        var originalString = s.toString()
+                        if (originalString.contains(",")) originalString = originalString.replace(",", "")
+                        val longValue: Long = java.lang.Long.parseLong(originalString)
+                        val formatter = NumberFormat.getInstance(Locale.US) as DecimalFormat
+                        formatter.applyPattern("#,###,###,###")
+                        val formattedString = formatter.format(longValue)
+                        editTextAmount.setText(formattedString)
+                        editTextAmount.setSelection(editTextAmount.text.length)
 
-                } catch (nfe: NumberFormatException) {
-                    nfe.printStackTrace()
+                    } catch (nfe: NumberFormatException) {
+                        nfe.printStackTrace()
+                    }
+                    editTextAmount.addTextChangedListener(this)
+                } else {
+                    if (s != null && s.isNotEmpty()) textViewGoodsAlert.visibility = GONE
                 }
-                editTextAmount.addTextChangedListener(this)
+                if (editTextGoods.text.toString().isNotEmpty() && editTextAmount.text.toString().isNotEmpty()) {
+                    textViewAdd.isEnabled = true
+                    textViewAdd.background = applicationContext.resources.getDrawable(R.drawable.selector_button_save_expenses, null)
+                } else {
+                    textViewAdd.isEnabled = false
+                    textViewAdd.background = applicationContext.resources.getDrawable(R.drawable.background_button_save_disabled, null)
+                }
             }
         }
     }
     private fun showMenu() {
-        if (!isAnimating) {
+        if (!isMenuAnimating) {
             val xTarget = constraintActivityMain.x
             val objectAnimator =
                 ObjectAnimator.ofFloat(constraintMainMenuContainer, "translationX", xTarget)
@@ -290,10 +320,10 @@ class DashboardActivity : AppCompatActivity() {
             animatorSet.start()
             animatorSet.addListener(object : Animator.AnimatorListener {
                 override fun onAnimationStart(animation: Animator?) {
-                    isAnimating = true
+                    isMenuAnimating = true
                 }
                 override fun onAnimationEnd(animation: Animator?) {
-                    isAnimating = false
+                    isMenuAnimating = false
                 }
                 override fun onAnimationCancel(animation: Animator?) {}
                 override fun onAnimationRepeat(animation: Animator?) {}
@@ -302,7 +332,7 @@ class DashboardActivity : AppCompatActivity() {
     }
 
     private fun hideMenu() {
-        if (!isAnimating) {
+        if (!isMenuAnimating) {
             val xTarget = constraintActivityMain.x + constraintMainMenu.width
             val objectAnimator =
                 ObjectAnimator.ofFloat(constraintMainMenuContainer, "translationX", xTarget)
@@ -312,10 +342,10 @@ class DashboardActivity : AppCompatActivity() {
             animatorSet.start()
             animatorSet.addListener(object : Animator.AnimatorListener {
                 override fun onAnimationStart(animation: Animator?) {
-                    isAnimating = true
+                    isMenuAnimating = true
                 }
                 override fun onAnimationEnd(animation: Animator?) {
-                    isAnimating = false
+                    isMenuAnimating = false
                 }
                 override fun onAnimationCancel(animation: Animator?) {}
                 override fun onAnimationRepeat(animation: Animator?) {}

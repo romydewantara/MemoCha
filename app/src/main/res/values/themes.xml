@@ -115,6 +115,13 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <style name="TextBoldBlack18">
+        <item name="android:fontFamily">@font/abeezee_regular</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
     <style name="TextBoldBlack20">
         <item name="android:fontFamily">@font/abeezee_regular</item>
         <item name="android:textColor">@color/black</item>
@@ -169,16 +176,16 @@
     </style>
 
     <!--  T E A L  -->
-    <style name="TextRegularTeal18">
-        <item name="android:fontFamily">@font/abeezee_regular</item>
-        <item name="android:textColor">@color/teal_dark</item>
-        <item name="android:textSize">18sp</item>
-    </style>
-
     <style name="TextRegularTeal14">
         <item name="android:fontFamily">@font/abeezee_regular</item>
         <item name="android:textColor">@color/teal_dark</item>
         <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="TextRegularTeal18">
+        <item name="android:fontFamily">@font/abeezee_regular</item>
+        <item name="android:textColor">@color/teal_dark</item>
+        <item name="android:textSize">18sp</item>
     </style>
 
     <style name="TextRegularTeal16">
@@ -216,6 +223,12 @@
     </style>
 
     <!--  R E D   D A R K -->
+    <style name="TextRegularRed14">
+        <item name="android:fontFamily">@font/abeezee_regular</item>
+        <item name="android:textColor">@color/red_dark</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
     <style name="TextRegularRed16">
         <item name="android:fontFamily">@font/abeezee_regular</item>
         <item name="android:textColor">@color/red_dark</item>
@@ -235,6 +248,12 @@
         <item name="android:textColor">@color/red_orange</item>
         <item name="android:textStyle">italic</item>
         <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="TextRegularRedOrange14">
+        <item name="android:fontFamily">@font/abeezee_regular</item>
+        <item name="android:textColor">@color/red_orange</item>
+        <item name="android:textSize">14sp</item>
     </style>
 
     <!--  B L U E -->

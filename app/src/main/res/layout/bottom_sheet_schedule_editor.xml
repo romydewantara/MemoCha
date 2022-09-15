@@ -322,6 +322,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:background="@drawable/background_edit_text_number"
+            android:drawableStart="@drawable/ic_action_column"
+            android:drawablePadding="6dp"
             android:hint="Type here…"
             android:inputType="textEmailAddress"
             android:maxLines="1"
