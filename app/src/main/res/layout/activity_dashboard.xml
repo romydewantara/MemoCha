@@ -7,6 +7,36 @@
     android:layout_height="match_parent"
     tools:context=".DashboardActivity">
 
+    <ImageView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_dashboard_background"
+        app:layout_constraintBottom_toTopOf="@id/layoutExpenses"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:rotation="30"
+        android:src="@drawable/ic_happy_color"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/analogClock"
+        app:layout_constraintWidth_percent=".3" />
+
+    <ImageView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:rotation="-25"
+        android:src="@drawable/ic_happy"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintWidth_percent=".4" />
+
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/lottieDashboard"
         android:layout_width="0dp"
@@ -20,16 +50,6 @@
         app:lottie_autoPlay="false"
         app:lottie_fileName="autumn_fall.json"
         app:lottie_loop="true" />
-
-    <ImageView
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/ic_dashboard_background"
-        app:layout_constraintBottom_toTopOf="@id/layoutExpenses"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
         android:id="@+id/setting"

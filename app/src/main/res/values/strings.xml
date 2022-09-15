@@ -12,6 +12,8 @@
     <string name="setting_language_bahasa">Bahasa Indonesia</string>
     <string name="setting_background_animation_on">On</string>
     <string name="setting_background_animation_off">Off</string>
+    <string name="setting_background_music_on">On</string>
+    <string name="setting_background_music_off">Off</string>
 
     <!-- M O N T H S -->
     <string name="month_january">January</string>

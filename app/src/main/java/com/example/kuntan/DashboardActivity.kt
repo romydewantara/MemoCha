@@ -5,6 +5,8 @@ import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.content.res.AssetFileDescriptor
+import android.media.MediaPlayer
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -23,6 +25,7 @@ import com.example.kuntan.entity.History
 import com.example.kuntan.entity.Settings
 import com.example.kuntan.lib.SelectorItemsBottomSheet
 import com.example.kuntan.utility.AppUtil
+import com.example.kuntan.utility.Constant
 import com.example.kuntan.utility.KuntanRoomDatabase
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_dashboard.*
@@ -38,6 +41,9 @@ import java.util.*
 
 class DashboardActivity : AppCompatActivity() {
 
+    companion object {
+        private lateinit var mediaPlayer: MediaPlayer
+    }
     private val TAG = "DashboardActivity"
     private val database by lazy { KuntanRoomDatabase(this) }
     private var isMenuHidden = false
@@ -77,10 +83,16 @@ class DashboardActivity : AppCompatActivity() {
     override fun onPause() {
         super.onPause()
         lottieDashboard.cancelAnimation()
+        if (mediaPlayer.isPlaying) {
+            mediaPlayer.stop()
+            mediaPlayer.release()
+            mediaPlayer = MediaPlayer()
+        }
     }
 
     @SuppressLint("SimpleDateFormat")
     private fun init() {
+        mediaPlayer = MediaPlayer()
         constraintActivityMain = findViewById(R.id.constraintActivityMain)
         constraintMainMenu = findViewById(R.id.constraintMainMenu)
         constraintMainMenuContainer = findViewById(R.id.constraintMainMenuContainer)
@@ -118,7 +130,7 @@ class DashboardActivity : AppCompatActivity() {
         CoroutineScope(Dispatchers.IO).launch {
             val settings = database.settingsDao().getSettings()
             if (settings == null) {
-                val setting = Settings(0, getString(R.string.setting_language_english), getString(R.string.setting_background_animation_off), "")
+                val setting = Settings(0, getString(R.string.setting_language_english), getString(R.string.setting_background_animation_off), Constant.DASHBOARD_BACKGROUND_AUTUMN, getString(R.string.setting_background_music_off))
                 database.settingsDao().insertSetting(setting)
             } else {
                 runOnUiThread {
@@ -127,6 +139,22 @@ class DashboardActivity : AppCompatActivity() {
                         lottieDashboard.visibility = VISIBLE
                         lottieDashboard.setAnimation(settings.dashboardBackground)
                         lottieDashboard.playAnimation()
+                        if (settings.backgroundMusicState == getString(R.string.setting_background_music_on)) {
+                            var fileName = ""
+                            when(settings.dashboardBackground) {
+                                Constant.DASHBOARD_BACKGROUND_AUTUMN -> {fileName = Constant.BACKGROUND_MUSIC_AUTUMN_THEME}
+                                Constant.DASHBOARD_BACKGROUND_SAKURA -> {fileName = Constant.BACKGROUND_MUSIC_SAKURA_THEME}
+                                Constant.DASHBOARD_BACKGROUND_SNOW -> {fileName = Constant.BACKGROUND_MUSIC_SNOW_THEME}
+                                Constant.DASHBOARD_BACKGROUND_SUMMER -> {fileName = Constant.BACKGROUND_MUSIC_SUMMER_THEME}
+                            }
+                            Log.d(TAG, "checkSettings: fileName: $fileName")
+                            val afd : AssetFileDescriptor = assets.openFd(fileName)
+                            mediaPlayer.setDataSource(afd.fileDescriptor, afd.startOffset, afd.length)
+                            mediaPlayer.setVolume(1f, 1f)
+                            mediaPlayer.isLooping = true
+                            mediaPlayer.prepare()
+                            mediaPlayer.start()
+                        }
                     } else {
                         lottieDashboard.visibility = GONE
                     }

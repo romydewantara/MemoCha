@@ -129,6 +129,13 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <style name="TextBoldBlack26">
+        <item name="android:fontFamily">@font/abeezee_regular</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:textSize">26sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
     <style name="TextBoldBlack32">
         <item name="android:fontFamily">@font/abeezee_regular</item>
         <item name="android:textColor">@color/black</item>
