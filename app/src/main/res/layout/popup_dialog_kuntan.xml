@@ -14,7 +14,7 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/textViewPopupTitle"
-            style="@style/TextBoldDarkGrey16"
+            style="@style/TextBoldBlack16"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingStart="25dp"

@@ -1,6 +1,8 @@
 package com.example.kuntan
 
 import android.annotation.SuppressLint
+import android.content.Intent
+import android.content.res.Configuration
 import android.os.Bundle
 import android.view.View
 import android.view.animation.AnimationUtils
@@ -17,6 +19,7 @@ import kotlinx.android.synthetic.main.activity_settings.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.util.*
 
 class SettingsActivity : AppCompatActivity() {
 
@@ -46,6 +49,7 @@ class SettingsActivity : AppCompatActivity() {
     private fun init() {
         backgroundAnimation = getString(R.string.setting_background_animation_off)
         backgroundMusicState = getString(R.string.setting_background_music_off)
+        dashboardBackground = Constant.DASHBOARD_BACKGROUND_AUTUMN
 
         CoroutineScope(Dispatchers.IO).launch {
             settings = database.settingsDao().getSettings()
@@ -86,9 +90,8 @@ class SettingsActivity : AppCompatActivity() {
     @SuppressLint("UseCompatLoadingForDrawables")
     private fun initListener() {
         textViewReset.setOnClickListener {
-            val kuntanPopupDialog = KuntanPopupDialog.newInstance().setContent("Warning",
-                "Are you sure you want to reset to default?",
-                "Reset", "Cancel", object : KuntanPopupDialog.KuntanPopupDialogListener {
+            val kuntanPopupDialog = KuntanPopupDialog.newInstance().setContent(getString(R.string.dialog_title_warning), getString(R.string.dialog_message_ask_reset),
+                getString(R.string.dialog_button_reset), getString(R.string.dialog_button_cancel), object : KuntanPopupDialog.KuntanPopupDialogListener {
                     override fun onNegativeButton() {
                         CoroutineScope(Dispatchers.IO).launch {
                             database.settingsDao().updateSetting(getString(R.string.setting_language_english), getString(R.string.setting_background_animation_off), Constant.DASHBOARD_BACKGROUND_AUTUMN, getString(R.string.setting_background_music_off))
@@ -108,6 +111,7 @@ class SettingsActivity : AppCompatActivity() {
                                 isAnimationSwitched = false
                                 isAudioSwitched = false
                                 isDashboardBackgroundChanged = false
+                                showRestartAppDialog(getString(R.string.dialog_message_reset))
                             }
                         }
                     }
@@ -117,7 +121,7 @@ class SettingsActivity : AppCompatActivity() {
         }
         textViewLanguage.setOnClickListener {
             selectorItemsBottomSheet = SelectorItemsBottomSheet(
-                getString(R.string.setting_application_language), ApplicationLanguageAdapter(applicationContext,
+                getString(R.string.settings_application_language), ApplicationLanguageAdapter(applicationContext,
                     object : ApplicationLanguageAdapter.ApplicationLanguageListener {
                         override fun onLanguageSelected(language: String) {
                             textViewLanguage.text = language
@@ -192,6 +196,7 @@ class SettingsActivity : AppCompatActivity() {
                     textViewApply.background = applicationContext.resources.getDrawable(R.drawable.background_button_save_disabled, null)
                     checkResetButtonEnable()
                     Snackbar.make(rootLayoutSetting, "Perubahan telah diterapkan", Snackbar.LENGTH_LONG).setAction("DISMISS") {}.show()
+                    if (isLanguageChanged) showRestartAppDialog(String.format(getString(R.string.dialog_message_switch_language), settings?.language))
                 }
             }
         }
@@ -216,5 +221,17 @@ class SettingsActivity : AppCompatActivity() {
             textViewReset.isEnabled = false
             TextViewCompat.setTextAppearance(textViewReset, R.style.TextRegularGrey14)
         }
+    }
+
+    private fun showRestartAppDialog(message: String) {
+        val kuntanPopupDialog = KuntanPopupDialog.newInstance().setContent(getString(R.string.dialog_title_information),
+            message, "", "OK", object : KuntanPopupDialog.KuntanPopupDialogListener {
+                override fun onNegativeButton() {}
+                override fun onPositiveButton() {
+                    startActivity(Intent(this@SettingsActivity, SplashActivity::class.java).setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP))
+                    finish()
+                }
+            })
+        kuntanPopupDialog.show(supportFragmentManager, kuntanPopupDialog.tag)
     }
 }

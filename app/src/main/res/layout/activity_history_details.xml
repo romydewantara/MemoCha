@@ -72,7 +72,7 @@
             style="@style/TextRegularWhite14"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Export Recapitulation" />
+            android:text="@string/history_detail_export" />
 
         <ImageView
             android:id="@+id/iconExport"
@@ -89,7 +89,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
-        android:text="Total expenses for this month:"
+        android:text="@string/history_detail_monthly_expenses"
         app:layout_constraintLeft_toLeftOf="@id/textViewMonthName"
         app:layout_constraintRight_toRightOf="@id/textViewMonthName"
         app:layout_constraintTop_toBottomOf="@id/layoutExport" />
@@ -122,7 +122,7 @@
             android:layout_marginStart="12dp"
             android:layout_marginTop="20dp"
             android:gravity="center"
-            android:text="Transaction"
+            android:text="@string/history_detail_transaction"
             android:visibility="visible"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -136,7 +136,7 @@
             android:background="@drawable/background_edit_text_search"
             android:drawableStart="@drawable/ic_search"
             android:drawablePadding="5dp"
-            android:hint="Search…"
+            android:hint="@string/history_detail_search"
             android:inputType="textEmailAddress"
             android:maxLines="1"
             app:layout_constraintLeft_toLeftOf="parent"

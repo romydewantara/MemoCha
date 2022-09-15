@@ -41,7 +41,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:text="Schedule"
+        android:text="@string/schedule_title_page"
         app:layout_constraintBottom_toBottomOf="@id/trash"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="@id/trash" />
@@ -64,7 +64,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
-        android:text="Activities"
+        android:text="@string/schedule_subtitle_page"
         app:layout_constraintBottom_toBottomOf="@id/iconActivities"
         app:layout_constraintLeft_toRightOf="@id/iconActivities"
         app:layout_constraintTop_toTopOf="@id/iconActivities" />
@@ -192,7 +192,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
         android:gravity="center"
-        android:text="No schedule has been created yet :("
+        android:text="@string/schedule_empty_list"
         android:visibility="gone"
         app:layout_constraintTop_toTopOf="@id/recyclerviewSchedule" />
 

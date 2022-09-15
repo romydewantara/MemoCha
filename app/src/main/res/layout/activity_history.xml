@@ -15,7 +15,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:text="History"
+        android:text="@string/history_title_page"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -37,7 +37,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
-        android:text="Monthly Expenses"
+        android:text="@string/history_subtitle_page"
         app:layout_constraintBottom_toBottomOf="@id/iconMonthlyExpenses"
         app:layout_constraintLeft_toRightOf="@id/iconMonthlyExpenses"
         app:layout_constraintTop_toTopOf="@id/iconMonthlyExpenses" />

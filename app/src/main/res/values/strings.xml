@@ -1,19 +1,9 @@
 <resources>
     <string name="app_name">Kuntan</string>
-    <string name="hint_word">Word...</string>
-    <string name="button_retry">Retry</string>
-    <string name="empty_not_saved">Word not saved because it is empty.</string>
-    <string name="add_word">Add word</string>
-    <string name="webview_error_load">Please check your internet connection and reload the page.\nError code: %s - %s</string>
 
-    <!-- S E T T I N G S -->
-    <string name="setting_application_language">Application Language</string>
-    <string name="setting_language_english">English (United States)</string>
-    <string name="setting_language_bahasa">Bahasa Indonesia</string>
-    <string name="setting_background_animation_on">On</string>
-    <string name="setting_background_animation_off">Off</string>
-    <string name="setting_background_music_on">On</string>
-    <string name="setting_background_music_off">Off</string>
+    <!-- C O M M O N -->
+    <string name="button_retry">Retry</string>
+    <string name="webview_error_load">Please check your internet connection and reload the page.\nError code: %s - %s</string>
 
     <!-- M O N T H S -->
     <string name="month_january">January</string>
@@ -39,27 +29,102 @@
     <string name="method_transfer">Transfer</string>
 
     <!-- C A T E G O R I E S -->
-    <string name="category_title">Kategori</string>
-    <string name="category_book">Buku</string>
-    <string name="category_kitchen">Dapur</string>
-    <string name="category_electro">Elektronik</string>
-    <string name="category_fashion">Baju</string>
-    <string name="category_child_fashion">Baju Khusus Anak</string>
-    <string name="category_film">Film dan Musik</string>
-    <string name="category_toys">Mainan Anak</string>
-    <string name="category_phone">Handphone dan Tablet</string>
-    <string name="category_skin_care">Kecantikan</string>
-    <string name="category_health">Kesehatan</string>
-    <string name="category_computer">Komputer dan Laptop</string>
-    <string name="category_gold">Logam Mulia</string>
-    <string name="category_food_and_drink">Makanan dan Minuman</string>
-    <string name="category_office_tools">Office dan Stationery</string>
-    <string name="category_sport">Olahraga</string>
-    <string name="category_automotive">Otomotif</string>
-    <string name="category_pet_care">Perawatan Hewan</string>
-    <string name="category_party">Perlengkapan Pesta dan Craft</string>
-    <string name="category_tools">Pertukangan</string>
-    <string name="category_property">Properti</string>
-    <string name="category_tour">Tour dan Travel</string>
-    <string name="category_others">Produk Lainnya</string>
+    <string name="category_title">Category</string>
+    <string name="category_book">Book</string>
+    <string name="category_kitchen">Kitchen</string>
+    <string name="category_electro">Electronic</string>
+    <string name="category_fashion">Dress or Shirt</string>
+    <string name="category_child_fashion">Children Chlotes</string>
+    <string name="category_film">Music and Film</string>
+    <string name="category_toys">Children Toys</string>
+    <string name="category_phone">Handphone and Tablet</string>
+    <string name="category_skin_care">Beauty</string>
+    <string name="category_health">Health</string>
+    <string name="category_computer">Computer and Laptop</string>
+    <string name="category_gold">Gold</string>
+    <string name="category_food_and_drink">Food and Drink</string>
+    <string name="category_office_tools">Office and Stationery</string>
+    <string name="category_sport">Sport</string>
+    <string name="category_automotive">Automotive</string>
+    <string name="category_pet_care">Pet Care</string>
+    <string name="category_party">Party Supplies dan Craft</string>
+    <string name="category_tools">Carpentry</string>
+    <string name="category_property">Property</string>
+    <string name="category_tour">Tour and Travel</string>
+    <string name="category_others">Others</string>
+
+    <!-- D A S H B O A R D -->
+    <string name="dasboard">Date</string>
+    <string name="dasboard_book">Book</string>
+    <string name="dasboard_question">Question</string>
+    <string name="dasboard_cart">Cart</string>
+    <string name="dasboard_history">History</string>
+    <string name="dasboard_expenses_note">Expenses Notes</string>
+    <string name="dasboard_expenses_category">Category…></string>
+    <string name="dasboard_expenses_category_item">Others</string>
+    <string name="dasboard_expenses_title_goods">Goods or Service</string>
+    <string name="dasboard_expenses_title_amount">Price</string>
+    <string name="dasboard_expenses_hint_goods">Ex: TV, Herbs, Service, etc</string>
+    <string name="dasboard_expenses_hint_amount">Ex: 20.000</string>
+    <string name="dasboard_expenses_hint_note">Notes (Optional)</string>
+    <string name="dasboard_expenses_button_add">Add</string>
+
+    <!-- S E T T I N G S -->
+    <string name="setting_language_english">English (United States)</string>
+    <string name="setting_language_bahasa">Bahasa Indonesia</string>
+    <string name="setting_background_animation_on">On</string>
+    <string name="setting_background_animation_off">Off</string>
+    <string name="setting_background_music_on">On</string>
+    <string name="setting_background_music_off">Off</string>
+    <string name="settings_title_page">Settings</string>
+    <string name="settings_application_language">Application Language</string>
+    <string name="settings_background_animation">Background Animation</string>
+    <string name="settings_theme_autumn">Autumn</string>
+    <string name="settings_theme_sakura">Sakura</string>
+    <string name="settings_theme_snow">Snow</string>
+    <string name="settings_theme_summer">Summer</string>
+    <string name="settings_music">Background Music Theme</string>
+    <string name="settings_button_reset">Reset</string>
+    <string name="settings_button_apply">Apply</string>
+
+    <!-- D I A L O G -->
+    <string name="dialog_title_warning">Warning!</string>
+    <string name="dialog_title_information">Information!</string>
+    <string name="dialog_message_ask_reset">Are you sure you want to reset to default?</string>
+    <string name="dialog_message_switch_language">You are detected to change the language of the application using:\n\n\"%s\"\n\nplease click OK button to restart the application</string>
+    <string name="dialog_message_reset">The application theme has been reset, please restart</string>
+    <string name="dialog_button_reset">Reset</string>
+    <string name="dialog_button_cancel">Cancel</string>
+    <!-- S N A C K B A R -->
+
+    <!-- H I S T O R Y -->
+    <string name="history_title_page">History</string>
+    <string name="history_subtitle_page">Monthly Expenses</string>
+    <string name="history_monthly_expenses">Total expenses in this Month:</string>
+
+    <!-- H I S T O R Y   D E T A I L -->
+    <string name="history_detail_month">January</string>
+    <string name="history_detail_export">Export Recapitulation</string>
+    <string name="history_detail_monthly_expenses">Total expenses in this Month:</string>
+    <string name="history_detail_transaction">Transaction</string>
+    <string name="history_detail_search">Search</string>
+    <string name="history_detail_empty">Monthly Expenses history for this month is empty</string>
+
+    <!-- S C H E D U L E -->
+    <string name="schedule_title_page">Schedule</string>
+    <string name="schedule_subtitle_page">Activities</string>
+    <string name="schedule_empty_list">No schedule has been created yet :(</string>
+
+    <!-- S C H E D U L E   |   B O T T O M   S H E E T -->
+    <string name="schedule_bs_add_title_page">Add New Schedule</string>
+    <string name="schedule_bs_edit_title_page">Edit Schedule</string>
+    <string name="schedule_bs_cancel">Cancel</string>
+    <string name="schedule_bs_add">Add</string>
+    <string name="schedule_bs_save">Save</string>
+    <string name="schedule_bs_start_time">Start Time</string>
+    <string name="schedule_bs_end_time">End Time</string>
+    <string name="schedule_bs_action_list">Action List</string>
+    <string name="schedule_bs_type_here">Type here…</string>
+    <string name="schedule_bs_delete_schedule">Delete Schedule</string>
+
 </resources>
