@@ -35,6 +35,7 @@ class SettingsActivity : AppCompatActivity() {
     private var isAnimationSwitched = false
     private var isAudioSwitched = false
     private var isDashboardBackgroundChanged = false
+    private var isReset = false
 
     private lateinit var selectorItemsBottomSheet: SelectorItemsBottomSheet
 
@@ -111,7 +112,7 @@ class SettingsActivity : AppCompatActivity() {
                                 isAnimationSwitched = false
                                 isAudioSwitched = false
                                 isDashboardBackgroundChanged = false
-                                showRestartAppDialog(getString(R.string.dialog_message_reset))
+                                isReset = true
                             }
                         }
                     }
@@ -223,13 +224,24 @@ class SettingsActivity : AppCompatActivity() {
         }
     }
 
+    override fun onBackPressed() {
+        if (isReset) goToSplashActivity() else super.onBackPressed()
+    }
+
+    private fun goToSplashActivity() {
+        startActivity(
+            Intent(this@SettingsActivity, SplashActivity::class.java)
+                .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+        )
+        finish()
+    }
+
     private fun showRestartAppDialog(message: String) {
         val kuntanPopupDialog = KuntanPopupDialog.newInstance().setContent(getString(R.string.dialog_title_information),
             message, "", "OK", object : KuntanPopupDialog.KuntanPopupDialogListener {
                 override fun onNegativeButton() {}
                 override fun onPositiveButton() {
-                    startActivity(Intent(this@SettingsActivity, SplashActivity::class.java).setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP))
-                    finish()
+                    goToSplashActivity()
                 }
             })
         kuntanPopupDialog.show(supportFragmentManager, kuntanPopupDialog.tag)

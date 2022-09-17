@@ -12,6 +12,8 @@ class Constant {
         const val BACKGROUND_MUSIC_SAKURA_THEME = "hm_sakura_theme.mp3"
         const val BACKGROUND_MUSIC_SNOW_THEME = "hm_winter_theme.mp3"
         const val BACKGROUND_MUSIC_SUMMER_THEME = "hm_summer_theme.mp3"
+
+        const val AMOUNT_OF_MONTH = 12
     }
 
 }

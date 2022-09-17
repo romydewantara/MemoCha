@@ -34,6 +34,14 @@
         <item name="android:textSize">20sp</item>
     </style>
 
+    <!--  L O B S T E R | MESTY  -->
+    <style name="LobsterTextBoldMesty12">
+        <item name="android:fontFamily">@font/lobster_regular</item>
+        <item name="android:textColor">@color/teal_light</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
     <!--  L O B S T E R | ROSE  -->
     <style name="LobsterTextBoldRose40">
         <item name="android:fontFamily">@font/lobster_regular</item>

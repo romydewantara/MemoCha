@@ -20,7 +20,7 @@ class SplashActivity : AppCompatActivity() {
 
         CoroutineScope(Dispatchers.IO).launch {
             val settings = database.settingsDao().getSettings()
-            setApplicationLanguage(settings.language)
+            if (settings != null) setApplicationLanguage(settings.language)
         }
         startActivity(Intent(this@SplashActivity, DashboardActivity::class.java).setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP))
         finish()

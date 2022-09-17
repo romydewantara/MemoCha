@@ -14,6 +14,7 @@ import android.util.Log
 import android.util.TypedValue
 import android.view.View.GONE
 import android.view.View.VISIBLE
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.widget.TextViewCompat
@@ -29,7 +30,6 @@ import com.example.kuntan.utility.Constant
 import com.example.kuntan.utility.KuntanRoomDatabase
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_dashboard.*
-import kotlinx.android.synthetic.main.layout_main_menu.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -59,10 +59,10 @@ class DashboardActivity : AppCompatActivity() {
         Times.Isya.name
     )
 
-    private lateinit var dashboardScheduleAdapter: DashboardScheduleAdapter
     private lateinit var constraintActivityMain: ConstraintLayout
     private lateinit var constraintMainMenu: ConstraintLayout
     private lateinit var constraintMainMenuContainer: ConstraintLayout
+    private lateinit var dashboardScheduleAdapter: DashboardScheduleAdapter
     private lateinit var selectorItemsBottomSheet: SelectorItemsBottomSheet
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -77,12 +77,13 @@ class DashboardActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
         refreshSchedule()
-        checkSettings()
+        adjustSettings()
     }
 
     override fun onPause() {
         super.onPause()
         lottieDashboard.cancelAnimation()
+        lottieDashboard.clearAnimation()
         if (mediaPlayer.isPlaying) {
             mediaPlayer.stop()
             mediaPlayer.release()
@@ -98,10 +99,12 @@ class DashboardActivity : AppCompatActivity() {
         constraintMainMenuContainer = findViewById(R.id.constraintMainMenuContainer)
         constraintActivityMain.viewTreeObserver.addOnGlobalLayoutListener {
             if (AppUtil.isKeyboardVisible(constraintActivityMain)) {
+                iconArrows.setImageResource(R.drawable.ic_arrows_disabled)
                 iconArrows.isEnabled = false
                 hideMenu()
                 isMenuHidden = true
             } else {
+                iconArrows.setImageResource(R.drawable.ic_arrows)
                 iconArrows.isEnabled = true
                 editTextGoods.isFocusable = false
                 editTextAmount.isFocusable = false
@@ -109,12 +112,29 @@ class DashboardActivity : AppCompatActivity() {
             }
         }
 
-        val calendar = Calendar.getInstance()
-        val date = SimpleDateFormat("EEEE, dd MMMM, yyyy").format(calendar.time)
-        currentDate = SimpleDateFormat("dd-MMMM-yyyy").format(calendar.time)
+        val calendar = Calendar.getInstance() //English: Friday, September 16th 2022 | Indonesia: Jum\'at, 16 September 2022
+        val date = SimpleDateFormat("EEEE, dd MMMM yyyy").format(calendar.time)
+        currentDate = SimpleDateFormat("dd-MM-yyyy").format(calendar.time)
+        Log.d(TAG, "init - currentDate: $currentDate")
         textDate.text = date
         time.text = arrayTimes[index]
+
+        loveMessage.setOnClickListener {
+            Toast.makeText(applicationContext, getString(R.string.secret_letter_coming_soon), Toast.LENGTH_SHORT).show()
+            //val secretLetterDialog = SecretLetterDialog(applicationContext)
+            //secretLetterLayout.addView(secretLetterDialog)
+            //secretLetterLayout.visibility = VISIBLE
+        }
+
         TextViewCompat.setAutoSizeTextTypeUniformWithConfiguration(textViewCategory, 1,
+            14, 1, TypedValue.COMPLEX_UNIT_SP)
+        TextViewCompat.setAutoSizeTextTypeUniformWithConfiguration(textBook, 1,
+            14, 1, TypedValue.COMPLEX_UNIT_SP)
+        TextViewCompat.setAutoSizeTextTypeUniformWithConfiguration(textIdentity, 1,
+            14, 1, TypedValue.COMPLEX_UNIT_SP)
+        TextViewCompat.setAutoSizeTextTypeUniformWithConfiguration(textNeeds, 1,
+            14, 1, TypedValue.COMPLEX_UNIT_SP)
+        TextViewCompat.setAutoSizeTextTypeUniformWithConfiguration(textHistory, 1,
             14, 1, TypedValue.COMPLEX_UNIT_SP)
     }
 
@@ -126,7 +146,7 @@ class DashboardActivity : AppCompatActivity() {
         }
     }
 
-    private fun checkSettings() {
+    private fun adjustSettings() {
         CoroutineScope(Dispatchers.IO).launch {
             val settings = database.settingsDao().getSettings()
             if (settings == null) {
@@ -196,18 +216,18 @@ class DashboardActivity : AppCompatActivity() {
             time.text = arrayTimes[index]
             refreshSchedule()
         }
-        book.setOnClickListener {
+        menuBook.setOnClickListener {
             //goToBookPage
             startActivity(Intent(this@DashboardActivity, WebViewActivity::class.java)
                 .setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP))
         }
-        question.setOnClickListener {
+        menuIdentity.setOnClickListener {
             //goToQuestionPage
         }
-        cart.setOnClickListener {
+        menuCart.setOnClickListener {
             //goToCartPage
         }
-        history.setOnClickListener {
+        menuHistory.setOnClickListener {
             startActivity(Intent(this@DashboardActivity, HistoryActivity::class.java)
                 .setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP))
             finish()

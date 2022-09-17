@@ -1,5 +1,9 @@
 <resources>
     <string name="app_name">Kuntan</string>
+    <string name="secret_letter_title">Secret Letter</string>
+    <string name="secret_letter_content">\t\t\tSecret Letter Content In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content</string>
+    <string name="secret_letter_calendar">Sunday, 10 January 2021</string>
+    <string name="secret_letter_coming_soon">Secret Letter, still prepared…</string>
 
     <!-- C O M M O N -->
     <string name="button_retry">Retry</string>
@@ -56,8 +60,8 @@
     <!-- D A S H B O A R D -->
     <string name="dasboard">Date</string>
     <string name="dasboard_book">Book</string>
-    <string name="dasboard_question">Question</string>
-    <string name="dasboard_cart">Cart</string>
+    <string name="dasboard_identity">Identity</string>
+    <string name="dasboard_needs">Needs</string>
     <string name="dasboard_history">History</string>
     <string name="dasboard_expenses_note">Expenses Notes</string>
     <string name="dasboard_expenses_category">Category…></string>
@@ -86,13 +90,13 @@
     <string name="settings_music">Background Music Theme</string>
     <string name="settings_button_reset">Reset</string>
     <string name="settings_button_apply">Apply</string>
+    <string name="settings_text_made_with_love">Made With Love :)</string>
 
     <!-- D I A L O G -->
     <string name="dialog_title_warning">Warning!</string>
     <string name="dialog_title_information">Information!</string>
     <string name="dialog_message_ask_reset">Are you sure you want to reset to default?</string>
-    <string name="dialog_message_switch_language">You are detected to change the language of the application using:\n\n\"%s\"\n\nplease click OK button to restart the application</string>
-    <string name="dialog_message_reset">The application theme has been reset, please restart</string>
+    <string name="dialog_message_switch_language">You are detected to change the language of the application using:\n\n\"%s\"\n\nPlease click \'OK\' button to restart the application</string>
     <string name="dialog_button_reset">Reset</string>
     <string name="dialog_button_cancel">Cancel</string>
     <!-- S N A C K B A R -->

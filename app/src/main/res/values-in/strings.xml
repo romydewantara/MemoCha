@@ -1,9 +1,13 @@
 <resources>
     <string name="app_name">Kuntan</string>
+    <string name="secret_letter_title">Secret Letter</string>
+    <string name="secret_letter_content">\t\t\tSecret Letter Content In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content</string>
+    <string name="secret_letter_calendar">Ahad, 10 Januari 2021</string>
+    <string name="secret_letter_coming_soon">Surat Rahasia, masih disiapkan…</string>
 
     <!-- C O M M O N -->
-    <string name="button_retry">Retry</string>
-    <string name="webview_error_load">Please check your internet connection and reload the page.\nError code: %s - %s</string>
+    <string name="button_retry">Muat Ulang</string>
+    <string name="webview_error_load">Silakan periksa koneksi internet anda dan muat ulang halaman ini.\nKode kesalahan: %s - %s</string>
 
     <!-- M O N T H S -->
     <string name="month_january">Januari</string>
@@ -56,8 +60,8 @@
     <!-- D A S H B O A R D -->
     <string name="dasboard">Tanggal</string>
     <string name="dasboard_book">Buku</string>
-    <string name="dasboard_question">Pertanyaan</string>
-    <string name="dasboard_cart">Keranjang</string>
+    <string name="dasboard_identity">Identitas</string>
+    <string name="dasboard_needs">Kebutuhan</string>
     <string name="dasboard_history">Riwayat</string>
     <string name="dasboard_expenses_note">Catatan Pengeluaran</string>
     <string name="dasboard_expenses_category">Kategori…></string>
@@ -86,13 +90,13 @@
     <string name="settings_music">Tema Musik Latar Belakang</string>
     <string name="settings_button_reset">Atur Ulang</string>
     <string name="settings_button_apply">Terapkan</string>
+    <string name="settings_text_made_with_love">Dibuat Dengan Cinta  :)</string>
 
     <!-- D I A L O G -->
     <string name="dialog_title_warning">Peringatan!</string>
     <string name="dialog_title_information">Informasi!</string>
     <string name="dialog_message_ask_reset">Apakah anda yakin akan mengatur ulang tema?</string>
-    <string name="dialog_message_switch_language">Anda terdeteksi mengubah bahasa aplikasi menggunakan:\n\n\"%s\"\n\nSilakan klik tombol OK untuk memulai ulang aplikasi</string>
-    <string name="dialog_message_reset">Tema aplikasi telah diatur ulang, silakan mulai ulang kembali</string>
+    <string name="dialog_message_switch_language">Anda terdeteksi mengubah bahasa aplikasi menggunakan:\n\n\"%s\"\n\nSilakan klik tombol \'OK\' untuk memulai ulang aplikasi</string>
     <string name="dialog_button_reset">Atur Ulang</string>
     <string name="dialog_button_cancel">Batal</string>
     <!-- S N A C K B A R -->

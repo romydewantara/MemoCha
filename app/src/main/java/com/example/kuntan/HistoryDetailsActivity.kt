@@ -33,9 +33,8 @@ class HistoryDetailsActivity : AppCompatActivity(), HistoryDetailAdapter.History
     private fun init() {
         val month = intent.extras?.getString("month").toString()
         val history = intent.extras?.getString("history").toString()
-        Log.d(TAG, "onCreate - history: $history")
 
-        textViewMonthName.text = month
+        textViewMonthName.text = AppUtil.convertMonthNameFromCode(applicationContext, month)
         val array = JSONArray(history)
         for (i in 0 until array.length()) {
             val jsonObject = array.getJSONObject(i)

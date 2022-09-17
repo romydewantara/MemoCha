@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.kuntan.R
 import com.example.kuntan.entity.History
+import com.example.kuntan.utility.AppUtil
 import kotlinx.android.synthetic.main.recyclerview_item_monthly_expenses.view.*
 
 class HistoryDetailAdapter(
@@ -23,8 +24,7 @@ class HistoryDetailAdapter(
 
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ExpensesDetailViewHolder, position: Int) {
-        holder.itemView.textViewDate.text =
-            "${histories[position].date} ${histories[position].month} ${histories[position].year}"
+        holder.itemView.textViewDate.text = "${histories[position].date} ${AppUtil.convertMonthNameFromCode(context, histories[position].month)} ${histories[position].year}"
         holder.itemView.textViewTime.text = "(${histories[position].time})"
         holder.itemView.textViewMethod.text = histories[position].method
         holder.itemView.textViewCategory.text = histories[position].category

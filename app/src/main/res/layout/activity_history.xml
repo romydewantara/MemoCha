@@ -25,7 +25,7 @@
         android:layout_height="0dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="5dp"
-        android:src="@drawable/ic_money"
+        android:src="@drawable/ic_history_white"
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@id/textViewHistoryTitle"
@@ -55,25 +55,26 @@
             android:id="@+id/imageLeaf"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:src="@drawable/ic_leaf"
             android:scaleType="fitXY"
             android:scaleY="-1"
-            app:layout_constraintTop_toTopOf="parent"
+            android:src="@drawable/ic_leaf"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"/>
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
-            android:id="@+id/imagePeople"
+            android:id="@+id/imageRibbon"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:src="@drawable/ic_emoji_people"
-            app:layout_constraintWidth_percent=".15"
-            app:layout_constraintDimensionRatio="1:1"
-            android:visibility="invisible"
             android:scaleType="centerCrop"
+            android:src="@drawable/ic_ribbon"
+            android:visibility="gone"
+            android:paddingBottom="13dp"
             app:layout_constraintBottom_toTopOf="@id/cardViewMonths"
-            app:layout_constraintRight_toRightOf="@id/cardViewMonths"/>
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <ImageView
             android:id="@+id/previousYear"

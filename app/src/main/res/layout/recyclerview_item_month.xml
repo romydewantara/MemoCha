@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/layoutItemYear"
+    android:id="@+id/layoutItemMonth"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="6dp"
@@ -38,26 +38,54 @@
             app:layout_constraintLeft_toRightOf="@id/textViewMonthCode"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <View
+            android:id="@+id/stripe"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="12dp"
+            android:background="@color/mesty_blue"
+            app:layout_constraintBottom_toBottomOf="@id/textViewMonthName"
+            app:layout_constraintHeight_percent=".025"
+            app:layout_constraintLeft_toRightOf="@id/textViewMonthName"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@id/textViewMonthName" />
+
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/textViewTotalTitle"
             style="@style/TextRegularWhite12"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="12dp"
             android:layout_marginTop="8dp"
+            android:maxLines="1"
             android:text="@string/history_monthly_expenses"
+            app:autoSizeTextType="uniform"
             app:layout_constraintLeft_toRightOf="@id/textViewMonthCode"
-            app:layout_constraintTop_toBottomOf="@id/textViewMonthName" />
+            app:layout_constraintTop_toBottomOf="@id/textViewMonthName"
+            app:layout_constraintWidth_percent=".4" />
+
+        <ImageView
+            android:id="@+id/iconTotal"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="3dp"
+            android:src="@drawable/ic_money"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintLeft_toRightOf="@id/textViewMonthCode"
+            app:layout_constraintTop_toBottomOf="@id/textViewTotalTitle"
+            app:layout_constraintWidth_percent=".07" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/textViewTotal"
             style="@style/TextBoldGold18"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
+            android:layout_marginStart="5dp"
             android:text="Rp 0"
-            app:layout_constraintLeft_toRightOf="@id/textViewMonthCode"
-            app:layout_constraintTop_toBottomOf="@id/textViewTotalTitle" />
+            app:layout_constraintBottom_toBottomOf="@id/iconTotal"
+            app:layout_constraintLeft_toRightOf="@id/iconTotal"
+            app:layout_constraintTop_toTopOf="@id/iconTotal" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
