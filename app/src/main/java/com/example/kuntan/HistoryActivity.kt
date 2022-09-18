@@ -143,6 +143,7 @@ class HistoryActivity : AppCompatActivity(), HistoryAdapter.HistoryAdapterListen
     override fun onMonthSelected(month: String, history: String) {
         startActivity(Intent(this@HistoryActivity, HistoryDetailsActivity::class.java)
             .putExtra("month", month).putExtra("history", history).setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP))
+        finish()
     }
 
     override fun onBackPressed() {

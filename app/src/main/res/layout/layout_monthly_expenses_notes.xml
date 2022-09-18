@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/layoutExpenses"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white_soft"
+    android:padding="8dp">
+
+    <ImageView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:scaleType="fitXY"
+        android:src="@drawable/ic_notes_background"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/textViewNotes"
+        style="@style/LobsterTextRegularTeal20"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/dasboard_expenses_note"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/iconExpenses"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="2dp"
+        android:scaleX="-1"
+        android:src="@drawable/ic_expenses"
+        app:layout_constraintBottom_toBottomOf="@id/textViewNotes"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintLeft_toRightOf="@id/textViewNotes"
+        app:layout_constraintTop_toTopOf="@id/textViewNotes"
+        app:layout_constraintWidth_percent=".05" />
+
+    <Spinner
+        android:id="@+id/layoutPaymentMethod"
+        tools:listitem="@layout/layout_payment_method_item_spinner"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/background_dark_transparent"
+        android:popupBackground="@drawable/popup_spinner_background_rounded"
+        android:spinnerMode="dropdown"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textViewCategory" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/textViewGoods"
+        style="@style/TextRegularBlack14"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:text="@string/dasboard_expenses_title_goods"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/layoutPaymentMethod" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/textViewGoodsAlert"
+        style="@style/TextRegularItalicRedOrange12"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:text="*kolom \'Barang atau Jasa\' harus diisi!"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/textViewGoods"
+        app:layout_constraintLeft_toRightOf="@id/textViewGoods"
+        app:layout_constraintTop_toTopOf="@id/textViewGoods" />
+
+    <EditText
+        android:id="@+id/editTextGoods"
+        style="@style/TextRegularBlack16"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:background="@drawable/background_edit_text_number"
+        android:drawableStart="@drawable/ic_goods_column"
+        android:drawablePadding="6dp"
+        android:hint="@string/dasboard_expenses_hint_goods"
+        android:inputType="textEmailAddress"
+        android:maxLines="1"
+        android:padding="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textViewGoods" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/textViewAmount"
+        style="@style/TextRegularBlack14"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="@string/dasboard_expenses_title_amount"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/editTextGoods" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/textViewAmountAlert"
+        style="@style/TextRegularItalicRedOrange12"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:text="*kolom \'Harga\' harus diisi!"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/textViewAmount"
+        app:layout_constraintLeft_toRightOf="@id/textViewAmount"
+        app:layout_constraintTop_toTopOf="@id/textViewAmount" />
+
+    <EditText
+        android:id="@+id/editTextAmount"
+        style="@style/TextRegularBlack16"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:background="@drawable/background_edit_text_number"
+        android:drawableStart="@drawable/ic_currency_column"
+        android:drawablePadding="6dp"
+        android:hint="@string/dasboard_expenses_hint_amount"
+        android:inputType="number"
+        android:maxLines="1"
+        android:padding="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textViewAmount" />
+
+    <EditText
+        android:id="@+id/editTextNote"
+        style="@style/TextRegularDarkGrey16"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/background_edit_text_number"
+        android:drawableStart="@drawable/ic_notes_column"
+        android:drawablePadding="6dp"
+        android:hint="@string/dasboard_expenses_hint_note"
+        android:inputType="textEmailAddress"
+        android:maxLines="1"
+        android:padding="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/editTextAmount" />
+
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/textViewCategoryTitle"
+        style="@style/TextBoldBlue14"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:padding="8dp"
+        android:text="@string/dasboard_expenses_category"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/textViewNotes" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/textViewCategory"
+        style="@style/TextRegularDarkGrey12"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="end"
+        android:maxLines="1"
+        android:paddingStart="5dp"
+        android:paddingEnd="5dp"
+        android:text="@string/dasboard_expenses_category_item"
+        app:autoSizeTextType="uniform"
+        app:layout_constraintRight_toRightOf="@id/textViewCategoryTitle"
+        app:layout_constraintTop_toBottomOf="@id/textViewCategoryTitle"
+        app:layout_constraintWidth_percent=".4" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/textViewAdd"
+        style="@style/TextBoldWhite16"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/background_button_save_disabled"
+        android:enabled="false"
+        android:paddingStart="16dp"
+        android:paddingTop="12dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="12dp"
+        android:text="@string/dasboard_expenses_button_add"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/editTextNote" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/textViewDelete"
+        style="@style/TextBoldRed16"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:background="@drawable/selector_button_delete_schedule"
+        android:enabled="false"
+        android:paddingStart="16dp"
+        android:paddingTop="12dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="12dp"
+        android:visibility="gone"
+        android:text="@string/button_delete"
+        app:layout_constraintRight_toLeftOf="@id/textViewAdd"
+        app:layout_constraintTop_toBottomOf="@id/editTextNote" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

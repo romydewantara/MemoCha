@@ -16,6 +16,12 @@ class AppUtil {
             val keypadHeight = screenHeight - rect.bottom
             return (keypadHeight > screenHeight * 0.15)
         }
+        fun getHeightOfSoftKeyboard(view: View) : Int {
+            val rect = Rect()
+            view.getWindowVisibleDisplayFrame(rect)
+            val screenHeight = view.rootView.height
+            return (screenHeight - rect.bottom)
+        }
         fun showSoftKeyboard(view: View, context: Context) {
             if (view.requestFocus()) {
                 val imm: InputMethodManager =
@@ -64,6 +70,14 @@ class AppUtil {
                 11 -> {return "12"}
             }
             return "empty"
+        }
+        fun convertPaymentMethodFromType(c: Context, type: String): Int {
+            when(type) {
+                c.getString(R.string.method_cash) -> {return 0}
+                c.getString(R.string.method_debit) -> {return 1}
+                c.getString(R.string.method_transfer) -> {return 2}
+            }
+            return 0
         }
     }
 }

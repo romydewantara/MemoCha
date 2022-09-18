@@ -9,10 +9,10 @@ data class History(
     val year: String,
     val month: String,
     val date: String,
-    val time: String,
-    val goods: String,
-    val amount: String,
-    val description: String,
-    val category: String,
-    val method: String
+    var time: String,
+    var goods: String,
+    var amount: String,
+    var description: String,
+    var category: String,
+    var method: String
 )

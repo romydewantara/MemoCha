@@ -27,6 +27,7 @@
     <string name="button_add">Tambah</string>
     <string name="button_save">Simpan</string>
     <string name="button_cancel">Batal</string>
+    <string name="button_delete">Hapus</string>
 
     <string name="method_cash">Cash</string>
     <string name="method_debit">Debit</string>
@@ -95,11 +96,19 @@
     <!-- D I A L O G -->
     <string name="dialog_title_warning">Peringatan!</string>
     <string name="dialog_title_information">Informasi!</string>
+    <string name="dialog_title_delete_from_history">Remove From History?</string>
     <string name="dialog_message_ask_reset">Apakah anda yakin akan mengatur ulang tema?</string>
     <string name="dialog_message_switch_language">Anda terdeteksi mengubah bahasa aplikasi menggunakan:\n\n\"%s\"\n\nSilakan klik tombol \'OK\' untuk memulai ulang aplikasi</string>
+    <string name="dialog_message_delete_from_history">Are you sure you want to delete this record from history?</string>
     <string name="dialog_button_reset">Atur Ulang</string>
     <string name="dialog_button_cancel">Batal</string>
     <!-- S N A C K B A R -->
+    <string name="snackbar_setting_applied">Pengaturan diterapkan</string>
+    <string name="snackbar_schedule_added">Jadwal baru telah ditambahkan</string>
+    <string name="snackbar_schedule_updated">Jadwal telah diubah</string>
+    <string name="snackbar_monthly_expenses_added">Data baru telah ditambahkan ke riwayat pengeluaran bulanan</string>
+    <string name="snackbar_monthly_expenses_updated">Data telah dirubah</string>
+    <string name="snackbar_monthly_expenses_deleted">Data telah dihapus dari riwayat</string>
 
     <!-- H I S T O R Y -->
     <string name="history_title_page">Riwayat</string>
@@ -113,6 +122,8 @@
     <string name="history_detail_transaction">Transaksi</string>
     <string name="history_detail_search">Cari</string>
     <string name="history_detail_empty">Riwayat pengeluaran di bulan ini kosong</string>
+
+    <string name="history_edit_monthly_expenses">Ubah Catatan Pengeluaran</string>
 
     <!-- S C H E D U L E -->
     <string name="schedule_title_page">Jadwal</string>

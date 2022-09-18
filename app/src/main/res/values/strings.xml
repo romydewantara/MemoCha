@@ -27,6 +27,7 @@
     <string name="button_add">Add</string>
     <string name="button_save">Save</string>
     <string name="button_cancel">Cancel</string>
+    <string name="button_delete">Delete</string>
 
     <string name="method_cash">Cash</string>
     <string name="method_debit">Debit</string>
@@ -95,11 +96,19 @@
     <!-- D I A L O G -->
     <string name="dialog_title_warning">Warning!</string>
     <string name="dialog_title_information">Information!</string>
+    <string name="dialog_title_delete_from_history">Remove From History?</string>
     <string name="dialog_message_ask_reset">Are you sure you want to reset to default?</string>
     <string name="dialog_message_switch_language">You are detected to change the language of the application using:\n\n\"%s\"\n\nPlease click \'OK\' button to restart the application</string>
+    <string name="dialog_message_delete_from_history">Are you sure you want to delete this record from history?</string>
     <string name="dialog_button_reset">Reset</string>
     <string name="dialog_button_cancel">Cancel</string>
     <!-- S N A C K B A R -->
+    <string name="snackbar_setting_applied">Settings applied</string>
+    <string name="snackbar_schedule_added">New schedule has been added</string>
+    <string name="snackbar_schedule_updated">Schedule has been updated</string>
+    <string name="snackbar_monthly_expenses_added">New data has been added to monthly expenses history</string>
+    <string name="snackbar_monthly_expenses_updated">Data has been updated</string>
+    <string name="snackbar_monthly_expenses_deleted">Data has been deleted from history</string>
 
     <!-- H I S T O R Y -->
     <string name="history_title_page">History</string>
@@ -113,6 +122,8 @@
     <string name="history_detail_transaction">Transaction</string>
     <string name="history_detail_search">Search</string>
     <string name="history_detail_empty">Monthly Expenses history for this month is empty</string>
+
+    <string name="history_edit_monthly_expenses">Edit Monthly Expenses</string>
 
     <!-- S C H E D U L E -->
     <string name="schedule_title_page">Schedule</string>

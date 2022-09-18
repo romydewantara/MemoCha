@@ -165,7 +165,7 @@ class ScheduleActivity : AppCompatActivity(), ScheduleAdapter.ScheduleAdapterLis
             database.scheduleDao().updateSchedule(id, startTime, endTime, actions)
             refreshSchedule(currentTab)
         }
-        Snackbar.make(rootLayoutSchedule, "Jadwal telah diperbarui",
+        Snackbar.make(rootLayoutSchedule, getString(R.string.snackbar_schedule_updated),
             Snackbar.LENGTH_LONG).setAnimationMode(Snackbar.ANIMATION_MODE_SLIDE).setAction("DISMISS") {}.show()
     }
 
@@ -174,7 +174,7 @@ class ScheduleActivity : AppCompatActivity(), ScheduleAdapter.ScheduleAdapterLis
             database.scheduleDao().insert(Schedule(id, currentTab, startTime, endTime, actions))
             refreshSchedule(currentTab)
         }
-        Snackbar.make(rootLayoutSchedule, "Jadwal baru berhasil ditambahkan",
+        Snackbar.make(rootLayoutSchedule, getString(R.string.snackbar_schedule_added),
             Snackbar.LENGTH_LONG).setAnimationMode(Snackbar.ANIMATION_MODE_SLIDE).setAction("DISMISS") {}.show()
     }
 

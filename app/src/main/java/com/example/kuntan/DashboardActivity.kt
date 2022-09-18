@@ -30,6 +30,7 @@ import com.example.kuntan.utility.Constant
 import com.example.kuntan.utility.KuntanRoomDatabase
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_dashboard.*
+import kotlinx.android.synthetic.main.layout_monthly_expenses_notes.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -279,7 +280,7 @@ class DashboardActivity : AppCompatActivity() {
                         editTextNote.setText("")
                         textViewCategory.text = getString(R.string.category_others)
                         layoutPaymentMethod.setSelection(0)
-                        Snackbar.make(constraintActivityMain, "Data pengeluaran telah ditambahkan ke riwayat.",
+                        Snackbar.make(constraintActivityMain, getString(R.string.snackbar_monthly_expenses_added),
                             Snackbar.LENGTH_INDEFINITE).setAnimationMode(Snackbar.ANIMATION_MODE_SLIDE).setAction("DISMISS") {}.show()
                     }
                 }
@@ -357,6 +358,7 @@ class DashboardActivity : AppCompatActivity() {
             }
         }
     }
+
     private fun showMenu() {
         if (!isMenuAnimating) {
             val xTarget = constraintActivityMain.x
