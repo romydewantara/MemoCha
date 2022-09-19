@@ -4,7 +4,7 @@
     android:id="@+id/rootHistory"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/teal_dark"
+    android:background="@color/teal"
     tools:context=".HistoryDetailsActivity">
 
     <ImageView

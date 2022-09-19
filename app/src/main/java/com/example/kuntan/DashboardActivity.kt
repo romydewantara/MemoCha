@@ -49,6 +49,7 @@ class DashboardActivity : AppCompatActivity() {
     private val database by lazy { KuntanRoomDatabase(this) }
     private var isMenuHidden = false
     private var isMenuAnimating = false
+    private var isDefaultSchedule = true
     private var currentDate = ""
     private var paymentMethod = ""
     private var index = 0
@@ -92,7 +93,6 @@ class DashboardActivity : AppCompatActivity() {
         }
     }
 
-    @SuppressLint("SimpleDateFormat")
     private fun init() {
         mediaPlayer = MediaPlayer()
         constraintActivityMain = findViewById(R.id.constraintActivityMain)
@@ -112,13 +112,6 @@ class DashboardActivity : AppCompatActivity() {
                 editTextNote.isFocusable = false
             }
         }
-
-        val calendar = Calendar.getInstance() //English: Friday, September 16th 2022 | Indonesia: Jum\'at, 16 September 2022
-        val date = SimpleDateFormat("EEEE, dd MMMM yyyy").format(calendar.time)
-        currentDate = SimpleDateFormat("dd-MM-yyyy").format(calendar.time)
-        Log.d(TAG, "init - currentDate: $currentDate")
-        textDate.text = date
-        time.text = arrayTimes[index]
 
         loveMessage.setOnClickListener {
             Toast.makeText(applicationContext, getString(R.string.secret_letter_coming_soon), Toast.LENGTH_SHORT).show()
@@ -147,15 +140,27 @@ class DashboardActivity : AppCompatActivity() {
         }
     }
 
+    @SuppressLint("UseCompatLoadingForDrawables", "SimpleDateFormat")
     private fun adjustSettings() {
+        val calendar = Calendar.getInstance() //English: Friday, September 16th 2022 | Indonesia: Jum\'at, 16 September 2022
+        currentDate = SimpleDateFormat("dd-MM-yyyy").format(calendar.time)
+        var date = SimpleDateFormat("EEEE, MMMM dd yyyy").format(calendar.time)
+        textDate.text = date
+        time.text = arrayTimes[index]
+
         CoroutineScope(Dispatchers.IO).launch {
             val settings = database.settingsDao().getSettings()
             if (settings == null) {
-                val setting = Settings(0, getString(R.string.setting_language_english), getString(R.string.setting_background_animation_off), Constant.DASHBOARD_BACKGROUND_AUTUMN, getString(R.string.setting_background_music_off))
+                val setting = Settings(0, Constant.APP_THEME_LIGHT, getString(R.string.setting_language_english), Constant.DASHBOARD_CLOCK_PRIMARY, getString(R.string.setting_background_animation_off), Constant.DASHBOARD_BACKGROUND_AUTUMN, getString(R.string.setting_background_music_off))
                 database.settingsDao().insertSetting(setting)
             } else {
                 runOnUiThread {
-                    Log.d(TAG, "checkSettings - dashboardBackground: ${settings.dashboardBackground}")
+                    Log.d(TAG, "checkSettings - settings: $settings")
+                    if (settings.language == getString(R.string.setting_language_bahasa)) {
+                        date = SimpleDateFormat("EEEE, dd MMMM yyyy").format(calendar.time)
+                        textDate.text = date
+                    }
+                    analogClock.background = AppUtil.convertDrawableFromTheme(applicationContext, settings.analogClockTheme)
                     if (settings.backgroundAnimation == getString(R.string.setting_background_animation_on)) {
                         lottieDashboard.visibility = VISIBLE
                         lottieDashboard.setAnimation(settings.dashboardBackground)
@@ -188,8 +193,12 @@ class DashboardActivity : AppCompatActivity() {
         CoroutineScope(Dispatchers.IO).launch {
             val schedules = database.scheduleDao().getSchedule(arrayTimes[index])
             Log.d(TAG, "onStart - schedules: $schedules")
-            withContext(Dispatchers.Main) {
-                dashboardScheduleAdapter.setData(schedules)
+            if (schedules.isEmpty() && isDefaultSchedule) {
+
+            } else {
+                withContext(Dispatchers.Main) {
+                    dashboardScheduleAdapter.setData(schedules)
+                }
             }
         }
     }
@@ -262,6 +271,10 @@ class DashboardActivity : AppCompatActivity() {
                     database.historyDao().insert(
                         History(
                             0,
+                            currentDate.split("-")[2],
+                            currentDate.split("-")[1],
+                            currentDate.split("-")[0],
+                            SimpleDateFormat("HH:mm").format(Date()),
                             currentDate.split("-")[2],
                             currentDate.split("-")[1],
                             currentDate.split("-")[0],

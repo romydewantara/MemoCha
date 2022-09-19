@@ -1,7 +1,9 @@
 package com.example.kuntan.utility
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Rect
+import android.graphics.drawable.Drawable
 import android.util.TypedValue
 import android.view.View
 import android.view.inputmethod.InputMethodManager
@@ -36,6 +38,52 @@ class AppUtil {
         fun dpToPx(c: Context, dipValue: Float): Int {
             val metrics = c.resources.displayMetrics
             return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dipValue, metrics).toInt()
+        }
+        @SuppressLint("UseCompatLoadingForDrawables")
+        fun convertDrawableFromTheme(c: Context, theme: String): Drawable {
+            when(theme) {
+                Constant.DASHBOARD_CLOCK_PRIMARY -> {
+                    return c.resources.getDrawable(R.drawable.background_analog_clock_primary, null)
+                }
+                Constant.DASHBOARD_CLOCK_SECONDARY -> {
+                    return c.resources.getDrawable(R.drawable.background_analog_clock_secondary, null)
+                }
+                Constant.DASHBOARD_CLOCK_DARK -> {
+                    return c.resources.getDrawable(R.drawable.background_analog_clock_dark, null)
+                }
+                Constant.DASHBOARD_CLOCK_YELLOW -> {
+                    return c.resources.getDrawable(R.drawable.background_analog_clock_yellow, null)
+                }
+                Constant.DASHBOARD_CLOCK_RED_ORANGE -> {
+                    return c.resources.getDrawable(R.drawable.background_analog_clock_red_orange, null)
+                }
+                Constant.DASHBOARD_CLOCK_PINK -> {
+                    return c.resources.getDrawable(R.drawable.background_analog_clock_pink, null)
+                }
+            }
+            return c.resources.getDrawable(R.drawable.background_analog_clock_primary, null)
+        }
+        fun convertResIdFromId(id: Int): Int {
+            when(id) {
+                0 -> { return R.drawable.ic_clock_theme_primary }
+                1 -> { return R.drawable.ic_clock_theme_secondary }
+                2 -> { return R.drawable.ic_clock_theme_dark }
+                3 -> { return R.drawable.ic_clock_theme_yellow }
+                4 -> { return R.drawable.ic_clock_theme_red_orange }
+                5 -> { return R.drawable.ic_clock_theme_pink }
+            }
+            return R.drawable.ic_clock_theme_primary
+        }
+        fun convertIdAnalogClockFromTheme(theme: String): Int {
+            when(theme) {
+                Constant.DASHBOARD_CLOCK_PRIMARY -> { return 0 }
+                Constant.DASHBOARD_CLOCK_SECONDARY -> { return 1 }
+                Constant.DASHBOARD_CLOCK_DARK -> { return 2 }
+                Constant.DASHBOARD_CLOCK_YELLOW -> { return 3 }
+                Constant.DASHBOARD_CLOCK_RED_ORANGE -> { return 4 }
+                Constant.DASHBOARD_CLOCK_PINK -> { return 5 }
+            }
+            return 0
         }
         fun convertMonthNameFromCode(context: Context, month: String): String {
             when(month){
@@ -78,6 +126,9 @@ class AppUtil {
                 c.getString(R.string.method_transfer) -> {return 2}
             }
             return 0
+        }
+        fun convertCardinalNumber(number: String): String {
+            return ""
         }
     }
 }

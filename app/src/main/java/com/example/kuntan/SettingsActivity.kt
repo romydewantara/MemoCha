@@ -3,14 +3,17 @@ package com.example.kuntan
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.animation.AnimationUtils
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.TextViewCompat
 import com.example.kuntan.adapter.ApplicationLanguageAdapter
+import com.example.kuntan.adapter.ClockThemeSpinnerAdapter
 import com.example.kuntan.entity.Settings
 import com.example.kuntan.lib.KuntanPopupDialog
 import com.example.kuntan.lib.SelectorItemsBottomSheet
+import com.example.kuntan.utility.AppUtil
 import com.example.kuntan.utility.Constant
 import com.example.kuntan.utility.KuntanRoomDatabase
 import com.google.android.material.snackbar.Snackbar
@@ -25,17 +28,22 @@ class SettingsActivity : AppCompatActivity() {
         private var settings: Settings? = null
     }
     private val database by lazy { KuntanRoomDatabase(this) }
+    private lateinit var appTheme: String
+    private lateinit var analogClockTheme: String
     private lateinit var backgroundAnimation: String
     private lateinit var dashboardBackground: String
     private lateinit var backgroundMusicState: String
 
+    private var isAppThemeChanged = false
     private var isLanguageChanged = false
+    private var isAnalogClockThemeChanged = false
     private var isAnimationSwitched = false
     private var isAudioSwitched = false
     private var isDashboardBackgroundChanged = false
     private var isReset = false
 
     private lateinit var selectorItemsBottomSheet: SelectorItemsBottomSheet
+    private lateinit var spinnerClockThemeAdapter: ClockThemeSpinnerAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,13 +54,31 @@ class SettingsActivity : AppCompatActivity() {
     }
 
     private fun init() {
+        analogClockTheme = Constant.DASHBOARD_CLOCK_PRIMARY
         backgroundAnimation = getString(R.string.setting_background_animation_off)
         backgroundMusicState = getString(R.string.setting_background_music_off)
         dashboardBackground = Constant.DASHBOARD_BACKGROUND_AUTUMN
 
+        val clockTheme = arrayListOf(
+            Constant.DASHBOARD_CLOCK_PRIMARY, Constant.DASHBOARD_CLOCK_SECONDARY, Constant.DASHBOARD_CLOCK_DARK,
+            Constant.DASHBOARD_CLOCK_YELLOW, Constant.DASHBOARD_CLOCK_RED_ORANGE, Constant.DASHBOARD_CLOCK_PINK)
+        spinnerClockThemeAdapter = ClockThemeSpinnerAdapter(applicationContext, clockTheme)
+        analogClockSpinner.adapter = spinnerClockThemeAdapter
+
         CoroutineScope(Dispatchers.IO).launch {
             settings = database.settingsDao().getSettings()
             textViewLanguage.text = settings?.language
+
+            when(settings?.analogClockTheme) {
+                Constant.DASHBOARD_CLOCK_PRIMARY -> { analogClockTheme = Constant.DASHBOARD_CLOCK_PRIMARY }
+                Constant.DASHBOARD_CLOCK_SECONDARY -> { analogClockTheme = Constant.DASHBOARD_CLOCK_SECONDARY }
+                Constant.DASHBOARD_CLOCK_DARK -> { analogClockTheme = Constant.DASHBOARD_CLOCK_DARK }
+                Constant.DASHBOARD_CLOCK_YELLOW -> { analogClockTheme = Constant.DASHBOARD_CLOCK_YELLOW }
+                Constant.DASHBOARD_CLOCK_RED_ORANGE -> { analogClockTheme = Constant.DASHBOARD_CLOCK_RED_ORANGE }
+                Constant.DASHBOARD_CLOCK_PINK -> { analogClockTheme = Constant.DASHBOARD_CLOCK_PINK }
+            }
+            analogClockSpinner.setSelection(AppUtil.convertIdAnalogClockFromTheme(analogClockTheme))
+
 
             if (settings?.backgroundAnimation == getString(R.string.setting_background_animation_on)) {
                 backgroundAnimation = getString(R.string.setting_background_animation_on)
@@ -93,7 +119,14 @@ class SettingsActivity : AppCompatActivity() {
                 getString(R.string.dialog_button_reset), getString(R.string.dialog_button_cancel), object : KuntanPopupDialog.KuntanPopupDialogListener {
                     override fun onNegativeButton() {
                         CoroutineScope(Dispatchers.IO).launch {
-                            database.settingsDao().updateSetting(getString(R.string.setting_language_english), getString(R.string.setting_background_animation_off), Constant.DASHBOARD_BACKGROUND_AUTUMN, getString(R.string.setting_background_music_off))
+                            database.settingsDao().updateSetting(
+                                Constant.APP_THEME_LIGHT,
+                                getString(R.string.setting_language_english),
+                                Constant.DASHBOARD_CLOCK_PRIMARY,
+                                getString(R.string.setting_background_animation_off),
+                                Constant.DASHBOARD_BACKGROUND_AUTUMN,
+                                getString(R.string.setting_background_music_off)
+                            )
                             settings = database.settingsDao().getSettings()
                             runOnUiThread {
                                 textViewReset.isEnabled = false
@@ -103,10 +136,14 @@ class SettingsActivity : AppCompatActivity() {
                                 animationOnOff.isChecked = false
                                 textViewApply.isEnabled = false
                                 textViewApply.background = applicationContext.resources.getDrawable(R.drawable.background_button_save_disabled, null)
+                                appTheme = Constant.APP_THEME_LIGHT
+                                analogClockTheme = Constant.DASHBOARD_CLOCK_PRIMARY
                                 backgroundAnimation = getString(R.string.setting_background_animation_off)
                                 backgroundMusicState = getString(R.string.setting_background_music_off)
                                 dashboardBackground = Constant.DASHBOARD_BACKGROUND_AUTUMN
+                                isAppThemeChanged = false
                                 isLanguageChanged = false
+                                isAnalogClockThemeChanged = false
                                 isAnimationSwitched = false
                                 isAudioSwitched = false
                                 isDashboardBackgroundChanged = false
@@ -131,6 +168,14 @@ class SettingsActivity : AppCompatActivity() {
                     }))
             selectorItemsBottomSheet.show(supportFragmentManager, "selector_bottom_sheet")
         }
+        spinnerClockThemeAdapter.addOnItemSelectedListener(object :
+            ClockThemeSpinnerAdapter.ItemSelectedListener {
+            override fun onItemSelected(clockTheme: String) {
+                analogClockTheme = clockTheme
+                isAnalogClockThemeChanged = clockTheme != settings?.analogClockTheme
+                checkApplyButtonEnable()
+            }
+        })
         animationOnOff.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
                 backgroundAnimation = getString(R.string.setting_background_animation_on)
@@ -188,13 +233,14 @@ class SettingsActivity : AppCompatActivity() {
         }
         textViewApply.setOnClickListener {
             CoroutineScope(Dispatchers.IO).launch {
-                database.settingsDao().updateSetting(textViewLanguage.text.toString(), backgroundAnimation, dashboardBackground, backgroundMusicState)
+                database.settingsDao().updateSetting(Constant.APP_THEME_LIGHT, textViewLanguage.text.toString(),
+                    analogClockTheme, backgroundAnimation, dashboardBackground, backgroundMusicState)
                 settings = database.settingsDao().getSettings()
                 runOnUiThread {
                     textViewApply.isEnabled = false
                     textViewApply.background = applicationContext.resources.getDrawable(R.drawable.background_button_save_disabled, null)
                     checkResetButtonEnable()
-                    Snackbar.make(rootLayoutSetting, "Perubahan telah diterapkan", Snackbar.LENGTH_LONG).setAction("DISMISS") {}.show()
+                    Snackbar.make(rootLayoutSetting, getString(R.string.snackbar_setting_applied), Snackbar.LENGTH_LONG).setAction("DISMISS") {}.show()
                     if (isLanguageChanged) showRestartAppDialog(String.format(getString(R.string.dialog_message_switch_language), settings?.language))
                 }
             }
@@ -203,7 +249,8 @@ class SettingsActivity : AppCompatActivity() {
 
     @SuppressLint("UseCompatLoadingForDrawables")
     private fun checkApplyButtonEnable() {
-        if (isLanguageChanged || isAnimationSwitched || isAudioSwitched || isDashboardBackgroundChanged) {
+        Log.d("SA", "checkApplyButtonEnable isAnalogChanged: $isAnalogClockThemeChanged")
+        if (isLanguageChanged || isAnalogClockThemeChanged || isAnimationSwitched || isAudioSwitched || isDashboardBackgroundChanged) {
             textViewApply.isEnabled = true
             textViewApply.background = applicationContext.resources.getDrawable(R.drawable.selector_button_save_expenses, null)
         } else {

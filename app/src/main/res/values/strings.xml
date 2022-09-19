@@ -33,6 +33,8 @@
     <string name="method_debit">Debit</string>
     <string name="method_transfer">Transfer</string>
 
+    <string name="analog_primary">Primary</string>
+
     <!-- C A T E G O R I E S -->
     <string name="category_title">Category</string>
     <string name="category_book">Book</string>
@@ -91,7 +93,8 @@
     <string name="settings_music">Background Music Theme</string>
     <string name="settings_button_reset">Reset</string>
     <string name="settings_button_apply">Apply</string>
-    <string name="settings_text_made_with_love">Made With Love :)</string>
+    <string name="settings_text_copyright">© 2022 RRS Production</string>
+    <string name="settings_text_made_with_love">┄── Made With Love :) ──┄</string>
 
     <!-- D I A L O G -->
     <string name="dialog_title_warning">Warning!</string>
@@ -123,6 +126,7 @@
     <string name="history_detail_search">Search</string>
     <string name="history_detail_empty">Monthly Expenses history for this month is empty</string>
 
+    <string name="history_edited_text">─ Edited</string>
     <string name="history_edit_monthly_expenses">Edit Monthly Expenses</string>
 
     <!-- S C H E D U L E -->

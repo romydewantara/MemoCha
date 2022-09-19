@@ -23,6 +23,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.text.DecimalFormat
 import java.text.NumberFormat
+import java.text.SimpleDateFormat
 import java.util.*
 
 @SuppressLint("ViewConstructor")
@@ -109,8 +110,12 @@ class MonthlyExpensesEditor(
         textViewAdd.setOnClickListener {
             AppUtil.hideSoftKeyboard(this, context)
             CoroutineScope(Dispatchers.IO).launch {
-                database.historyDao().updateHistory(history.id, history.time, editTextGoods.text.toString(),
-                    editTextAmount.text.toString(), editTextNote.text.toString(), textViewCategory.text.toString(), paymentMethod)
+                val currentDate = SimpleDateFormat("dd-MM-yyyy").format(Calendar.getInstance().time)
+                val currentTime = SimpleDateFormat("HH:mm").format(Date())
+                database.historyDao().updateHistory(history.id, currentDate.split("-")[2],
+                    currentDate.split("-")[1], currentDate.split("-")[0],
+                    currentTime, editTextGoods.text.toString(), editTextAmount.text.toString(),
+                    editTextNote.text.toString(), textViewCategory.text.toString(), paymentMethod)
 
                 (mContext as Activity).runOnUiThread {
                     history.goods = editTextGoods.text.toString()
@@ -118,6 +123,10 @@ class MonthlyExpensesEditor(
                     history.description = editTextNote.text.toString()
                     history.category = textViewCategory.text.toString()
                     history.method = paymentMethod
+                    history.yearEdited = currentDate.split("-")[2]
+                    history.monthEdited = currentDate.split("-")[1]
+                    history.dateEdited = currentDate.split("-")[0]
+                    history.timeEdited = currentTime
 
                     textViewCategory.text = context.getString(R.string.category_others)
                     layoutPaymentMethod.setSelection(0)

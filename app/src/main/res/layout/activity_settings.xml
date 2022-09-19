@@ -68,6 +68,19 @@
         android:background="@color/pewter"
         app:layout_constraintTop_toBottomOf="@id/textViewLanguage" />
 
+    <Spinner
+        android:id="@+id/analogClockSpinner"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/background_spinner_analog_clock"
+        android:popupBackground="@drawable/popup_spinner_background_rounded"
+        android:spinnerMode="dropdown"
+        app:layout_constraintLeft_toLeftOf="@id/lineLanguage"
+        app:layout_constraintRight_toRightOf="@id/lineLanguage"
+        app:layout_constraintTop_toBottomOf="@id/lineLanguage"
+        tools:listitem="@layout/layout_analog_clock_theme_item_spinner" />
+
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/textViewAnimation"
         style="@style/TextRegularBlack14"
@@ -86,7 +99,7 @@
         android:layout_marginEnd="15dp"
         android:thumb="@drawable/selector_custom_thumb"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/lineLanguage"
+        app:layout_constraintTop_toBottomOf="@id/analogClockSpinner"
         app:showText="false"
         app:track="@drawable/selector_custom_track" />
 
@@ -177,7 +190,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:buttonTint="@color/teal_dark"
+                android:buttonTint="@color/teal"
                 android:checked="true" />
 
             <RadioButton
@@ -185,7 +198,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:buttonTint="@color/teal_dark"
+                android:buttonTint="@color/teal"
                 android:checked="false" />
 
             <RadioButton
@@ -193,7 +206,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:buttonTint="@color/teal_dark"
+                android:buttonTint="@color/teal"
                 android:checked="false" />
 
             <RadioButton
@@ -201,7 +214,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:buttonTint="@color/teal_dark"
+                android:buttonTint="@color/teal"
                 android:checked="false" />
 
         </RadioGroup>
@@ -252,6 +265,16 @@
         android:paddingRight="30dp"
         android:paddingBottom="12dp"
         android:text="@string/settings_button_apply"
+        app:layout_constraintBottom_toTopOf="@id/textViewRRS"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/textViewRRS"
+        style="@style/TextRegularGrey12"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/settings_text_copyright"
         app:layout_constraintBottom_toTopOf="@id/textViewMadeWithLove"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
@@ -265,6 +288,6 @@
         android:text="@string/settings_text_made_with_love"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"/>
+        app:layout_constraintRight_toRightOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
