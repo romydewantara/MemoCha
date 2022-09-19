@@ -15,7 +15,15 @@ interface SettingsDao {
     @Query("SELECT * FROM settings_table")
     suspend fun getSettings(): Settings
 
-    @Query("UPDATE settings_table SET theme = :theme, language = :language, analogClockTheme = :analogClockTheme, backgroundAnimation = :backgroundAnimation, dashboardBackground = :dashboardBackground, backgroundMusicState = :backgroundMusicState")
-    suspend fun updateSetting(theme: String, language: String, analogClockTheme: String, backgroundAnimation: String, dashboardBackground: String, backgroundMusicState: String)
+    @Query("UPDATE settings_table SET username = :username, theme = :theme, language = :language, analogClockTheme = :analogClockTheme, backgroundAnimation = :backgroundAnimation, dashboardBackground = :dashboardBackground, backgroundMusicState = :backgroundMusicState")
+    suspend fun updateSetting(
+        username: String,
+        theme: String,
+        language: String,
+        analogClockTheme: String,
+        backgroundAnimation: String,
+        dashboardBackground: String,
+        backgroundMusicState: String
+    )
 
 }

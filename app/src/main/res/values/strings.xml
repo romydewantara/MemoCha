@@ -76,6 +76,10 @@
     <string name="dasboard_expenses_hint_note">Notes (Optional)</string>
     <string name="dasboard_expenses_button_add">Add</string>
 
+    <!-- E X P E N S E   N O T E -->
+    <string name="calendar_adjust">Adjust Date</string>
+    <string name="calendar_adjust_info">The date selection will adjust the record time of the current expense report</string>
+
     <!-- S E T T I N G S -->
     <string name="setting_language_english">English (United States)</string>
     <string name="setting_language_bahasa">Bahasa Indonesia</string>
@@ -91,6 +95,8 @@
     <string name="settings_theme_snow">Snow</string>
     <string name="settings_theme_summer">Summer</string>
     <string name="settings_music">Background Music Theme</string>
+    <string name="settings_surname">Show Surname</string>
+    <string name="settings_hint_surname">Ex: Ocha</string>
     <string name="settings_button_reset">Reset</string>
     <string name="settings_button_apply">Apply</string>
     <string name="settings_text_copyright">© 2022 RRS Production</string>
@@ -109,7 +115,7 @@
     <string name="snackbar_setting_applied">Settings applied</string>
     <string name="snackbar_schedule_added">New schedule has been added</string>
     <string name="snackbar_schedule_updated">Schedule has been updated</string>
-    <string name="snackbar_monthly_expenses_added">New data has been added to monthly expenses history</string>
+    <string name="snackbar_monthly_expenses_added">New data has been added to monthly expense history</string>
     <string name="snackbar_monthly_expenses_updated">Data has been updated</string>
     <string name="snackbar_monthly_expenses_deleted">Data has been deleted from history</string>
 
@@ -124,10 +130,10 @@
     <string name="history_detail_monthly_expenses">Total expenses in this Month:</string>
     <string name="history_detail_transaction">Transaction</string>
     <string name="history_detail_search">Search</string>
-    <string name="history_detail_empty">Monthly Expenses history for this month is empty</string>
+    <string name="history_detail_empty">Monthly expense history for this month is empty</string>
 
     <string name="history_edited_text">─ Edited</string>
-    <string name="history_edit_monthly_expenses">Edit Monthly Expenses</string>
+    <string name="history_edit_monthly_expenses">Edit Monthly Expense</string>
 
     <!-- S C H E D U L E -->
     <string name="schedule_title_page">Schedule</string>

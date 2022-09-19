@@ -291,6 +291,12 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <style name="TextRegularBlue12">
+        <item name="android:fontFamily">@font/abeezee_regular</item>
+        <item name="android:textColor">@color/blue</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
     <!--  G O L D -->
     <style name="TextBoldGold18">
         <item name="android:fontFamily">@font/abeezee_regular</item>

@@ -3,6 +3,8 @@ package com.example.kuntan
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import android.view.animation.AnimationUtils
@@ -33,6 +35,7 @@ class SettingsActivity : AppCompatActivity() {
     private lateinit var backgroundAnimation: String
     private lateinit var dashboardBackground: String
     private lateinit var backgroundMusicState: String
+    private lateinit var surename: String
 
     private var isAppThemeChanged = false
     private var isLanguageChanged = false
@@ -40,6 +43,8 @@ class SettingsActivity : AppCompatActivity() {
     private var isAnimationSwitched = false
     private var isAudioSwitched = false
     private var isDashboardBackgroundChanged = false
+    private var isSurenameChanged = false
+    private var isSurenameFilled = false
     private var isReset = false
 
     private lateinit var selectorItemsBottomSheet: SelectorItemsBottomSheet
@@ -54,6 +59,9 @@ class SettingsActivity : AppCompatActivity() {
     }
 
     private fun init() {
+        rootLayoutSetting.viewTreeObserver.addOnGlobalLayoutListener {
+            if (!AppUtil.isKeyboardVisible(rootLayoutSetting)) editTextSurname.isFocusable = false
+        }
         analogClockTheme = Constant.DASHBOARD_CLOCK_PRIMARY
         backgroundAnimation = getString(R.string.setting_background_animation_off)
         backgroundMusicState = getString(R.string.setting_background_music_off)
@@ -112,7 +120,7 @@ class SettingsActivity : AppCompatActivity() {
         }
     }
 
-    @SuppressLint("UseCompatLoadingForDrawables")
+    @SuppressLint("UseCompatLoadingForDrawables", "ClickableViewAccessibility")
     private fun initListener() {
         textViewReset.setOnClickListener {
             val kuntanPopupDialog = KuntanPopupDialog.newInstance().setContent(getString(R.string.dialog_title_warning), getString(R.string.dialog_message_ask_reset),
@@ -120,6 +128,7 @@ class SettingsActivity : AppCompatActivity() {
                     override fun onNegativeButton() {
                         CoroutineScope(Dispatchers.IO).launch {
                             database.settingsDao().updateSetting(
+                                "",
                                 Constant.APP_THEME_LIGHT,
                                 getString(R.string.setting_language_english),
                                 Constant.DASHBOARD_CLOCK_PRIMARY,
@@ -231,9 +240,23 @@ class SettingsActivity : AppCompatActivity() {
             isDashboardBackgroundChanged = dashboardBackground != settings?.dashboardBackground
             checkApplyButtonEnable()
         }
+        surnameOnOff.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                editTextSurname.visibility = View.VISIBLE
+                editTextSurname.startAnimation(AnimationUtils.loadAnimation(applicationContext, R.anim.fade_in))
+            } else {
+                editTextSurname.visibility = View.GONE
+                editTextSurname.startAnimation(AnimationUtils.loadAnimation(applicationContext, R.anim.fade_out))
+            }
+        }
+        editTextSurname.addTextChangedListener(onTextChangedListener())
+        editTextSurname.setOnTouchListener { _, _, ->
+            editTextSurname.isFocusableInTouchMode = true
+            false
+        }
         textViewApply.setOnClickListener {
             CoroutineScope(Dispatchers.IO).launch {
-                database.settingsDao().updateSetting(Constant.APP_THEME_LIGHT, textViewLanguage.text.toString(),
+                database.settingsDao().updateSetting("", Constant.APP_THEME_LIGHT, textViewLanguage.text.toString(),
                     analogClockTheme, backgroundAnimation, dashboardBackground, backgroundMusicState)
                 settings = database.settingsDao().getSettings()
                 runOnUiThread {
@@ -242,6 +265,20 @@ class SettingsActivity : AppCompatActivity() {
                     checkResetButtonEnable()
                     Snackbar.make(rootLayoutSetting, getString(R.string.snackbar_setting_applied), Snackbar.LENGTH_LONG).setAction("DISMISS") {}.show()
                     if (isLanguageChanged) showRestartAppDialog(String.format(getString(R.string.dialog_message_switch_language), settings?.language))
+                }
+            }
+        }
+    }
+
+    private fun onTextChangedListener() : TextWatcher {
+        return object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+            override fun afterTextChanged(s: Editable?) {
+                if (editTextSurname.text.toString().isNotEmpty()) {
+                    isSurenameFilled = true
+                } else {
+                    isSurenameFilled = false
                 }
             }
         }

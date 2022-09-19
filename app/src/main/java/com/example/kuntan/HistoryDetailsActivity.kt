@@ -40,9 +40,9 @@ class HistoryDetailsActivity : AppCompatActivity(), HistoryDetailAdapter.History
     private fun init() {
         val month = intent.extras?.getString("month").toString()
         val history = intent.extras?.getString("history").toString()
+        val array = JSONArray(history)
 
         textViewMonthName.text = AppUtil.convertMonthNameFromCode(applicationContext, month)
-        val array = JSONArray(history)
         if (array.length() > 0) {
             for (i in 0 until array.length()) {
                 val jsonObject = array.getJSONObject(i)
@@ -52,9 +52,13 @@ class HistoryDetailsActivity : AppCompatActivity(), HistoryDetailAdapter.History
             layoutExport.background = resources.getDrawable(R.drawable.background_text_export_disabled, null)
             TextViewCompat.setTextAppearance(textViewExport, R.style.TextRegularGrey14)
             iconExport.setImageResource(R.drawable.ic_export_gray)
+            editTextSearch.background = resources.getDrawable(R.drawable.background_edit_text_search_disabled, null)
+            editTextSearch.isEnabled = false
+            editTextSearch.isFocusable = false
             layoutExport.isEnabled = false
             layoutExport.isFocusable = false
             layoutExport.isClickable = false
+            cardViewPaymentDetail.visibility = View.GONE
         }
 
         histories.reverse()

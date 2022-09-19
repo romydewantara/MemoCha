@@ -12,6 +12,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.util.TypedValue
+import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.widget.Toast
@@ -24,6 +25,7 @@ import com.example.kuntan.adapter.DashboardScheduleAdapter
 import com.example.kuntan.adapter.PaymentMethodSpinnerAdapter
 import com.example.kuntan.entity.History
 import com.example.kuntan.entity.Settings
+import com.example.kuntan.lib.CalendarDialog
 import com.example.kuntan.lib.SelectorItemsBottomSheet
 import com.example.kuntan.utility.AppUtil
 import com.example.kuntan.utility.Constant
@@ -50,6 +52,7 @@ class DashboardActivity : AppCompatActivity() {
     private var isMenuHidden = false
     private var isMenuAnimating = false
     private var isDefaultSchedule = true
+    private var username = ""
     private var currentDate = ""
     private var paymentMethod = ""
     private var index = 0
@@ -93,6 +96,7 @@ class DashboardActivity : AppCompatActivity() {
         }
     }
 
+    @SuppressLint("SimpleDateFormat")
     private fun init() {
         mediaPlayer = MediaPlayer()
         constraintActivityMain = findViewById(R.id.constraintActivityMain)
@@ -112,13 +116,13 @@ class DashboardActivity : AppCompatActivity() {
                 editTextNote.isFocusable = false
             }
         }
-
-        loveMessage.setOnClickListener {
-            Toast.makeText(applicationContext, getString(R.string.secret_letter_coming_soon), Toast.LENGTH_SHORT).show()
-            //val secretLetterDialog = SecretLetterDialog(applicationContext)
-            //secretLetterLayout.addView(secretLetterDialog)
-            //secretLetterLayout.visibility = VISIBLE
-        }
+        val calendar = Calendar.getInstance() //English: Friday, September 16th 2022 | Indonesia: Jum\'at, 16 September 2022
+        currentDate = SimpleDateFormat("dd-MM-yyyy").format(calendar.time)
+        textDate.text = SimpleDateFormat("EEEE, MMMM dd yyyy").format(calendar.time)
+        textViewCalendar.text = SimpleDateFormat("dd/MM/yyyy").format(calendar.time)
+        time.text = arrayTimes[index]
+        layoutCalendar.visibility = VISIBLE
+        textViewCalendar.text = currentDate.replace("-","/")
 
         TextViewCompat.setAutoSizeTextTypeUniformWithConfiguration(textViewCategory, 1,
             14, 1, TypedValue.COMPLEX_UNIT_SP)
@@ -142,23 +146,16 @@ class DashboardActivity : AppCompatActivity() {
 
     @SuppressLint("UseCompatLoadingForDrawables", "SimpleDateFormat")
     private fun adjustSettings() {
-        val calendar = Calendar.getInstance() //English: Friday, September 16th 2022 | Indonesia: Jum\'at, 16 September 2022
-        currentDate = SimpleDateFormat("dd-MM-yyyy").format(calendar.time)
-        var date = SimpleDateFormat("EEEE, MMMM dd yyyy").format(calendar.time)
-        textDate.text = date
-        time.text = arrayTimes[index]
-
         CoroutineScope(Dispatchers.IO).launch {
             val settings = database.settingsDao().getSettings()
             if (settings == null) {
-                val setting = Settings(0, Constant.APP_THEME_LIGHT, getString(R.string.setting_language_english), Constant.DASHBOARD_CLOCK_PRIMARY, getString(R.string.setting_background_animation_off), Constant.DASHBOARD_BACKGROUND_AUTUMN, getString(R.string.setting_background_music_off))
+                val setting = Settings(0, username, Constant.APP_THEME_LIGHT, getString(R.string.setting_language_english), Constant.DASHBOARD_CLOCK_PRIMARY, getString(R.string.setting_background_animation_off), Constant.DASHBOARD_BACKGROUND_AUTUMN, getString(R.string.setting_background_music_off))
                 database.settingsDao().insertSetting(setting)
             } else {
                 runOnUiThread {
                     Log.d(TAG, "checkSettings - settings: $settings")
                     if (settings.language == getString(R.string.setting_language_bahasa)) {
-                        date = SimpleDateFormat("EEEE, dd MMMM yyyy").format(calendar.time)
-                        textDate.text = date
+                        textDate.text = SimpleDateFormat("EEEE, dd MMMM yyyy").format(Calendar.getInstance().time)
                     }
                     analogClock.background = AppUtil.convertDrawableFromTheme(applicationContext, settings.analogClockTheme)
                     if (settings.backgroundAnimation == getString(R.string.setting_background_animation_on)) {
@@ -248,6 +245,12 @@ class DashboardActivity : AppCompatActivity() {
             isMenuHidden = !isMenuHidden
             if (!isMenuHidden) showMenu() else hideMenu()
         }
+        loveMessage.setOnClickListener {
+            Toast.makeText(applicationContext, getString(R.string.secret_letter_coming_soon), Toast.LENGTH_SHORT).show()
+            //val secretLetterDialog = SecretLetterDialog(applicationContext)
+            //secretLetterLayout.addView(secretLetterDialog)
+            //secretLetterLayout.visibility = VISIBLE
+        }
         textViewAdd.setOnClickListener {
             val isGoodsFilled: Boolean
             val isAmountFilled: Boolean
@@ -333,6 +336,17 @@ class DashboardActivity : AppCompatActivity() {
             })
         layoutPaymentMethod.adapter = spinnerPaymentMethodAdapter
 
+        layoutCalendar.setOnClickListener {
+            val calendarDialog = CalendarDialog()
+            calendarDialog.newInstance(applicationContext, SimpleDateFormat("yyyy-MM-dd").format(Date()))
+                .onDateChangeListener(object : CalendarDialog.DateChangeListener {
+                    override fun onDateChanges(dateSelected: String) {
+                        currentDate = dateSelected
+                        textViewCalendar.text = dateSelected.replace("-","/")
+                    }
+                })
+            calendarDialog.show(supportFragmentManager, calendarDialog.tag)
+        }
     }
 
     @SuppressLint("UseCompatLoadingForDrawables")

@@ -144,6 +144,18 @@
             app:layout_constraintTop_toBottomOf="@id/textViewTransaction"
             app:layout_constraintWidth_percent=".94" />
 
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textViewHistoryEmpty"
+            style="@style/TextRegularGrey16"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:gravity="center"
+            android:text="@string/history_detail_empty"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
         <androidx.cardview.widget.CardView
             android:id="@+id/cardViewPaymentDetail"
             android:layout_width="match_parent"
