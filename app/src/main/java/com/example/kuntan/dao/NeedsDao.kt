@@ -15,8 +15,11 @@ interface NeedsDao {
     @Query("SELECT * FROM needs_table")
     suspend fun getNeeds() : List<Needs>
 
-    @Query("UPDATE needs_table SET item = :item, date = :date, time = :time, isChecked = :isChecked WHERE id = :id")
-    suspend fun updateNeeds(id: Int, item: String, date: String, time: String, isChecked: Boolean)
+    @Query("UPDATE needs_table SET item = :item, date = :date, time = :time, checked = :checked WHERE id = :id")
+    suspend fun updateNeeds(id: Int, item: String, date: String, time: String, checked: Boolean)
+
+    @Query("UPDATE needs_table SET checked = :checked WHERE id = :id")
+    suspend fun updateChecked(id: Int, checked: Boolean)
 
     @Query("DELETE FROM needs_table WHERE id = :id")
     suspend fun deleteNeeds(id: Int)

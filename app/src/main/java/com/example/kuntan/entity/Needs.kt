@@ -11,6 +11,6 @@ class Needs(
     val date: String,
     val time: String,
     val isDateShown: Boolean,
-    val isChecked: Boolean,
+    val checked: Boolean,
     @ColumnInfo(typeAffinity = ColumnInfo.BLOB) val image: ByteArray?
 )

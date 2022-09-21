@@ -23,15 +23,14 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.widget.TextViewCompat
 import com.airbnb.lottie.LottieAnimationView
 import com.example.kuntan.entity.Needs
+import com.example.kuntan.lib.KuntanPopupDialog
 import com.example.kuntan.utility.AppUtil
-import com.example.kuntan.utility.Constant
 import com.example.kuntan.utility.KuntanRoomDatabase
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_needs.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -49,6 +48,7 @@ class NeedsActivity : AppCompatActivity(), NeedsListener {
     private var currentYHeader: Float = 0f
     private var currentYFooter: Float = 0f
     private var previousTextLength = 0
+    private var tempDate = ""
     private val arrayListOfNeedsLayout = arrayListOf<LinearLayout>()
     private lateinit var needsListener: NeedsListener
 
@@ -77,6 +77,52 @@ class NeedsActivity : AppCompatActivity(), NeedsListener {
         populateNeeds()
     }
 
+    @SuppressLint("ClickableViewAccessibility", "SimpleDateFormat")
+    private fun initListener() {
+        var previousTextLength = 0
+        editTextNeedsItem.addTextChangedListener(onTextChangedListener())
+        editTextNeedsItem.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                previousTextLength = if (s != null && s.isNotEmpty()) s.length else 0
+            }
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+            override fun afterTextChanged(s: Editable?) {
+                if (s != null && s.isNotEmpty()) {
+                    if (s.isNotEmpty() && previousTextLength < 1) {
+                        showSendButton()
+                    }
+                } else {
+                    hideSendButton()
+                }
+            }
+        })
+        editTextNeedsItem.setOnTouchListener { _, _ ->
+            editTextNeedsItem.isFocusableInTouchMode = true
+            false
+        }
+        iconSend.setOnClickListener {
+            if (editTextNeedsItem.text != null && editTextNeedsItem.text.toString().trim().isNotEmpty()) {
+                val currentDate = SimpleDateFormat("dd/MM/yyyy").format(Calendar.getInstance().time)
+                val currentTime = SimpleDateFormat("HH:mm").format(Date())
+                var isDateShown = false
+                /*if (tempDate != currentDate) {
+                    tempDate = currentDate
+                    isDateShown = true
+                }*/
+                val needsObj = Needs(0, editTextNeedsItem.text.toString().trim(), currentDate, currentTime, isDateShown, false, null)
+                generateNeedsItem(needsObj)
+                CoroutineScope(Dispatchers.IO).launch {
+                    Log.d("Needs", "initListener - needs: ${Gson().toJson(needsObj)}")
+                    database.needsDao().insert(needsObj)
+                }
+            }
+            editTextNeedsItem.setText("")
+        }
+        iconAddImage.setOnClickListener {
+            //editTextNeedsItem.setText(Constant.TEST_TEXT)
+        }
+    }
+
     private fun updateLayoutSize(type: String, height: Int, y: Float) {
         when(type) {
             HEADER -> {
@@ -91,14 +137,60 @@ class NeedsActivity : AppCompatActivity(), NeedsListener {
         if (headerHeight > 0 && footerHeight > 0) needsListener.onLayoutDrawn()
     }
 
+    private fun populateNeeds() {
+        CoroutineScope(Dispatchers.IO).launch {
+            val needs = database.needsDao().getNeeds()
+            Log.d("Needs", "populateNeeds (setUpdate()) - needs: ${Gson().toJson(needs)}")
+            if (needs.isNotEmpty()) {
+                arrayListOfNeedsLayout.clear()
+                val amount = if (needs.isNotEmpty()) needs.size else 0
+                runOnUiThread {
+                    for (i in needs.indices) {
+                        generateNeedsItem(needs[i])
+                    }
+                    textViewNeedsAmount.text = String.format(getString(R.string.needs_today_list), amount)
+                }
+            }
+        }
+    }
+
     @SuppressLint("UseCompatLoadingForDrawables")
-    private fun generateNeedsItem(item: String, time: String) {
+    private fun onTextChangedListener() : TextWatcher {
+        return object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                previousTextLength = if (s != null && s.isNotEmpty()) s.length else 0
+            }
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+            override fun afterTextChanged(s: Editable?) {
+                if (s != null && s.isNotEmpty()) {
+                    if (s.isNotEmpty() && previousTextLength < 1) {
+                        showSendButton()
+                        if (s.length > 400) {
+                            editTextNeedsItem.removeTextChangedListener(this)
+                            try {
+                                Toast.makeText(applicationContext, String.format(getString(R.string.needs_text_length_limit), s.length), Toast.LENGTH_LONG).show()
+                                editTextNeedsItem.setText(s.toString())
+                            } catch (nfe: NumberFormatException) {
+                                nfe.printStackTrace()
+                            }
+                            editTextNeedsItem.addTextChangedListener(this)
+                        }
+                    }
+                } else {
+                    hideSendButton()
+                }
+            }
+        }
+    }
+
+    @SuppressLint("UseCompatLoadingForDrawables")
+    private fun generateNeedsItem(needs: Needs) {
         /*========================  LAYOUT TEXT-NEEDS  ========================*/
         val textItem = AppCompatTextView(this)
         val textItemParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
         textItem.layoutParams = textItemParams
-        TextViewCompat.setTextAppearance(textItem, R.style.TextRegularWhite14)
-        textItem.text = item
+        TextViewCompat.setTextAppearance(textItem, R.style.TextRegularBlack16)
+        textItem.text = needs.item
         textItem.viewTreeObserver.addOnGlobalLayoutListener(
             object : ViewTreeObserver.OnGlobalLayoutListener {
                 override fun onGlobalLayout() {
@@ -116,8 +208,8 @@ class NeedsActivity : AppCompatActivity(), NeedsListener {
             AppUtil.dpToPx(this, 0f), AppUtil.dpToPx(this, 0f)
         )
         textTime.layoutParams = textTimeParams
-        TextViewCompat.setTextAppearance(textTime, R.style.TextRegularGrayLight12)
-        textTime.text = time
+        TextViewCompat.setTextAppearance(textTime, R.style.TextRegularDarkGrey14)
+        textTime.text = needs.time
 
         val layoutTextItem = LinearLayout(this)
         val latestLayoutItemParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
@@ -133,23 +225,29 @@ class NeedsActivity : AppCompatActivity(), NeedsListener {
         layoutTextItem.addView(textTime)
 
         /*========================  LAYOUT IMAGE CHECKED  ========================*/
-        val imageSize = AppUtil.getWidthPercent(this, 7f).toInt()
+        val imageSize = AppUtil.getWidthPercent(this, 8f).toInt()
         val lottieImageChecked = LottieAnimationView(this)
         val imageCheckedParams = LinearLayout.LayoutParams(imageSize, imageSize)
         lottieImageChecked.layoutParams = imageCheckedParams
         lottieImageChecked.background = resources.getDrawable(R.drawable.ic_unchecked, null)
         lottieImageChecked.scaleType = ImageView.ScaleType.FIT_CENTER
         lottieImageChecked.setAnimation("lottie_checked.json")
-        var isChecked = false
+        var checked = needs.checked
+        if (checked) lottieImageChecked.playAnimation()
         lottieImageChecked.setOnClickListener {
-            Log.d(TAG, "generateNeedsItem - item $item has been checked")
-            isChecked = !isChecked
-            if (isChecked) {
-                lottieImageChecked.speed = 2f
-                lottieImageChecked.playAnimation()
-            } else {
-                lottieImageChecked.speed = -25f
-                lottieImageChecked.playAnimation()
+            CoroutineScope(Dispatchers.IO).launch {
+                checked = !checked
+                Log.d(TAG, "generateNeedsItem checked: $checked")
+                database.needsDao().updateChecked(needs.id, checked)
+                runOnUiThread {
+                    if (checked) {
+                        lottieImageChecked.speed = 2f
+                        lottieImageChecked.playAnimation()
+                    } else {
+                        lottieImageChecked.speed = -25f
+                        lottieImageChecked.playAnimation()
+                    }
+                }
             }
         }
 
@@ -202,7 +300,8 @@ class NeedsActivity : AppCompatActivity(), NeedsListener {
         textNeedsDate.layoutParams = textNeedsDateParams
         textNeedsDate.background = resources.getDrawable(R.drawable.background_text_view_date_gray, null)
         TextViewCompat.setTextAppearance(textNeedsDate, R.style.TextBoldWhite12)
-        textNeedsDate.text = getString(R.string.secret_letter_calendar)
+        textNeedsDate.text = needs.date
+        if (needs.isDateShown) textNeedsDate.visibility = View.VISIBLE else textNeedsDate.visibility = View.GONE
         textNeedsDate.viewTreeObserver.addOnGlobalLayoutListener(
             object : ViewTreeObserver.OnGlobalLayoutListener {
                 override fun onGlobalLayout() {
@@ -218,14 +317,36 @@ class NeedsActivity : AppCompatActivity(), NeedsListener {
         containerTextAndCheckedItem.addView(layoutTextItem)
         needsLayout.addView(textNeedsDate)
         needsLayout.addView(containerTextAndCheckedItem)
+        layoutTextItem.setOnLongClickListener {
+            val kuntanPopupDialog = KuntanPopupDialog.newInstance().setContent("Remove \"${needs.item}\"?",
+                "Be careful, it will be deleted permanently!",
+                getString(R.string.button_delete), getString(R.string.button_cancel), object : KuntanPopupDialog.KuntanPopupDialogListener {
+                    override fun onNegativeButton() {
+                        CoroutineScope(Dispatchers.IO).launch {
+                            database.needsDao().deleteNeeds(needs.id)
+                            runOnUiThread {
+                                containerNeedsContent.removeAllViews()
+                                arrayListOfNeedsLayout.clear()
+                                populateNeeds()
+                            }
+                        }
+                    }
+                    override fun onPositiveButton() {
+
+                    }
+
+                })
+            kuntanPopupDialog.show(supportFragmentManager, kuntanPopupDialog.tag)
+            false
+        }
         arrayListOfNeedsLayout.add(needsLayout)
         containerNeedsContent.addView(needsLayout)
 
-        var previousYLayout = 0
         containerNeedsContent.viewTreeObserver.addOnGlobalLayoutListener(
             object : ViewTreeObserver.OnGlobalLayoutListener {
                 override fun onGlobalLayout() {
-                    var itemsHeight = 0
+                    var previousYLayout = 0
+                    var needsContainerHeight = 0
                     if (arrayListOfNeedsLayout.isNotEmpty()) {
                         for (i in 0 until arrayListOfNeedsLayout.size) {
                             val masterNeedsItem = arrayListOfNeedsLayout[i]
@@ -234,109 +355,16 @@ class NeedsActivity : AppCompatActivity(), NeedsListener {
 
                             masterNeedsItem.y = (previousYLayout + marginTop).toFloat()
                             previousYLayout += (marginTop + masterNeedsItem.height)
-                            itemsHeight += masterNeedsItem.height + (marginTop * 2)
-
-                            val containerParams = FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT)
-                            containerParams.height = itemsHeight
-                            containerNeedsContent.layoutParams = containerParams
-                            scrollViewNeeds.scrollTo(0, containerNeedsContent.height)
+                            needsContainerHeight += masterNeedsItem.height + marginTop
                         }
+                        val containerParams = FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT)
+                        containerParams.height = needsContainerHeight + AppUtil.dpToPx(this@NeedsActivity, 10f)
+                        containerNeedsContent.layoutParams = containerParams
+                        scrollViewNeeds.scrollTo(0, needsContainerHeight + AppUtil.dpToPx(this@NeedsActivity, 10f))
                     }
                     containerNeedsContent.viewTreeObserver.removeOnGlobalLayoutListener(this)
                 }
             })
-    }
-
-    private fun populateNeeds() {
-        CoroutineScope(Dispatchers.IO).launch {
-            val needs = database.needsDao().getNeeds()
-            Log.d("Needs", "populateNeeds (setUpdate()) - needs: ${Gson().toJson(needs)}")
-            if (needs.isNotEmpty()) {
-                withContext(Dispatchers.Main) {
-                    val amount = if (needs.isNotEmpty()) needs.size else 0
-                    runOnUiThread {
-                        textViewNeedsAmount.text = String.format(getString(R.string.needs_today_list), amount)
-                    }
-                }
-            }
-        }
-    }
-
-    @SuppressLint("ClickableViewAccessibility", "SimpleDateFormat")
-    private fun initListener() {
-        var previousTextLength = 0
-        editTextNeedsItem.addTextChangedListener(onTextChangedListener())
-        editTextNeedsItem.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                previousTextLength = if (s != null && s.isNotEmpty()) s.length else 0
-            }
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
-            override fun afterTextChanged(s: Editable?) {
-                if (s != null && s.isNotEmpty()) {
-                    if (s.isNotEmpty() && previousTextLength < 1) {
-                        showSendButton()
-                    }
-                } else {
-                    hideSendButton()
-                }
-            }
-        })
-        editTextNeedsItem.setOnTouchListener { _, _ ->
-            editTextNeedsItem.isFocusableInTouchMode = true
-            false
-        }
-        iconSend.setOnClickListener {
-            if (editTextNeedsItem.text != null && editTextNeedsItem.text.toString().trim().isNotEmpty()) {
-                val currentDate = SimpleDateFormat("dd/MM/yyyy").format(Calendar.getInstance().time)
-                val currentTime = SimpleDateFormat("HH:mm").format(Date())
-                val isDateShown = false
-                val needsObj = Needs(0, editTextNeedsItem.text.toString().trim(), currentDate, currentTime, isDateShown, false, null)
-                generateNeedsItem(editTextNeedsItem.text.toString().trim(), currentTime)
-                /*CoroutineScope(Dispatchers.IO).launch {
-                    val currentList = database.needsDao().getNeeds()
-                    var isDateShown = false
-                    if (currentList.isEmpty()) isDateShown = true
-                    val needsObj = Needs(
-                        0, editTextNeedsItem.text.toString().trim(), currentDate, currentTime, isDateShown, false, null)
-                    Log.d("Needs", "initListener - needs: ${Gson().toJson(needsObj)}")
-                    database.needsDao().insert(needsObj)
-                    populateNeeds()
-                }*/
-            }
-            editTextNeedsItem.setText("")
-        }
-        iconAddImage.setOnClickListener {
-            editTextNeedsItem.setText(Constant.TEST_TEXT)
-        }
-    }
-
-    @SuppressLint("UseCompatLoadingForDrawables")
-    private fun onTextChangedListener() : TextWatcher {
-        return object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                previousTextLength = if (s != null && s.isNotEmpty()) s.length else 0
-            }
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
-            override fun afterTextChanged(s: Editable?) {
-                if (s != null && s.isNotEmpty()) {
-                    if (s.isNotEmpty() && previousTextLength < 1) {
-                        showSendButton()
-                        if (s.length > 400) {
-                            editTextNeedsItem.removeTextChangedListener(this)
-                            try {
-                                Toast.makeText(applicationContext, String.format(getString(R.string.needs_text_length_limit), s.length), Toast.LENGTH_LONG).show()
-                                editTextNeedsItem.setText(s.toString())
-                            } catch (nfe: NumberFormatException) {
-                                nfe.printStackTrace()
-                            }
-                            editTextNeedsItem.addTextChangedListener(this)
-                        }
-                    }
-                } else {
-                    hideSendButton()
-                }
-            }
-        }
     }
 
     private fun showSendButton() {
