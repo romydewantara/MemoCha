@@ -93,43 +93,7 @@ class NeedsActivity : AppCompatActivity(), NeedsListener {
 
     @SuppressLint("UseCompatLoadingForDrawables")
     private fun generateNeedsItem(item: String, time: String) {
-        val needsMasterLayout = LinearLayout(this)
-        val layoutNeedsItemParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-        needsMasterLayout.layoutParams = layoutNeedsItemParams
-        needsMasterLayout.orientation = LinearLayout.HORIZONTAL
-        needsMasterLayout.gravity = Gravity.END
-
-        val imageSize = AppUtil.getWidthPercent(this, 7f).toInt()
-        val imageChecked = LottieAnimationView(this)
-        val imageCheckedParams = LinearLayout.LayoutParams(imageSize, imageSize)
-        imageChecked.layoutParams = imageCheckedParams
-        imageChecked.background = resources.getDrawable(R.drawable.ic_unchecked, null)
-        imageChecked.scaleType = ImageView.ScaleType.FIT_CENTER
-        imageChecked.setAnimation("lottie_checked.json")
-        var isChecked = false
-        imageChecked.setOnClickListener {
-            Log.d(TAG, "generateNeedsItem - item $item has been checked")
-            isChecked = !isChecked
-            if (isChecked) {
-                imageChecked.speed = 2f
-                imageChecked.playAnimation()
-            } else {
-                imageChecked.speed = -25f
-                imageChecked.playAnimation()
-            }
-        }
-
-        val layoutItem = LinearLayout(this)
-        val latestLayoutItemParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-        layoutItem.setPadding(
-            AppUtil.dpToPx(this, 10f), AppUtil.dpToPx(this, 8f),
-            AppUtil.dpToPx(this, 10f), AppUtil.dpToPx(this, 8f)
-        )
-        layoutItem.layoutParams = latestLayoutItemParams
-        layoutItem.orientation = LinearLayout.VERTICAL
-        layoutItem.gravity = Gravity.END
-        layoutItem.background = getDrawable(R.drawable.background_item_needs_rounded)
-
+        /*========================  LAYOUT TEXT-NEEDS  ========================*/
         val textItem = AppCompatTextView(this)
         val textItemParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
         textItem.layoutParams = textItemParams
@@ -137,13 +101,13 @@ class NeedsActivity : AppCompatActivity(), NeedsListener {
         textItem.text = item
         textItem.viewTreeObserver.addOnGlobalLayoutListener(
             object : ViewTreeObserver.OnGlobalLayoutListener {
-            override fun onGlobalLayout() {
-                val textParams = textItem.layoutParams
-                textParams.height = textItem.measuredHeight
-                textItem.layoutParams = textParams
-                textItem.viewTreeObserver.removeOnGlobalLayoutListener(this)
-            }
-        })
+                override fun onGlobalLayout() {
+                    val textParams = textItem.layoutParams
+                    textParams.height = textItem.measuredHeight
+                    textItem.layoutParams = textParams
+                    textItem.viewTreeObserver.removeOnGlobalLayoutListener(this)
+                }
+            })
 
         val textTime = AppCompatTextView(this)
         val textTimeParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT)
@@ -155,37 +119,107 @@ class NeedsActivity : AppCompatActivity(), NeedsListener {
         TextViewCompat.setTextAppearance(textTime, R.style.TextRegularGrayLight12)
         textTime.text = time
 
-        layoutItem.addView(textItem)
-        layoutItem.addView(textTime)
+        val layoutTextItem = LinearLayout(this)
+        val latestLayoutItemParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+        layoutTextItem.setPadding(
+            AppUtil.dpToPx(this, 10f), AppUtil.dpToPx(this, 8f),
+            AppUtil.dpToPx(this, 10f), AppUtil.dpToPx(this, 8f)
+        )
+        layoutTextItem.layoutParams = latestLayoutItemParams
+        layoutTextItem.orientation = LinearLayout.VERTICAL
+        layoutTextItem.gravity = Gravity.END
+        layoutTextItem.background = getDrawable(R.drawable.background_item_needs_rounded)
+        layoutTextItem.addView(textItem)
+        layoutTextItem.addView(textTime)
 
-        needsMasterLayout.viewTreeObserver.addOnGlobalLayoutListener(
+        /*========================  LAYOUT IMAGE CHECKED  ========================*/
+        val imageSize = AppUtil.getWidthPercent(this, 7f).toInt()
+        val lottieImageChecked = LottieAnimationView(this)
+        val imageCheckedParams = LinearLayout.LayoutParams(imageSize, imageSize)
+        lottieImageChecked.layoutParams = imageCheckedParams
+        lottieImageChecked.background = resources.getDrawable(R.drawable.ic_unchecked, null)
+        lottieImageChecked.scaleType = ImageView.ScaleType.FIT_CENTER
+        lottieImageChecked.setAnimation("lottie_checked.json")
+        var isChecked = false
+        lottieImageChecked.setOnClickListener {
+            Log.d(TAG, "generateNeedsItem - item $item has been checked")
+            isChecked = !isChecked
+            if (isChecked) {
+                lottieImageChecked.speed = 2f
+                lottieImageChecked.playAnimation()
+            } else {
+                lottieImageChecked.speed = -25f
+                lottieImageChecked.playAnimation()
+            }
+        }
+
+        val containerTextAndCheckedItem = LinearLayout(this)
+        val containerTextAndCheckedItemParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+        containerTextAndCheckedItem.layoutParams = containerTextAndCheckedItemParams
+        containerTextAndCheckedItem.orientation = LinearLayout.HORIZONTAL
+        containerTextAndCheckedItem.gravity = Gravity.END
+        containerTextAndCheckedItem.viewTreeObserver.addOnGlobalLayoutListener(
             object : ViewTreeObserver.OnGlobalLayoutListener {
             override fun onGlobalLayout() {
-                var itemWidth = layoutItem.width
-                val itemMaxWidth = needsMasterLayout.width - (imageChecked.width + AppUtil.dpToPx(this@NeedsActivity, 35f))
-                if (layoutItem.width >= itemMaxWidth) {
-                    itemWidth = (needsMasterLayout.width - imageChecked.width)
-                    val layoutItemParams = layoutItem.layoutParams
+                var itemWidth = layoutTextItem.width
+                val itemMaxWidth = containerTextAndCheckedItem.width - (lottieImageChecked.width + AppUtil.dpToPx(this@NeedsActivity, 35f))
+                if (layoutTextItem.width >= itemMaxWidth) {
+                    itemWidth = (containerTextAndCheckedItem.width - lottieImageChecked.width)
+                    val layoutItemParams = layoutTextItem.layoutParams
                     layoutItemParams.width = itemMaxWidth
-                    layoutItem.layoutParams = layoutItemParams
+                    layoutTextItem.layoutParams = layoutItemParams
                 }
 
-                val xLayoutItem = (needsMasterLayout.width - itemWidth - AppUtil.dpToPx(this@NeedsActivity, 10f)).toFloat()
-                layoutItem.x = xLayoutItem
-                imageChecked.x = xLayoutItem - imageChecked.width - AppUtil.dpToPx(this@NeedsActivity, 8f)
-                imageChecked.y = (layoutItem.height / 2f) - (imageChecked.height / 2f)
+                val xLayoutItem = (containerTextAndCheckedItem.width - itemWidth - AppUtil.dpToPx(this@NeedsActivity, 10f)).toFloat()
+                layoutTextItem.x = xLayoutItem
+                lottieImageChecked.x = xLayoutItem - lottieImageChecked.width - AppUtil.dpToPx(this@NeedsActivity, 8f)
+                lottieImageChecked.y = (layoutTextItem.height / 2f) - (lottieImageChecked.height / 2f)
 
-                val needsItemParams = needsMasterLayout.layoutParams
-                needsItemParams.height = layoutItem.height
-                needsMasterLayout.layoutParams = needsItemParams
-                needsMasterLayout.viewTreeObserver.removeOnGlobalLayoutListener(this)
+                val needsItemParams = containerTextAndCheckedItem.layoutParams
+                needsItemParams.height = layoutTextItem.height
+                containerTextAndCheckedItem.layoutParams = needsItemParams
+                containerTextAndCheckedItem.viewTreeObserver.removeOnGlobalLayoutListener(this)
             }
         })
 
-        needsMasterLayout.addView(imageChecked)
-        needsMasterLayout.addView(layoutItem)
-        arrayListOfNeedsLayout.add(needsMasterLayout)
-        containerNeedsContent.addView(needsMasterLayout)
+        /*========================  LAYOUT MASTER-NEEDS  ========================*/
+        val needsLayout = LinearLayout(this)
+        val needsLayoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+        needsLayout.layoutParams = needsLayoutParams
+        needsLayout.orientation = LinearLayout.VERTICAL
+        needsLayout.gravity = Gravity.CENTER
+
+        val textNeedsDate = AppCompatTextView(this)
+        val textNeedsDateParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT)
+        textNeedsDateParams.setMargins(
+            AppUtil.dpToPx(this, 10f), AppUtil.dpToPx(this, 16f),
+            AppUtil.dpToPx(this, 10f), AppUtil.dpToPx(this, 13f)
+        )
+        textNeedsDate.setPadding(
+            AppUtil.dpToPx(this, 10f), AppUtil.dpToPx(this, 8f),
+            AppUtil.dpToPx(this, 10f), AppUtil.dpToPx(this, 8f)
+        )
+        textNeedsDate.layoutParams = textNeedsDateParams
+        textNeedsDate.background = resources.getDrawable(R.drawable.background_text_view_date_gray, null)
+        TextViewCompat.setTextAppearance(textNeedsDate, R.style.TextBoldWhite12)
+        textNeedsDate.text = getString(R.string.secret_letter_calendar)
+        textNeedsDate.viewTreeObserver.addOnGlobalLayoutListener(
+            object : ViewTreeObserver.OnGlobalLayoutListener {
+                override fun onGlobalLayout() {
+                    val textParams = textNeedsDate.layoutParams
+                    textParams.height = textNeedsDate.measuredHeight
+                    textNeedsDate.layoutParams = textParams
+                    textNeedsDate.viewTreeObserver.removeOnGlobalLayoutListener(this)
+                }
+            })
+
+        /*========================  ADDED TO CONTAINER TIME !!!  ========================*/
+        containerTextAndCheckedItem.addView(lottieImageChecked)
+        containerTextAndCheckedItem.addView(layoutTextItem)
+        needsLayout.addView(textNeedsDate)
+        needsLayout.addView(containerTextAndCheckedItem)
+        arrayListOfNeedsLayout.add(needsLayout)
+        containerNeedsContent.addView(needsLayout)
 
         var previousYLayout = 0
         containerNeedsContent.viewTreeObserver.addOnGlobalLayoutListener(
