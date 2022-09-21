@@ -4,19 +4,17 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.example.kuntan.dao.HistoryDao
-import com.example.kuntan.dao.ScheduleDao
-import com.example.kuntan.dao.SettingsDao
-import com.example.kuntan.entity.History
-import com.example.kuntan.entity.Schedule
-import com.example.kuntan.entity.Settings
+import com.example.kuntan.dao.*
+import com.example.kuntan.entity.*
 
-@Database(entities = [Schedule::class, History::class, Settings::class], version = 1, exportSchema = false)
+@Database(entities = [Settings::class, Schedule::class, Identity::class, Needs::class, History::class], version = 1)
 abstract class KuntanRoomDatabase : RoomDatabase() {
 
-    abstract fun scheduleDao(): ScheduleDao
-    abstract fun historyDao(): HistoryDao
     abstract fun settingsDao(): SettingsDao
+    abstract fun scheduleDao(): ScheduleDao
+    abstract fun identityDao(): IdentityDao
+    abstract fun needsDao(): NeedsDao
+    abstract fun historyDao(): HistoryDao
 
     companion object {
         @Volatile

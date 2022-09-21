@@ -12,19 +12,21 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.util.TypedValue
-import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
+import android.view.animation.AnimationUtils
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.widget.TextViewCompat
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.kuntan.adapter.CategoryAdapter
 import com.example.kuntan.adapter.DashboardScheduleAdapter
 import com.example.kuntan.adapter.PaymentMethodSpinnerAdapter
 import com.example.kuntan.entity.History
 import com.example.kuntan.entity.Settings
+import com.example.kuntan.fragment.IdentityScreenFragment
 import com.example.kuntan.lib.CalendarDialog
 import com.example.kuntan.lib.SelectorItemsBottomSheet
 import com.example.kuntan.utility.AppUtil
@@ -51,6 +53,7 @@ class DashboardActivity : AppCompatActivity() {
     private val database by lazy { KuntanRoomDatabase(this) }
     private var isMenuHidden = false
     private var isMenuAnimating = false
+    private var isIdentityShown = false
     private var isDefaultSchedule = true
     private var username = ""
     private var currentDate = ""
@@ -64,6 +67,7 @@ class DashboardActivity : AppCompatActivity() {
         Times.Isya.name
     )
 
+    private lateinit var fragment: Fragment
     private lateinit var constraintActivityMain: ConstraintLayout
     private lateinit var constraintMainMenu: ConstraintLayout
     private lateinit var constraintMainMenuContainer: ConstraintLayout
@@ -148,12 +152,12 @@ class DashboardActivity : AppCompatActivity() {
     private fun adjustSettings() {
         CoroutineScope(Dispatchers.IO).launch {
             val settings = database.settingsDao().getSettings()
+            Log.d(TAG, "checkSettings - settings: $settings")
             if (settings == null) {
                 val setting = Settings(0, username, Constant.APP_THEME_LIGHT, getString(R.string.setting_language_english), Constant.DASHBOARD_CLOCK_PRIMARY, getString(R.string.setting_background_animation_off), Constant.DASHBOARD_BACKGROUND_AUTUMN, getString(R.string.setting_background_music_off))
                 database.settingsDao().insertSetting(setting)
             } else {
                 runOnUiThread {
-                    Log.d(TAG, "checkSettings - settings: $settings")
                     if (settings.language == getString(R.string.setting_language_bahasa)) {
                         textDate.text = SimpleDateFormat("EEEE, dd MMMM yyyy").format(Calendar.getInstance().time)
                     }
@@ -202,8 +206,8 @@ class DashboardActivity : AppCompatActivity() {
 
     @SuppressLint("ClickableViewAccessibility", "SimpleDateFormat")
     private fun initListener() {
+        overlayLayout.setOnClickListener {}
         setting.setOnClickListener {
-            //goToSettings
             startActivity(Intent(this@DashboardActivity, SettingsActivity::class.java)
                 .setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP))
         }
@@ -224,15 +228,26 @@ class DashboardActivity : AppCompatActivity() {
             refreshSchedule()
         }
         menuBook.setOnClickListener {
-            //goToBookPage
             startActivity(Intent(this@DashboardActivity, WebViewActivity::class.java)
                 .setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP))
         }
         menuIdentity.setOnClickListener {
-            //goToQuestionPage
+            placeHolderLayout.x = resources.displayMetrics.widthPixels.toFloat()
+            fragment = IdentityScreenFragment(applicationContext).addIdentityListener(
+                object : IdentityScreenFragment.IdentityListener {
+                override fun onIdentityScreenCreated() {
+                    showOverlayLayout()
+                    placeHolderLayout.animate().translationX(0f)
+                    isIdentityShown = true
+                }
+            })
+            supportFragmentManager.beginTransaction().replace(R.id.placeHolderLayout, fragment, "identity").commit()
+            placeHolderLayout.visibility = VISIBLE
         }
-        menuCart.setOnClickListener {
-            //goToCartPage
+        menuNeeds.setOnClickListener {
+            startActivity(Intent(this@DashboardActivity, NeedsActivity::class.java)
+                .setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP))
+            finish()
         }
         menuHistory.setOnClickListener {
             startActivity(Intent(this@DashboardActivity, HistoryActivity::class.java)
@@ -248,57 +263,39 @@ class DashboardActivity : AppCompatActivity() {
         loveMessage.setOnClickListener {
             Toast.makeText(applicationContext, getString(R.string.secret_letter_coming_soon), Toast.LENGTH_SHORT).show()
             //val secretLetterDialog = SecretLetterDialog(applicationContext)
-            //secretLetterLayout.addView(secretLetterDialog)
-            //secretLetterLayout.visibility = VISIBLE
+            //placeHolderLayout.addView(secretLetterDialog)
+            //placeHolderLayout.visibility = VISIBLE
         }
-        textViewAdd.setOnClickListener {
-            val isGoodsFilled: Boolean
-            val isAmountFilled: Boolean
-            if (editTextGoods.text.toString().isEmpty()) {
-                textViewGoodsAlert.visibility = VISIBLE
-                isGoodsFilled = false
-            } else {
-                textViewGoodsAlert.visibility = GONE
-                isGoodsFilled = true
-            }
-            if (editTextAmount.text.toString().isEmpty()) {
-                textViewAmountAlert.visibility = VISIBLE
-                isAmountFilled = false
-            } else {
-                textViewAmountAlert.visibility = GONE
-                isAmountFilled = true
-            }
-            if (isGoodsFilled && isAmountFilled) {
-                AppUtil.hideSoftKeyboard(constraintActivityMain, applicationContext)
-                CoroutineScope(Dispatchers.IO).launch {
-                    database.historyDao().insert(
-                        History(
-                            0,
-                            currentDate.split("-")[2],
-                            currentDate.split("-")[1],
-                            currentDate.split("-")[0],
-                            SimpleDateFormat("HH:mm").format(Date()),
-                            currentDate.split("-")[2],
-                            currentDate.split("-")[1],
-                            currentDate.split("-")[0],
-                            SimpleDateFormat("HH:mm").format(Date()),
-                            editTextGoods.text.toString(),
-                            editTextAmount.text.toString(),
-                            editTextNote.text.toString(),
-                            textViewCategory.text.toString(),
-                            paymentMethod
-                        )
+        imageAdd.setOnClickListener {
+            AppUtil.hideSoftKeyboard(constraintActivityMain, applicationContext)
+            CoroutineScope(Dispatchers.IO).launch {
+                database.historyDao().insert(
+                    History(
+                        0,
+                        currentDate.split("-")[2],
+                        currentDate.split("-")[1],
+                        currentDate.split("-")[0],
+                        SimpleDateFormat("HH:mm").format(Date()),
+                        currentDate.split("-")[2],
+                        currentDate.split("-")[1],
+                        currentDate.split("-")[0],
+                        SimpleDateFormat("HH:mm").format(Date()),
+                        editTextGoods.text.toString().trim(),
+                        editTextAmount.text.toString().trim(),
+                        editTextNote.text.toString().trim(),
+                        textViewCategory.text.toString(),
+                        paymentMethod
                     )
-                    runOnUiThread {
-                        //Reset form
-                        editTextGoods.setText("")
-                        editTextAmount.setText("")
-                        editTextNote.setText("")
-                        textViewCategory.text = getString(R.string.category_others)
-                        layoutPaymentMethod.setSelection(0)
-                        Snackbar.make(constraintActivityMain, getString(R.string.snackbar_monthly_expenses_added),
-                            Snackbar.LENGTH_INDEFINITE).setAnimationMode(Snackbar.ANIMATION_MODE_SLIDE).setAction("DISMISS") {}.show()
-                    }
+                )
+                runOnUiThread {
+                    //Reset form
+                    editTextGoods.setText("")
+                    editTextAmount.setText("")
+                    editTextNote.setText("")
+                    textViewCategory.text = getString(R.string.category_others)
+                    layoutPaymentMethod.setSelection(0)
+                    Snackbar.make(constraintActivityMain, getString(R.string.snackbar_monthly_expenses_added),
+                        Snackbar.LENGTH_INDEFINITE).setAnimationMode(Snackbar.ANIMATION_MODE_SLIDE).setAction("DISMISS") {}.show()
                 }
             }
         }
@@ -356,7 +353,6 @@ class DashboardActivity : AppCompatActivity() {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
             override fun afterTextChanged(s: Editable?) {
                 if (isAmount) {
-                    if (s != null && s.isNotEmpty()) textViewAmountAlert.visibility = GONE
                     editTextAmount.removeTextChangedListener(this)
                     try {
                         var originalString = s.toString()
@@ -372,15 +368,13 @@ class DashboardActivity : AppCompatActivity() {
                         nfe.printStackTrace()
                     }
                     editTextAmount.addTextChangedListener(this)
-                } else {
-                    if (s != null && s.isNotEmpty()) textViewGoodsAlert.visibility = GONE
                 }
                 if (editTextGoods.text.toString().isNotEmpty() && editTextAmount.text.toString().isNotEmpty()) {
-                    textViewAdd.isEnabled = true
-                    textViewAdd.background = applicationContext.resources.getDrawable(R.drawable.selector_button_save_expenses, null)
+                    imageAdd.isEnabled = true
+                    imageAdd.background = applicationContext.resources.getDrawable(R.drawable.selector_button_send_needs_item, null)
                 } else {
-                    textViewAdd.isEnabled = false
-                    textViewAdd.background = applicationContext.resources.getDrawable(R.drawable.background_button_save_disabled, null)
+                    imageAdd.isEnabled = false
+                    imageAdd.background = applicationContext.resources.getDrawable(R.drawable.background_button_send_disabled, null)
                 }
             }
         }
@@ -427,6 +421,34 @@ class DashboardActivity : AppCompatActivity() {
                 override fun onAnimationCancel(animation: Animator?) {}
                 override fun onAnimationRepeat(animation: Animator?) {}
             })
+        }
+    }
+
+    private fun showOverlayLayout() {
+        overlayLayout.startAnimation(AnimationUtils.loadAnimation(applicationContext, R.anim.white_overlay_fade_in))
+        overlayLayout.visibility = VISIBLE
+    }
+
+    private fun hideOverlayLayout() {
+        overlayLayout.startAnimation(AnimationUtils.loadAnimation(applicationContext, R.anim.white_overlay_fade_out))
+        overlayLayout.visibility = GONE
+    }
+
+    override fun onBackPressed() {
+        if (isIdentityShown) {
+            placeHolderLayout.animate().translationX(resources.displayMetrics.widthPixels.toFloat()).setListener(object : Animator.AnimatorListener{
+                override fun onAnimationStart(animation: Animator?) {
+                    hideOverlayLayout()
+                }
+                override fun onAnimationEnd(animation: Animator?) {
+                    placeHolderLayout.visibility = GONE
+                    isIdentityShown = false
+                }
+                override fun onAnimationCancel(animation: Animator?) {}
+                override fun onAnimationRepeat(animation: Animator?) {}
+            })
+        } else {
+            super.onBackPressed()
         }
     }
 }

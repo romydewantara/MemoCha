@@ -111,11 +111,4 @@ public class SecretLetterDialog(context: Context): RelativeLayout(context) {
         imagePhoto.y = content.y + content.measuredHeight + (calendar.measuredHeight * 6)
     }
 
-    @SuppressLint("NewApi", "ResourceType")
-    fun border(view: View, color: Int) {
-        val border = GradientDrawable()
-        border.setStroke(5, context.resources.getColor(color, null))
-        view.background = border
-    }
-
 }

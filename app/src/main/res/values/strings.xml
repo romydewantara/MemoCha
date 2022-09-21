@@ -71,8 +71,8 @@
     <string name="dasboard_expenses_category_item">Others</string>
     <string name="dasboard_expenses_title_goods">Goods or Service</string>
     <string name="dasboard_expenses_title_amount">Price</string>
-    <string name="dasboard_expenses_hint_goods">Ex: TV, Herbs, Service, etc</string>
-    <string name="dasboard_expenses_hint_amount">Ex: 20.000</string>
+    <string name="dasboard_expenses_hint_goods">Ex: Herbs, Service, etc…</string>
+    <string name="dasboard_expenses_hint_amount">Ex: 25.000</string>
     <string name="dasboard_expenses_hint_note">Notes (Optional)</string>
     <string name="dasboard_expenses_button_add">Add</string>
 
@@ -118,6 +118,17 @@
     <string name="snackbar_monthly_expenses_added">New data has been added to monthly expense history</string>
     <string name="snackbar_monthly_expenses_updated">Data has been updated</string>
     <string name="snackbar_monthly_expenses_deleted">Data has been deleted from history</string>
+
+    <!-- N E E D S -->
+    <string name="needs_title_page">Need List</string>
+    <string name="needs_date">@string/secret_letter_calendar</string>
+    <string name="needs_today_list">Today\'s List: %s</string>
+    <string name="needs_hint_goods">Ex: Ice Cream, Glass, etc…</string>
+    <string name="needs_text_length_limit">Text length has reached the maximum limit (max. 400 characters), your text length: %s</string>
+
+    <!-- I D E N T I T Y -->
+    <string name="identity_title_page">Family Data Information</string>
+    <string name="identity_address">Address</string>
 
     <!-- H I S T O R Y -->
     <string name="history_title_page">History</string>

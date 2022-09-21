@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Rect
 import android.graphics.drawable.Drawable
+import android.graphics.drawable.GradientDrawable
 import android.util.TypedValue
 import android.view.View
 import android.view.inputmethod.InputMethodManager
@@ -38,6 +39,12 @@ class AppUtil {
         fun dpToPx(c: Context, dipValue: Float): Int {
             val metrics = c.resources.displayMetrics
             return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dipValue, metrics).toInt()
+        }
+        fun getWidthPercent(c: Context, percent: Float) : Float {
+            return c.resources.displayMetrics.widthPixels * (percent / 100)
+        }
+        fun getHeightPercent(c: Context, percent: Float) : Float {
+            return c.resources.displayMetrics.heightPixels * (percent / 100)
         }
         @SuppressLint("UseCompatLoadingForDrawables")
         fun convertDrawableFromTheme(c: Context, theme: String): Drawable {
@@ -129,6 +136,12 @@ class AppUtil {
         }
         fun convertCardinalNumber(number: String): String {
             return ""
+        }
+        @SuppressLint("NewApi", "ResourceType")
+        fun border(context: Context, view: View, color: Int) {
+            val border = GradientDrawable()
+            border.setStroke(5, context.resources.getColor(color, null))
+            view.background = border
         }
     }
 }

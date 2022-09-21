@@ -78,18 +78,19 @@ class MonthlyExpensesEditor(
         initListener()
     }
 
-    @SuppressLint("ClickableViewAccessibility", "SimpleDateFormat")
+    @SuppressLint("ClickableViewAccessibility", "SimpleDateFormat", "UseCompatLoadingForDrawables")
     private fun initListener() {
         textViewNotes.text = context.getString(R.string.history_edit_monthly_expenses)
-        textViewAdd.text = context.getString(R.string.button_save)
+        imageAdd.setImageResource(R.drawable.ic_save)
+        imageAdd.background = context.resources.getDrawable(R.drawable.background_button_send_disabled, null)
         textViewCategory.text = history.category
         editTextGoods.setText(history.goods)
         editTextAmount.setText(history.amount)
         editTextNote.setText(history.description)
-        textViewDelete.visibility = View.VISIBLE
-        textViewDelete.isEnabled = true
+        imageDelete.visibility = View.VISIBLE
+        imageDelete.isEnabled = true
 
-        textViewDelete.setOnClickListener {
+        imageDelete.setOnClickListener {
             val kuntanPopupDialog = KuntanPopupDialog.newInstance().setContent(context.getString(R.string.dialog_title_delete_from_history),
                 context.getString(R.string.dialog_message_delete_from_history), "OK", context.getString(R.string.button_cancel), object : KuntanPopupDialog.KuntanPopupDialogListener {
                     override fun onNegativeButton() {
@@ -107,20 +108,20 @@ class MonthlyExpensesEditor(
             kuntanPopupDialog.show(fragmentManager, kuntanPopupDialog.tag)
             AppUtil.hideSoftKeyboard(this, context)
         }
-        textViewAdd.setOnClickListener {
+        imageAdd.setOnClickListener {
             AppUtil.hideSoftKeyboard(this, context)
             CoroutineScope(Dispatchers.IO).launch {
                 val currentDate = SimpleDateFormat("dd-MM-yyyy").format(Calendar.getInstance().time)
                 val currentTime = SimpleDateFormat("HH:mm").format(Date())
                 database.historyDao().updateHistory(history.id, currentDate.split("-")[2],
                     currentDate.split("-")[1], currentDate.split("-")[0],
-                    currentTime, editTextGoods.text.toString(), editTextAmount.text.toString(),
-                    editTextNote.text.toString(), textViewCategory.text.toString(), paymentMethod)
+                    currentTime, editTextGoods.text.toString().trim(), editTextAmount.text.toString().trim(),
+                    editTextNote.text.toString().trim(), textViewCategory.text.toString(), paymentMethod)
 
                 (mContext as Activity).runOnUiThread {
-                    history.goods = editTextGoods.text.toString()
-                    history.amount = editTextAmount.text.toString()
-                    history.description = editTextNote.text.toString()
+                    history.goods = editTextGoods.text.toString().trim()
+                    history.amount = editTextAmount.text.toString().trim()
+                    history.description = editTextNote.text.toString().trim()
                     history.category = textViewCategory.text.toString()
                     history.method = paymentMethod
                     history.yearEdited = currentDate.split("-")[2]
@@ -185,10 +186,9 @@ class MonthlyExpensesEditor(
             override fun afterTextChanged(s: Editable?) {
                 when(type) {
                     EDIT_TEXT_GOODS -> {
-                        if (s != null && s.isNotEmpty()) textViewGoodsAlert.visibility = GONE
+
                     }
                     EDIT_TEXT_AMOUNT -> {
-                        if (s != null && s.isNotEmpty()) textViewAmountAlert.visibility = GONE
                         editTextAmount.removeTextChangedListener(this)
                         try {
                             var originalString = s.toString()
@@ -222,11 +222,11 @@ class MonthlyExpensesEditor(
     @SuppressLint("UseCompatLoadingForDrawables")
     private fun setSaveButtonEnable(isEnable: Boolean) {
         if (isEnable) {
-            textViewAdd.isEnabled = true
-            textViewAdd.background = context.resources.getDrawable(R.drawable.selector_button_save_expenses, null)
+            imageAdd.isEnabled = true
+            imageAdd.background = context.resources.getDrawable(R.drawable.selector_button_send_needs_item, null)
         } else {
-            textViewAdd.isEnabled = false
-            textViewAdd.background = context.resources.getDrawable(R.drawable.background_button_save_disabled, null)
+            imageAdd.isEnabled = false
+            imageAdd.background = context.resources.getDrawable(R.drawable.background_button_send_disabled, null)
         }
     }
 
