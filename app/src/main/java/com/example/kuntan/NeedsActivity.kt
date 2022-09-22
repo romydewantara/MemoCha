@@ -35,6 +35,7 @@ import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
 
+@SuppressLint("ClickableViewAccessibility", "SimpleDateFormat", "UseCompatLoadingForDrawables")
 class NeedsActivity : AppCompatActivity(), NeedsListener {
 
     companion object {
@@ -66,6 +67,7 @@ class NeedsActivity : AppCompatActivity(), NeedsListener {
 
     private fun init() {
         needsListener = this
+        tempDate = SimpleDateFormat("dd/MM/yyyy").format(Calendar.getInstance().time)
         val needsHeader = findViewById<ConstraintLayout>(R.id.layoutNeedsHeader)
         val needsFooter = findViewById<ConstraintLayout>(R.id.layoutNeedsFooter)
         needsHeader.post { updateLayoutSize(HEADER, needsHeader.height, needsHeader.y) }
@@ -81,7 +83,6 @@ class NeedsActivity : AppCompatActivity(), NeedsListener {
         populateNeeds()
     }
 
-    @SuppressLint("ClickableViewAccessibility", "SimpleDateFormat")
     private fun initListener() {
         var previousTextLength = 0
         editTextNeedsItem.addTextChangedListener(onTextChangedListener())
@@ -109,15 +110,22 @@ class NeedsActivity : AppCompatActivity(), NeedsListener {
                 val currentDate = SimpleDateFormat("dd/MM/yyyy").format(Calendar.getInstance().time)
                 val currentTime = SimpleDateFormat("HH:mm").format(Date())
                 var isDateShown = false
-                /*if (tempDate != currentDate) {
+                if (tempDate != currentDate) {
                     tempDate = currentDate
                     isDateShown = true
-                }*/
+                }
                 val needsObj = Needs(0, editTextNeedsItem.text.toString().trim(), currentDate, currentTime, isDateShown, false, null)
-                generateNeedsItem(needsObj)
                 CoroutineScope(Dispatchers.IO).launch {
                     Log.d("Needs", "initListener - needs: ${Gson().toJson(needsObj)}")
                     database.needsDao().insert(needsObj)
+                    val needs = database.needsDao().getNeeds()
+                    runOnUiThread {
+                        for (i in needs.indices) {
+                            if (i == needs.size - 1) {
+                                generateNeedsItem(needs[i])
+                            }
+                        }
+                    }
                 }
             }
             editTextNeedsItem.setText("")
@@ -149,6 +157,10 @@ class NeedsActivity : AppCompatActivity(), NeedsListener {
                 val amount = if (needs.isNotEmpty()) needs.size else 0
                 runOnUiThread {
                     for (i in needs.indices) {
+                        if (tempDate != needs[i].date) {
+                            tempDate = needs[i].date
+                            needs[i].isDateShown = true
+                        }
                         generateNeedsItem(needs[i])
                     }
                     textViewNeedsAmount.text = String.format(getString(R.string.needs_today_list), amount)
@@ -157,7 +169,6 @@ class NeedsActivity : AppCompatActivity(), NeedsListener {
         }
     }
 
-    @SuppressLint("UseCompatLoadingForDrawables")
     private fun onTextChangedListener() : TextWatcher {
         return object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -186,8 +197,8 @@ class NeedsActivity : AppCompatActivity(), NeedsListener {
         }
     }
 
-    @SuppressLint("UseCompatLoadingForDrawables")
     private fun generateNeedsItem(needs: Needs) {
+        Log.d(TAG, "generateNeedsItem - needs: ${Gson().toJson(needs)}")
         val needsItem = NeedsItem(applicationContext).getInstance(needs,
             object : NeedsItem.NeedsItemListener {
                 override fun onChecked(id: Int, checked: Boolean) {
@@ -200,14 +211,14 @@ class NeedsActivity : AppCompatActivity(), NeedsListener {
                         getString(R.string.button_delete), getString(R.string.button_cancel),
                         object : KuntanPopupDialog.KuntanPopupDialogListener {
                             override fun onNegativeButton() {
-                                CoroutineScope(Dispatchers.IO).launch {
+                                /*CoroutineScope(Dispatchers.IO).launch {
                                     database.needsDao().deleteNeeds(id)
                                     runOnUiThread {
-                                        /*containerNeedsContent.removeAllViews()
+                                        *//*containerNeedsContent.removeAllViews()
                                         arrayListOfNeedsLayout.clear()
-                                        populateNeeds()*/
+                                        populateNeeds()*//*
                                     }
-                                }
+                                }*/
                             }
                             override fun onPositiveButton() {}
                         })
@@ -219,7 +230,8 @@ class NeedsActivity : AppCompatActivity(), NeedsListener {
         containerNeedsContent.viewTreeObserver.addOnGlobalLayoutListener(
             object : ViewTreeObserver.OnGlobalLayoutListener {
                 override fun onGlobalLayout() {
-                    val marginTop = AppUtil.dpToPx(this@NeedsActivity, 10f)
+                    var marginTop = AppUtil.dpToPx(this@NeedsActivity, 10f)
+                    if (!needs.isDateShown) marginTop = AppUtil.dpToPx(this@NeedsActivity, 3f)
 
                     needsItem.y = (previousYLayout + marginTop).toFloat()
                     previousYLayout += (marginTop + needsItem.height)
@@ -228,7 +240,9 @@ class NeedsActivity : AppCompatActivity(), NeedsListener {
                     val containerParams = FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT)
                     containerParams.height = needsContainerHeight + AppUtil.dpToPx(this@NeedsActivity, 10f)
                     containerNeedsContent.layoutParams = containerParams
-                    scrollViewNeeds.scrollTo(0, needsContainerHeight + AppUtil.dpToPx(this@NeedsActivity, 10f))
+                    Log.d(TAG, "onGlobalLayout - container height: ${containerNeedsContent.height} | params: ${containerNeedsContent.layoutParams.height} | measured: ${containerNeedsContent.measuredHeight}")
+                    val bottomOfLastItem = (needsItem.y + needsItem.height + AppUtil.dpToPx(this@NeedsActivity, 10f)).toInt()
+                    scrollViewNeeds.scrollTo(0, bottomOfLastItem)
                     containerNeedsContent.viewTreeObserver.removeOnGlobalLayoutListener(this)
                 }
             })

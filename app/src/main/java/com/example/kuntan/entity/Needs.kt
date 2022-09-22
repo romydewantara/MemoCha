@@ -10,7 +10,7 @@ class Needs(
     val item: String,
     val date: String,
     val time: String,
-    val isDateShown: Boolean,
+    var isDateShown: Boolean,
     val checked: Boolean,
     @ColumnInfo(typeAffinity = ColumnInfo.BLOB) val image: ByteArray?
 )
