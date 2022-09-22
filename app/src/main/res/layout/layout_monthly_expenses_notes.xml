@@ -40,17 +40,85 @@
         app:layout_constraintTop_toTopOf="@id/textViewNotes"
         app:layout_constraintWidth_percent=".05" />
 
+    <RelativeLayout
+        android:id="@+id/layoutCalendar"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:background="?android:selectableItemBackground"
+        android:paddingTop="6dp"
+        android:paddingBottom="6dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@id/textViewNotes"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintWidth_percent=".4">
+
+        <ImageView
+            android:id="@+id/iconCalendar"
+            android:layout_width="40dp"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:paddingEnd="5dp"
+            android:scaleType="fitEnd"
+            android:src="@drawable/ic_calendar"
+            tools:ignore="RtlSymmetry" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textViewCalendar"
+            style="@style/TextBoldNavy12"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@id/iconCalendar"
+            android:autoSizeTextType="uniform"
+            android:maxLines="1"
+            android:text="17/10/2021" />
+
+    </RelativeLayout>
+
     <Spinner
         android:id="@+id/layoutPaymentMethod"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginTop="8dp"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
         android:background="@drawable/background_dark_transparent"
         android:popupBackground="@drawable/popup_spinner_background_rounded"
         android:spinnerMode="dropdown"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textViewCategory"
+        app:layout_constraintRight_toLeftOf="@id/textViewCategoryTitle"
+        app:layout_constraintTop_toBottomOf="@id/textViewNotes"
         tools:listitem="@layout/layout_payment_method_item_spinner" />
+
+    <ImageView
+        android:id="@+id/textViewCategoryTitle"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="?android:selectableItemBackground"
+        android:clickable="true"
+        android:padding="2dp"
+        android:src="@drawable/ic_category"
+        app:layout_constraintBottom_toBottomOf="@id/layoutPaymentMethod"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/layoutPaymentMethod"
+        app:layout_constraintWidth_percent=".1" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/textViewCategory"
+        style="@style/TextRegularDarkGrey12"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="end"
+        android:maxLines="1"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
+        android:text="@string/dasboard_expenses_category_item"
+        android:visibility="gone"
+        app:autoSizeTextType="uniform"
+        app:layout_constraintRight_toRightOf="@id/textViewCategoryTitle"
+        app:layout_constraintTop_toBottomOf="@id/textViewCategoryTitle"
+        app:layout_constraintWidth_percent=".4" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/textViewGoods"
@@ -107,9 +175,10 @@
     <EditText
         android:id="@+id/editTextNote"
         style="@style/TextRegularDarkGrey16"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="10dp"
         android:background="@drawable/background_edit_text_number"
         android:drawableStart="@drawable/ic_notes_column"
         android:drawablePadding="6dp"
@@ -118,100 +187,36 @@
         android:maxLines="1"
         android:padding="8dp"
         app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/imageDelete"
         app:layout_constraintTop_toBottomOf="@id/editTextAmount" />
-
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/textViewCategoryTitle"
-        style="@style/TextBoldBlue14"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:clickable="true"
-        android:focusable="true"
-        android:padding="8dp"
-        android:text="@string/dasboard_expenses_category"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@id/textViewNotes" />
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/textViewCategory"
-        style="@style/TextRegularDarkGrey12"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:gravity="end"
-        android:maxLines="1"
-        android:paddingStart="8dp"
-        android:paddingEnd="8dp"
-        android:text="@string/dasboard_expenses_category_item"
-        app:autoSizeTextType="uniform"
-        app:layout_constraintRight_toRightOf="@id/textViewCategoryTitle"
-        app:layout_constraintTop_toBottomOf="@id/textViewCategoryTitle"
-        app:layout_constraintWidth_percent=".4" />
 
     <ImageView
         android:id="@+id/imageAdd"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="6dp"
         android:background="@drawable/background_button_send_disabled"
         android:padding="10dp"
         android:src="@drawable/ic_send"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/editTextNote"
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/editTextNote"
+        app:layout_constraintTop_toTopOf="@+id/editTextNote"
         app:layout_constraintWidth_percent=".1" />
 
     <ImageView
         android:id="@+id/imageDelete"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="6dp"
         android:layout_marginEnd="10dp"
         android:background="@drawable/selector_image_button_delete"
         android:padding="4dp"
         android:src="@drawable/ic_trash_red_white"
         android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/editTextNote"
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintRight_toLeftOf="@id/imageAdd"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/editTextNote"
+        app:layout_constraintTop_toTopOf="@+id/editTextNote"
         app:layout_constraintWidth_percent=".1" />
-
-    <RelativeLayout
-        android:id="@+id/layoutCalendar"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:background="?android:selectableItemBackground"
-        android:paddingTop="6dp"
-        android:paddingBottom="6dp"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@id/imageAdd"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="@id/imageAdd"
-        app:layout_constraintWidth_percent=".4">
-
-        <ImageView
-            android:id="@+id/iconCalendar"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_centerVertical="true"
-            android:src="@drawable/ic_calendar" />
-
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/textViewCalendar"
-            style="@style/TextRegularBlue12"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="6dp"
-            android:layout_marginEnd="6dp"
-            android:layout_toEndOf="@id/iconCalendar"
-            android:autoSizeTextType="uniform"
-            android:maxLines="1"
-            android:text="17/10/2021" />
-
-    </RelativeLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

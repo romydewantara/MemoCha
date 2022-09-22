@@ -8,9 +8,9 @@
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/teal_light</item>
         <item name="colorSecondaryVariant">@color/teal_dark</item>
-        <item name="colorOnSecondary">@color/black</item>
+        <item name="colorOnSecondary">@color/teal_extra_dark</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorSecondaryVariant</item>
+        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorOnSecondary</item>
         <!-- Customize your theme here. -->
     </style>
 
@@ -234,6 +234,13 @@
         <item name="android:fontFamily">@font/abeezee_regular</item>
         <item name="android:textColor">@color/blue_navy</item>
         <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="TextBoldNavy12">
+        <item name="android:fontFamily">@font/abeezee_regular</item>
+        <item name="android:textColor">@color/blue_navy</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
     <style name="TextBoldNavy14">

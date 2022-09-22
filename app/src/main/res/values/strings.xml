@@ -144,7 +144,7 @@
     <string name="history_detail_empty">Monthly expense history for this month is empty</string>
 
     <string name="history_edited_text">─ Edited</string>
-    <string name="history_edit_monthly_expenses">Edit Monthly Expense</string>
+    <string name="history_edit_monthly_expenses">Edit</string>
 
     <!-- S C H E D U L E -->
     <string name="schedule_title_page">Schedule</string>

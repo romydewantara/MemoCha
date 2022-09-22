@@ -3,9 +3,12 @@
     android:shape="oval">
     <stroke
         android:width="4dp"
-        android:color="@color/pewter" />
+        android:color="@color/gray" />
     <gradient
         android:startColor="@color/black"
-        android:centerColor="@color/dark_gray"
-        android:endColor="@color/gray" />
+        android:centerColor="@color/black"
+        android:endColor="@color/gray"
+        android:type="sweep"
+        android:centerX="0%"
+        android:centerY="100%"/>
 </shape>

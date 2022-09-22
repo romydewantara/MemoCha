@@ -321,7 +321,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:background="@drawable/background_edit_text_number"
+            android:background="@drawable/background_edit_text_search"
             android:drawableStart="@drawable/ic_action_column"
             android:drawablePadding="6dp"
             android:hint="@string/schedule_bs_type_here"

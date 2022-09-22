@@ -2,11 +2,13 @@
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
     android:shape="oval">
     <stroke
-        android:width="4dp"
+        android:width="3dp"
         android:color="@color/teal_semi_light" />
     <gradient
         android:startColor="@color/teal_extra_dark"
-        android:centerColor="@color/teal_dark"
-        android:endColor="@color/teal"
-        />
+        android:centerColor="@color/teal"
+        android:endColor="@color/teal_extra_dark"
+        android:type="sweep"
+        android:centerX="0%"
+        android:centerY="100%"/>
 </shape>

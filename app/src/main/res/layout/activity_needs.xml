@@ -10,7 +10,7 @@
         android:id="@+id/layoutNeedsHeader"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:background="@color/teal_dark"
+        android:background="@color/teal_extra_dark"
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -85,7 +85,7 @@
         android:id="@+id/layoutNeedsFooter"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/dark_gray"
+        android:background="@drawable/background_needs_footer_gradient_dark"
         app:layout_constraintBottom_toBottomOf="parent">
 
         <ImageView

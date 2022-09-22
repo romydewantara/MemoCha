@@ -144,7 +144,7 @@
     <string name="history_detail_empty">Riwayat pengeluaran di bulan ini kosong</string>
 
     <string name="history_edited_text">─ Dirubah</string>
-    <string name="history_edit_monthly_expenses">Ubah Catatan Pengeluaran</string>
+    <string name="history_edit_monthly_expenses">Ubah</string>
 
     <!-- S C H E D U L E -->
     <string name="schedule_title_page">Jadwal</string>
