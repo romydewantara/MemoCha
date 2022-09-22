@@ -157,4 +157,15 @@
 
     </ScrollView>
 
+    <RelativeLayout
+        android:id="@+id/needsLoading"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clickable="true"
+        android:visibility="gone"
+        android:background="@color/black_60"
+        android:gravity="center">
+        <include layout="@layout/layout_kuntan_loading_dialog" />
+    </RelativeLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

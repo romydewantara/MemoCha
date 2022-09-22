@@ -24,6 +24,7 @@ import androidx.core.widget.TextViewCompat
 import com.airbnb.lottie.LottieAnimationView
 import com.example.kuntan.entity.Needs
 import com.example.kuntan.lib.KuntanPopupDialog
+import com.example.kuntan.lib.NeedsItem
 import com.example.kuntan.utility.AppUtil
 import com.example.kuntan.utility.KuntanRoomDatabase
 import com.google.gson.Gson
@@ -47,9 +48,12 @@ class NeedsActivity : AppCompatActivity(), NeedsListener {
     private var footerHeight: Int = 0
     private var currentYHeader: Float = 0f
     private var currentYFooter: Float = 0f
+    private var previousYLayout = 0
+    private var needsContainerHeight = 0
     private var previousTextLength = 0
     private var tempDate = ""
     private val arrayListOfNeedsLayout = arrayListOf<LinearLayout>()
+
     private lateinit var needsListener: NeedsListener
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -142,7 +146,6 @@ class NeedsActivity : AppCompatActivity(), NeedsListener {
             val needs = database.needsDao().getNeeds()
             Log.d("Needs", "populateNeeds (setUpdate()) - needs: ${Gson().toJson(needs)}")
             if (needs.isNotEmpty()) {
-                arrayListOfNeedsLayout.clear()
                 val amount = if (needs.isNotEmpty()) needs.size else 0
                 runOnUiThread {
                     for (i in needs.indices) {
@@ -185,7 +188,53 @@ class NeedsActivity : AppCompatActivity(), NeedsListener {
 
     @SuppressLint("UseCompatLoadingForDrawables")
     private fun generateNeedsItem(needs: Needs) {
-        /*========================  LAYOUT TEXT-NEEDS  ========================*/
+        val needsItem = NeedsItem(applicationContext).getInstance(needs,
+            object : NeedsItem.NeedsItemListener {
+                override fun onChecked(id: Int, checked: Boolean) {
+                    updateChecked(id, checked)
+                }
+
+                override fun onLongItemClicked(id: Int) {
+                    val kuntanPopupDialog = KuntanPopupDialog.newInstance().setContent("Remove \"${needs.item}\"?",
+                        "Be careful, it will be deleted permanently! (STILL TESTING | IT DOESN'T AFFECTS RIGHT NOW)",
+                        getString(R.string.button_delete), getString(R.string.button_cancel),
+                        object : KuntanPopupDialog.KuntanPopupDialogListener {
+                            override fun onNegativeButton() {
+                                CoroutineScope(Dispatchers.IO).launch {
+                                    database.needsDao().deleteNeeds(id)
+                                    runOnUiThread {
+                                        /*containerNeedsContent.removeAllViews()
+                                        arrayListOfNeedsLayout.clear()
+                                        populateNeeds()*/
+                                    }
+                                }
+                            }
+                            override fun onPositiveButton() {}
+                        })
+                    kuntanPopupDialog.show(supportFragmentManager, kuntanPopupDialog.tag)
+                }
+            })
+
+        //arrayListOfNeedsLayout.add(needsItem)
+        containerNeedsContent.viewTreeObserver.addOnGlobalLayoutListener(
+            object : ViewTreeObserver.OnGlobalLayoutListener {
+                override fun onGlobalLayout() {
+                    val marginTop = AppUtil.dpToPx(this@NeedsActivity, 10f)
+
+                    needsItem.y = (previousYLayout + marginTop).toFloat()
+                    previousYLayout += (marginTop + needsItem.height)
+                    needsContainerHeight += needsItem.height + marginTop
+
+                    val containerParams = FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT)
+                    containerParams.height = needsContainerHeight + AppUtil.dpToPx(this@NeedsActivity, 10f)
+                    containerNeedsContent.layoutParams = containerParams
+                    scrollViewNeeds.scrollTo(0, needsContainerHeight + AppUtil.dpToPx(this@NeedsActivity, 10f))
+                    containerNeedsContent.viewTreeObserver.removeOnGlobalLayoutListener(this)
+                }
+            })
+        containerNeedsContent.addView(needsItem)
+
+        /*========================  LAYOUT TEXT-NEEDS  ========================*//*
         val textItem = AppCompatTextView(this)
         val textItemParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT)
         textItem.layoutParams = textItemParams
@@ -224,7 +273,7 @@ class NeedsActivity : AppCompatActivity(), NeedsListener {
         layoutTextItem.addView(textItem)
         layoutTextItem.addView(textTime)
 
-        /*========================  LAYOUT IMAGE CHECKED  ========================*/
+        *//*========================  LAYOUT IMAGE CHECKED  ========================*//*
         val imageSize = AppUtil.getWidthPercent(this, 8f).toInt()
         val lottieImageChecked = LottieAnimationView(this)
         val imageCheckedParams = LinearLayout.LayoutParams(imageSize, imageSize)
@@ -280,7 +329,7 @@ class NeedsActivity : AppCompatActivity(), NeedsListener {
             }
         })
 
-        /*========================  LAYOUT MASTER-NEEDS  ========================*/
+        *//*========================  LAYOUT MASTER-NEEDS  ========================*//*
         val needsLayout = LinearLayout(this)
         val needsLayoutParams = LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
         needsLayout.layoutParams = needsLayoutParams
@@ -312,7 +361,7 @@ class NeedsActivity : AppCompatActivity(), NeedsListener {
                 }
             })
 
-        /*========================  ADDED TO CONTAINER TIME !!!  ========================*/
+        *//*========================  ADDED TO CONTAINER TIME !!!  ========================*//*
         containerTextAndCheckedItem.addView(lottieImageChecked)
         containerTextAndCheckedItem.addView(layoutTextItem)
         needsLayout.addView(textNeedsDate)
@@ -364,7 +413,13 @@ class NeedsActivity : AppCompatActivity(), NeedsListener {
                     }
                     containerNeedsContent.viewTreeObserver.removeOnGlobalLayoutListener(this)
                 }
-            })
+            })*/
+    }
+
+    private fun updateChecked(id: Int, checked: Boolean) {
+        CoroutineScope(Dispatchers.IO).launch {
+            database.needsDao().updateChecked(id, checked)
+        }
     }
 
     private fun showSendButton() {
