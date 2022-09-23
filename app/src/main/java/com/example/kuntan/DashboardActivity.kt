@@ -44,6 +44,7 @@ import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
+@SuppressLint("ClickableViewAccessibility", "UseCompatLoadingForDrawables", "SimpleDateFormat")
 class DashboardActivity : AppCompatActivity() {
 
     companion object {
@@ -100,7 +101,6 @@ class DashboardActivity : AppCompatActivity() {
         }
     }
 
-    @SuppressLint("SimpleDateFormat")
     private fun init() {
         mediaPlayer = MediaPlayer()
         constraintActivityMain = findViewById(R.id.constraintActivityMain)
@@ -148,13 +148,15 @@ class DashboardActivity : AppCompatActivity() {
         }
     }
 
-    @SuppressLint("UseCompatLoadingForDrawables", "SimpleDateFormat")
     private fun adjustSettings() {
         CoroutineScope(Dispatchers.IO).launch {
             val settings = database.settingsDao().getSettings()
             Log.d(TAG, "checkSettings - settings: $settings")
             if (settings == null) {
-                val setting = Settings(0, username, Constant.APP_THEME_LIGHT, getString(R.string.setting_language_english), Constant.DASHBOARD_CLOCK_PRIMARY, getString(R.string.setting_background_animation_off), Constant.DASHBOARD_BACKGROUND_AUTUMN, getString(R.string.setting_background_music_off))
+                val setting = Settings(0, username, Constant.APP_THEME_LIGHT,
+                    getString(R.string.setting_language_english), Constant.DASHBOARD_CLOCK_PRIMARY,
+                    getString(R.string.setting_background_animation_off), Constant.DASHBOARD_BACKGROUND_AUTUMN, getString(R.string.setting_background_music_off)
+                )
                 database.settingsDao().insertSetting(setting)
             } else {
                 runOnUiThread {
@@ -204,9 +206,7 @@ class DashboardActivity : AppCompatActivity() {
         }
     }
 
-    @SuppressLint("ClickableViewAccessibility", "SimpleDateFormat")
     private fun initListener() {
-        overlayLayout.setOnClickListener {}
         setting.setOnClickListener {
             startActivity(Intent(this@DashboardActivity, SettingsActivity::class.java)
                 .setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP))
@@ -232,17 +232,19 @@ class DashboardActivity : AppCompatActivity() {
                 .setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP))
         }
         menuIdentity.setOnClickListener {
+            isIdentityShown = true
+            showOverlayLayout()
             placeHolderLayout.x = resources.displayMetrics.widthPixels.toFloat()
-            fragment = IdentityScreenFragment(applicationContext).addIdentityListener(
-                object : IdentityScreenFragment.IdentityListener {
-                override fun onIdentityScreenCreated() {
-                    showOverlayLayout()
-                    placeHolderLayout.animate().translationX(0f)
-                    isIdentityShown = true
-                }
-            })
+            val fragment = IdentityScreenFragment(applicationContext)
+                .addIdentityListener(object : IdentityScreenFragment.IdentityListener {
+                    override fun onIdentityScreenCreated() {
+                        placeHolderLayout.visibility = VISIBLE
+                        val objectAnimator = ObjectAnimator.ofFloat(placeHolderLayout, "translationX", 0f)
+                        objectAnimator.duration = 500L
+                        objectAnimator.start()
+                    }
+                })
             supportFragmentManager.beginTransaction().replace(R.id.placeHolderLayout, fragment, "identity").commit()
-            placeHolderLayout.visibility = VISIBLE
         }
         menuNeeds.setOnClickListener {
             startActivity(Intent(this@DashboardActivity, NeedsActivity::class.java)
@@ -295,7 +297,7 @@ class DashboardActivity : AppCompatActivity() {
                     textViewCategory.text = getString(R.string.category_others)
                     layoutPaymentMethod.setSelection(0)
                     Snackbar.make(constraintActivityMain, getString(R.string.snackbar_monthly_expenses_added),
-                        Snackbar.LENGTH_INDEFINITE).setAnimationMode(Snackbar.ANIMATION_MODE_SLIDE).setAction("DISMISS") {}.show()
+                        Snackbar.LENGTH_LONG).setAction("DISMISS") {}.show()
                 }
             }
         }
@@ -346,7 +348,6 @@ class DashboardActivity : AppCompatActivity() {
         }
     }
 
-    @SuppressLint("UseCompatLoadingForDrawables")
     private fun onTextChangedListener(isAmount: Boolean) : TextWatcher {
         return object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
@@ -436,17 +437,18 @@ class DashboardActivity : AppCompatActivity() {
 
     override fun onBackPressed() {
         if (isIdentityShown) {
-            placeHolderLayout.animate().translationX(resources.displayMetrics.widthPixels.toFloat()).setListener(object : Animator.AnimatorListener{
+            isIdentityShown = false
+            val objectAnimator = ObjectAnimator.ofFloat(placeHolderLayout, "translationX", resources.displayMetrics.widthPixels.toFloat())
+            objectAnimator.duration = 500L
+            objectAnimator.addListener(object : Animator.AnimatorListener {
                 override fun onAnimationStart(animation: Animator?) {
                     hideOverlayLayout()
                 }
-                override fun onAnimationEnd(animation: Animator?) {
-                    placeHolderLayout.visibility = GONE
-                    isIdentityShown = false
-                }
+                override fun onAnimationEnd(animation: Animator?) {}
                 override fun onAnimationCancel(animation: Animator?) {}
                 override fun onAnimationRepeat(animation: Animator?) {}
             })
+            objectAnimator.start()
         } else {
             super.onBackPressed()
         }

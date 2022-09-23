@@ -9,6 +9,7 @@ import android.util.TypedValue
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import com.example.kuntan.R
+import java.util.*
 
 class AppUtil {
     companion object {
@@ -50,23 +51,17 @@ class AppUtil {
         fun convertDrawableFromTheme(c: Context, theme: String): Drawable {
             when(theme) {
                 Constant.DASHBOARD_CLOCK_PRIMARY -> {
-                    return c.resources.getDrawable(R.drawable.background_analog_clock_primary, null)
-                }
+                    return c.resources.getDrawable(R.drawable.background_analog_clock_primary, null) }
                 Constant.DASHBOARD_CLOCK_SECONDARY -> {
-                    return c.resources.getDrawable(R.drawable.background_analog_clock_secondary, null)
-                }
+                    return c.resources.getDrawable(R.drawable.background_analog_clock_secondary, null) }
                 Constant.DASHBOARD_CLOCK_DARK -> {
-                    return c.resources.getDrawable(R.drawable.background_analog_clock_dark, null)
-                }
+                    return c.resources.getDrawable(R.drawable.background_analog_clock_dark, null) }
                 Constant.DASHBOARD_CLOCK_YELLOW -> {
-                    return c.resources.getDrawable(R.drawable.background_analog_clock_yellow, null)
-                }
+                    return c.resources.getDrawable(R.drawable.background_analog_clock_yellow, null) }
                 Constant.DASHBOARD_CLOCK_RED_ORANGE -> {
-                    return c.resources.getDrawable(R.drawable.background_analog_clock_red_orange, null)
-                }
+                    return c.resources.getDrawable(R.drawable.background_analog_clock_red_orange, null) }
                 Constant.DASHBOARD_CLOCK_PINK -> {
-                    return c.resources.getDrawable(R.drawable.background_analog_clock_pink, null)
-                }
+                    return c.resources.getDrawable(R.drawable.background_analog_clock_pink, null) }
             }
             return c.resources.getDrawable(R.drawable.background_analog_clock_primary, null)
         }
@@ -92,25 +87,42 @@ class AppUtil {
             }
             return 0
         }
+        fun convertMonthCodeFromName(context: Context, monthName: String): String {
+            when (monthName) {
+                context.getString(R.string.month_january) -> { return "01" }
+                context.getString(R.string.month_february) -> { return "02" }
+                context.getString(R.string.month_march) -> { return "03" }
+                context.getString(R.string.month_april) -> { return "04" }
+                context.getString(R.string.month_may) -> { return "05" }
+                context.getString(R.string.month_june) -> { return "06" }
+                context.getString(R.string.month_july) -> { return "07" }
+                context.getString(R.string.month_august) -> { return "08" }
+                context.getString(R.string.month_september) -> { return "09" }
+                context.getString(R.string.month_october) -> { return "10" }
+                context.getString(R.string.month_november) -> { return "11" }
+                context.getString(R.string.month_december) -> { return "12" }
+            }
+            return "01"
+        }
         fun convertMonthNameFromCode(context: Context, month: String): String {
-            when(month){
-                "01" -> {return context.getString(R.string.month_january)}
-                "02" -> {return context.getString(R.string.month_february)}
-                "03" -> {return context.getString(R.string.month_march)}
-                "04" -> {return context.getString(R.string.month_april)}
-                "05" -> {return context.getString(R.string.month_may)}
-                "06" -> {return context.getString(R.string.month_june)}
-                "07" -> {return context.getString(R.string.month_july)}
-                "08" -> {return context.getString(R.string.month_august)}
-                "09" -> {return context.getString(R.string.month_september)}
-                "10" -> {return context.getString(R.string.month_october)}
-                "11" -> {return context.getString(R.string.month_november)}
-                "12" -> {return context.getString(R.string.month_december)}
+            when (month) {
+                "01" -> { return context.getString(R.string.month_january) }
+                "02" -> { return context.getString(R.string.month_february) }
+                "03" -> { return context.getString(R.string.month_march) }
+                "04" -> { return context.getString(R.string.month_april) }
+                "05" -> { return context.getString(R.string.month_may) }
+                "06" -> { return context.getString(R.string.month_june) }
+                "07" -> { return context.getString(R.string.month_july) }
+                "08" -> { return context.getString(R.string.month_august) }
+                "09" -> { return context.getString(R.string.month_september) }
+                "10" -> { return context.getString(R.string.month_october) }
+                "11" -> { return context.getString(R.string.month_november) }
+                "12" -> { return context.getString(R.string.month_december) }
             }
             return "empty"
         }
         fun convertMonthCodeFromId(id: Int): String {
-            when(id){
+            when (id) {
                 0 -> {return "01"}
                 1 -> {return "02"}
                 2 -> {return "03"}
@@ -127,7 +139,7 @@ class AppUtil {
             return "empty"
         }
         fun convertPaymentMethodFromType(c: Context, type: String): Int {
-            when(type) {
+            when (type) {
                 c.getString(R.string.method_cash) -> {return 0}
                 c.getString(R.string.method_debit) -> {return 1}
                 c.getString(R.string.method_transfer) -> {return 2}
@@ -136,6 +148,34 @@ class AppUtil {
         }
         fun convertCardinalNumber(number: String): String {
             return ""
+        }
+        fun randomIcon(context: Context, arrayListIconUsed: ArrayList<Int>): Int {
+            var icon: Int
+            val icons = arrayListOf<Int>()
+            icons.add(R.mipmap.ic_needs_accordion)
+            icons.add(R.mipmap.ic_needs_cactus)
+            icons.add(R.mipmap.ic_needs_canjica)
+            icons.add(R.mipmap.ic_needs_corn)
+            icons.add(R.mipmap.ic_needs_flowers)
+            icons.add(R.mipmap.ic_needs_hotdog)
+            icons.add(R.mipmap.ic_needs_kite)
+            icons.add(R.mipmap.ic_needs_maracas)
+            icons.add(R.mipmap.ic_needs_patch)
+            icons.add(R.mipmap.ic_needs_popcorn)
+            icons.add(R.mipmap.ic_needs_sunflower)
+            icons.add(R.mipmap.ic_needs_ukulele)
+
+            val random = Random()
+            icon = icons[random.nextInt(icons.size)]
+            if (arrayListIconUsed.isNotEmpty()) {
+                for (i in 0 until arrayListIconUsed.size) {
+                    if (icon == arrayListIconUsed[i]) {
+                        return randomIcon(context, arrayListIconUsed)
+                    }
+                }
+            }
+            arrayListIconUsed.add(icon)
+            return icon
         }
         @SuppressLint("NewApi", "ResourceType")
         fun border(context: Context, view: View, color: Int) {

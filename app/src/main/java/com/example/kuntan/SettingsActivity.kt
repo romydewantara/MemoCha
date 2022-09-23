@@ -263,7 +263,7 @@ class SettingsActivity : AppCompatActivity() {
                     textViewApply.isEnabled = false
                     textViewApply.background = applicationContext.resources.getDrawable(R.drawable.background_button_save_disabled, null)
                     checkResetButtonEnable()
-                    Snackbar.make(rootLayoutSetting, getString(R.string.snackbar_setting_applied), Snackbar.LENGTH_LONG).setAction("DISMISS") {}.show()
+                    Snackbar.make(rootLayoutSetting, getString(R.string.snackbar_setting_applied), Snackbar.LENGTH_SHORT).setAction("DISMISS") {}.show()
                     if (isLanguageChanged) showRestartAppDialog(String.format(getString(R.string.dialog_message_switch_language), settings?.language))
                 }
             }

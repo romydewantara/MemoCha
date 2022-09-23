@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/needsLayoutDateHeader"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@drawable/background_gradient_teal_dark"
+            app:layout_constraintHeight_percent=".35"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/textViewHeader"
+                style="@style/TextBoldWhite16"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:autoSizeTextType="uniform"
+                android:gravity="center"
+                android:maxLines="9"
+                android:padding="16dp"
+                android:text="@string/needs_date_chooser_text_header"
+                app:layout_constraintBottom_toTopOf="@id/layoutYearSelection"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@id/lottieHeader"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.airbnb.lottie.LottieAnimationView
+                android:id="@+id/lottieHeader"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:scaleType="fitCenter"
+                app:layout_constraintWidth_percent=".45"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/layoutYearSelection"
+                app:lottie_autoPlay="true"
+                app:lottie_fileName="woman.json"
+                app:lottie_loop="true" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/layoutYearSelection"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:background="@drawable/background_needs_footer_gradient_dark"
+                app:layout_constraintHeight_percent=".20"
+                app:layout_constraintBottom_toBottomOf="parent">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/textYear"
+                    style="@style/TextBoldWhite16"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="?android:selectableItemBackground"
+                    android:padding="10dp"
+                    android:text="2022"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
+
+                <ImageView
+                    android:id="@+id/previousYear"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginEnd="15dp"
+                    android:background="?android:selectableItemBackground"
+                    android:padding="10dp"
+                    android:src="@drawable/ic_arrow_left_white"
+                    app:layout_constraintBottom_toBottomOf="@id/textYear"
+                    app:layout_constraintDimensionRatio="1:1"
+                    app:layout_constraintRight_toLeftOf="@id/textYear"
+                    app:layout_constraintTop_toTopOf="@id/textYear"
+                    app:layout_constraintWidth_percent=".1" />
+
+                <ImageView
+                    android:id="@+id/nextYear"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginStart="15dp"
+                    android:background="?android:selectableItemBackground"
+                    android:padding="10dp"
+                    android:src="@drawable/ic_arrow_right_white"
+                    app:layout_constraintBottom_toBottomOf="@id/textYear"
+                    app:layout_constraintDimensionRatio="1:1"
+                    app:layout_constraintLeft_toRightOf="@id/textYear"
+                    app:layout_constraintTop_toTopOf="@id/textYear"
+                    app:layout_constraintWidth_percent=".1" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@drawable/background_needs_month_icon_item"
+            android:scrollbars="none"
+            app:layout_constraintHeight_percent=".75"
+            app:layout_constraintTop_toBottomOf="@id/needsLayoutDateHeader">
+
+            <RelativeLayout
+                android:id="@+id/containerMonthNeeds"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </ScrollView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</RelativeLayout>

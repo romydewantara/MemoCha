@@ -165,8 +165,8 @@ class ScheduleActivity : AppCompatActivity(), ScheduleAdapter.ScheduleAdapterLis
             database.scheduleDao().updateSchedule(id, startTime, endTime, actions)
             refreshSchedule(currentTab)
         }
-        Snackbar.make(rootLayoutSchedule, getString(R.string.snackbar_schedule_updated),
-            Snackbar.LENGTH_LONG).setAnimationMode(Snackbar.ANIMATION_MODE_SLIDE).setAction("DISMISS") {}.show()
+        Snackbar.make(rootLayoutSchedule, getString(R.string.snackbar_schedule_updated), Snackbar.LENGTH_SHORT)
+            .setAction("DISMISS") {}.show()
     }
 
     override fun onAddNewSchedule(id: Int, startTime: String, endTime: String, actions: String) {
@@ -174,8 +174,8 @@ class ScheduleActivity : AppCompatActivity(), ScheduleAdapter.ScheduleAdapterLis
             database.scheduleDao().insert(Schedule(id, currentTab, startTime, endTime, actions))
             refreshSchedule(currentTab)
         }
-        Snackbar.make(rootLayoutSchedule, getString(R.string.snackbar_schedule_added),
-            Snackbar.LENGTH_LONG).setAnimationMode(Snackbar.ANIMATION_MODE_SLIDE).setAction("DISMISS") {}.show()
+        Snackbar.make(rootLayoutSchedule, getString(R.string.snackbar_schedule_added), Snackbar.LENGTH_SHORT)
+            .setAction("DISMISS") {}.show()
     }
 
     override fun onDeleteSchedule(id: Int) {

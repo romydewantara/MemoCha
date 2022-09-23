@@ -41,7 +41,6 @@ class MonthlyExpensesEditor(
         init()
     }
 
-    private val database by lazy { KuntanRoomDatabase(context) }
     private val mContext = context
     private var isInit = true
     private var isCategoryChanged = false
@@ -94,14 +93,9 @@ class MonthlyExpensesEditor(
             val kuntanPopupDialog = KuntanPopupDialog.newInstance().setContent(context.getString(R.string.dialog_title_delete_from_history),
                 context.getString(R.string.dialog_message_delete_from_history), "OK", context.getString(R.string.button_cancel), object : KuntanPopupDialog.KuntanPopupDialogListener {
                     override fun onNegativeButton() {
-                        CoroutineScope(Dispatchers.IO).launch {
-                            database.historyDao().deleteSchedule(history.id)
-                            (mContext as Activity).runOnUiThread {
-                                monthlyExpensesEditorListener.onDeleteClicked(history.id)
-                                Snackbar.make(this@MonthlyExpensesEditor, context.getString(R.string.snackbar_monthly_expenses_deleted),
-                                    Snackbar.LENGTH_LONG).setAnimationMode(Snackbar.ANIMATION_MODE_SLIDE).setAction("DISMISS") {}.show()
-                            }
-                        }
+                        monthlyExpensesEditorListener.onDeleteClicked(history.id)
+                        Snackbar.make(this@MonthlyExpensesEditor, context.getString(R.string.snackbar_monthly_expenses_deleted),
+                            Snackbar.LENGTH_SHORT).setAction("DISMISS") {}.show()
                     }
                     override fun onPositiveButton() {}
                 })
@@ -110,31 +104,24 @@ class MonthlyExpensesEditor(
         }
         imageAdd.setOnClickListener {
             AppUtil.hideSoftKeyboard(this, context)
-            CoroutineScope(Dispatchers.IO).launch {
+            (mContext as Activity).runOnUiThread {
                 val currentDate = SimpleDateFormat("dd-MM-yyyy").format(Calendar.getInstance().time)
                 val currentTime = SimpleDateFormat("HH:mm").format(Date())
-                database.historyDao().updateHistory(history.id, currentDate.split("-")[2],
-                    currentDate.split("-")[1], currentDate.split("-")[0],
-                    currentTime, editTextGoods.text.toString().trim(), editTextAmount.text.toString().trim(),
-                    editTextNote.text.toString().trim(), textViewCategory.text.toString(), paymentMethod)
+                history.goods = editTextGoods.text.toString().trim()
+                history.amount = editTextAmount.text.toString().trim()
+                history.description = editTextNote.text.toString().trim()
+                history.category = textViewCategory.text.toString()
+                history.method = paymentMethod
+                history.yearEdited = currentDate.split("-")[2]
+                history.monthEdited = currentDate.split("-")[1]
+                history.dateEdited = currentDate.split("-")[0]
+                history.timeEdited = currentTime
 
-                (mContext as Activity).runOnUiThread {
-                    history.goods = editTextGoods.text.toString().trim()
-                    history.amount = editTextAmount.text.toString().trim()
-                    history.description = editTextNote.text.toString().trim()
-                    history.category = textViewCategory.text.toString()
-                    history.method = paymentMethod
-                    history.yearEdited = currentDate.split("-")[2]
-                    history.monthEdited = currentDate.split("-")[1]
-                    history.dateEdited = currentDate.split("-")[0]
-                    history.timeEdited = currentTime
-
-                    textViewCategory.text = context.getString(R.string.category_others)
-                    layoutPaymentMethod.setSelection(0)
-                    Snackbar.make(this@MonthlyExpensesEditor, context.getString(R.string.snackbar_monthly_expenses_updated),
-                        Snackbar.LENGTH_LONG).setAnimationMode(Snackbar.ANIMATION_MODE_SLIDE).setAction("DISMISS") {}.show()
-                    monthlyExpensesEditorListener.onSaveClicked(history.id, history)
-                }
+                textViewCategory.text = context.getString(R.string.category_others)
+                layoutPaymentMethod.setSelection(0)
+                Snackbar.make(this@MonthlyExpensesEditor, context.getString(R.string.snackbar_monthly_expenses_updated), Snackbar.LENGTH_SHORT)
+                    .setAction("DISMISS") {}.show()
+                monthlyExpensesEditorListener.onSaveClicked(history.id, history)
             }
         }
         textViewCategoryTitle.setOnClickListener {

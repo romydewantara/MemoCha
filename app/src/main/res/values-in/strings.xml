@@ -119,6 +119,8 @@
     <string name="snackbar_monthly_expenses_updated">Data telah dirubah</string>
     <string name="snackbar_monthly_expenses_deleted">Data telah dihapus dari riwayat</string>
 
+    <string name="needs_date_chooser_text_header">Dan janganlah kamu menghambur–hamburkan (hartamu) secara boros. Sesungguhnya pemboros-pemboros itu adalah saudara-saudara syaitan dan syaitan itu adalah sangat ingkar kepada Tuhannya. (QS. 17: 26─27)</string>
+
     <!-- N E E D S -->
     <string name="needs_title_page">Daftar\nKebutuhan</string>
     <string name="needs_date">@string/secret_letter_calendar</string>

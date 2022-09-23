@@ -11,18 +11,19 @@ import com.example.kuntan.entity.History
 import com.example.kuntan.utility.AppUtil
 import kotlinx.android.synthetic.main.recyclerview_item_monthly_expenses.view.*
 
+@SuppressLint("SetTextI18n", "NotifyDataSetChanged")
 class HistoryDetailAdapter(
     private val context: Context,
-    private val histories: ArrayList<History>,
-    private val historyDetailListener: HistoryDetailListener
+    private val histories: ArrayList<History>
 ) : RecyclerView.Adapter<HistoryDetailAdapter.ExpensesDetailViewHolder>() {
+
+    private lateinit var historyDetailListener: HistoryDetailListener
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ExpensesDetailViewHolder {
         return ExpensesDetailViewHolder(LayoutInflater.from(parent.context)
                 .inflate(R.layout.recyclerview_item_monthly_expenses, parent, false))
     }
 
-    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: ExpensesDetailViewHolder, position: Int) {
         holder.itemView.textViewDate.text = "${histories[position].date} ${AppUtil.convertMonthNameFromCode(context, histories[position].month)} ${histories[position].year}"
         holder.itemView.textViewTime.text = "(${histories[position].time})"
@@ -42,6 +43,17 @@ class HistoryDetailAdapter(
     }
 
     override fun getItemCount(): Int = histories.size
+
+    fun setData(list: List<History>) {
+        histories.clear()
+        histories.addAll(list)
+        histories.reverse()
+        notifyDataSetChanged()
+    }
+
+    fun addOnHistoryDetailListener(historyDetailListener: HistoryDetailListener) {
+        this.historyDetailListener = historyDetailListener
+    }
 
     class ExpensesDetailViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 

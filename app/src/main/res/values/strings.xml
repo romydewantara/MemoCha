@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">MemoCha</string>
     <string name="secret_letter_title">Secret Letter</string>
     <string name="secret_letter_content">\t\t\tSecret Letter Content In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content</string>
@@ -118,6 +118,8 @@
     <string name="snackbar_monthly_expenses_added">New data has been added to monthly expense history</string>
     <string name="snackbar_monthly_expenses_updated">Data has been updated</string>
     <string name="snackbar_monthly_expenses_deleted">Data has been deleted from history</string>
+
+    <string name="needs_date_chooser_text_header">Dan janganlah kamu menghambur–hamburkan (hartamu) secara boros. Sesungguhnya pemboros-pemboros itu adalah saudara-saudara syaitan dan syaitan itu adalah sangat ingkar kepada Tuhannya. (QS. 17: 26─27)</string>
 
     <!-- N E E D S -->
     <string name="needs_title_page">Need List</string>
