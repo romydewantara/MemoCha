@@ -12,8 +12,8 @@ interface NeedsDao {
     @Insert
     suspend fun insert(needs: Needs)
 
-    @Query("SELECT * FROM needs_table")
-    suspend fun getNeeds() : List<Needs>
+    @Query("SELECT * FROM needs_table WHERE month = :month AND year = :year")
+    suspend fun getNeeds(month: String, year: String) : List<Needs>
 
     @Query("UPDATE needs_table SET item = :item, date = :date, time = :time, checked = :checked WHERE id = :id")
     suspend fun updateNeeds(id: Int, item: String, date: String, time: String, checked: Boolean)

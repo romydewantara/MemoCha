@@ -8,6 +8,7 @@ import android.util.TypedValue
 import android.view.*
 import android.widget.FrameLayout
 import android.widget.GridLayout
+import android.widget.RelativeLayout
 import androidx.core.widget.TextViewCompat
 import com.example.kuntan.R
 import com.example.kuntan.utility.AppUtil
@@ -23,8 +24,7 @@ class NeedsMonthChooserBottomSheet: BottomSheetDialogFragment() {
 
     companion object {
         const val TAG = "NeedsMonth"
-        const val rows = 6
-        const val columns = 2
+        const val GRID_COLUMNS = 3
         val arrayListOfMonth = arrayListOf(
             R.string.month_january, R.string.month_february, R.string.month_march, R.string.month_april,
             R.string.month_may, R.string.month_june, R.string.month_july, R.string.month_august,
@@ -35,7 +35,6 @@ class NeedsMonthChooserBottomSheet: BottomSheetDialogFragment() {
     private val arrayListIconUsed = arrayListOf<Int>()
 
     lateinit var needsDateChooserListener: NeedsDateChooserListener
-    lateinit var gridLayout: GridLayout
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.layout_needs_month_chooser_bottom_sheet, container, false)
@@ -47,7 +46,6 @@ class NeedsMonthChooserBottomSheet: BottomSheetDialogFragment() {
         TextViewCompat.setAutoSizeTextTypeUniformWithConfiguration(
             textViewHeader, 1, 16,
             1, TypedValue.COMPLEX_UNIT_SP)
-        generateLayout()
         initListener()
     }
 
@@ -59,62 +57,81 @@ class NeedsMonthChooserBottomSheet: BottomSheetDialogFragment() {
                 BottomSheetBehavior.from(bottomSheet).state = BottomSheetBehavior.STATE_EXPANDED
                 BottomSheetBehavior.from(bottomSheet).skipCollapsed = false
                 BottomSheetBehavior.from(bottomSheet).isDraggable = false
+                BottomSheetBehavior.from(bottomSheet).addBottomSheetCallback(
+                    object : BottomSheetBehavior.BottomSheetCallback() {
+                    override fun onStateChanged(bottomSheet: View, newState: Int) {
+                        if (newState == BottomSheetBehavior.STATE_EXPANDED) {
+                            lottieHeader.playAnimation()
+                            generateLayout()
+                        }
+                    }
+                    override fun onSlide(bottomSheet: View, slideOffset: Float) {}
+                })
             }
         }
         bottomSheetDialog.setOnKeyListener { _: DialogInterface?, _: Int, keyEvent: KeyEvent ->
-            if (keyEvent.keyCode == KeyEvent.KEYCODE_BACK) dismiss()
+            if (keyEvent.keyCode == KeyEvent.KEYCODE_BACK) {
+                lottieHeader.cancelAnimation()
+                dismiss()
+            }
             false
         }
         return bottomSheetDialog
     }
 
     private fun generateLayout() {
-        gridLayout = GridLayout(context)
-        val gridParams = ViewGroup.LayoutParams(
-            ViewGroup.LayoutParams.MATCH_PARENT,
-            ViewGroup.LayoutParams.WRAP_CONTENT)
-        gridLayout.layoutParams = gridParams
-        gridLayout.alignmentMode = GridLayout.ALIGN_BOUNDS
-        gridLayout.rowCount = rows
-        gridLayout.columnCount = columns
-
+        var heightNeedsMonthChooser = 0
+        val marginStartEnd = (resources.displayMetrics.widthPixels % 3).toFloat()
+        val marginTopBottom = (resources.displayMetrics.heightPixels % 4).toFloat()
         var column = 0
         var row = 0
+
         for (i in 0 until arrayListOfMonth.size) {
-            if (column == columns) {
+            if (column == GRID_COLUMNS) {
                 column = 0
                 row++
             }
 
-            val needsMonthChooser = LayoutInflater.from(requireContext()).inflate(
-                R.layout.layout_needs_month_chooser, gridLayout, false)
-            needsMonthChooser.measure(needsMonthChooser.width, needsMonthChooser.height)
-
             val needsMonthChooserParams = GridLayout.LayoutParams()
-            needsMonthChooserParams.width = (resources.displayMetrics.widthPixels / 2) - AppUtil.dpToPx(requireContext(), 40f)
-            needsMonthChooserParams.height = ViewGroup.LayoutParams.WRAP_CONTENT
+            needsMonthChooserParams.width = ((resources.displayMetrics.widthPixels / 3) - AppUtil.getWidthPercent(requireContext(), 3.5f)).toInt()
+            needsMonthChooserParams.height = ((resources.displayMetrics.heightPixels / 4)  - AppUtil.getHeightPercent(requireContext(), 2.0f)).toInt()
             needsMonthChooserParams.setGravity(Gravity.CENTER)
             needsMonthChooserParams.columnSpec = GridLayout.spec(column)
             needsMonthChooserParams.rowSpec = GridLayout.spec(row)
             needsMonthChooserParams.setMargins(
-                AppUtil.dpToPx(requireContext(), 20f), AppUtil.dpToPx(requireContext(), 10f),
-                AppUtil.dpToPx(requireContext(), 20f), AppUtil.dpToPx(requireContext(), 10f)
-            )
+                AppUtil.getWidthPercent(requireContext(), 1.8f).toInt(),
+                AppUtil.getHeightPercent(requireContext(), 1f).toInt(),
+                AppUtil.getWidthPercent(requireContext(), 1.8f).toInt(),
+                AppUtil.getHeightPercent(requireContext(), 1f).toInt())
+
+            val needsMonthChooser = LayoutInflater.from(requireContext()).inflate(R.layout.layout_needs_month_chooser, needsGridLayout, false)
             needsMonthChooser.layoutParams = needsMonthChooserParams
             needsMonthChooser.imageIcon.setImageResource(AppUtil.randomIcon(requireContext(), arrayListIconUsed))
             needsMonthChooser.textViewNeedsMonthCode.text = AppUtil.convertMonthCodeFromId(i)
             needsMonthChooser.textViewNeedsMonth.text = requireContext().getString(arrayListOfMonth[i])
-
             needsMonthChooser.setOnClickListener {
                 needsDateChooserListener.onDateSelected(year,
-                    AppUtil.convertMonthCodeFromName(requireContext(), arrayListOfMonth[i].toString()))
+                    AppUtil.convertMonthCodeFromName(requireContext(), requireContext().getString(arrayListOfMonth[i])))
+                lottieHeader.cancelAnimation()
                 dismiss()
             }
+            TextViewCompat.setAutoSizeTextTypeUniformWithConfiguration(
+                needsMonthChooser.textViewNeedsMonth, 1, 16, 1, TypedValue.COMPLEX_UNIT_SP)
 
-            gridLayout.addView(needsMonthChooser)
+            needsGridLayout.viewTreeObserver.addOnGlobalLayoutListener(
+                object : ViewTreeObserver.OnGlobalLayoutListener {
+                    override fun onGlobalLayout() {
+                        if (i == 0 || i == 3 || i == 6 || i == 9) {
+                            heightNeedsMonthChooser += (needsMonthChooser.layoutParams.height + marginTopBottom).toInt()
+                            val containerParams = RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.WRAP_CONTENT)
+                            containerParams.height = resources.displayMetrics.heightPixels
+                            needsGridLayout.layoutParams = containerParams
+                        }
+                        needsGridLayout.viewTreeObserver.removeOnGlobalLayoutListener(this)
+                    }})
+            needsGridLayout.addView(needsMonthChooser)
             column++
         }
-        containerMonthNeeds.addView(gridLayout)
     }
 
     fun initListener() {

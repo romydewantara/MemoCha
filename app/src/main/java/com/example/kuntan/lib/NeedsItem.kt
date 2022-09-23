@@ -174,7 +174,8 @@ class NeedsItem(context: Context) : LinearLayout(context) {
         textDate.background =
             resources.getDrawable(R.drawable.background_text_view_date_gray, null)
         TextViewCompat.setTextAppearance(textDate, R.style.TextBoldWhite12)
-        textDate.text = needs.date
+        val date = "${needs.date}/${needs.month}/${needs.year}"
+        textDate.text = date
         if (needs.isDateShown) textDate.visibility =
             View.VISIBLE else textDate.visibility = View.GONE
         textDate.viewTreeObserver.addOnGlobalLayoutListener(

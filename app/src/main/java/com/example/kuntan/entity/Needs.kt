@@ -8,8 +8,10 @@ import androidx.room.PrimaryKey
 class Needs(
     @PrimaryKey(autoGenerate = true) val id: Int,
     val item: String,
-    val date: String,
     val time: String,
+    val date: String,
+    val month: String,
+    val year: String,
     var isDateShown: Boolean,
     val checked: Boolean,
     @ColumnInfo(typeAffinity = ColumnInfo.BLOB) val image: ByteArray?

@@ -41,7 +41,7 @@
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toTopOf="@id/layoutYearSelection"
-                app:lottie_autoPlay="true"
+                app:lottie_autoPlay="false"
                 app:lottie_fileName="woman.json"
                 app:lottie_loop="true" />
 
@@ -99,17 +99,27 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <ScrollView
+            android:id="@+id/scrollViewGrid"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:background="@drawable/background_needs_month_icon_item"
             android:scrollbars="none"
-            app:layout_constraintHeight_percent=".75"
-            app:layout_constraintTop_toBottomOf="@id/needsLayoutDateHeader">
+            app:layout_constraintHeight_percent=".65"
+            app:layout_constraintTop_toBottomOf="@id/needsLayoutDateHeader"
+            app:layout_constraintBottom_toBottomOf="parent">
 
             <RelativeLayout
-                android:id="@+id/containerMonthNeeds"
+                android:id="@+id/containerGridLayout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content">
+                <GridLayout
+                    android:id="@+id/needsGridLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:alignmentMode="alignBounds"
+                    android:rowCount="4"
+                    android:columnCount="3"/>
+            </RelativeLayout>
 
         </ScrollView>
 

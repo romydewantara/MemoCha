@@ -4,32 +4,10 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
-    android:background="@color/white"
+    android:background="@color/transparent"
     android:paddingStart="20dp"
     android:paddingTop="10dp"
     android:paddingEnd="20dp"
     android:paddingBottom="10dp">
-
-    <com.google.android.material.progressindicator.CircularProgressIndicator
-        android:id="@+id/circularProgress"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:backgroundTint="@color/teal_dark"
-        android:indeterminate="true"
-        android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/textViewLoading"
-        style="@style/TextRegularBlack14"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:text="Loading, please wait…"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toRightOf="@id/circularProgress"
-        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

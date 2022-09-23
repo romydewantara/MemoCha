@@ -1,26 +1,27 @@
-package com.example.kuntan
+package com.example.kuntan.fragment
 
 import android.animation.ObjectAnimator
 import android.annotation.SuppressLint
-import android.content.Intent
+import android.app.Activity
+import android.content.Context
 import android.graphics.Rect
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.util.TypedValue
-import android.view.MotionEvent
 import android.view.View
-import android.view.ViewGroup
 import android.view.ViewTreeObserver
 import android.view.animation.Animation
 import android.view.animation.ScaleAnimation
 import android.widget.FrameLayout
 import android.widget.RelativeLayout
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.widget.TextViewCompat
+import androidx.fragment.app.Fragment
+import com.example.kuntan.DashboardActivity
+import com.example.kuntan.R
 import com.example.kuntan.entity.Needs
 import com.example.kuntan.lib.KuntanPopupDialog
 import com.example.kuntan.lib.NeedsItem
@@ -35,8 +36,8 @@ import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
 
-@SuppressLint("ClickableViewAccessibility", "SimpleDateFormat", "UseCompatLoadingForDrawables")
-class NeedsActivity : AppCompatActivity(), NeedsListener {
+@SuppressLint("ClickableViewAccessibility", "SimpleDateFormat")
+class NeedsScreenFragment(context: Context) : Fragment(R.layout.activity_needs), NeedsListener {
 
     companion object {
         const val TAG = "Needs"
@@ -44,7 +45,7 @@ class NeedsActivity : AppCompatActivity(), NeedsListener {
         const val FOOTER = "footer"
     }
 
-    private val database by lazy { KuntanRoomDatabase(this) }
+    private val database by lazy { KuntanRoomDatabase(requireContext()) }
     private var headerHeight: Int = 0
     private var footerHeight: Int = 0
     private var currentYHeader: Float = 0f
@@ -54,45 +55,55 @@ class NeedsActivity : AppCompatActivity(), NeedsListener {
     private var previousTextLength = 0
     private var scrollDuration = 0L
     private var tempDate = ""
+    private var currentMonth = ""
+    private var currentYear = ""
+    private var dataSize = 0
+    private var dataSizeCount = 0
     private var isInit = true
     private var isToday = true
 
     private lateinit var invisibleBackground: View
     private lateinit var needsListener: NeedsListener
+    private lateinit var needsScreenListener: NeedsScreenListener
+    private lateinit var globalLayoutListener: ViewTreeObserver.OnGlobalLayoutListener
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_needs)
+    private lateinit var previousPage: String
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        needsScreenListener.onScreenCreated()
 
         init()
         initListener()
     }
 
-    override fun onResume() {
-        super.onResume()
-        if (isInit) {
-            isInit = false
-        }
-    }
     private fun init() {
-        needsListener = this
-        invisibleBackground = View(this@NeedsActivity)
-        containerNeedsContent.addView(invisibleBackground)
         tempDate = SimpleDateFormat("dd/MM/yyyy").format(Calendar.getInstance().time)
-        val needsHeader = findViewById<ConstraintLayout>(R.id.layoutNeedsHeader)
-        val needsFooter = findViewById<ConstraintLayout>(R.id.layoutNeedsFooter)
-        needsHeader.post { updateLayoutSize(HEADER, needsHeader.height, needsHeader.y) }
-        needsFooter.post { updateLayoutSize(FOOTER, needsFooter.height, needsFooter.y) }
+        currentMonth = tempDate.split("/")[1]
+        currentYear = tempDate.split("/")[2]
 
-        rootLayoutNeeds.viewTreeObserver.addOnGlobalLayoutListener {
-            if (!AppUtil.isKeyboardVisible(rootLayoutNeeds)) editTextNeedsItem.isFocusable = false
-        }
+        needsListener = this
+        invisibleBackground = View(requireContext())
+        containerNeedsContent.addView(invisibleBackground)
+
+        val needsHeader = view?.findViewById<ConstraintLayout>(R.id.layoutNeedsHeader)
+        val needsFooter = view?.findViewById<ConstraintLayout>(R.id.layoutNeedsFooter)
+        needsHeader?.post { updateLayoutSize(HEADER, needsHeader.height, needsHeader.y) }
+        needsFooter?.post { updateLayoutSize(FOOTER, needsFooter.height, needsFooter.y) }
+
+        rootLayoutNeeds.viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
+            override fun onGlobalLayout() {
+                globalLayoutListener = this
+                if (!AppUtil.isKeyboardVisible(rootLayoutNeeds)) editTextNeedsItem.isFocusable = false
+            }
+        })
+
         TextViewCompat.setAutoSizeTextTypeUniformWithConfiguration(textViewNeedsTitle,
             1, 24, 1, TypedValue.COMPLEX_UNIT_SP)
 
-        textViewNeedsDate.text = AppUtil.convertMonthNameFromCode(this, SimpleDateFormat("MM").format(Calendar.getInstance().time))
+        textViewNeedsDate.text = AppUtil.convertMonthNameFromCode(requireContext(), SimpleDateFormat("MM").format(
+            Calendar.getInstance().time))
         hideSendButton()
-        populateNeeds()
     }
 
     private fun initListener() {
@@ -134,8 +145,8 @@ class NeedsActivity : AppCompatActivity(), NeedsListener {
                 CoroutineScope(Dispatchers.IO).launch {
                     Log.d("Needs", "initListener - needs: ${Gson().toJson(needsObj)}")
                     database.needsDao().insert(needsObj)
-                    val needs = database.needsDao().getNeeds("01", "2022") //hardcode
-                    runOnUiThread {
+                    val needs = database.needsDao().getNeeds(currentMonth, currentYear)
+                    (requireContext() as Activity).runOnUiThread {
                         for (i in needs.indices) {
                             if (i == needs.size - 1) {
                                 generateNeedsItem(needs[i])
@@ -154,11 +165,15 @@ class NeedsActivity : AppCompatActivity(), NeedsListener {
             needsMonthChooserBottomSheet.addOnNeedsDateChooserListener(
                 object : NeedsMonthChooserBottomSheet.NeedsDateChooserListener {
                     override fun onDateSelected(year: String, month: String) {
-
+                        Log.d(TAG, "onDateSelected - month: $month | year: $year")
+                        previousPage = DashboardActivity.PAGE_MONTH_CHOOSER
+                        currentMonth = month
+                        currentYear = year
+                        populateNeeds()
                     }
                 })
             needsMonthChooserBottomSheet.isCancelable = false
-            needsMonthChooserBottomSheet.show(supportFragmentManager, needsMonthChooserBottomSheet.tag)
+            needsMonthChooserBottomSheet.show(childFragmentManager, needsMonthChooserBottomSheet.tag)
         }
         //setScrollViewNeedsObserver()
         buttonScrollToTop.setOnClickListener {
@@ -179,11 +194,11 @@ class NeedsActivity : AppCompatActivity(), NeedsListener {
             buttonScrollToBottom.visibility = View.GONE
             if (bottomDetector == 0) {
                 buttonScrollToTop.visibility = View.VISIBLE
-                Toast.makeText(baseContext, "Scroll View bottom reached", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Scroll View bottom reached", Toast.LENGTH_SHORT).show()
             }
             if (topDetector <= 0) {
                 buttonScrollToBottom.visibility = View.VISIBLE
-                Toast.makeText(baseContext, "Scroll View top reached", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), "Scroll View top reached", Toast.LENGTH_SHORT).show()
             }
 
             Log.d(TAG, "setScrollViewNeedsObserver.. scrolling…")
@@ -201,19 +216,40 @@ class NeedsActivity : AppCompatActivity(), NeedsListener {
                 currentYFooter = y
             }
         }
-        if (headerHeight > 0 && footerHeight > 0) {
-            needsListener.onLayoutDrawn()
-            //needsLoading.visibility = View.VISIBLE
-        }
+        if (headerHeight > 0 && footerHeight > 0) needsListener.onLayoutDrawn()
     }
 
-    private fun populateNeeds() {
+    private fun reset() {
+        isInit = true
+        dataSize = 0
+        dataSizeCount = 0
+        previousYLayout = 0
+        needsContainerHeight = 0
+
+        //set Y position of footer | footer is hidden for readable mode
+        var currentYFooter = 0f
+        val currentDate = SimpleDateFormat("MM/yyyy").format(Calendar.getInstance().time)
+        if (previousPage == DashboardActivity.PAGE_MONTH_CHOOSER &&
+            currentMonth != currentDate.split("/")[0] &&
+            currentMonth != currentDate.split("/")[1]) {
+            currentYFooter = resources.displayMetrics.heightPixels.toFloat()
+        }
+        val objectAnimator = ObjectAnimator.ofFloat(layoutNeedsFooter, "translationY", currentYFooter)
+        objectAnimator.duration = 0L
+        objectAnimator.start()
+        containerNeedsContent.removeAllViews()
+    }
+
+    fun populateNeeds() {
+        reset()
+        needsScreenListener.onPopulateData()
         CoroutineScope(Dispatchers.IO).launch {
-            val needs = database.needsDao().getNeeds("01", "2022") //hardcode
+            val needs = database.needsDao().getNeeds(currentMonth, currentYear)
             Log.d("Needs", "populateNeeds (setUpdate()) - needs: ${Gson().toJson(needs)}")
             if (needs.isNotEmpty()) {
+                dataSize = (needs.size - 1)
                 val amount = if (needs.isNotEmpty()) needs.size else 0
-                runOnUiThread {
+                (requireContext() as Activity).runOnUiThread {
                     for (i in needs.indices) {
                         if (tempDate != needs[i].date) {
                             tempDate = needs[i].date
@@ -222,6 +258,10 @@ class NeedsActivity : AppCompatActivity(), NeedsListener {
                         generateNeedsItem(needs[i])
                     }
                     textViewNeedsAmount.text = String.format(getString(R.string.needs_today_list), amount)
+                }
+            } else {
+                (requireContext() as Activity).runOnUiThread {
+                    needsScreenListener.onDataPopulated()
                 }
             }
         }
@@ -240,7 +280,7 @@ class NeedsActivity : AppCompatActivity(), NeedsListener {
                         if (s.length > 400) {
                             editTextNeedsItem.removeTextChangedListener(this)
                             try {
-                                Toast.makeText(applicationContext, String.format(getString(R.string.needs_text_length_limit), s.length), Toast.LENGTH_LONG).show()
+                                Toast.makeText(requireContext(), String.format(getString(R.string.needs_text_length_limit), s.length), Toast.LENGTH_LONG).show()
                                 editTextNeedsItem.setText(s.toString())
                             } catch (nfe: NumberFormatException) {
                                 nfe.printStackTrace()
@@ -257,7 +297,7 @@ class NeedsActivity : AppCompatActivity(), NeedsListener {
 
     private fun generateNeedsItem(needs: Needs) {
         Log.d(TAG, "generateNeedsItem - needs: ${Gson().toJson(needs)}")
-        val needsItem = NeedsItem(applicationContext).getInstance(needs,
+        val needsItem = NeedsItem(requireContext()).getInstance(needs,
             object : NeedsItem.NeedsItemListener {
                 override fun onChecked(id: Int, checked: Boolean) {
                     updateChecked(id, checked)
@@ -269,34 +309,32 @@ class NeedsActivity : AppCompatActivity(), NeedsListener {
                         getString(R.string.button_delete), getString(R.string.button_cancel),
                         object : KuntanPopupDialog.KuntanPopupDialogListener {
                             override fun onNegativeButton() {
-                                /*CoroutineScope(Dispatchers.IO).launch {
+                                CoroutineScope(Dispatchers.IO).launch {
                                     database.needsDao().deleteNeeds(id)
-                                    runOnUiThread {
-                                        *//*containerNeedsContent.removeAllViews()
-                                        arrayListOfNeedsLayout.clear()
-                                        populateNeeds()*//*
+                                    (requireContext() as Activity).runOnUiThread {
+                                        containerNeedsContent.removeAllViews()
+                                        populateNeeds()
                                     }
-                                }*/
+                                }
                             }
                             override fun onPositiveButton() {}
                         })
-                    kuntanPopupDialog.show(supportFragmentManager, kuntanPopupDialog.tag)
+                    kuntanPopupDialog.show(childFragmentManager, kuntanPopupDialog.tag)
                 }
             })
 
-        //arrayListOfNeedsLayout.add(needsItem)
         containerNeedsContent.viewTreeObserver.addOnGlobalLayoutListener(
             object : ViewTreeObserver.OnGlobalLayoutListener {
                 override fun onGlobalLayout() {
-                    var marginTop = AppUtil.dpToPx(this@NeedsActivity, 10f)
-                    if (!needs.isDateShown) marginTop = AppUtil.dpToPx(this@NeedsActivity, 3f)
+                    var marginTop = AppUtil.dpToPx(requireContext(), 10f)
+                    if (!needs.isDateShown) marginTop = AppUtil.dpToPx(requireContext(), 3f)
 
                     needsItem.y = (previousYLayout + marginTop).toFloat()
                     previousYLayout += (marginTop + needsItem.height)
                     needsContainerHeight += needsItem.height + marginTop
 
                     val containerParams = FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT)
-                    containerParams.height = needsContainerHeight + AppUtil.dpToPx(this@NeedsActivity, 10f)
+                    containerParams.height = needsContainerHeight + AppUtil.dpToPx(requireContext(), 10f)
                     containerNeedsContent.layoutParams = containerParams
                     Log.d(TAG, "onGlobalLayout - container height: ${containerNeedsContent.height} | params: ${containerNeedsContent.layoutParams.height} | measured: ${containerNeedsContent.measuredHeight}")
 
@@ -305,6 +343,15 @@ class NeedsActivity : AppCompatActivity(), NeedsListener {
                     val invisibleBackgroundParams = RelativeLayout.LayoutParams(0, (containerNeedsContent.layoutParams.height / 2))
                     invisibleBackground.layoutParams = invisibleBackgroundParams
 
+                    Log.d(TAG, "onGlobalLayout - isInit: $isInit | dataSizeCount: $dataSizeCount | dataSize: $dataSize")
+                    if (isInit) {
+                        if (dataSizeCount < dataSize) {
+                            dataSizeCount++
+                        } else {
+                            isInit = false
+                            needsScreenListener.onDataPopulated()
+                        }
+                    }
                     scrollToBottom()
                     containerNeedsContent.viewTreeObserver.removeOnGlobalLayoutListener(this)
                 }
@@ -362,10 +409,17 @@ class NeedsActivity : AppCompatActivity(), NeedsListener {
         iconSend.startAnimation(animation)
     }
 
-    override fun onBackPressed() {
-        startActivity(Intent(this@NeedsActivity, DashboardActivity::class.java)
-            .setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP))
-        finish()
+    fun addOnNeedScreenListener(needsScreenListener: NeedsScreenListener) : Fragment {
+        this.needsScreenListener = needsScreenListener
+        return this@NeedsScreenFragment
+    }
+
+    fun addPreviousPage(previousPage: String) {
+        this.previousPage = previousPage
+    }
+
+    fun removeOnGlobalLayoutListener() {
+        rootLayoutNeeds.viewTreeObserver.removeOnGlobalLayoutListener(globalLayoutListener)
     }
 
     override fun onLayoutDrawn() {
@@ -375,6 +429,12 @@ class NeedsActivity : AppCompatActivity(), NeedsListener {
         layoutParams.width = resources.displayMetrics.widthPixels
         layoutParams.height = containerHeight.toInt()
         containerNeedsContent.layoutParams = layoutParams
+    }
+
+    interface NeedsScreenListener {
+        fun onScreenCreated()
+        fun onPopulateData()
+        fun onDataPopulated()
     }
 
 }

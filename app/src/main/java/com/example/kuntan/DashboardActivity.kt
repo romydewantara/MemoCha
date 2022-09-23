@@ -27,6 +27,7 @@ import com.example.kuntan.adapter.PaymentMethodSpinnerAdapter
 import com.example.kuntan.entity.History
 import com.example.kuntan.entity.Settings
 import com.example.kuntan.fragment.IdentityScreenFragment
+import com.example.kuntan.fragment.NeedsScreenFragment
 import com.example.kuntan.lib.CalendarDialog
 import com.example.kuntan.lib.SelectorItemsBottomSheet
 import com.example.kuntan.utility.AppUtil
@@ -49,12 +50,14 @@ class DashboardActivity : AppCompatActivity() {
 
     companion object {
         private lateinit var mediaPlayer: MediaPlayer
+        const val PAGE_DASHBOARD = "dashboard"
+        const val PAGE_MONTH_CHOOSER = "month_chooser"
     }
     private val TAG = "DashboardActivity"
     private val database by lazy { KuntanRoomDatabase(this) }
     private var isMenuHidden = false
     private var isMenuAnimating = false
-    private var isIdentityShown = false
+    private var isFragmentShown = false
     private var isDefaultSchedule = true
     private var username = ""
     private var currentDate = ""
@@ -232,10 +235,10 @@ class DashboardActivity : AppCompatActivity() {
                 .setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP))
         }
         menuIdentity.setOnClickListener {
-            isIdentityShown = true
+            isFragmentShown = true
             showOverlayLayout()
             placeHolderLayout.x = resources.displayMetrics.widthPixels.toFloat()
-            val fragment = IdentityScreenFragment(applicationContext)
+            fragment = IdentityScreenFragment(applicationContext)
                 .addIdentityListener(object : IdentityScreenFragment.IdentityListener {
                     override fun onIdentityScreenCreated() {
                         placeHolderLayout.visibility = VISIBLE
@@ -247,9 +250,34 @@ class DashboardActivity : AppCompatActivity() {
             supportFragmentManager.beginTransaction().replace(R.id.placeHolderLayout, fragment, "identity").commit()
         }
         menuNeeds.setOnClickListener {
-            startActivity(Intent(this@DashboardActivity, NeedsActivity::class.java)
-                .setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP))
-            finish()
+            isFragmentShown = true
+            showOverlayLayout()
+            placeHolderLayout.x = resources.displayMetrics.widthPixels.toFloat()
+            fragment = NeedsScreenFragment(applicationContext)
+                .addOnNeedScreenListener(object : NeedsScreenFragment.NeedsScreenListener {
+                    override fun onScreenCreated() {
+                        placeHolderLayout.visibility = VISIBLE
+                        val objectAnimator = ObjectAnimator.ofFloat(placeHolderLayout, "translationX", 0f)
+                        objectAnimator.duration = 500L
+                        objectAnimator.start()
+                        objectAnimator.addListener(object : Animator.AnimatorListener {
+                            override fun onAnimationStart(animation: Animator?) {}
+                            override fun onAnimationEnd(animation: Animator?) {
+                                (fragment as NeedsScreenFragment).addPreviousPage(PAGE_DASHBOARD)
+                                (fragment as NeedsScreenFragment).populateNeeds()
+                            }
+                            override fun onAnimationCancel(animation: Animator?) {}
+                            override fun onAnimationRepeat(animation: Animator?) {}
+                        })
+                    }
+                    override fun onPopulateData() {
+                        needsLoading.visibility = VISIBLE
+                    }
+                    override fun onDataPopulated() {
+                        needsLoading.visibility = GONE
+                    }
+                })
+            supportFragmentManager.beginTransaction().replace(R.id.placeHolderLayout, fragment, "needs").commit()
         }
         menuHistory.setOnClickListener {
             startActivity(Intent(this@DashboardActivity, HistoryActivity::class.java)
@@ -257,8 +285,6 @@ class DashboardActivity : AppCompatActivity() {
             finish()
         }
         iconArrows.setOnClickListener {
-            //show-hide Menu
-            Log.d(TAG, "onCreate - isMenuHidden: $isMenuHidden")
             isMenuHidden = !isMenuHidden
             if (!isMenuHidden) showMenu() else hideMenu()
         }
@@ -436,8 +462,10 @@ class DashboardActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        if (isIdentityShown) {
-            isIdentityShown = false
+        if (isFragmentShown) {
+            isFragmentShown = false
+            if (fragment is NeedsScreenFragment) (fragment as NeedsScreenFragment).removeOnGlobalLayoutListener()
+
             val objectAnimator = ObjectAnimator.ofFloat(placeHolderLayout, "translationX", resources.displayMetrics.widthPixels.toFloat())
             objectAnimator.duration = 500L
             objectAnimator.addListener(object : Animator.AnimatorListener {
