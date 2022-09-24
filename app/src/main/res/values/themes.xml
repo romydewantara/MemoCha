@@ -27,6 +27,13 @@
         <item name="android:textSize">20sp</item>
     </style>
 
+    <style name="LobsterTextBoldTealDark24">
+        <item name="android:fontFamily">@font/lobster_regular</item>
+        <item name="android:textColor">@color/teal_dark</item>
+        <item name="android:textSize">24sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
     <!--  L O B S T E R | WHITE  -->
     <style name="LobsterTextRegularWhite20">
         <item name="android:fontFamily">@font/lobster_regular</item>
@@ -38,13 +45,6 @@
         <item name="android:fontFamily">@font/lobster_regular</item>
         <item name="android:textColor">@color/white</item>
         <item name="android:textSize">16sp</item>
-        <item name="android:textStyle">bold</item>
-    </style>
-
-    <style name="LobsterTextBoldWhite18">
-        <item name="android:fontFamily">@font/lobster_regular</item>
-        <item name="android:textColor">@color/white</item>
-        <item name="android:textSize">18sp</item>
         <item name="android:textStyle">bold</item>
     </style>
 
@@ -104,13 +104,6 @@
         <item name="android:textStyle">bold</item>
     </style>
 
-    <style name="TextBoldWhite18">
-        <item name="android:fontFamily">@font/abeezee_regular</item>
-        <item name="android:textColor">@color/white</item>
-        <item name="android:textSize">18sp</item>
-        <item name="android:textStyle">bold</item>
-    </style>
-
     <style name="TextBoldWhite22">
         <item name="android:fontFamily">@font/abeezee_regular</item>
         <item name="android:textColor">@color/white</item>
@@ -126,12 +119,6 @@
     </style>
 
     <!--  B L A C K  -->
-    <style name="TextRegularBlack12">
-        <item name="android:fontFamily">@font/abeezee_regular</item>
-        <item name="android:textColor">@color/black</item>
-        <item name="android:textSize">12sp</item>
-    </style>
-
     <style name="TextRegularBlack14">
         <item name="android:fontFamily">@font/abeezee_regular</item>
         <item name="android:textColor">@color/black</item>
@@ -144,30 +131,10 @@
         <item name="android:textSize">16sp</item>
     </style>
 
-    <style name="TextRegularBlack18">
-        <item name="android:fontFamily">@font/abeezee_regular</item>
-        <item name="android:textColor">@color/black</item>
-        <item name="android:textSize">18sp</item>
-    </style>
-
     <style name="TextBoldBlack16">
         <item name="android:fontFamily">@font/abeezee_regular</item>
         <item name="android:textColor">@color/black</item>
         <item name="android:textSize">16sp</item>
-        <item name="android:textStyle">bold</item>
-    </style>
-
-    <style name="TextBoldBlack18">
-        <item name="android:fontFamily">@font/abeezee_regular</item>
-        <item name="android:textColor">@color/black</item>
-        <item name="android:textSize">18sp</item>
-        <item name="android:textStyle">bold</item>
-    </style>
-
-    <style name="TextBoldBlack20">
-        <item name="android:fontFamily">@font/abeezee_regular</item>
-        <item name="android:textColor">@color/black</item>
-        <item name="android:textSize">20sp</item>
         <item name="android:textStyle">bold</item>
     </style>
 
@@ -185,20 +152,7 @@
         <item name="android:textStyle">bold</item>
     </style>
 
-    <!--  G R E Y  |  L I G H T  -->
-    <style name="TextRegularGrayLight12">
-        <item name="android:fontFamily">@font/abeezee_regular</item>
-        <item name="android:textColor">@color/gray_light</item>
-        <item name="android:textSize">12sp</item>
-    </style>
-
     <!--  G R E Y  -->
-    <style name="TextRegularGrey9">
-        <item name="android:fontFamily">@font/abeezee_regular</item>
-        <item name="android:textColor">@color/pewter</item>
-        <item name="android:textSize">9sp</item>
-    </style>
-
     <style name="TextRegularGrey12">
         <item name="android:fontFamily">@font/abeezee_regular</item>
         <item name="android:textColor">@color/pewter</item>
@@ -244,12 +198,6 @@
     </style>
 
     <!--  N A V Y  -->
-    <style name="TextRegularNavy18">
-        <item name="android:fontFamily">@font/abeezee_regular</item>
-        <item name="android:textColor">@color/blue_navy</item>
-        <item name="android:textSize">18sp</item>
-    </style>
-
     <style name="TextBoldNavy12">
         <item name="android:fontFamily">@font/abeezee_regular</item>
         <item name="android:textColor">@color/blue_navy</item>
@@ -265,18 +213,6 @@
     </style>
 
     <!--  T E A L  -->
-    <style name="TextRegularTeal14">
-        <item name="android:fontFamily">@font/abeezee_regular</item>
-        <item name="android:textColor">@color/teal</item>
-        <item name="android:textSize">14sp</item>
-    </style>
-
-    <style name="TextRegularTeal18">
-        <item name="android:fontFamily">@font/abeezee_regular</item>
-        <item name="android:textColor">@color/teal</item>
-        <item name="android:textSize">18sp</item>
-    </style>
-
     <style name="TextRegularTeal16">
         <item name="android:fontFamily">@font/abeezee_regular</item>
         <item name="android:textColor">@color/teal</item>
@@ -311,6 +247,13 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <!--  T E A L  |  D A R K -->
+    <style name="TextRegularTealDark16">
+        <item name="android:fontFamily">@font/abeezee_regular</item>
+        <item name="android:textColor">@color/teal_dark</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
     <!--  T E A L  |  E X T R A   L I G H T  -->
     <style name="TextBoldTealExtraLight14">
         <item name="android:fontFamily">@font/abeezee_regular</item>
@@ -326,45 +269,11 @@
         <item name="android:textSize">14sp</item>
     </style>
 
-    <style name="TextRegularRed16">
-        <item name="android:fontFamily">@font/abeezee_regular</item>
-        <item name="android:textColor">@color/red_dark</item>
-        <item name="android:textSize">16sp</item>
-    </style>
-
     <style name="TextBoldRed16">
         <item name="android:fontFamily">@font/abeezee_regular</item>
         <item name="android:textColor">@color/red_dark</item>
         <item name="android:textSize">16sp</item>
         <item name="android:textStyle">bold</item>
-    </style>
-
-    <!--  R E D   O R A N G E -->
-    <style name="TextRegularItalicRedOrange12">
-        <item name="android:fontFamily">@font/abeezee_regular</item>
-        <item name="android:textColor">@color/red_orange</item>
-        <item name="android:textStyle">italic</item>
-        <item name="android:textSize">12sp</item>
-    </style>
-
-    <style name="TextRegularRedOrange14">
-        <item name="android:fontFamily">@font/abeezee_regular</item>
-        <item name="android:textColor">@color/red_orange</item>
-        <item name="android:textSize">14sp</item>
-    </style>
-
-    <!--  B L U E -->
-    <style name="TextBoldBlue14">
-        <item name="android:fontFamily">@font/abeezee_regular</item>
-        <item name="android:textColor">@color/blue</item>
-        <item name="android:textSize">14sp</item>
-        <item name="android:textStyle">bold</item>
-    </style>
-
-    <style name="TextRegularBlue12">
-        <item name="android:fontFamily">@font/abeezee_regular</item>
-        <item name="android:textColor">@color/blue</item>
-        <item name="android:textSize">12sp</item>
     </style>
 
     <!--  G O L D -->

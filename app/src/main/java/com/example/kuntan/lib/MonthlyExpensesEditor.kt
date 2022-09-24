@@ -15,18 +15,14 @@ import com.example.kuntan.adapter.CategoryAdapter
 import com.example.kuntan.adapter.PaymentMethodSpinnerAdapter
 import com.example.kuntan.entity.History
 import com.example.kuntan.utility.AppUtil
-import com.example.kuntan.utility.KuntanRoomDatabase
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.layout_monthly_expenses_notes.view.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 import java.text.DecimalFormat
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
-@SuppressLint("ViewConstructor")
+@SuppressLint("ViewConstructor", "UseCompatLoadingForDrawables", "ClickableViewAccessibility", "NewApi", "SimpleDateFormat")
 class MonthlyExpensesEditor(
     context: Context, private val history: History, private val fragmentManager: FragmentManager
 ): RelativeLayout(context) {
@@ -53,11 +49,10 @@ class MonthlyExpensesEditor(
     private lateinit var selectorItemsBottomSheet: SelectorItemsBottomSheet
     private lateinit var paymentMethod: String
 
-    @SuppressLint("UseCompatLoadingForDrawables")
     private fun init() {
         val monthlyExpensesLayoutParams = LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
         layoutParams = monthlyExpensesLayoutParams
-        background = context.resources.getDrawable(R.drawable.background_monthly_expenses_editor_transparent, null)
+        setBackgroundColor(context.resources.getColor(R.color.black_60, null))
         setOnClickListener { AppUtil.hideSoftKeyboard(this@MonthlyExpensesEditor, context) }
 
         val view = LayoutInflater.from(context).inflate(R.layout.layout_monthly_expenses_notes, this, false)
@@ -77,7 +72,6 @@ class MonthlyExpensesEditor(
         initListener()
     }
 
-    @SuppressLint("ClickableViewAccessibility", "SimpleDateFormat", "UseCompatLoadingForDrawables")
     private fun initListener() {
         textViewNotes.text = context.getString(R.string.history_edit_monthly_expenses)
         imageAdd.setImageResource(R.drawable.ic_save)
@@ -206,7 +200,6 @@ class MonthlyExpensesEditor(
         }
     }
 
-    @SuppressLint("UseCompatLoadingForDrawables")
     private fun setSaveButtonEnable(isEnable: Boolean) {
         if (isEnable) {
             imageAdd.isEnabled = true

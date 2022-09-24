@@ -4,7 +4,7 @@
     android:id="@+id/rootHistory"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background_gradient_teal_dark"
+    android:background="@drawable/background_layout_teal_dark"
     tools:context=".HistoryDetailsActivity">
 
     <ImageView
@@ -109,7 +109,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="15dp"
-        android:background="@drawable/background_white_page_top_rounded"
+        android:background="@drawable/background_page_white_rounded_top"
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/textViewAmount">
@@ -162,6 +162,7 @@
             android:layout_height="0dp"
             android:layout_marginTop="10dp"
             android:visibility="visible"
+            app:cardBackgroundColor="@color/transparent"
             app:cardCornerRadius="16dp"
             app:cardElevation="0dp"
             app:cardMaxElevation="0dp"

@@ -5,7 +5,7 @@
     android:id="@+id/rootHistory"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background_gradient_teal_dark"
+    android:background="@drawable/background_layout_teal_dark"
     tools:context=".HistoryActivity">
 
     <androidx.appcompat.widget.AppCompatTextView
@@ -24,8 +24,7 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginStart="15dp"
-        android:layout_marginTop="5dp"
-        android:src="@drawable/ic_history_white"
+        android:src="@drawable/ic_history_year"
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@id/textViewHistoryTitle"
@@ -47,7 +46,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="15dp"
-        android:background="@drawable/background_white_page_top_rounded"
+        android:background="@drawable/background_page_white_rounded_top"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/iconMonthlyExpenses">
 
@@ -68,7 +67,7 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:scaleType="centerCrop"
-            android:src="@drawable/ic_ribbon"
+            android:src="@drawable/ic_ribbon_now"
             android:visibility="gone"
             android:paddingBottom="13dp"
             app:layout_constraintBottom_toTopOf="@id/cardViewMonths"

@@ -60,7 +60,7 @@ class ScheduleEditorBottomSheet(
 
         if (!isEdit) {
             textViewSave.text = requireContext().getString(R.string.button_add)
-            textViewDelete.visibility = View.GONE
+            imageDelete.visibility = View.GONE
         }
 
         initListener()
@@ -80,7 +80,7 @@ class ScheduleEditorBottomSheet(
 
             dismiss()
         }
-        textViewDelete.setOnClickListener {
+        imageDelete.setOnClickListener {
             mListener.onDeleteSchedule(timeId)
             dismiss()
         }

@@ -144,7 +144,7 @@ class SettingsActivity : AppCompatActivity() {
                                 audioOnOff.isChecked = false
                                 animationOnOff.isChecked = false
                                 textViewApply.isEnabled = false
-                                textViewApply.background = applicationContext.resources.getDrawable(R.drawable.background_button_save_disabled, null)
+                                textViewApply.background = applicationContext.resources.getDrawable(R.drawable.background_button_apply_disabled, null)
                                 appTheme = Constant.APP_THEME_LIGHT
                                 analogClockTheme = Constant.DASHBOARD_CLOCK_PRIMARY
                                 backgroundAnimation = getString(R.string.setting_background_animation_off)
@@ -261,7 +261,7 @@ class SettingsActivity : AppCompatActivity() {
                 settings = database.settingsDao().getSettings()
                 runOnUiThread {
                     textViewApply.isEnabled = false
-                    textViewApply.background = applicationContext.resources.getDrawable(R.drawable.background_button_save_disabled, null)
+                    textViewApply.background = applicationContext.resources.getDrawable(R.drawable.background_button_apply_disabled, null)
                     checkResetButtonEnable()
                     Snackbar.make(rootLayoutSetting, getString(R.string.snackbar_setting_applied), Snackbar.LENGTH_SHORT).setAction("DISMISS") {}.show()
                     if (isLanguageChanged) showRestartAppDialog(String.format(getString(R.string.dialog_message_switch_language), settings?.language))
@@ -289,10 +289,10 @@ class SettingsActivity : AppCompatActivity() {
         Log.d("SA", "checkApplyButtonEnable isAnalogChanged: $isAnalogClockThemeChanged")
         if (isLanguageChanged || isAnalogClockThemeChanged || isAnimationSwitched || isAudioSwitched || isDashboardBackgroundChanged) {
             textViewApply.isEnabled = true
-            textViewApply.background = applicationContext.resources.getDrawable(R.drawable.selector_button_save_expenses, null)
+            textViewApply.background = applicationContext.resources.getDrawable(R.drawable.selector_button_apply_settings, null)
         } else {
             textViewApply.isEnabled = false
-            textViewApply.background = applicationContext.resources.getDrawable(R.drawable.background_button_save_disabled, null)
+            textViewApply.background = applicationContext.resources.getDrawable(R.drawable.background_button_apply_disabled, null)
         }
     }
 

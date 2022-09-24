@@ -3,9 +3,9 @@
     <gradient
         android:centerColor="@color/white"
         android:endColor="@color/white"
-        android:startColor="@color/gray_ivory"
+        android:startColor="@color/blue_navy_extra_light"
         android:type="sweep"
-        android:centerX="100%"
+        android:centerX="105%"
         android:centerY="0%" />
     <corners android:radius="10dp" />
 </shape>

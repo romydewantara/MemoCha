@@ -90,7 +90,7 @@ class NeedsItem(context: Context) : LinearLayout(context) {
         textGroupLayout.layoutParams = latestLayoutItemParams
         textGroupLayout.orientation = VERTICAL
         textGroupLayout.gravity = Gravity.END
-        textGroupLayout.background = context.getDrawable(R.drawable.background_item_needs_rounded)
+        textGroupLayout.background = context.getDrawable(R.drawable.background_group_needs_item_white_rounded)
         textGroupLayout.addView(textItem)
         textGroupLayout.addView(textTime)
         textGroupLayout.setOnLongClickListener {
@@ -172,7 +172,7 @@ class NeedsItem(context: Context) : LinearLayout(context) {
         )
         textDate.layoutParams = textNeedsDateParams
         textDate.background =
-            resources.getDrawable(R.drawable.background_text_view_date_gray, null)
+            resources.getDrawable(R.drawable.background_needs_text_date_teal_dark, null)
         TextViewCompat.setTextAppearance(textDate, R.style.TextBoldWhite12)
         val date = "${needs.date}/${needs.month}/${needs.year}"
         textDate.text = date

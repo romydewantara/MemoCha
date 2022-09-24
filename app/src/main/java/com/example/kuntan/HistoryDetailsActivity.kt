@@ -67,6 +67,7 @@ class HistoryDetailsActivity : AppCompatActivity() {
                         }
                         val summary = "Rp ${String.format("%,d", sum)}"
                         textViewAmount.text = summary.replace(",", ".")
+                        textViewHistoryEmpty.visibility = View.GONE
                     }
                 }
             } else {
@@ -83,7 +84,7 @@ class HistoryDetailsActivity : AppCompatActivity() {
                         resources.getDrawable(R.drawable.background_edit_text_search_disabled, null)
                     editTextSearch.isEnabled = false
                     editTextSearch.isFocusable = false
-
+                    textViewHistoryEmpty.visibility = View.VISIBLE
                     cardViewPaymentDetail.visibility = View.GONE
                 }
             }

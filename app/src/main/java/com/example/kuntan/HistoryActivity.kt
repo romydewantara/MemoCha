@@ -127,12 +127,12 @@ class HistoryActivity : AppCompatActivity(), HistoryAdapter.HistoryAdapterListen
         if (year == currentMonthYear.split("-")[1]) {
             month = currentMonthYear.split("-")[0]
             layoutHistory.background = applicationContext.resources.getDrawable(
-                R.drawable.background_white_page_top_rounded, null)
+                R.drawable.background_page_white_rounded_top, null)
             imageRibbon.visibility = View.VISIBLE
             imageRibbon.startAnimation(AnimationUtils.loadAnimation(applicationContext, R.anim.fade_in))
         } else {
             layoutHistory.background = applicationContext.resources.getDrawable(
-                R.drawable.background_grey_page_top_rounded, null)
+                R.drawable.background_page_gray_rounded_top, null)
             imageRibbon.visibility = View.INVISIBLE
         }
         textViewYear.text = year

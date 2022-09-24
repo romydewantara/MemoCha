@@ -2,9 +2,7 @@ package com.example.kuntan.lib
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.graphics.drawable.GradientDrawable
 import android.view.Gravity
-import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.RelativeLayout
@@ -88,7 +86,7 @@ public class SecretLetterDialog(context: Context): RelativeLayout(context) {
         imagePhoto.layoutParams = imagePhotoParams
         //border(imagePhoto, R.color.red_orange)
         imagePhoto.background = context.resources.getDrawable(R.drawable.background_secret_letter, null)
-        imagePhoto.setImageResource(R.drawable.rosya_romy_wedding)
+        imagePhoto.setImageResource(R.drawable.image_rr_wedding)
 
         adjustView(title, content, calendar, imagePhoto)
         container.addView(title)

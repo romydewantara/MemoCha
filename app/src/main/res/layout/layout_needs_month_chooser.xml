@@ -19,11 +19,13 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintWidth_percent=".5">
 
-        <ImageView
+        <View
             android:id="@+id/imageWhiteBackgroundIcon"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:background="@drawable/background_needs_month_icon_item"
+            android:scaleY="-1"
+            android:scaleX="-1"
+            android:background="@drawable/background_needs_month_item_gradient_white"
             app:layout_constraintHeight_percent=".8"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"

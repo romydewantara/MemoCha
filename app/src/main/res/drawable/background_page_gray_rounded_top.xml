@@ -4,4 +4,11 @@
     <corners
         android:topLeftRadius="16dp"
         android:topRightRadius="16dp" />
+    <gradient
+        android:centerColor="@color/gray_ivory"
+        android:endColor="@color/white"
+        android:centerX="0%"
+        android:centerY="0%"
+        android:type="linear"
+        android:angle="-90"/>
 </shape>

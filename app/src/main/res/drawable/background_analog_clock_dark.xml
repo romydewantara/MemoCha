@@ -7,8 +7,8 @@
     <gradient
         android:startColor="@color/black"
         android:centerColor="@color/black"
-        android:endColor="@color/gray"
+        android:endColor="@color/dark_gray"
         android:type="sweep"
-        android:centerX="0%"
-        android:centerY="100%"/>
+        android:centerX="40%"
+        android:centerY="110%" />
 </shape>

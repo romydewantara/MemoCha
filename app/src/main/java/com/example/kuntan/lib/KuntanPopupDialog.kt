@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import android.view.Window
 import androidx.fragment.app.DialogFragment
 import com.example.kuntan.R
-import kotlinx.android.synthetic.main.popup_dialog_kuntan.*
+import kotlinx.android.synthetic.main.layout_kuntan_popup_dialog.*
 
 class KuntanPopupDialog : DialogFragment() {
 
@@ -30,7 +30,7 @@ class KuntanPopupDialog : DialogFragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.popup_dialog_kuntan, container, false)
+        return inflater.inflate(R.layout.layout_kuntan_popup_dialog, container, false)
     }
 
     @SuppressLint("UseCompatLoadingForDrawables")

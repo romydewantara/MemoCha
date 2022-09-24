@@ -36,10 +36,10 @@
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/textTitle"
-        style="@style/TextBoldTeal26"
+        style="@style/LobsterTextBoldTealDark24"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="15dp"
         android:layout_marginTop="8dp"
         android:text="@string/schedule_title_page"
         app:layout_constraintBottom_toBottomOf="@id/trash"
@@ -50,9 +50,9 @@
         android:id="@+id/iconActivities"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="5dp"
-        android:src="@drawable/ic_schedule"
+        android:layout_marginStart="15dp"
+
+        android:src="@drawable/ic_activities"
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toBottomOf="@id/textTitle"
@@ -60,7 +60,7 @@
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/textSubtitle"
-        style="@style/TextRegularTeal16"
+        style="@style/TextRegularTealDark16"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="5dp"
@@ -99,7 +99,7 @@
             android:layout_width="match_parent"
             android:layout_height="36dp"
             android:layout_gravity="center_vertical"
-            android:background="@drawable/background_teal_rounded"
+            android:background="@drawable/background_schedule_bar_rounded_gradient_teal_dark"
             android:orientation="horizontal"
             android:padding="2dp">
 

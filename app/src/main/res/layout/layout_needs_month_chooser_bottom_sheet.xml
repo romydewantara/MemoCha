@@ -12,9 +12,15 @@
             android:id="@+id/needsLayoutDateHeader"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:background="@drawable/background_gradient_teal_dark"
             app:layout_constraintHeight_percent=".35"
             app:layout_constraintTop_toTopOf="parent">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/background_layout_teal_dark"
+                android:scaleY="-1"
+                android:visibility="visible" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/textViewHeader"
@@ -36,11 +42,11 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:scaleType="fitCenter"
-                app:layout_constraintWidth_percent=".45"
+                app:layout_constraintBottom_toTopOf="@id/layoutYearSelection"
                 app:layout_constraintDimensionRatio="1:1"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toTopOf="@id/layoutYearSelection"
+                app:layout_constraintWidth_percent=".45"
                 app:lottie_autoPlay="false"
                 app:lottie_fileName="woman.json"
                 app:lottie_loop="true" />
@@ -49,9 +55,27 @@
                 android:id="@+id/layoutYearSelection"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:background="@drawable/background_needs_footer_gradient_dark"
-                app:layout_constraintHeight_percent=".20"
-                app:layout_constraintBottom_toBottomOf="parent">
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintHeight_percent=".15">
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/background_needs_footer_gradient_dark"
+                    android:scaleX="-1"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintWidth_percent=".5" />
+
+                <ImageView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/background_needs_footer_gradient_dark"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintWidth_percent=".5" />
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/textYear"
@@ -61,10 +85,10 @@
                     android:background="?android:selectableItemBackground"
                     android:padding="10dp"
                     android:text="2022"
+                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"/>
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <ImageView
                     android:id="@+id/previousYear"
@@ -102,23 +126,24 @@
             android:id="@+id/scrollViewGrid"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:background="@drawable/background_needs_month_icon_item"
+            android:background="@drawable/background_needs_month_list_gradient_dark_to_light"
             android:scrollbars="none"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintHeight_percent=".65"
-            app:layout_constraintTop_toBottomOf="@id/needsLayoutDateHeader"
-            app:layout_constraintBottom_toBottomOf="parent">
+            app:layout_constraintTop_toBottomOf="@id/needsLayoutDateHeader">
 
             <RelativeLayout
                 android:id="@+id/containerGridLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+
                 <GridLayout
                     android:id="@+id/needsGridLayout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:alignmentMode="alignBounds"
-                    android:rowCount="4"
-                    android:columnCount="3"/>
+                    android:columnCount="3"
+                    android:rowCount="4" />
             </RelativeLayout>
 
         </ScrollView>
