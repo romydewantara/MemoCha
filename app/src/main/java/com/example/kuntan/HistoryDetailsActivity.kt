@@ -80,6 +80,8 @@ class HistoryDetailsActivity : AppCompatActivity() {
                     iconExport.setImageResource(R.drawable.ic_export_gray)
                     TextViewCompat.setTextAppearance(textViewExport, R.style.TextRegularGrey14)
 
+                    val zero = "Rp 0"
+                    textViewAmount.text = zero
                     editTextSearch.background =
                         resources.getDrawable(R.drawable.background_edit_text_search_disabled, null)
                     editTextSearch.isEnabled = false
@@ -150,6 +152,9 @@ class HistoryDetailsActivity : AppCompatActivity() {
         layoutMonthlyExpensesEditor.addView(monthlyExpensesEditor)
         layoutMonthlyExpensesEditor.visibility = View.VISIBLE
         layoutMonthlyExpensesEditor.startAnimation(AnimationUtils.loadAnimation(applicationContext, R.anim.fade_in))
+        layoutMonthlyExpensesEditor.setOnClickListener {
+            AppUtil.hideSoftKeyboard(layoutMonthlyExpensesEditor, this@HistoryDetailsActivity)
+        }
     }
 
     private fun setupRecyclerView() {

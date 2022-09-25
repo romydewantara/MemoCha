@@ -157,12 +157,24 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/textViewNeedsInfo"
+        style="@style/TextRegularBlack14"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:autoSizeTextType="uniform"
+        android:background="@drawable/background_needs_info_yellow"
+        android:maxLines="1"
+        android:text="@string/needs_notification_page"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/layoutNeedsHeader" />
+
     <ScrollView
         android:id="@+id/scrollViewNeeds"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@id/layoutNeedsFooter"
-        app:layout_constraintTop_toBottomOf="@id/layoutNeedsHeader">
+        app:layout_constraintTop_toBottomOf="@id/textViewNeedsInfo">
 
         <RelativeLayout
             android:id="@+id/containerNeedsContent"
@@ -176,9 +188,9 @@
         android:id="@+id/buttonScrollToTop"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:padding="10dp"
         android:visibility="gone"
         app:layout_constraintDimensionRatio="1:1"
-        app:layout_constraintLeft_toLeftOf="@id/scrollViewNeeds"
         app:layout_constraintRight_toRightOf="@id/scrollViewNeeds"
         app:layout_constraintTop_toTopOf="@id/scrollViewNeeds"
         app:layout_constraintWidth_percent=".15">
@@ -186,6 +198,7 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:background="@drawable/background_needs_text_date_teal_dark"
             android:rotation="-90"
             android:src="@drawable/ic_arrow_right_white"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -197,21 +210,29 @@
         android:id="@+id/buttonScrollToBottom"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:padding="10dp"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@id/scrollViewNeeds"
         app:layout_constraintDimensionRatio="1:1"
-        app:layout_constraintLeft_toLeftOf="@id/scrollViewNeeds"
         app:layout_constraintRight_toRightOf="@id/scrollViewNeeds"
         app:layout_constraintWidth_percent=".15">
 
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:background="@drawable/background_needs_text_date_teal_dark"
             android:rotation="90"
             android:src="@drawable/ic_arrow_right_white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <RelativeLayout
+        android:id="@+id/needsOverlayLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clickable="true"
+        android:visibility="gone" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

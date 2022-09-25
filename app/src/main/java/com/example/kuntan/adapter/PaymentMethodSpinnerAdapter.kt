@@ -12,12 +12,12 @@ import com.example.kuntan.R
 
 class PaymentMethodSpinnerAdapter(
     private val context: Context,
-    private val listOfItem: List<String>,
-    private var itemSelectedListener: ItemSelectedListener
+    private val listOfItem: List<String>
 ) : BaseAdapter() {
 
     private val layoutInflater: LayoutInflater = LayoutInflater.from(context)
     private var selectedItem = ""
+    private var itemSelectedListener: ItemSelectedListener? = null
 
     @SuppressLint("ViewHolder")
     override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
@@ -37,7 +37,6 @@ class PaymentMethodSpinnerAdapter(
                 imageViewIcon.setBackgroundResource(R.drawable.ic_transfer)
             }
         }
-        itemSelectedListener.onItemSelected(selectedItem)
         return view
     }
 
@@ -73,7 +72,12 @@ class PaymentMethodSpinnerAdapter(
     }
 
     override fun getItemId(position: Int): Long {
-        return 0
+        itemSelectedListener?.onItemSelected("${getItem(position)}")
+        return position.toLong()
+    }
+
+    fun addOnPaymentMethodListener(itemSelectedListener: ItemSelectedListener) {
+        this.itemSelectedListener = itemSelectedListener
     }
 
     interface ItemSelectedListener {

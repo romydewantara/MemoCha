@@ -153,9 +153,8 @@ class NeedsActivity : AppCompatActivity(), NeedsListener {
             val needsMonthChooserBottomSheet = NeedsMonthChooserBottomSheet()
             needsMonthChooserBottomSheet.addOnNeedsDateChooserListener(
                 object : NeedsMonthChooserBottomSheet.NeedsDateChooserListener {
-                    override fun onDateSelected(year: String, month: String) {
-
-                    }
+                    override fun onDateSelected(year: String, month: String) {}
+                    override fun onBackPressed() {}
                 })
             needsMonthChooserBottomSheet.isCancelable = false
             needsMonthChooserBottomSheet.show(supportFragmentManager, needsMonthChooserBottomSheet.tag)

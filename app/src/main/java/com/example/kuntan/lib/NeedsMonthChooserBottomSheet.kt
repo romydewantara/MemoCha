@@ -71,6 +71,7 @@ class NeedsMonthChooserBottomSheet: BottomSheetDialogFragment() {
         }
         bottomSheetDialog.setOnKeyListener { _: DialogInterface?, _: Int, keyEvent: KeyEvent ->
             if (keyEvent.keyCode == KeyEvent.KEYCODE_BACK) {
+                needsDateChooserListener.onBackPressed()
                 lottieHeader.cancelAnimation()
                 dismiss()
             }
@@ -151,5 +152,6 @@ class NeedsMonthChooserBottomSheet: BottomSheetDialogFragment() {
 
     interface NeedsDateChooserListener {
         fun onDateSelected(year: String, month: String)
+        fun onBackPressed()
     }
 }

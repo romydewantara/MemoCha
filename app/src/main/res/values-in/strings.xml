@@ -123,7 +123,7 @@
 
     <!-- N E E D S -->
     <string name="needs_title_page">Daftar\nKebutuhan</string>
-    <string name="needs_notification_page">Daftar item keperluan di bulan yang udah lewat ngga bisa diubah.</string>
+    <string name="needs_notification_page">Daftar item keperluan di bulan yang udah lewat ngga bisa ditambahin item baru.</string>
     <string name="needs_date">@string/secret_letter_calendar</string>
     <string name="needs_today_list">Daftar Hari Ini: %s</string>
     <string name="needs_hint_goods">Contoh: Eskrim, Gelas, dll…</string>
@@ -134,7 +134,7 @@
     <string name="identity_address">Address</string>
 
     <!-- H I S T O R Y -->
-    <string name="history_title_page">Riwayat</string>
+    <string name="history_title_page">Riwayat\t</string>
     <string name="history_subtitle_page">Pengeluaran Bulanan</string>
     <string name="history_monthly_expenses">Total pengeluaran di Bulan ini:</string>
 
@@ -150,7 +150,7 @@
     <string name="history_edit_monthly_expenses">Ubah</string>
 
     <!-- S C H E D U L E -->
-    <string name="schedule_title_page">Jadwal</string>
+    <string name="schedule_title_page">Jadwal\t</string>
     <string name="schedule_subtitle_page">Aktivitas</string>
     <string name="schedule_empty_list">Belum ada Jadwal yang dibuat… :(</string>
 

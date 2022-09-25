@@ -14,6 +14,7 @@ import android.util.Log
 import android.util.TypedValue
 import android.view.View.GONE
 import android.view.View.VISIBLE
+import android.view.View.INVISIBLE
 import android.view.animation.AnimationUtils
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -43,17 +44,19 @@ import kotlinx.coroutines.withContext
 import java.text.DecimalFormat
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Calendar
+import java.util.Date
+import java.util.Locale
 
 @SuppressLint("ClickableViewAccessibility", "UseCompatLoadingForDrawables", "SimpleDateFormat")
 class DashboardActivity : AppCompatActivity() {
 
     companion object {
-        private lateinit var mediaPlayer: MediaPlayer
+        const val TAG = "DashboardActivity"
         const val PAGE_DASHBOARD = "dashboard"
         const val PAGE_MONTH_CHOOSER = "month_chooser"
     }
-    private val TAG = "DashboardActivity"
+
     private val database by lazy { KuntanRoomDatabase(this) }
     private var isMenuHidden = false
     private var isMenuAnimating = false
@@ -61,6 +64,7 @@ class DashboardActivity : AppCompatActivity() {
     private var isDefaultSchedule = true
     private var username = ""
     private var currentDate = ""
+    private var customDate = ""
     private var paymentMethod = ""
     private var index = 0
     private var arrayTimes = arrayListOf(
@@ -71,12 +75,14 @@ class DashboardActivity : AppCompatActivity() {
         Times.Isya.name
     )
 
-    private lateinit var fragment: Fragment
+    private lateinit var mediaPlayer: MediaPlayer
     private lateinit var constraintActivityMain: ConstraintLayout
     private lateinit var constraintMainMenu: ConstraintLayout
     private lateinit var constraintMainMenuContainer: ConstraintLayout
     private lateinit var dashboardScheduleAdapter: DashboardScheduleAdapter
-    private lateinit var selectorItemsBottomSheet: SelectorItemsBottomSheet
+    private lateinit var paymentMethodSpinnerAdapter: PaymentMethodSpinnerAdapter
+    private lateinit var selectorCategory: SelectorItemsBottomSheet
+    private lateinit var fragment: Fragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -125,11 +131,16 @@ class DashboardActivity : AppCompatActivity() {
         }
         val calendar = Calendar.getInstance() //English: Friday, September 16th 2022 | Indonesia: Jum\'at, 16 September 2022
         currentDate = SimpleDateFormat("dd-MM-yyyy").format(calendar.time)
+        customDate = SimpleDateFormat("dd-MM-yyyy").format(calendar.time)
         textDate.text = SimpleDateFormat("EEEE, MMMM dd yyyy").format(calendar.time)
         textViewCalendar.text = SimpleDateFormat("dd/MM/yyyy").format(calendar.time)
         time.text = arrayTimes[index]
         layoutCalendar.visibility = VISIBLE
         textViewCalendar.text = currentDate.replace("-","/")
+
+        val sortType = arrayListOf(getString(R.string.method_cash), getString(R.string.method_debit), getString(R.string.method_transfer))
+        paymentMethodSpinnerAdapter = PaymentMethodSpinnerAdapter(applicationContext, sortType)
+        layoutPaymentMethod.adapter = paymentMethodSpinnerAdapter
 
         TextViewCompat.setAutoSizeTextTypeUniformWithConfiguration(textViewCategory, 1,
             14, 1, TypedValue.COMPLEX_UNIT_SP)
@@ -245,6 +256,14 @@ class DashboardActivity : AppCompatActivity() {
                         val objectAnimator = ObjectAnimator.ofFloat(placeHolderLayout, "translationX", 0f)
                         objectAnimator.duration = 500L
                         objectAnimator.start()
+                        objectAnimator.addListener(object : Animator.AnimatorListener {
+                            override fun onAnimationStart(animation: Animator?) {}
+                            override fun onAnimationEnd(animation: Animator?) {
+                                resetExpenseNote()
+                            }
+                            override fun onAnimationCancel(animation: Animator?) {}
+                            override fun onAnimationRepeat(animation: Animator?) {}
+                        })
                     }
                 })
             supportFragmentManager.beginTransaction().replace(R.id.placeHolderLayout, fragment, "identity").commit()
@@ -265,6 +284,7 @@ class DashboardActivity : AppCompatActivity() {
                             override fun onAnimationEnd(animation: Animator?) {
                                 (fragment as NeedsScreenFragment).addPreviousPage(PAGE_DASHBOARD)
                                 (fragment as NeedsScreenFragment).populateNeeds()
+                                resetExpenseNote()
                             }
                             override fun onAnimationCancel(animation: Animator?) {}
                             override fun onAnimationRepeat(animation: Animator?) {}
@@ -328,14 +348,14 @@ class DashboardActivity : AppCompatActivity() {
             }
         }
         textViewCategoryTitle.setOnClickListener {
-            selectorItemsBottomSheet = SelectorItemsBottomSheet(getString(R.string.category_title),
+            selectorCategory = SelectorItemsBottomSheet(getString(R.string.category_title),
                 CategoryAdapter(applicationContext, object : CategoryAdapter.CategoryAdapterListener {
                 override fun onCategoryClicked(category: String) {
-                    selectorItemsBottomSheet.dismiss()
+                    selectorCategory.dismiss()
                     textViewCategory.text = category
                 }
             }))
-            selectorItemsBottomSheet.show(supportFragmentManager, "selector_bottom_sheet")
+            selectorCategory.show(supportFragmentManager, "selector_bottom_sheet")
         }
         editTextGoods.addTextChangedListener(onTextChangedListener(false))
         editTextGoods.setOnTouchListener { _, _ ->
@@ -351,23 +371,20 @@ class DashboardActivity : AppCompatActivity() {
             false
         }
         editTextAmount.addTextChangedListener(onTextChangedListener(true))
-
-        val sortType = arrayListOf(getString(R.string.method_cash), getString(R.string.method_debit), getString(R.string.method_transfer))
-        val spinnerPaymentMethodAdapter = PaymentMethodSpinnerAdapter(applicationContext,
-            sortType, object : PaymentMethodSpinnerAdapter.ItemSelectedListener {
-                override fun onItemSelected(selectedItem: String) {
-                    paymentMethod = selectedItem
-                }
-            })
-        layoutPaymentMethod.adapter = spinnerPaymentMethodAdapter
-
+        paymentMethodSpinnerAdapter.addOnPaymentMethodListener(
+            object : PaymentMethodSpinnerAdapter.ItemSelectedListener {
+            override fun onItemSelected(selectedItem: String) {
+                paymentMethod = selectedItem
+            }
+        })
         layoutCalendar.setOnClickListener {
             val calendarDialog = CalendarDialog()
-            calendarDialog.newInstance(applicationContext, SimpleDateFormat("yyyy-MM-dd").format(Date()))
+            calendarDialog.newInstance(applicationContext, customDate)
                 .onDateChangeListener(object : CalendarDialog.DateChangeListener {
                     override fun onDateChanges(dateSelected: String) {
-                        currentDate = dateSelected
+                        customDate = dateSelected
                         textViewCalendar.text = dateSelected.replace("-","/")
+                        if (!isDateEqualsToday()) startPulsateAnimation() else stopPulsateAnimation()
                     }
                 })
             calendarDialog.show(supportFragmentManager, calendarDialog.tag)
@@ -405,6 +422,39 @@ class DashboardActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    private fun resetExpenseNote() {
+        layoutPaymentMethod.setSelection(0)
+        paymentMethod = getString(R.string.method_cash)
+        editTextGoods.setText("")
+        editTextAmount.setText("")
+        editTextNote.setText("")
+        if (!isDateEqualsToday()) {
+            stopPulsateAnimation()
+            customDate = currentDate
+            textViewCalendar.text = currentDate
+        }
+    }
+
+    private fun isDateEqualsToday(): Boolean {
+        return customDate == currentDate
+    }
+
+    private fun startPulsateAnimation() {
+        val firstPulsate = AnimationUtils.loadAnimation(this, R.anim.first_pulsate)
+        val secondPulsate = AnimationUtils.loadAnimation(this, R.anim.second_pulsate)
+        firstPulse.startAnimation(firstPulsate)
+        secondPulse.startAnimation(secondPulsate)
+        firstPulse.visibility = VISIBLE
+        secondPulse.visibility = VISIBLE
+    }
+
+    private fun stopPulsateAnimation() {
+        firstPulse.clearAnimation()
+        secondPulse.clearAnimation()
+        firstPulse.visibility = INVISIBLE
+        secondPulse.visibility = INVISIBLE
     }
 
     private fun showMenu() {
@@ -464,9 +514,10 @@ class DashboardActivity : AppCompatActivity() {
     override fun onBackPressed() {
         if (isFragmentShown) {
             isFragmentShown = false
-            if (fragment is NeedsScreenFragment) (fragment as NeedsScreenFragment).removeOnGlobalLayoutListener()
+            if (fragment is NeedsScreenFragment) (fragment as NeedsScreenFragment).removeListener()
 
-            val objectAnimator = ObjectAnimator.ofFloat(placeHolderLayout, "translationX", resources.displayMetrics.widthPixels.toFloat())
+            val objectAnimator = ObjectAnimator.ofFloat(
+                placeHolderLayout, "translationX", resources.displayMetrics.widthPixels.toFloat())
             objectAnimator.duration = 500L
             objectAnimator.addListener(object : Animator.AnimatorListener {
                 override fun onAnimationStart(animation: Animator?) {

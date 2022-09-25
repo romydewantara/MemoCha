@@ -5,9 +5,10 @@ import android.app.Activity
 import android.content.Context
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
+import android.view.ViewTreeObserver
 import android.widget.RelativeLayout
 import androidx.fragment.app.FragmentManager
 import com.example.kuntan.R
@@ -34,7 +35,7 @@ class MonthlyExpensesEditor(
     }
 
     init {
-        init()
+        onCreateView()
     }
 
     private val mContext = context
@@ -48,31 +49,42 @@ class MonthlyExpensesEditor(
     private lateinit var monthlyExpensesEditorListener: MonthlyExpensesEditorListener
     private lateinit var selectorItemsBottomSheet: SelectorItemsBottomSheet
     private lateinit var paymentMethod: String
+    private lateinit var paymentMethodSpinnerAdapter: PaymentMethodSpinnerAdapter
+    private lateinit var globalLayoutListener: ViewTreeObserver.OnGlobalLayoutListener
 
-    private fun init() {
-        val monthlyExpensesLayoutParams = LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
-        layoutParams = monthlyExpensesLayoutParams
-        setBackgroundColor(context.resources.getColor(R.color.black_60, null))
-        setOnClickListener { AppUtil.hideSoftKeyboard(this@MonthlyExpensesEditor, context) }
-
+    private fun onCreateView() {
         val view = LayoutInflater.from(context).inflate(R.layout.layout_monthly_expenses_notes, this, false)
         view.measure(view.width, view.height)
-
-        viewTreeObserver.addOnGlobalLayoutListener {
-            view.y = (this@MonthlyExpensesEditor.height - view.measuredHeight).toFloat()
-            if (isInit) {
-                editTextGoods.requestFocus()
-                editTextGoods.setSelection(history.goods.length)
-                AppUtil.showSoftKeyboard(editTextGoods, context)
-                isInit = false
-            }
-        }
-
         addView(view)
+
+        viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
+            override fun onGlobalLayout() {
+                globalLayoutListener = this
+
+                view.y = (this@MonthlyExpensesEditor.height - view.measuredHeight).toFloat()
+                if (isInit) {
+                    editTextGoods.requestFocus()
+                    editTextGoods.setSelection(history.goods.length)
+                    AppUtil.showSoftKeyboard(editTextGoods, context)
+                    isInit = false
+                }
+                if (!AppUtil.isKeyboardVisible(this@MonthlyExpensesEditor)) {
+                    editTextGoods.isFocusable = false
+                    editTextAmount.isFocusable = false
+                    editTextNote.isFocusable = false
+                }
+            }
+        })
+
+        val sortType = arrayListOf(context.getString(R.string.method_cash), context.getString(R.string.method_debit), context.getString(R.string.method_transfer))
+        paymentMethodSpinnerAdapter = PaymentMethodSpinnerAdapter(context, sortType)
+        layoutPaymentMethod.adapter = paymentMethodSpinnerAdapter
+        layoutPaymentMethod.setSelection(AppUtil.convertPaymentMethodFromType(context, history.method))
         initListener()
     }
 
     private fun initListener() {
+        layoutCalendar.visibility = GONE
         textViewNotes.text = context.getString(R.string.history_edit_monthly_expenses)
         imageAdd.setImageResource(R.drawable.ic_save)
         imageAdd.background = context.resources.getDrawable(R.drawable.background_button_send_disabled, null)
@@ -146,18 +158,15 @@ class MonthlyExpensesEditor(
             editTextNote.isFocusableInTouchMode = true
             false
         }
-
-        val sortType = arrayListOf(context.getString(R.string.method_cash), context.getString(R.string.method_debit), context.getString(R.string.method_transfer))
-        val spinnerPaymentMethodAdapter = PaymentMethodSpinnerAdapter(context,
-            sortType, object : PaymentMethodSpinnerAdapter.ItemSelectedListener {
-                override fun onItemSelected(selectedItem: String) {
-                    paymentMethod = selectedItem
-                    isPaymentMethodChanged = selectedItem != history.method
-                    setSaveButtonEnable(isGoodsChanged || isAmountChanged || isNoteChanged || isCategoryChanged || isPaymentMethodChanged)
-                }
-            })
-        layoutPaymentMethod.adapter = spinnerPaymentMethodAdapter
-        layoutPaymentMethod.setSelection(AppUtil.convertPaymentMethodFromType(context, history.method))
+        paymentMethodSpinnerAdapter.addOnPaymentMethodListener(
+            object : PaymentMethodSpinnerAdapter.ItemSelectedListener {
+            override fun onItemSelected(selectedItem: String) {
+                paymentMethod = selectedItem
+                Log.d("MEE", "onItemSelected - selItem: $selectedItem | method: ${history.method}")
+                isPaymentMethodChanged = selectedItem != history.method
+                setSaveButtonEnable(isGoodsChanged || isAmountChanged || isNoteChanged || isCategoryChanged || isPaymentMethodChanged)
+            }
+        })
     }
 
     private fun onTextChangedListener(type: String) : TextWatcher {
@@ -189,9 +198,9 @@ class MonthlyExpensesEditor(
                     EDIT_TEXT_NOTE -> {}
                 }
 
-                val goodsValue = editTextGoods.text.toString()
-                val amountValue = editTextAmount.text.toString()
-                val noteValue = editTextNote.text.toString()
+                val goodsValue = editTextGoods.text.toString().trim()
+                val amountValue = editTextAmount.text.toString().trim()
+                val noteValue = editTextNote.text.toString().trim()
                 isGoodsChanged = goodsValue != history.goods
                 isAmountChanged = amountValue != history.amount
                 isNoteChanged = noteValue != history.description

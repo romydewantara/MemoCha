@@ -4,22 +4,19 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
 import android.util.TypedValue
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import android.view.Window
 import androidx.core.widget.TextViewCompat
 import androidx.fragment.app.DialogFragment
 import com.example.kuntan.R
-import com.example.kuntan.utility.AppUtil
 import kotlinx.android.synthetic.main.layout_dialog_calendar.*
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Locale
 
+@SuppressLint("UseCompatLoadingForDrawables", "StaticFieldLeak")
 class CalendarDialog : DialogFragment(R.layout.layout_dialog_calendar) {
 
     companion object {
-        @SuppressLint("StaticFieldLeak")
         private lateinit var context: Context
         private lateinit var dateChangeListener: DateChangeListener
     }
@@ -43,13 +40,12 @@ class CalendarDialog : DialogFragment(R.layout.layout_dialog_calendar) {
         super.onCreate(savedInstanceState)
     }
 
-    @SuppressLint("UseCompatLoadingForDrawables")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         if (dialog != null && dialog?.window != null) {
             dialog?.window?.setBackgroundDrawable(Companion.context.resources.getDrawable(R.drawable.background_calendar_dialog_rounded, null))
         }
-        val dateSelected = SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH).parse(mDate)
+        val dateSelected = SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH).parse(mDate)
         calendarView.setDate(dateSelected!!.time, true, true)
         calendarView.setOnDateChangeListener { _, year, month, dayOfMonth ->
             dateChangeListener.onDateChanges("${String.format("%02d", dayOfMonth)}-${String.format("%02d", month+1)}-$year")

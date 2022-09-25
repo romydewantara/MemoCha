@@ -17,10 +17,10 @@ import android.view.animation.ScaleAnimation
 import android.widget.FrameLayout
 import android.widget.RelativeLayout
 import android.widget.Toast
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.widget.TextViewCompat
 import androidx.fragment.app.Fragment
 import com.example.kuntan.DashboardActivity
+import com.example.kuntan.NeedsActivity
 import com.example.kuntan.R
 import com.example.kuntan.entity.Needs
 import com.example.kuntan.lib.KuntanPopupDialog
@@ -34,22 +34,17 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Calendar
+import java.util.Date
 
 @SuppressLint("ClickableViewAccessibility", "SimpleDateFormat")
-class NeedsScreenFragment(context: Context) : Fragment(R.layout.activity_needs), NeedsListener {
+class NeedsScreenFragment(context: Context) : Fragment(R.layout.activity_needs) {
 
     companion object {
         const val TAG = "Needs"
-        const val HEADER = "header"
-        const val FOOTER = "footer"
     }
 
     private val database by lazy { KuntanRoomDatabase(requireContext()) }
-    private var headerHeight: Int = 0
-    private var footerHeight: Int = 0
-    private var currentYHeader: Float = 0f
-    private var currentYFooter: Float = 0f
     private var previousYLayout = 0
     private var needsContainerHeight = 0
     private var previousTextLength = 0
@@ -60,12 +55,11 @@ class NeedsScreenFragment(context: Context) : Fragment(R.layout.activity_needs),
     private var dataSize = 0
     private var dataSizeCount = 0
     private var isInit = true
-    private var isToday = true
 
     private lateinit var invisibleBackground: View
-    private lateinit var needsListener: NeedsListener
     private lateinit var needsScreenListener: NeedsScreenListener
     private lateinit var globalLayoutListener: ViewTreeObserver.OnGlobalLayoutListener
+    private lateinit var scrollChangedListener: ViewTreeObserver.OnScrollChangedListener
 
     private lateinit var previousPage: String
 
@@ -82,14 +76,8 @@ class NeedsScreenFragment(context: Context) : Fragment(R.layout.activity_needs),
         currentMonth = tempDate.split("/")[1]
         currentYear = tempDate.split("/")[2]
 
-        needsListener = this
         invisibleBackground = View(requireContext())
         containerNeedsContent.addView(invisibleBackground)
-
-        val needsHeader = view?.findViewById<ConstraintLayout>(R.id.layoutNeedsHeader)
-        val needsFooter = view?.findViewById<ConstraintLayout>(R.id.layoutNeedsFooter)
-        needsHeader?.post { updateLayoutSize(HEADER, needsHeader.height, needsHeader.y) }
-        needsFooter?.post { updateLayoutSize(FOOTER, needsFooter.height, needsFooter.y) }
 
         rootLayoutNeeds.viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
             override fun onGlobalLayout() {
@@ -101,8 +89,8 @@ class NeedsScreenFragment(context: Context) : Fragment(R.layout.activity_needs),
         TextViewCompat.setAutoSizeTextTypeUniformWithConfiguration(textViewNeedsTitle,
             1, 24, 1, TypedValue.COMPLEX_UNIT_SP)
 
-        textViewNeedsDate.text = AppUtil.convertMonthNameFromCode(requireContext(), SimpleDateFormat("MM").format(
-            Calendar.getInstance().time))
+        textViewNeedsDate.text = AppUtil.convertMonthNameFromCode(
+            requireContext(), SimpleDateFormat("MM").format(Calendar.getInstance().time))
         hideSendButton()
     }
 
@@ -161,109 +149,33 @@ class NeedsScreenFragment(context: Context) : Fragment(R.layout.activity_needs),
             //editTextNeedsItem.setText(Constant.TEST_TEXT)
         }
         imageThreeDots.setOnClickListener {
+            needsOverlayLayout.visibility = View.VISIBLE
             val needsMonthChooserBottomSheet = NeedsMonthChooserBottomSheet()
             needsMonthChooserBottomSheet.addOnNeedsDateChooserListener(
                 object : NeedsMonthChooserBottomSheet.NeedsDateChooserListener {
                     override fun onDateSelected(year: String, month: String) {
                         Log.d(TAG, "onDateSelected - month: $month | year: $year")
+                        onBackPressed()
                         previousPage = DashboardActivity.PAGE_MONTH_CHOOSER
                         currentMonth = month
                         currentYear = year
                         populateNeeds()
                     }
+                    override fun onBackPressed() {
+                        needsOverlayLayout.visibility = View.GONE
+                    }
                 })
             needsMonthChooserBottomSheet.isCancelable = false
             needsMonthChooserBottomSheet.show(childFragmentManager, needsMonthChooserBottomSheet.tag)
         }
-        //setScrollViewNeedsObserver()
+        setScrollViewNeedsObserver()
         buttonScrollToTop.setOnClickListener {
+            scrollDuration = 600L
             scrollToTop()
         }
         buttonScrollToBottom.setOnClickListener {
+            scrollDuration = 600L
             scrollToBottom()
-        }
-    }
-
-    private fun setScrollViewNeedsObserver() {
-        scrollViewNeeds.setOnTouchListener { _, _ -> false }
-        scrollViewNeeds.viewTreeObserver.addOnScrollChangedListener {
-            val view = scrollViewNeeds.getChildAt(scrollViewNeeds.childCount - 1)
-            val topDetector = scrollViewNeeds.scrollY
-            val bottomDetector: Int = view.bottom - (scrollViewNeeds.height + scrollViewNeeds.scrollY)
-            buttonScrollToTop.visibility = View.GONE
-            buttonScrollToBottom.visibility = View.GONE
-            if (bottomDetector == 0) {
-                buttonScrollToTop.visibility = View.VISIBLE
-                Toast.makeText(requireContext(), "Scroll View bottom reached", Toast.LENGTH_SHORT).show()
-            }
-            if (topDetector <= 0) {
-                buttonScrollToBottom.visibility = View.VISIBLE
-                Toast.makeText(requireContext(), "Scroll View top reached", Toast.LENGTH_SHORT).show()
-            }
-
-            Log.d(TAG, "setScrollViewNeedsObserver.. scrolling…")
-        }
-    }
-
-    private fun updateLayoutSize(type: String, height: Int, y: Float) {
-        when(type) {
-            HEADER -> {
-                headerHeight = height
-                currentYHeader = y
-            }
-            FOOTER -> {
-                footerHeight = height
-                currentYFooter = y
-            }
-        }
-        if (headerHeight > 0 && footerHeight > 0) needsListener.onLayoutDrawn()
-    }
-
-    private fun reset() {
-        isInit = true
-        dataSize = 0
-        dataSizeCount = 0
-        previousYLayout = 0
-        needsContainerHeight = 0
-
-        //set Y position of footer | footer is hidden for readable mode
-        var currentYFooter = 0f
-        val currentDate = SimpleDateFormat("MM/yyyy").format(Calendar.getInstance().time)
-        if (previousPage == DashboardActivity.PAGE_MONTH_CHOOSER &&
-            currentMonth != currentDate.split("/")[0] &&
-            currentMonth != currentDate.split("/")[1]) {
-            currentYFooter = resources.displayMetrics.heightPixels.toFloat()
-        }
-        val objectAnimator = ObjectAnimator.ofFloat(layoutNeedsFooter, "translationY", currentYFooter)
-        objectAnimator.duration = 0L
-        objectAnimator.start()
-        containerNeedsContent.removeAllViews()
-    }
-
-    fun populateNeeds() {
-        reset()
-        needsScreenListener.onPopulateData()
-        CoroutineScope(Dispatchers.IO).launch {
-            val needs = database.needsDao().getNeeds(currentMonth, currentYear)
-            Log.d("Needs", "populateNeeds (setUpdate()) - needs: ${Gson().toJson(needs)}")
-            if (needs.isNotEmpty()) {
-                dataSize = (needs.size - 1)
-                val amount = if (needs.isNotEmpty()) needs.size else 0
-                (requireContext() as Activity).runOnUiThread {
-                    for (i in needs.indices) {
-                        if (tempDate != needs[i].date) {
-                            tempDate = needs[i].date
-                            needs[i].isDateShown = true
-                        }
-                        generateNeedsItem(needs[i])
-                    }
-                    textViewNeedsAmount.text = String.format(getString(R.string.needs_today_list), amount)
-                }
-            } else {
-                (requireContext() as Activity).runOnUiThread {
-                    needsScreenListener.onDataPopulated()
-                }
-            }
         }
     }
 
@@ -295,6 +207,92 @@ class NeedsScreenFragment(context: Context) : Fragment(R.layout.activity_needs),
         }
     }
 
+    private fun setScrollViewNeedsObserver() {
+        Log.d(NeedsActivity.TAG, "setScrollViewNeedsObserver")
+        scrollViewNeeds.setOnTouchListener { _, _ -> false }
+        scrollViewNeeds.viewTreeObserver.addOnScrollChangedListener(object : ViewTreeObserver.OnScrollChangedListener {
+            override fun onScrollChanged() {
+                scrollChangedListener = this
+                val view = scrollViewNeeds.getChildAt(scrollViewNeeds.childCount - 1)
+                Log.d(NeedsActivity.TAG, "setScrollViewNeedsObserver - view height: ${view.height} | params: ${view.layoutParams.height}")
+                if (view.height > resources.displayMetrics.heightPixels) {
+                    val topDetector = scrollViewNeeds.scrollY
+                    val bottomDetector: Int = view.bottom - (scrollViewNeeds.height + scrollViewNeeds.scrollY)
+                    buttonScrollToTop.visibility = View.GONE
+                    buttonScrollToBottom.visibility = View.GONE
+                    if (bottomDetector == 0) {
+                        buttonScrollToTop.visibility = View.VISIBLE
+                        Toast.makeText(requireContext(), "Scroll View bottom reached", Toast.LENGTH_SHORT).show()
+                    }
+                    if (topDetector <= 0) {
+                        buttonScrollToBottom.visibility = View.VISIBLE
+                        Toast.makeText(requireContext(), "Scroll View top reached", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+        })
+    }
+
+    private fun scrollToBottom() {
+        scrollViewNeeds.post {
+            val objectAnimator = ObjectAnimator.ofInt(scrollViewNeeds, "scrollY",
+                scrollViewNeeds.getChildAt(scrollViewNeeds.childCount - 1).bottom)
+            objectAnimator.duration = scrollDuration
+            objectAnimator.start()
+        }
+    }
+
+    private fun scrollToTop() {
+        scrollViewNeeds.post {
+            val objectAnimator = ObjectAnimator.ofInt(scrollViewNeeds, "scrollY",
+                scrollViewNeeds.getChildAt(scrollViewNeeds.childCount - 1).top)
+            objectAnimator.duration = scrollDuration
+            objectAnimator.start()
+        }
+    }
+
+    private fun showSendButton() {
+        val animation = ScaleAnimation(0f, 1f, 0f, 1f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f)
+        animation.duration = 120
+        animation.setAnimationListener(object : Animation.AnimationListener {
+            override fun onAnimationStart(animation: Animation?) {
+                iconSend.visibility = View.VISIBLE
+            }
+            override fun onAnimationEnd(animation: Animation?) {}
+            override fun onAnimationRepeat(animation: Animation?) {}
+        })
+        iconSend.startAnimation(animation)
+    }
+
+    private fun hideSendButton() {
+        val animation = ScaleAnimation(1f, 0f, 1f, 0f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f)
+        animation.duration = 120
+        animation.setAnimationListener(object : Animation.AnimationListener {
+            override fun onAnimationStart(animation: Animation?) {}
+            override fun onAnimationEnd(animation: Animation?) {
+                iconSend.visibility = View.GONE
+            }
+            override fun onAnimationRepeat(animation: Animation?) {}
+        })
+        iconSend.startAnimation(animation)
+    }
+
+    private fun reset() {
+        isInit = true
+        dataSize = 0
+        dataSizeCount = 0
+        previousYLayout = 0
+        needsContainerHeight = 0
+        previousTextLength = 0
+        scrollDuration = 0L
+
+        //reset container height size
+        containerNeedsContent.removeAllViews()
+        val containerParams = FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT)
+        containerParams.height = 0
+        containerNeedsContent.layoutParams = containerParams
+    }
+
     private fun generateNeedsItem(needs: Needs) {
         Log.d(TAG, "generateNeedsItem - needs: ${Gson().toJson(needs)}")
         val needsItem = NeedsItem(requireContext()).getInstance(needs,
@@ -312,7 +310,6 @@ class NeedsScreenFragment(context: Context) : Fragment(R.layout.activity_needs),
                                 CoroutineScope(Dispatchers.IO).launch {
                                     database.needsDao().deleteNeeds(id)
                                     (requireContext() as Activity).runOnUiThread {
-                                        containerNeedsContent.removeAllViews()
                                         populateNeeds()
                                     }
                                 }
@@ -365,48 +362,44 @@ class NeedsScreenFragment(context: Context) : Fragment(R.layout.activity_needs),
         }
     }
 
-    private fun scrollToBottom() {
-        scrollViewNeeds.post {
-            val objectAnimator = ObjectAnimator.ofInt(scrollViewNeeds, "scrollY",
-                scrollViewNeeds.getChildAt(scrollViewNeeds.childCount - 1).bottom)
-            objectAnimator.duration = scrollDuration
-            objectAnimator.start()
-        }
-    }
-
-    private fun scrollToTop() {
-        scrollViewNeeds.post {
-            val objectAnimator = ObjectAnimator.ofInt(scrollViewNeeds, "scrollY",
-                scrollViewNeeds.getChildAt(scrollViewNeeds.childCount - 1).top)
-            objectAnimator.duration = scrollDuration
-            objectAnimator.start()
-        }
-    }
-
-    private fun showSendButton() {
-        val animation = ScaleAnimation(0f, 1f, 0f, 1f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f)
-        animation.duration = 120
-        animation.setAnimationListener(object : Animation.AnimationListener {
-            override fun onAnimationStart(animation: Animation?) {
-                iconSend.visibility = View.VISIBLE
+    fun populateNeeds() {
+        needsScreenListener.onPopulateData()
+        reset()
+        if (previousPage == DashboardActivity.PAGE_MONTH_CHOOSER) {
+            if ("$currentMonth/$currentYear" == SimpleDateFormat("MM/yyyy").format(Calendar.getInstance().time)) {
+                layoutNeedsFooter.visibility = View.VISIBLE
+                textViewNeedsInfo.visibility = View.GONE
+            } else {
+                layoutNeedsFooter.visibility = View.GONE
+                textViewNeedsInfo.visibility = View.VISIBLE
             }
-            override fun onAnimationEnd(animation: Animation?) {}
-            override fun onAnimationRepeat(animation: Animation?) {}
-        })
-        iconSend.startAnimation(animation)
-    }
+        }
 
-    private fun hideSendButton() {
-        val animation = ScaleAnimation(1f, 0f, 1f, 0f, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f)
-        animation.duration = 120
-        animation.setAnimationListener(object : Animation.AnimationListener {
-            override fun onAnimationStart(animation: Animation?) {}
-            override fun onAnimationEnd(animation: Animation?) {
-                iconSend.visibility = View.GONE
+        CoroutineScope(Dispatchers.IO).launch {
+            val needs = database.needsDao().getNeeds(currentMonth, currentYear)
+            Log.d(TAG, "populateNeeds - data: ${Gson().toJson(needs)}")
+            if (needs.isNotEmpty()) {
+                dataSize = (needs.size - 1)
+                val amount = if (needs.isNotEmpty()) needs.size else 0
+                (requireContext() as Activity).runOnUiThread {
+                    for (i in needs.indices) {
+                        if (tempDate != needs[i].date) {
+                            tempDate = needs[i].date
+                            needs[i].isDateShown = true
+                        }
+                        generateNeedsItem(needs[i])
+                    }
+                    textViewNeedsAmount.text = String.format(getString(R.string.needs_today_list), amount)
+                }
+            } else {
+                (requireContext() as Activity).runOnUiThread {
+                    needsScreenListener.onDataPopulated()
+                }
             }
-            override fun onAnimationRepeat(animation: Animation?) {}
-        })
-        iconSend.startAnimation(animation)
+            (requireContext() as Activity).runOnUiThread {
+
+            }
+        }
     }
 
     fun addOnNeedScreenListener(needsScreenListener: NeedsScreenListener) : Fragment {
@@ -418,17 +411,9 @@ class NeedsScreenFragment(context: Context) : Fragment(R.layout.activity_needs),
         this.previousPage = previousPage
     }
 
-    fun removeOnGlobalLayoutListener() {
+    fun removeListener() {
         rootLayoutNeeds.viewTreeObserver.removeOnGlobalLayoutListener(globalLayoutListener)
-    }
-
-    override fun onLayoutDrawn() {
-        val currentYContainer = currentYHeader + headerHeight
-        val containerHeight = currentYFooter - currentYContainer
-        val layoutParams = containerNeedsContent.layoutParams
-        layoutParams.width = resources.displayMetrics.widthPixels
-        layoutParams.height = containerHeight.toInt()
-        containerNeedsContent.layoutParams = layoutParams
+        scrollViewNeeds.viewTreeObserver.removeOnScrollChangedListener(scrollChangedListener)
     }
 
     interface NeedsScreenListener {
@@ -437,8 +422,4 @@ class NeedsScreenFragment(context: Context) : Fragment(R.layout.activity_needs),
         fun onDataPopulated()
     }
 
-}
-
-interface NeedsListener {
-    fun onLayoutDrawn()
 }

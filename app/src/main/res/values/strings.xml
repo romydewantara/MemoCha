@@ -123,7 +123,7 @@
 
     <!-- N E E D S -->
     <string name="needs_title_page">Need List</string>
-    <string name="needs_notification_page">Needs list items of the past month should not be edited.</string>
+    <string name="needs_notification_page">Needs list items of the past month should not be added new item.</string>
     <string name="needs_date">@string/secret_letter_calendar</string>
     <string name="needs_today_list">Today\'s List: %s</string>
     <string name="needs_hint_goods">Ex: Ice Cream, Glass, etc…</string>
@@ -134,7 +134,7 @@
     <string name="identity_address">Address</string>
 
     <!-- H I S T O R Y -->
-    <string name="history_title_page">History</string>
+    <string name="history_title_page">History\t</string>
     <string name="history_subtitle_page">Monthly Expenses</string>
     <string name="history_monthly_expenses">Total expenses in this Month:</string>
 
@@ -150,7 +150,7 @@
     <string name="history_edit_monthly_expenses">Edit</string>
 
     <!-- S C H E D U L E -->
-    <string name="schedule_title_page">Schedule</string>
+    <string name="schedule_title_page">Schedule\t</string>
     <string name="schedule_subtitle_page">Activities</string>
     <string name="schedule_empty_list">No schedule has been created yet :(</string>
 

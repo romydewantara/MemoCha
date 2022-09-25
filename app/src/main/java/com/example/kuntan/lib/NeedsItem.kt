@@ -129,7 +129,7 @@ class NeedsItem(context: Context) : LinearLayout(context) {
             LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
         textGroupAndImageLayout.layoutParams = containerTextAndCheckedItemParams
         textGroupAndImageLayout.orientation = HORIZONTAL
-        textGroupAndImageLayout.gravity = Gravity.END
+        textGroupAndImageLayout.gravity = Gravity.START
         textGroupAndImageLayout.viewTreeObserver.addOnGlobalLayoutListener(
             object : ViewTreeObserver.OnGlobalLayoutListener {
                 override fun onGlobalLayout() {
@@ -143,11 +143,10 @@ class NeedsItem(context: Context) : LinearLayout(context) {
                         textGroupLayout.layoutParams = layoutItemParams
                     }
 
-                    val xLayoutItem = (textGroupAndImageLayout.width - itemWidth -
-                            AppUtil.dpToPx(context, 10f)).toFloat()
-                    textGroupLayout.x = xLayoutItem
-                    lottieChecked.x = xLayoutItem - lottieChecked.width - AppUtil.dpToPx(context, 8f)
+                    val xLayoutItem = AppUtil.dpToPx(context, 10f).toFloat()
+                    lottieChecked.x = xLayoutItem
                     lottieChecked.y = (textGroupLayout.height / 2f) - (lottieChecked.height / 2f)
+                    textGroupLayout.x = xLayoutItem + lottieChecked.width + AppUtil.dpToPx(context, 10f).toFloat()
 
                     val needsItemParams = textGroupAndImageLayout.layoutParams
                     needsItemParams.height = textGroupLayout.height
