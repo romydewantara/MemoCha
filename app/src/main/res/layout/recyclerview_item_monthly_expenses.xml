@@ -112,22 +112,31 @@
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/textViewAmount"
         style="@style/TextBoldBlack16"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
+        android:autoSizeTextType="uniform"
+        android:gravity="end"
+        android:maxLines="1"
         android:text="Rp 10.000"
         app:layout_constraintBottom_toBottomOf="@id/iconMethod"
+        app:layout_constraintLeft_toRightOf="@id/textViewMethod"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="@id/iconMethod" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/textViewGoods"
         style="@style/TextRegularBlack14"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
+        android:layout_marginEnd="20dp"
+        android:autoSizeTextType="uniform"
+        android:gravity="start"
+        android:maxLines="2"
         android:text="Meja"
         app:layout_constraintLeft_toRightOf="@id/iconMethod"
+        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/iconMethod" />
 
     <androidx.appcompat.widget.AppCompatTextView

@@ -20,7 +20,6 @@ import android.widget.Toast
 import androidx.core.widget.TextViewCompat
 import androidx.fragment.app.Fragment
 import com.example.kuntan.DashboardActivity
-import com.example.kuntan.NeedsActivity
 import com.example.kuntan.R
 import com.example.kuntan.entity.Needs
 import com.example.kuntan.lib.KuntanPopupDialog
@@ -29,7 +28,7 @@ import com.example.kuntan.lib.NeedsMonthChooserBottomSheet
 import com.example.kuntan.utility.AppUtil
 import com.example.kuntan.utility.KuntanRoomDatabase
 import com.google.gson.Gson
-import kotlinx.android.synthetic.main.activity_needs.*
+import kotlinx.android.synthetic.main.layout_fragment_needs.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -38,7 +37,7 @@ import java.util.Calendar
 import java.util.Date
 
 @SuppressLint("ClickableViewAccessibility", "SimpleDateFormat")
-class NeedsScreenFragment(context: Context) : Fragment(R.layout.activity_needs) {
+class NeedsScreenFragment(context: Context) : Fragment(R.layout.layout_fragment_needs) {
 
     companion object {
         const val TAG = "Needs"
@@ -59,7 +58,6 @@ class NeedsScreenFragment(context: Context) : Fragment(R.layout.activity_needs) 
     private lateinit var invisibleBackground: View
     private lateinit var needsScreenListener: NeedsScreenListener
     private lateinit var globalLayoutListener: ViewTreeObserver.OnGlobalLayoutListener
-    private lateinit var scrollChangedListener: ViewTreeObserver.OnScrollChangedListener
 
     private lateinit var previousPage: String
 
@@ -85,9 +83,13 @@ class NeedsScreenFragment(context: Context) : Fragment(R.layout.activity_needs) 
                 if (!AppUtil.isKeyboardVisible(rootLayoutNeeds)) editTextNeedsItem.isFocusable = false
             }
         })
+        //setScrollViewNeedsObserver()
 
         TextViewCompat.setAutoSizeTextTypeUniformWithConfiguration(textViewNeedsTitle,
             1, 24, 1, TypedValue.COMPLEX_UNIT_SP)
+        TextViewCompat.setAutoSizeTextTypeUniformWithConfiguration(
+            textViewNeedsInfo,
+            1, 14, 1, TypedValue.COMPLEX_UNIT_SP)
 
         textViewNeedsDate.text = AppUtil.convertMonthNameFromCode(
             requireContext(), SimpleDateFormat("MM").format(Calendar.getInstance().time))
@@ -140,6 +142,7 @@ class NeedsScreenFragment(context: Context) : Fragment(R.layout.activity_needs) 
                                 generateNeedsItem(needs[i])
                             }
                         }
+                        textViewNeedsAmount.text = String.format(getString(R.string.needs_today_list), needs.size)
                     }
                 }
             }
@@ -155,6 +158,7 @@ class NeedsScreenFragment(context: Context) : Fragment(R.layout.activity_needs) 
                 object : NeedsMonthChooserBottomSheet.NeedsDateChooserListener {
                     override fun onDateSelected(year: String, month: String) {
                         Log.d(TAG, "onDateSelected - month: $month | year: $year")
+                        textViewNeedsDate.text = AppUtil.convertMonthNameFromCode(requireContext(), month)
                         onBackPressed()
                         previousPage = DashboardActivity.PAGE_MONTH_CHOOSER
                         currentMonth = month
@@ -168,7 +172,6 @@ class NeedsScreenFragment(context: Context) : Fragment(R.layout.activity_needs) 
             needsMonthChooserBottomSheet.isCancelable = false
             needsMonthChooserBottomSheet.show(childFragmentManager, needsMonthChooserBottomSheet.tag)
         }
-        setScrollViewNeedsObserver()
         buttonScrollToTop.setOnClickListener {
             scrollDuration = 600L
             scrollToTop()
@@ -208,13 +211,12 @@ class NeedsScreenFragment(context: Context) : Fragment(R.layout.activity_needs) 
     }
 
     private fun setScrollViewNeedsObserver() {
-        Log.d(NeedsActivity.TAG, "setScrollViewNeedsObserver")
+        Log.d(TAG, "setScrollViewNeedsObserver")
         scrollViewNeeds.setOnTouchListener { _, _ -> false }
         scrollViewNeeds.viewTreeObserver.addOnScrollChangedListener(object : ViewTreeObserver.OnScrollChangedListener {
             override fun onScrollChanged() {
-                scrollChangedListener = this
                 val view = scrollViewNeeds.getChildAt(scrollViewNeeds.childCount - 1)
-                Log.d(NeedsActivity.TAG, "setScrollViewNeedsObserver - view height: ${view.height} | params: ${view.layoutParams.height}")
+                Log.d(TAG, "setScrollViewNeedsObserver - view height: ${view.height} | params: ${view.layoutParams.height}")
                 if (view.height > resources.displayMetrics.heightPixels) {
                     val topDetector = scrollViewNeeds.scrollY
                     val bottomDetector: Int = view.bottom - (scrollViewNeeds.height + scrollViewNeeds.scrollY)
@@ -378,10 +380,10 @@ class NeedsScreenFragment(context: Context) : Fragment(R.layout.activity_needs) 
         CoroutineScope(Dispatchers.IO).launch {
             val needs = database.needsDao().getNeeds(currentMonth, currentYear)
             Log.d(TAG, "populateNeeds - data: ${Gson().toJson(needs)}")
-            if (needs.isNotEmpty()) {
-                dataSize = (needs.size - 1)
+            (requireContext() as Activity).runOnUiThread {
                 val amount = if (needs.isNotEmpty()) needs.size else 0
-                (requireContext() as Activity).runOnUiThread {
+                if (needs.isNotEmpty()) {
+                    dataSize = (needs.size - 1)
                     for (i in needs.indices) {
                         if (tempDate != needs[i].date) {
                             tempDate = needs[i].date
@@ -389,15 +391,8 @@ class NeedsScreenFragment(context: Context) : Fragment(R.layout.activity_needs) 
                         }
                         generateNeedsItem(needs[i])
                     }
-                    textViewNeedsAmount.text = String.format(getString(R.string.needs_today_list), amount)
-                }
-            } else {
-                (requireContext() as Activity).runOnUiThread {
-                    needsScreenListener.onDataPopulated()
-                }
-            }
-            (requireContext() as Activity).runOnUiThread {
-
+                } else needsScreenListener.onDataPopulated()
+                textViewNeedsAmount.text = String.format(getString(R.string.needs_today_list), amount)
             }
         }
     }
@@ -413,7 +408,7 @@ class NeedsScreenFragment(context: Context) : Fragment(R.layout.activity_needs) 
 
     fun removeListener() {
         rootLayoutNeeds.viewTreeObserver.removeOnGlobalLayoutListener(globalLayoutListener)
-        scrollViewNeeds.viewTreeObserver.removeOnScrollChangedListener(scrollChangedListener)
+        //scrollViewNeeds.viewTreeObserver.removeOnScrollChangedListener(scrollChangedListener) //always null -_-
     }
 
     interface NeedsScreenListener {

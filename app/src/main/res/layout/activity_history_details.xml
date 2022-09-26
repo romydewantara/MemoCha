@@ -99,9 +99,13 @@
         style="@style/TextBoldGold26"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp"
+        android:autoSizeTextType="uniform"
+        android:maxLines="1"
         android:text="Rp 0"
-        app:layout_constraintLeft_toLeftOf="@id/textViewAmountTitle"
-        app:layout_constraintRight_toRightOf="@id/textViewAmountTitle"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/textViewAmountTitle" />
 
     <androidx.constraintlayout.widget.ConstraintLayout

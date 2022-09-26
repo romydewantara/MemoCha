@@ -12,7 +12,6 @@ import android.widget.LinearLayout
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.widget.TextViewCompat
 import com.airbnb.lottie.LottieAnimationView
-import com.example.kuntan.NeedsActivity
 import com.example.kuntan.R
 import com.example.kuntan.entity.Needs
 import com.example.kuntan.utility.AppUtil
@@ -89,7 +88,7 @@ class NeedsItem(context: Context) : LinearLayout(context) {
         )
         textGroupLayout.layoutParams = latestLayoutItemParams
         textGroupLayout.orientation = VERTICAL
-        textGroupLayout.gravity = Gravity.END
+        textGroupLayout.gravity = Gravity.START
         textGroupLayout.background = context.getDrawable(R.drawable.background_group_needs_item_white_rounded)
         textGroupLayout.addView(textItem)
         textGroupLayout.addView(textTime)
@@ -121,7 +120,7 @@ class NeedsItem(context: Context) : LinearLayout(context) {
                 lottieChecked.playAnimation()
             }
             needsItemListener.onChecked(needs.id, checked)
-            Log.d(NeedsActivity.TAG, "LottieChecked - checked: ${checked}")
+            Log.d(TAG, "LottieChecked - checked: ${checked}")
         }
 
         textGroupAndImageLayout = LinearLayout(context)

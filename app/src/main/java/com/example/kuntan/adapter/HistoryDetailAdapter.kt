@@ -2,9 +2,11 @@ package com.example.kuntan.adapter
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.widget.TextViewCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.kuntan.R
 import com.example.kuntan.entity.History
@@ -37,6 +39,10 @@ class HistoryDetailAdapter(
             context.getString(R.string.method_debit) -> { holder.itemView.iconMethod.setImageResource(R.drawable.ic_debit) }
             context.getString(R.string.method_transfer) -> { holder.itemView.iconMethod.setImageResource(R.drawable.ic_transfer) }
         }
+        TextViewCompat.setAutoSizeTextTypeUniformWithConfiguration(
+            holder.itemView.textViewGoods, 1, 14, 1, TypedValue.COMPLEX_UNIT_SP)
+        TextViewCompat.setAutoSizeTextTypeUniformWithConfiguration(
+            holder.itemView.textViewAmount, 1, 16, 1, TypedValue.COMPLEX_UNIT_SP)
         holder.itemView.layoutItemExpenses.setOnClickListener {
             historyDetailListener.onItemExpensesClicked(histories[position])
         }

@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.util.TypedValue
 import android.view.View
 import android.view.animation.AnimationUtils
 import androidx.appcompat.app.AppCompatActivity
@@ -19,6 +20,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.math.BigInteger
 
 @SuppressLint("UseCompatLoadingForDrawables", "ClickableViewAccessibility")
 class HistoryDetailsActivity : AppCompatActivity() {
@@ -46,6 +48,8 @@ class HistoryDetailsActivity : AppCompatActivity() {
         }
 
         textViewMonthName.text = AppUtil.convertMonthNameFromCode(this, month)
+        TextViewCompat.setAutoSizeTextTypeUniformWithConfiguration(
+            textViewAmount, 1, 26, 1, TypedValue.COMPLEX_UNIT_SP)
 
         setupRecyclerView()
         init()
@@ -60,10 +64,10 @@ class HistoryDetailsActivity : AppCompatActivity() {
                 withContext(Dispatchers.Main) {
                     historyDetailAdapter.setData(history)
                     runOnUiThread {
-                        var sum = 0
+                        var sum = BigInteger("0")
                         for (i in history.indices) {
-                            val amount = history[i].amount.replace(",", "")
-                            if (amount.isNotEmpty()) sum += amount.toInt()
+                            val amount: BigInteger = history[i].amount.replace(",", "").toBigInteger()
+                            sum += amount
                         }
                         val summary = "Rp ${String.format("%,d", sum)}"
                         textViewAmount.text = summary.replace(",", ".")

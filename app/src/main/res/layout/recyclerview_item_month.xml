@@ -79,12 +79,16 @@
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/textViewTotal"
             style="@style/TextBoldGold18"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
             android:layout_marginStart="5dp"
+            android:autoSizeTextType="uniform"
+            android:gravity="center_vertical"
+            android:maxLines="1"
             android:text="Rp 0"
             app:layout_constraintBottom_toBottomOf="@id/iconTotal"
             app:layout_constraintLeft_toRightOf="@id/iconTotal"
+            app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="@id/iconTotal" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

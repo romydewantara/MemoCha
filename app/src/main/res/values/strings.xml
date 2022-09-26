@@ -123,9 +123,9 @@
 
     <!-- N E E D S -->
     <string name="needs_title_page">Need List</string>
-    <string name="needs_notification_page">Needs list items of the past month should not be added new item.</string>
+    <string name="needs_notification_page">Needs list items outside of the current month should not be added new item.</string>
     <string name="needs_date">@string/secret_letter_calendar</string>
-    <string name="needs_today_list">Today\'s List: %s</string>
+    <string name="needs_today_list">Total of Needs: %s</string>
     <string name="needs_hint_goods">Ex: Ice Cream, Glass, etc…</string>
     <string name="needs_text_length_limit">Text length has reached the maximum limit (max. 400 characters), your text length: %s</string>
 

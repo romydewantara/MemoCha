@@ -13,6 +13,7 @@ import com.example.kuntan.entity.History
 import com.example.kuntan.utility.AppUtil
 import com.google.gson.Gson
 import kotlinx.android.synthetic.main.recyclerview_item_month.view.*
+import java.math.BigInteger
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -38,12 +39,14 @@ class HistoryAdapter(
 
         holder.itemView.textViewMonthCode.text = monthCode
         holder.itemView.textViewMonthName.text = monthName
-        holder.itemView.textViewTotal.text = getTotalExpenses(monthCode)
+        holder.itemView.textViewTotal.text = getTotalExpenses(position)
 
         TextViewCompat.setAutoSizeTextTypeUniformWithConfiguration(holder.itemView.textViewMonthCode,
             1, 40, 1, TypedValue.COMPLEX_UNIT_SP)
         TextViewCompat.setAutoSizeTextTypeUniformWithConfiguration(holder.itemView.textViewTotalTitle,
             1, 12, 1, TypedValue.COMPLEX_UNIT_SP)
+        TextViewCompat.setAutoSizeTextTypeUniformWithConfiguration(holder.itemView.textViewTotal,
+            1, 18, 1, TypedValue.COMPLEX_UNIT_SP)
 
         if (currentMonth == monthCode && currentYear == currentMonthYear.split("-")[1])
             holder.itemView.imageTagLabel.visibility = View.VISIBLE
@@ -55,18 +58,12 @@ class HistoryAdapter(
 
     override fun getItemCount(): Int = 12
 
-    private fun getTotalExpenses(monthId: String): String {
-        var sum = 0
-        if (histories.isNotEmpty()) {
-            for (i in 0 until histories.size) {
-                if (histories[i].isNotEmpty()) {
-                    for (j in 0 until histories[i].size) {
-                        if (histories[i][j].month == monthId) {
-                            val amount = histories[i][j].amount.replace(",", "")
-                            if (amount.isNotEmpty()) sum += amount.toInt()
-                        }
-                    }
-                }
+    private fun getTotalExpenses(position: Int): String {
+        var sum = BigInteger("0")
+        if (histories[position].isNotEmpty()) {
+            for (i in 0 until histories[position].size) {
+                val amount = histories[position][i].amount.replace(",", "").toBigInteger()
+                sum += amount
             }
         }
         return "Rp ${String.format("%,d", sum)}".replace(",", ".")
