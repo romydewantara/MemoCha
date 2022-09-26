@@ -210,12 +210,13 @@ class DashboardActivity : AppCompatActivity() {
         CoroutineScope(Dispatchers.IO).launch {
             val schedules = database.scheduleDao().getSchedule(arrayTimes[index])
             Log.d(TAG, "onStart - schedules: $schedules")
+            withContext(Dispatchers.Main) {
+                dashboardScheduleAdapter.setData(schedules)
+            }
             if (schedules.isEmpty() && isDefaultSchedule) {
 
             } else {
-                withContext(Dispatchers.Main) {
-                    dashboardScheduleAdapter.setData(schedules)
-                }
+
             }
         }
     }

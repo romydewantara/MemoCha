@@ -2,12 +2,17 @@ package com.example.kuntan.lib
 
 import android.annotation.SuppressLint
 import android.app.Dialog
+import android.content.DialogInterface
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
+import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.FrameLayout
+import androidx.core.widget.TextViewCompat
 import com.example.kuntan.R
 import com.example.kuntan.utility.AppUtil
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -58,9 +63,9 @@ class ScheduleEditorBottomSheet(
         editTextEndTimeMinute.setText(eMinute)
         editTextActions.setText(action)
 
-        if (!isEdit) {
-            textViewSave.text = requireContext().getString(R.string.button_add)
-            imageDelete.visibility = View.GONE
+        if (isEdit) {
+            textViewAdd.text = requireContext().getString(R.string.button_save)
+            imageDelete.visibility = View.VISIBLE
         }
 
         initListener()
@@ -71,7 +76,7 @@ class ScheduleEditorBottomSheet(
         textViewCancel.setOnClickListener {
             dismiss()
         }
-        textViewSave.setOnClickListener {
+        textViewAdd.setOnClickListener {
             val startTime = "${editTextStartTimeHour.text}:${editTextStartTimeMinute.text}"
             val endTime = "${editTextEndTimeHour.text}:${editTextEndTimeMinute.text}"
             val actions = if (editTextActions.text.toString() != "") editTextActions.text.toString() else "Empty"
@@ -112,6 +117,23 @@ class ScheduleEditorBottomSheet(
             editTextActions.isFocusableInTouchMode = true
             false
         }
+        editTextActions.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+            override fun afterTextChanged(s: Editable?) {
+                if (s != null && s.isNotEmpty()) {
+                    textViewAdd.isClickable = true
+                    textViewAdd.isFocusable = true
+                    textViewAdd.isEnabled = true
+                    TextViewCompat.setTextAppearance(textViewAdd, R.style.TextBoldTeal16)
+                } else {
+                    textViewAdd.isClickable = false
+                    textViewAdd.isFocusable = false
+                    textViewAdd.isEnabled = false
+                    TextViewCompat.setTextAppearance(textViewAdd, R.style.TextBoldGray16)
+                }
+            }
+        })
     }
 
     private fun updateNumber(type: String, numberType: String, editText: EditText, max: Int, min: Int) {
@@ -181,6 +203,10 @@ class ScheduleEditorBottomSheet(
                 BottomSheetBehavior.from(bottomSheet).skipCollapsed = false
                 BottomSheetBehavior.from(bottomSheet).isDraggable = false
             }
+        }
+        bottomSheetDialog.setOnKeyListener { _: DialogInterface?, _: Int, keyEvent: KeyEvent ->
+            if (keyEvent.keyCode == KeyEvent.KEYCODE_BACK) dismiss()
+            false
         }
         return bottomSheetDialog
     }

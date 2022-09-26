@@ -2,7 +2,10 @@ package com.example.kuntan
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.Log
 import android.view.View
+import android.view.animation.AnimationUtils
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.kuntan.Times.*
@@ -10,13 +13,17 @@ import com.example.kuntan.adapter.ScheduleAdapter
 import com.example.kuntan.entity.Schedule
 import com.example.kuntan.lib.KuntanPopupDialog
 import com.example.kuntan.lib.ScheduleEditorBottomSheet
+import com.example.kuntan.utility.AppUtil
+import com.example.kuntan.utility.Constant
 import com.example.kuntan.utility.KuntanRoomDatabase
 import com.google.android.material.snackbar.Snackbar
+import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_schedule.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import org.json.JSONArray
 
 enum class Times {
     Subuh, Dzuhur, Ashar, Maghrib, Isya
@@ -24,10 +31,13 @@ enum class Times {
 
 class ScheduleActivity : AppCompatActivity(), ScheduleAdapter.ScheduleAdapterListener, ScheduleEditorBottomSheet.ScheduleEditorListener {
 
+    companion object {
+        const val TAG = "ScheduleActivity"
+    }
+
     private val database by lazy { KuntanRoomDatabase(this) }
     private lateinit var scheduleAdapter: ScheduleAdapter
     private var currentTab = Subuh.name
-    private var isScheduleEmpty = true
     private var isDelete = false
 
     @SuppressLint("NotifyDataSetChanged")
@@ -52,6 +62,32 @@ class ScheduleActivity : AppCompatActivity(), ScheduleAdapter.ScheduleAdapterLis
     }
 
     private fun initListener() {
+        imageImport.setOnClickListener {
+            val kuntanPopupDialog = KuntanPopupDialog.newInstance().setContent("Import default \"$currentTab Schedules\"?",
+                "This action can make your list contain the default schedule",
+                "Import", "Cancel", object : KuntanPopupDialog.KuntanPopupDialogListener {
+                    override fun onNegativeButton() {
+                        //AppUtil.writeFileToStorage(this@ScheduleActivity, Constant.FOLDER_NAME_SCHEDULES, currentTab, Gson().toJson(schedules))
+                        val defSchedule = AppUtil.readFileFromStorage(this@ScheduleActivity, Constant.FOLDER_NAME_SCHEDULES, currentTab)
+                        val array = JSONArray(defSchedule)
+                        CoroutineScope(Dispatchers.IO).launch {
+                            for (i in 0 until array.length()) {
+                                val jsonObject = array.getJSONObject(i)
+                                database.scheduleDao().insert(Gson().fromJson(jsonObject.toString(), Schedule::class.java))
+                            }
+                            val list = database.scheduleDao().getSchedule(currentTab)
+                            withContext(Dispatchers.Main) {
+                                scheduleAdapter.setData(list)
+                                runOnUiThread {
+                                    refreshSchedule(currentTab)
+                                }
+                            }
+                        }
+                    }
+                    override fun onPositiveButton() {}
+                })
+            kuntanPopupDialog.show(supportFragmentManager, kuntanPopupDialog.tag)
+        }
         add.setOnClickListener {
             showScheduleEditorBottomSheet(0, "00", "00", "00", "00", "",false)
         }
@@ -90,12 +126,22 @@ class ScheduleActivity : AppCompatActivity(), ScheduleAdapter.ScheduleAdapterLis
     private fun refreshSchedule(time: String) {
         CoroutineScope(Dispatchers.IO).launch {
             val schedules = database.scheduleDao().getSchedule(time)
-            isScheduleEmpty = schedules.isEmpty()
-            runOnUiThread {
-                if (isScheduleEmpty) textViewEmpty.visibility = View.VISIBLE  else textViewEmpty.visibility = View.GONE
-            }
             withContext(Dispatchers.Main) {
                 scheduleAdapter.setData(schedules)
+            }
+            runOnUiThread {
+                if (schedules.isEmpty()) {
+                    imageImport.isClickable = true
+                    imageImport.isFocusable = true
+                    imageImport.setImageResource(R.drawable.ic_import_teal_dark)
+                    textViewEmpty.visibility = View.VISIBLE
+                }  else {
+                    imageImport.isClickable = false
+                    imageImport.isFocusable = false
+                    imageImport.setImageResource(R.drawable.ic_import_gray)
+                    textViewEmpty.visibility = View.GONE
+                    textViewEmpty.startAnimation(AnimationUtils.loadAnimation(this@ScheduleActivity, R.anim.fade_out))
+                }
             }
         }
     }

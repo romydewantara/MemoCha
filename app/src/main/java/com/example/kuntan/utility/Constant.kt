@@ -24,7 +24,10 @@ class Constant {
         const val BACKGROUND_MUSIC_SUMMER_THEME = "hm_summer_theme.mp3"
 
         const val AMOUNT_OF_MONTH = 12
-        const val TEST_TEXT = "At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta."
+
+        const val FOLDER_NAME_SCHEDULES = "Schedule"
+        const val FOLDER_NAME_HISTORY = "History"
+        const val PATH_FILE_SCHEDULES = ""
     }
 
 }

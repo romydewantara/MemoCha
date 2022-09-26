@@ -15,6 +15,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginTop="20dp"
+            android:background="?selectableItemBackground"
             android:clickable="true"
             android:focusable="true"
             android:text="@string/schedule_bs_cancel"
@@ -33,14 +34,16 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/textViewSave"
-            style="@style/TextBoldTeal16"
+            android:id="@+id/textViewAdd"
+            style="@style/TextBoldGray16"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:layout_marginEnd="20dp"
-            android:clickable="true"
-            android:focusable="true"
+            android:background="?selectableItemBackground"
+            android:clickable="false"
+            android:enabled="false"
+            android:focusable="false"
             android:text="@string/schedule_bs_add"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -341,7 +344,7 @@
             android:background="@drawable/selector_button_delete"
             android:padding="4dp"
             android:src="@drawable/ic_trash_red_white"
-            android:visibility="visible"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintDimensionRatio="1:1"
             app:layout_constraintLeft_toLeftOf="parent"

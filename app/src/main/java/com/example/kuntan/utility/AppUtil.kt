@@ -9,10 +9,43 @@ import android.util.TypedValue
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import com.example.kuntan.R
-import java.util.*
+import java.util.Random
+import java.io.BufferedReader
+import java.io.File
+import java.io.FileReader
+import java.io.FileWriter
+import java.io.IOException
 
 class AppUtil {
     companion object {
+        fun writeFileToStorage(c: Context, folderName: String, fileName: String, body: String) {
+            val dir = File(c.externalCacheDir?.path + File.separator + folderName + File.separator)
+            if (!dir.exists()) {
+                dir.mkdir()
+            }
+            try {
+                val file = File(dir, "$fileName.txt")
+                val fileWriter = FileWriter(file)
+                fileWriter.append(body)
+                fileWriter.flush()
+                fileWriter.close()
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+        fun readFileFromStorage(c: Context, folderName: String, fileName: String): String {
+            val file = File(c.externalCacheDir?.path + File.separator + folderName + File.separator, "$fileName.txt")
+            val sb = StringBuilder()
+            try {
+                val br = BufferedReader(FileReader(file))
+                sb.append(br.readLine())
+                sb.append('\n')
+                br.close()
+            } catch (e: IOException) {
+                e.printStackTrace()
+            }
+            return sb.toString()
+        }
         fun isKeyboardVisible(view: View) : Boolean {
             val rect = Rect()
             view.getWindowVisibleDisplayFrame(rect)
