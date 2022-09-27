@@ -130,6 +130,11 @@ class HistoryDetailsActivity : AppCompatActivity() {
                 }
             }
         )
+        imageMenu.setOnClickListener {
+            startActivity(Intent(this@HistoryDetailsActivity, HistoryActivity::class.java)
+                .setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP))
+            finish()
+        }
         editTextSearch.setOnTouchListener { _, _ ->
             editTextSearch.isFocusableInTouchMode = true
             false
@@ -180,7 +185,7 @@ class HistoryDetailsActivity : AppCompatActivity() {
         if (isEditing) {
             closeEditorLayout()
         } else {
-            startActivity(Intent(this@HistoryDetailsActivity, HistoryActivity::class.java)
+            startActivity(Intent(this@HistoryDetailsActivity, DashboardActivity::class.java)
                 .setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP))
             finish()
         }

@@ -24,6 +24,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.json.JSONArray
+import org.json.JSONObject
 
 enum class Times {
     Subuh, Dzuhur, Ashar, Maghrib, Isya
@@ -33,12 +34,14 @@ class ScheduleActivity : AppCompatActivity(), ScheduleAdapter.ScheduleAdapterLis
 
     companion object {
         const val TAG = "ScheduleActivity"
+        const val SCHEDULES = "schedules"
     }
 
     private val database by lazy { KuntanRoomDatabase(this) }
     private lateinit var scheduleAdapter: ScheduleAdapter
     private var currentTab = Subuh.name
     private var isDelete = false
+    private var isSchedulesEmpty = true
 
     @SuppressLint("NotifyDataSetChanged")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -63,30 +66,43 @@ class ScheduleActivity : AppCompatActivity(), ScheduleAdapter.ScheduleAdapterLis
 
     private fun initListener() {
         imageImport.setOnClickListener {
-            val kuntanPopupDialog = KuntanPopupDialog.newInstance().setContent("Import default \"$currentTab Schedules\"?",
-                "This action can make your list contain the default schedule",
-                "Import", "Cancel", object : KuntanPopupDialog.KuntanPopupDialogListener {
-                    override fun onNegativeButton() {
-                        //AppUtil.writeFileToStorage(this@ScheduleActivity, Constant.FOLDER_NAME_SCHEDULES, currentTab, Gson().toJson(schedules))
-                        val defSchedule = AppUtil.readFileFromStorage(this@ScheduleActivity, Constant.FOLDER_NAME_SCHEDULES, currentTab)
-                        val array = JSONArray(defSchedule)
-                        CoroutineScope(Dispatchers.IO).launch {
-                            for (i in 0 until array.length()) {
-                                val jsonObject = array.getJSONObject(i)
-                                database.scheduleDao().insert(Gson().fromJson(jsonObject.toString(), Schedule::class.java))
-                            }
-                            val list = database.scheduleDao().getSchedule(currentTab)
-                            withContext(Dispatchers.Main) {
-                                scheduleAdapter.setData(list)
-                                runOnUiThread {
-                                    refreshSchedule(currentTab)
+            val kPopupDialog = KuntanPopupDialog.newInstance()
+            if (isSchedulesEmpty) {
+                kPopupDialog.setContent("Import default \"$currentTab Schedules\"?",
+                    "This action can make your list contain the default schedule",
+                    getString(R.string.button_import), getString(R.string.button_cancel),
+                    object : KuntanPopupDialog.KuntanPopupDialogListener {
+                        override fun onNegativeButton() {
+                            //AppUtil.writeFileToStorage(this@ScheduleActivity, Constant.FOLDER_NAME_SCHEDULES, currentTab, Gson().toJson(schedules))
+                            val defSchedule = AppUtil.readTextFromAssets(this@ScheduleActivity, Constant.FOLDER_ASSETS_FILE_SCHEDULE)
+                            val schedules = JSONObject(defSchedule).getJSONObject(SCHEDULES)
+                            val array = schedules.getJSONArray(currentTab)
+                            CoroutineScope(Dispatchers.IO).launch {
+                                for (i in 0 until array.length()) {
+                                    val jsonObject = array.getJSONObject(i)
+                                    Log.d(TAG, "onNegativeButton - jObject: $jsonObject")
+                                    database.scheduleDao().insert(Gson().fromJson(jsonObject.toString(), Schedule::class.java))
+                                }
+                                val list = database.scheduleDao().getSchedule(currentTab)
+                                Log.d(TAG, "onNegativeButton - list: $list")
+                                withContext(Dispatchers.Main) {
+                                    scheduleAdapter.setData(list)
+                                    runOnUiThread {
+                                        refreshSchedule(currentTab)
+                                    }
                                 }
                             }
                         }
-                    }
-                    override fun onPositiveButton() {}
-                })
-            kuntanPopupDialog.show(supportFragmentManager, kuntanPopupDialog.tag)
+                        override fun onPositiveButton() {}
+                    })
+            } else {
+                kPopupDialog.setContent("", "Your \"$currentTab Schedules\" is already filled with schedule",
+                    "", getString(R.string.button_ok), object : KuntanPopupDialog.KuntanPopupDialogListener {
+                        override fun onNegativeButton() {}
+                        override fun onPositiveButton() {}
+                    })
+            }
+            kPopupDialog.show(supportFragmentManager, kPopupDialog.tag)
         }
         add.setOnClickListener {
             showScheduleEditorBottomSheet(0, "00", "00", "00", "00", "",false)
@@ -130,17 +146,13 @@ class ScheduleActivity : AppCompatActivity(), ScheduleAdapter.ScheduleAdapterLis
                 scheduleAdapter.setData(schedules)
             }
             runOnUiThread {
+                isSchedulesEmpty = schedules.isEmpty()
                 if (schedules.isEmpty()) {
-                    imageImport.isClickable = true
-                    imageImport.isFocusable = true
                     imageImport.setImageResource(R.drawable.ic_import_teal_dark)
                     textViewEmpty.visibility = View.VISIBLE
                 }  else {
-                    imageImport.isClickable = false
-                    imageImport.isFocusable = false
                     imageImport.setImageResource(R.drawable.ic_import_gray)
                     textViewEmpty.visibility = View.GONE
-                    textViewEmpty.startAnimation(AnimationUtils.loadAnimation(this@ScheduleActivity, R.anim.fade_out))
                 }
             }
         }

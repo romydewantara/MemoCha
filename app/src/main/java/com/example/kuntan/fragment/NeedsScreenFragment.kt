@@ -151,7 +151,7 @@ class NeedsScreenFragment(context: Context) : Fragment(R.layout.layout_fragment_
         iconAddImage.setOnClickListener {
             //editTextNeedsItem.setText(Constant.TEST_TEXT)
         }
-        imageThreeDots.setOnClickListener {
+        imageMenu.setOnClickListener {
             needsOverlayLayout.visibility = View.VISIBLE
             val needsMonthChooserBottomSheet = NeedsMonthChooserBottomSheet()
             needsMonthChooserBottomSheet.addOnNeedsDateChooserListener(
@@ -305,7 +305,7 @@ class NeedsScreenFragment(context: Context) : Fragment(R.layout.layout_fragment_
 
                 override fun onLongItemClicked(id: Int) {
                     val kuntanPopupDialog = KuntanPopupDialog.newInstance().setContent("Remove \"${needs.item}\"?",
-                        "Be careful, it will be deleted permanently! (STILL TESTING | IT DOESN'T AFFECTS RIGHT NOW)",
+                        "Be careful, it will be deleted permanently!",
                         getString(R.string.button_delete), getString(R.string.button_cancel),
                         object : KuntanPopupDialog.KuntanPopupDialogListener {
                             override fun onNegativeButton() {

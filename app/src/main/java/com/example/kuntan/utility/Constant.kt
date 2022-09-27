@@ -6,10 +6,10 @@ class Constant {
         const val APP_THEME_LIGHT = "light"
         const val APP_THEME_DARK = "dark"
 
-        const val DASHBOARD_BACKGROUND_AUTUMN = "autumn_fall.json"
-        const val DASHBOARD_BACKGROUND_SAKURA = "sakura_fall.json"
-        const val DASHBOARD_BACKGROUND_SNOW = "snow_fall.json"
-        const val DASHBOARD_BACKGROUND_SUMMER = "summer_fall.json"
+        const val DASHBOARD_BACKGROUND_ANIMATION_AUTUMN = "autumn_fall.json"
+        const val DASHBOARD_BACKGROUND_ANIMATION_SAKURA = "sakura_fall.json"
+        const val DASHBOARD_BACKGROUND_ANIMATION_SNOW = "snow_fall.json"
+        const val DASHBOARD_BACKGROUND_ANIMATION_SUMMER = "summer_fall.json"
 
         const val DASHBOARD_CLOCK_PRIMARY = "Primary"
         const val DASHBOARD_CLOCK_SECONDARY = "Secondary"
@@ -27,6 +27,7 @@ class Constant {
 
         const val FOLDER_NAME_SCHEDULES = "Schedule"
         const val FOLDER_NAME_HISTORY = "History"
+        const val FOLDER_ASSETS_FILE_SCHEDULE = "schedules.json"
         const val PATH_FILE_SCHEDULES = ""
     }
 

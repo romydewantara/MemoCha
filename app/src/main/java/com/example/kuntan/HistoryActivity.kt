@@ -147,7 +147,9 @@ class HistoryActivity : AppCompatActivity(), HistoryAdapter.HistoryAdapterListen
     }
 
     override fun onBackPressed() {
-        startActivity(Intent(this@HistoryActivity, DashboardActivity::class.java)
+        startActivity(Intent(this@HistoryActivity, HistoryDetailsActivity::class.java)
+            .putExtra("month", currentMonthYear.split("-")[0])
+            .putExtra("year", currentMonthYear.split("-")[1])
             .setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP))
         finish()
     }

@@ -1,0 +1,460 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/rootLayoutSetting"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textViewSettingsTitle"
+            style="@style/TextBoldBlack26"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="15dp"
+            android:text="@string/settings_title_page"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textViewReset"
+            style="@style/TextRegularGrey14"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="15dp"
+            android:background="?android:selectableItemBackground"
+            android:enabled="false"
+            android:padding="6dp"
+            android:text="@string/settings_button_reset"
+            app:layout_constraintBottom_toBottomOf="@id/textViewSettingsTitle"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@id/textViewSettingsTitle" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardViewAppTheme"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="15dp"
+            app:cardBackgroundColor="@color/white_soft"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="8dp"
+            app:layout_constraintHeight_percent=".07"
+            app:layout_constraintTop_toBottomOf="@id/textViewSettingsTitle">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/settingAppTheme"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="?selectableItemBackground"
+                android:clickable="false"
+                android:focusable="false">
+
+                <ImageView
+                    android:id="@+id/iconAppTheme"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:padding="10dp"
+                    android:src="@drawable/ic_app_theme"
+                    app:layout_constraintDimensionRatio="1:1"
+                    app:layout_constraintLeft_toLeftOf="parent" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/textViewAppThemeTitle"
+                    style="@style/TextRegularBlack14"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:gravity="bottom"
+                    android:text="Application Theme"
+                    app:layout_constraintHeight_percent=".5"
+                    app:layout_constraintLeft_toRightOf="@id/iconAppTheme"
+                    app:layout_constraintRight_toLeftOf="@id/arrowAppTheme"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/textViewAppTheme"
+                    style="@style/TextRegularGrey12"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:gravity="top"
+                    android:text="Light"
+                    app:layout_constraintHeight_percent=".5"
+                    app:layout_constraintLeft_toRightOf="@id/iconAppTheme"
+                    app:layout_constraintRight_toLeftOf="@id/arrowAppTheme"
+                    app:layout_constraintTop_toBottomOf="@id/textViewAppThemeTitle" />
+
+                <ImageView
+                    android:id="@+id/arrowAppTheme"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginEnd="12dp"
+                    android:src="@drawable/ic_arrow_right_white"
+                    app:layout_constraintRight_toRightOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardViewSettings"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="15dp"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="8dp"
+            app:layout_constraintHeight_percent=".35"
+            app:layout_constraintTop_toBottomOf="@id/cardViewAppTheme">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:weightSum="5">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/setting1"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:background="?android:selectableItemBackground"
+                    android:clickable="true"
+                    android:focusable="true">
+
+                    <ImageView
+                        android:id="@+id/iconLanguage"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:padding="10dp"
+                        android:src="@drawable/ic_planet_language"
+                        app:layout_constraintDimensionRatio="1:1"
+                        app:layout_constraintLeft_toLeftOf="parent" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/textViewLanguageTitle"
+                        style="@style/TextRegularBlack14"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:gravity="bottom"
+                        android:text="Application Language"
+                        app:layout_constraintHeight_percent=".5"
+                        app:layout_constraintLeft_toRightOf="@id/iconLanguage"
+                        app:layout_constraintRight_toLeftOf="@id/arrowLanguage"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/textViewLanguage"
+                        style="@style/TextRegularGrey12"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:gravity="top"
+                        android:text="@string/setting_language_english"
+                        app:layout_constraintHeight_percent=".5"
+                        app:layout_constraintLeft_toRightOf="@id/iconLanguage"
+                        app:layout_constraintRight_toLeftOf="@id/arrowLanguage"
+                        app:layout_constraintTop_toBottomOf="@id/textViewLanguageTitle" />
+
+                    <ImageView
+                        android:id="@+id/arrowLanguage"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginEnd="12dp"
+                        android:src="@drawable/ic_arrow_right"
+                        app:layout_constraintRight_toRightOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/gray" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/setting2"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:background="?android:selectableItemBackground"
+                    android:clickable="true"
+                    android:focusable="true">
+
+                    <ImageView
+                        android:id="@+id/iconAnalogClock"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:padding="10dp"
+                        android:src="@drawable/ic_analog_clock"
+                        app:layout_constraintDimensionRatio="1:1"
+                        app:layout_constraintLeft_toLeftOf="parent" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/textViewAnalogClockTitle"
+                        style="@style/TextRegularBlack14"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:gravity="bottom"
+                        android:text="Clock Theme"
+                        app:layout_constraintHeight_percent=".5"
+                        app:layout_constraintLeft_toRightOf="@id/iconAnalogClock"
+                        app:layout_constraintRight_toLeftOf="@id/arrowAnalogClock"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/textViewAnalogClock"
+                        style="@style/TextRegularGrey12"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:gravity="top"
+                        android:text="Primary"
+                        app:layout_constraintHeight_percent=".5"
+                        app:layout_constraintLeft_toRightOf="@id/iconAnalogClock"
+                        app:layout_constraintRight_toLeftOf="@id/arrowAnalogClock"
+                        app:layout_constraintTop_toBottomOf="@id/textViewAnalogClockTitle" />
+
+                    <ImageView
+                        android:id="@+id/arrowAnalogClock"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginEnd="12dp"
+                        android:src="@drawable/ic_arrow_right"
+                        app:layout_constraintRight_toRightOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/gray" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/setting3"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:background="?android:selectableItemBackground"
+                    android:clickable="true"
+                    android:focusable="true">
+
+                    <ImageView
+                        android:id="@+id/iconAnimation"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:padding="10dp"
+                        android:src="@drawable/ic_animation_background"
+                        app:layout_constraintDimensionRatio="1:1"
+                        app:layout_constraintLeft_toLeftOf="parent" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/textViewAnimationTitle"
+                        style="@style/TextRegularBlack14"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:gravity="bottom"
+                        android:text="@string/settings_background_animation"
+                        app:layout_constraintHeight_percent=".5"
+                        app:layout_constraintLeft_toRightOf="@id/iconAnimation"
+                        app:layout_constraintRight_toLeftOf="@id/arrowAnimation"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/textViewAnimation"
+                        style="@style/TextRegularGrey12"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:gravity="top"
+                        android:text="@string/setting_background_animation_off"
+                        app:layout_constraintHeight_percent=".5"
+                        app:layout_constraintLeft_toRightOf="@id/iconAnimation"
+                        app:layout_constraintRight_toLeftOf="@id/arrowAnimation"
+                        app:layout_constraintTop_toBottomOf="@id/textViewAnimationTitle" />
+
+                    <ImageView
+                        android:id="@+id/arrowAnimation"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginEnd="12dp"
+                        android:src="@drawable/ic_arrow_right"
+                        app:layout_constraintRight_toRightOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/gray" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/setting4"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:background="?android:selectableItemBackground"
+                    android:clickable="true"
+                    android:focusable="true">
+
+                    <ImageView
+                        android:id="@+id/iconSurname"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:padding="10dp"
+                        android:src="@drawable/ic_profile_color"
+                        app:layout_constraintDimensionRatio="1:1"
+                        app:layout_constraintLeft_toLeftOf="parent" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/textViewSurnameTitle"
+                        style="@style/TextRegularBlack14"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:gravity="bottom"
+                        android:text="@string/settings_surname_state"
+                        app:layout_constraintHeight_percent=".5"
+                        app:layout_constraintLeft_toRightOf="@id/iconSurname"
+                        app:layout_constraintRight_toLeftOf="@id/arrowSurname"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/textViewSurname"
+                        style="@style/TextRegularGrey12"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:gravity="top"
+                        android:text="@string/setting_surname_off"
+                        app:layout_constraintHeight_percent=".5"
+                        app:layout_constraintLeft_toRightOf="@id/iconSurname"
+                        app:layout_constraintRight_toLeftOf="@id/arrowSurname"
+                        app:layout_constraintTop_toBottomOf="@id/textViewSurnameTitle" />
+
+                    <ImageView
+                        android:id="@+id/arrowSurname"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginEnd="12dp"
+                        android:src="@drawable/ic_arrow_right"
+                        app:layout_constraintRight_toRightOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.5dp"
+                    android:background="@color/gray" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/setting5"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:background="?android:selectableItemBackground"
+                    android:clickable="true"
+                    android:focusable="true">
+
+                    <ImageView
+                        android:id="@+id/iconNotification"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:padding="10dp"
+                        android:src="@drawable/ic_notification"
+                        app:layout_constraintDimensionRatio="1:1"
+                        app:layout_constraintLeft_toLeftOf="parent" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/textViewNotificationTitle"
+                        style="@style/TextRegularBlack14"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:gravity="bottom"
+                        android:text="Notification"
+                        app:layout_constraintHeight_percent=".5"
+                        app:layout_constraintLeft_toRightOf="@id/iconNotification"
+                        app:layout_constraintRight_toLeftOf="@id/arrowNotification"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/textViewNotification"
+                        style="@style/TextRegularGrey12"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:gravity="top"
+                        android:text="@string/setting_surname_off"
+                        app:layout_constraintHeight_percent=".5"
+                        app:layout_constraintLeft_toRightOf="@id/iconNotification"
+                        app:layout_constraintRight_toLeftOf="@id/arrowNotification"
+                        app:layout_constraintTop_toBottomOf="@id/textViewNotificationTitle" />
+
+                    <ImageView
+                        android:id="@+id/arrowNotification"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginEnd="12dp"
+                        android:src="@drawable/ic_arrow_right"
+                        app:layout_constraintRight_toRightOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textViewApply"
+            style="@style/TextBoldWhite16"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="25dp"
+            android:background="@drawable/background_button_apply_disabled"
+            android:paddingLeft="30dp"
+            android:paddingTop="12dp"
+            android:paddingRight="30dp"
+            android:paddingBottom="12dp"
+            android:text="@string/settings_button_apply"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cardViewSettings" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textViewMadeWithLove"
+            style="@style/LobsterTextBoldMesty12"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/settings_text_made_with_love"
+            app:layout_constraintBottom_toTopOf="@id/textViewRRS"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textViewRRS"
+            style="@style/TextRegularGrey12"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            android:gravity="center"
+            android:text="@string/settings_text_copyright"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <RelativeLayout
+        android:id="@+id/settingsOverlayLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clickable="true"
+        android:visibility="gone"/>
+
+    <RelativeLayout
+        android:id="@+id/containerSetting"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:visibility="gone" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

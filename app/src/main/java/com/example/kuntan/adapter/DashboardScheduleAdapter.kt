@@ -1,9 +1,11 @@
 package com.example.kuntan.adapter
 
 import android.annotation.SuppressLint
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.widget.TextViewCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.kuntan.R
 import com.example.kuntan.entity.Schedule
@@ -20,6 +22,8 @@ class DashboardScheduleAdapter(private val schedules: ArrayList<Schedule>) : Rec
         holder.itemView.textStartTime.text = schedule.startTime
         holder.itemView.textEndTime.text = schedule.endTime
         holder.itemView.textAction.text = schedule.action
+        TextViewCompat.setAutoSizeTextTypeUniformWithConfiguration(holder.itemView.textAction,
+            1, 16, 1, TypedValue.COMPLEX_UNIT_SP)
     }
 
     override fun getItemCount(): Int = schedules.size

@@ -45,6 +45,7 @@ class KuntanPopupDialog : DialogFragment() {
         negativeButton.text = textNegativeButton
         positiveButton.text = textPositiveButton
 
+        if (textPopupTitle == "") textViewPopupTitle.visibility = View.GONE
         if (textNegativeButton.isEmpty()) negativeButton.visibility = View.GONE
         negativeButton.setOnClickListener {
             dismiss()

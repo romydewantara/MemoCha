@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragment.ApplicationLanguageFragment">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/textViewSettingLanguage"
+        style="@style/TextBoldTealDark18"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="@string/settings_application_language"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="15dp"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="8dp"
+        app:layout_constraintHeight_percent=".14"
+        app:layout_constraintTop_toBottomOf="@id/textViewSettingLanguage">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:weightSum="2">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/languageEnglish"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:background="?selectableItemBackground">
+
+                <ImageView
+                    android:id="@+id/imageIconEnglish"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginTop="6dp"
+                    android:layout_marginBottom="6dp"
+                    android:padding="5dp"
+                    android:src="@drawable/ic_english"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintDimensionRatio="1:1"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintWidth_percent=".1" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/textViewEnglish"
+                    style="@style/TextRegularBlack16"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:text="@string/setting_language_english"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toRightOf="@id/imageIconEnglish"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/checkedEnglish"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginEnd="12dp"
+                    android:padding="10dp"
+                    android:src="@drawable/ic_checked"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="@id/imageIconEnglish"
+                    app:layout_constraintDimensionRatio="1:1"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/imageIconEnglish" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <View
+                android:id="@+id/line"
+                android:layout_width="match_parent"
+                android:layout_height=".1dp"
+                android:background="@color/pewter"
+                app:layout_constraintBottom_toBottomOf="parent" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/languageBahasa"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:background="?selectableItemBackground">
+
+                <ImageView
+                    android:id="@+id/imageIconBahasa"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginTop="6dp"
+                    android:layout_marginBottom="6dp"
+                    android:padding="5dp"
+                    android:src="@drawable/ic_bahasa"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintDimensionRatio="1:1"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintWidth_percent=".1" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/textViewBahasa"
+                    style="@style/TextRegularBlack16"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:text="@string/setting_language_bahasa"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toRightOf="@id/imageIconBahasa"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/checkedBahasa"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginEnd="12dp"
+                    android:padding="10dp"
+                    android:src="@drawable/ic_checked"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="@id/imageIconBahasa"
+                    app:layout_constraintDimensionRatio="1:1"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/imageIconBahasa" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

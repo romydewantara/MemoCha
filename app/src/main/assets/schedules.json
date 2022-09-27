@@ -1,139 +1,146 @@
 {
-  "schedules" : {
-    "subuh": [
+  "schedules": {
+    "Subuh": [
+      {
+        "action": "Bermain, Belajar, Bekerja, Berkreasi",
+        "endTime": "12:00",
+        "id": 0,
+        "startTime": "09:15",
+        "time": "Subuh"
+      },
+      {
+        "action": "Shalat Dhuha",
+        "endTime": "09:15",
+        "id": 0,
+        "startTime": "09:00",
+        "time": "Subuh"
+      },
+      {
+        "action": "Masak, Sarapan, Mandi Pagi",
+        "endTime": "09:00",
+        "id": 0,
+        "startTime": "07:00",
+        "time": "Subuh"
+      },
+      {
+        "action": "Senam atau Olahraga, Berjalan",
+        "endTime": "07:00",
+        "id": 0,
+        "startTime": "05:45",
+        "time": "Subuh"
+      },
       {
         "action": "Shalat Subuh",
         "endTime": "05:45",
         "id": 0,
         "startTime": "04:30",
-        "time": "subuh"
-      },
-      {
-        "action": "Masak, Sarapan, Mandi Pagi",
-        "endTime": "09:00",
-        "id": 1,
-        "startTime": "07:00",
-        "time": "subuh"
-      },
-      {
-        "action": "Shalat Dhuha",
-        "endTime": "09:15",
-        "id": 2,
-        "startTime": "09:00",
-        "time": "subuh"
-      },
-      {
-        "action": "Bermain, Belajar, Bekerja, Berkreasi",
-        "endTime": "12:00",
-        "id": 3,
-        "startTime": "09:15",
-        "time": "subuh"
+        "time": "Subuh"
       }
     ],
-    "dzuhur": [
+    "Dzuhur": [
       {
-        "action": "Shalat Dzuhur",
-        "endTime": "12:15",
-        "id": 4,
-        "startTime": "12:00",
-        "time": "dzuhur"
-      },
-      {
-        "action": "Makan Siang",
-        "endTime": "13:15",
-        "id": 5,
-        "startTime": "12:15",
-        "time": "dzuhur"
+        "action": "Tidur Siang",
+        "endTime": "15:00",
+        "id": 0,
+        "startTime": "14:00",
+        "time": "Dzuhur"
       },
       {
         "action": "Istirahat Sebentar atau Berjalan",
         "endTime": "14:00",
-        "id": 6,
+        "id": 0,
         "startTime": "13:15",
-        "time": "dzuhur"
+        "time": "Dzuhur"
       },
       {
-        "action": "Tidur Siang",
-        "endTime": "15:00",
-        "id": 7,
-        "startTime": "14:00",
-        "time": "dzuhur"
+        "action": "Makan Siang",
+        "endTime": "13:15",
+        "id": 0,
+        "startTime": "12:15",
+        "time": "Dzuhur"
+      },
+      {
+        "action": "Shalat Dzuhur",
+        "endTime": "12:15",
+        "id": 0,
+        "startTime": "12:00",
+        "time": "Dzuhur"
       }
     ],
-    "ashar": [
+    "Ashar": [
       {
-        "action": "Shalat Ashar",
-        "endTime": "15:15",
-        "id": 8,
-        "startTime": "15:00",
-        "time": "ashar"
-      },
-      {
-        "action": "Masak, Cemilan Ringan, Jalan Sore",
-        "endTime": "16:45",
-        "id": 9,
-        "startTime": "15:15",
-        "time": "ashar"
+        "action": "Mandi",
+        "endTime": "18:00",
+        "id": 0,
+        "startTime": "17:00",
+        "time": "Ashar"
       },
       {
         "action": "Istirahat Sebentar atau Duduk",
         "endTime": "17:00",
-        "id": 10,
+        "id": 0,
         "startTime": "16:45",
-        "time": "ashar"
-      },
-      {
-        "action": "Mandi",
-        "endTime": "18:00",
-        "id": 11,
-        "startTime": "17:00",
-        "time": "ashar"
-      }
-    ],
-    "maghrib": [
-      {
-        "action": "Shalat Maghrib",
-        "endTime": "18:15",
-        "id": 8,
-        "startTime": "18:00",
-        "time": "maghrib"
+        "time": "Ashar"
       },
       {
         "action": "Masak, Cemilan Ringan, Jalan Sore",
-        "endTime": "18:15",
-        "id": 9,
-        "startTime": "19:00",
-        "time": "maghrib"
-      }
-    ],
-    "isya": [
-      {
-        "action": "Shalat Isya",
-        "endTime": "19:15",
-        "id": 8,
-        "startTime": "19:00",
-        "time": "isya"
+        "endTime": "16:45",
+        "id": 0,
+        "startTime": "15:15",
+        "time": "Ashar"
       },
       {
-        "action": "Makan Malam",
-        "endTime": "19:40",
-        "id": 9,
-        "startTime": "19:15",
-        "time": "isya"
+        "action": "Shalat Ashar",
+        "endTime": "15:15",
+        "id": 0,
+        "startTime": "15:00",
+        "time": "Ashar"
+      }
+    ],
+    "Maghrib": [
+      {
+        "action": "Masak, Cemilan Ringan, Jalan Sore",
+        "endTime": "19:00",
+        "id": 0,
+        "startTime": "18:15",
+        "time": "Maghrib"
+      },
+      {
+        "action": "Shalat Maghrib",
+        "endTime": "18:15",
+        "id": 0,
+        "startTime": "18:00",
+        "time": "Maghrib"
+      }
+    ],
+    "Isya": [
+      {
+        "action": "Istirahat atau Tidur",
+        "endTime": "22:00",
+        "id": 0,
+        "startTime": "21:00",
+        "time": "Isya"
       },
       {
         "action": "Belajar, Menonton TV, Berkreasi",
         "endTime": "21:00",
-        "id": 10,
+        "id": 0,
         "startTime": "19:40",
-        "time": "isya"
+        "time": "Isya"
       },
       {
-        "action": "Istirahat atau Tidur",
-        "endTime": "22:00",
-        "id": 11,
-        "startTime": "21:00",
-        "time": "isya"
+        "action": "Makan Malam",
+        "endTime": "19:40",
+        "id": 0,
+        "startTime": "19:15",
+        "time": "Isya"
+      },
+      {
+        "action": "Shalat Isya",
+        "endTime": "19:15",
+        "id": 0,
+        "startTime": "19:00",
+        "time": "Isya"
       }
     ]
   }

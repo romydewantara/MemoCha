@@ -24,16 +24,25 @@
     <string name="month_december">Desember</string>
 
     <!-- B U T T O N -->
+    <string name="button_ok">OK</string>
     <string name="button_add">Tambah</string>
     <string name="button_save">Simpan</string>
     <string name="button_cancel">Batal</string>
     <string name="button_delete">Hapus</string>
+    <string name="button_import">Impor</string>
+    <string name="button_export">Ekspor</string>
 
     <string name="method_cash">Cash</string>
     <string name="method_debit">Debit</string>
     <string name="method_transfer">Transfer</string>
 
-    <string name="analog_primary">Primary</string>
+    <!-- C L O C K   T H E M E -->
+    <string name="clock_theme_primary">Primary</string>
+    <string name="clock_theme_secondary">Secondary</string>
+    <string name="clock_theme_dark">Dark</string>
+    <string name="clock_theme_yellow">Yellow</string>
+    <string name="clock_theme_red_orange">Red Orange</string>
+    <string name="clock_theme_pink">Pink</string>
 
     <!-- C A T E G O R I E S -->
     <string name="category_title">Kategori</string>
@@ -62,6 +71,7 @@
 
     <!-- D A S H B O A R D -->
     <string name="dasboard">Tanggal</string>
+    <string name="dasboard_greetings">Halo %s, selamat %s!</string>
     <string name="dasboard_book">Buku</string>
     <string name="dasboard_identity">Identitas</string>
     <string name="dasboard_needs">Kebutuhan</string>
@@ -83,29 +93,40 @@
     <!-- S E T T I N G S -->
     <string name="setting_language_english">English (United States)</string>
     <string name="setting_language_bahasa">Bahasa Indonesia</string>
-    <string name="setting_background_animation_on">On</string>
-    <string name="setting_background_animation_off">Off</string>
-    <string name="setting_background_music_on">On</string>
-    <string name="setting_background_music_off">Off</string>
+    <string name="setting_background_animation_on">Nyala</string>
+    <string name="setting_background_animation_off">Mati</string>
+    <string name="setting_background_music_on">Nyala</string>
+    <string name="setting_background_music_off">Mati</string>
+    <string name="setting_surname_on">Nyala</string>
+    <string name="setting_surname_off">Mati</string>
+    <string name="setting_notification_on">Nyala</string>
+    <string name="setting_notification_off">Mati</string>
     <string name="settings_title_page">Pengaturan</string>
     <string name="settings_application_language">Bahasa Aplikasi</string>
+    <string name="settings_clock_theme">Tema Waktu</string>
     <string name="settings_background_animation">Animasi Latar Belakang</string>
+    <string name="settings_background_animation_information">Memainkan animasi di latar belakang layar saat berada di Halaman Utama</string>
+    <string name="settings_surname">Nama Pengguna</string>
     <string name="settings_theme_autumn">Musim Gugur</string>
     <string name="settings_theme_sakura">Bunga Sakura</string>
     <string name="settings_theme_snow">Salju</string>
     <string name="settings_theme_summer">Musim Panas</string>
     <string name="settings_music">Tema Musik Latar Belakang</string>
-    <string name="settings_surname">Tampilkan Nama Panggilan</string>
+    <string name="settings_music_information">Menyetel music latar belakang hanya saat berada di Halaman Utama, Halaman Identitas Keluarga, dan Halaman Daftar Kebutuhan</string>
+    <string name="settings_surname_state">Tampilkan Nama Panggilanmu</string>
     <string name="settings_hint_surname">Contoh: Ocha</string>
+    <string name="settings_surname_info">Nama tersebut akan ditampilkan pada Home Page sebagai username dan kolom tersebut harus diisi, jika kolom tersebut kosong maka status \'Show Surname\' secara otomatis akan mati</string>
     <string name="settings_button_reset">Atur Ulang</string>
     <string name="settings_button_apply">Terapkan</string>
-    <string name="settings_text_copyright">© 2022 RRS Production</string>
+    <string name="settings_button_confirm">Konfirmasi</string>
+    <string name="settings_text_copyright">© 2022 RRS Production\nVersion 1.0</string>
     <string name="settings_text_made_with_love">┄── Made With Love :) ──┄</string>
 
     <!-- D I A L O G -->
     <string name="dialog_title_warning">Peringatan!</string>
     <string name="dialog_title_information">Informasi!</string>
     <string name="dialog_title_delete_from_history">Hapus Dari Riwayat?</string>
+    <string name="dialog_message_app_theme">Sorry, fitur ini belum siap</string>
     <string name="dialog_message_ask_reset">Apakah anda yakin akan mengatur ulang tema?</string>
     <string name="dialog_message_switch_language">Kamu terdeteksi mengubah bahasa aplikasi menggunakan:\n\n\"%s\"\n\nSegera klik tombol \'OK\' untuk memulai ulang aplikasi</string>
     <string name="dialog_message_delete_from_history">Apakah kamu yakin mau menghapus data ini dari riwayat?</string>

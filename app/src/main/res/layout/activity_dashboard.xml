@@ -60,22 +60,37 @@
         android:src="@drawable/ic_settings"
         android:visibility="visible"
         app:layout_constraintDimensionRatio="1:1"
-        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintWidth_percent=".1" />
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/loveMessage"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:padding="6dp"
+        android:rotation="-19"
+        android:scaleType="fitCenter"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/setting"
+        app:lottie_autoPlay="true"
+        app:lottie_fileName="love_message.json"
+        app:lottie_loop="true" />
 
     <AnalogClock
         android:id="@+id/analogClock"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="10dp"
         android:background="@drawable/background_analog_clock_primary"
         android:padding="20dp"
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintWidth_percent=".35" />
+        app:layout_constraintHeight_percent=".18" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/textDate"
@@ -88,18 +103,30 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/analogClock" />
 
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/textGreetings"
+        style="@style/TextBoldPinkLight16"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:visibility="gone"
+        android:text="@string/dasboard_greetings"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textDate" />
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginTop="8dp"
         app:layout_constraintBottom_toTopOf="@id/layoutExpenses"
-        app:layout_constraintTop_toBottomOf="@id/textDate">
+        app:layout_constraintTop_toBottomOf="@id/textGreetings">
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/time"
             style="@style/TextBoldTeal16"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="25dp"
             android:background="?android:selectableItemBackground"
             android:padding="10dp"
             android:text="Time"
@@ -142,21 +169,6 @@
             android:layout_marginTop="12dp"
             android:background="@color/pewter"
             app:layout_constraintTop_toBottomOf="@id/time" />
-
-        <com.airbnb.lottie.LottieAnimationView
-            android:id="@+id/loveMessage"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:padding="6dp"
-            android:rotation="-19"
-            android:scaleType="fitCenter"
-            app:layout_constraintBottom_toTopOf="@id/lineSchedule"
-            app:layout_constraintDimensionRatio="1:1"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintWidth_percent=".1"
-            app:lottie_autoPlay="true"
-            app:lottie_fileName="love_message.json"
-            app:lottie_loop="true" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerviewSchedule"

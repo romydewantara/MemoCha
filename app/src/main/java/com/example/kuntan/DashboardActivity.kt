@@ -61,12 +61,26 @@ class DashboardActivity : AppCompatActivity() {
     private var isMenuHidden = false
     private var isMenuAnimating = false
     private var isFragmentShown = false
-    private var isDefaultSchedule = true
-    private var username = ""
+
+    //Settings
+    private var surnameState = false
+    private var backgroundAnimationState = false
+    private var backgroundMusicState = false
+    private var notificationState = false
+    private var surname = ""
+    private var applicationTheme = ""
+    private var applicationLanguage = ""
+    private var clockTheme = ""
+    private var backgroundAnimation = ""
+
+    //History
     private var currentDate = ""
     private var customDate = ""
     private var paymentMethod = ""
+
+    //Schedule
     private var index = 0
+    private var isDefaultSchedule = true
     private var arrayTimes = arrayListOf(
         Times.Subuh.name,
         Times.Dzuhur.name,
@@ -129,6 +143,15 @@ class DashboardActivity : AppCompatActivity() {
                 editTextNote.isFocusable = false
             }
         }
+        surname = ""
+        applicationTheme = Constant.APP_THEME_LIGHT
+        applicationLanguage = getString(R.string.setting_language_english)
+        clockTheme = getString(R.string.clock_theme_primary)
+        backgroundAnimation = Constant.DASHBOARD_BACKGROUND_ANIMATION_AUTUMN
+        surnameState = false
+        backgroundAnimationState = false
+        backgroundMusicState = false
+
         val calendar = Calendar.getInstance() //English: Friday, September 16th 2022 | Indonesia: Jum\'at, 16 September 2022
         currentDate = SimpleDateFormat("dd-MM-yyyy").format(calendar.time)
         customDate = SimpleDateFormat("dd-MM-yyyy").format(calendar.time)
@@ -165,30 +188,41 @@ class DashboardActivity : AppCompatActivity() {
     private fun adjustSettings() {
         CoroutineScope(Dispatchers.IO).launch {
             val settings = database.settingsDao().getSettings()
-            Log.d(TAG, "checkSettings - settings: $settings")
+            Log.d(TAG, "adjustSettings - settings: $settings")
             if (settings == null) {
-                val setting = Settings(0, username, Constant.APP_THEME_LIGHT,
-                    getString(R.string.setting_language_english), Constant.DASHBOARD_CLOCK_PRIMARY,
-                    getString(R.string.setting_background_animation_off), Constant.DASHBOARD_BACKGROUND_AUTUMN, getString(R.string.setting_background_music_off)
-                )
-                database.settingsDao().insertSetting(setting)
+                applicationTheme = Constant.APP_THEME_LIGHT
+                applicationLanguage = getString(R.string.setting_language_english)
+                clockTheme = Constant.DASHBOARD_CLOCK_PRIMARY
+                val defaultSetting = Settings(0, surname, applicationTheme,
+                    applicationLanguage, clockTheme, backgroundAnimation, surnameState,
+                    backgroundAnimationState, backgroundMusicState, notificationState)
+                Log.d(TAG, "adjustSetting - object: $defaultSetting")
+                database.settingsDao().insertSetting(defaultSetting)
             } else {
                 runOnUiThread {
-                    if (settings.language == getString(R.string.setting_language_bahasa)) {
+
+                    if (settings.applicationLanguage == getString(R.string.setting_language_bahasa)) {
                         textDate.text = SimpleDateFormat("EEEE, dd MMMM yyyy").format(Calendar.getInstance().time)
                     }
-                    analogClock.background = AppUtil.convertDrawableFromTheme(applicationContext, settings.analogClockTheme)
-                    if (settings.backgroundAnimation == getString(R.string.setting_background_animation_on)) {
+                    analogClock.background = AppUtil.convertDrawableFromTheme(this@DashboardActivity, settings.clockTheme)
+                    if (settings.surnameState) {
+                        var tempSurname = "User"
+                        if (settings.surname.isNotEmpty()) {
+                            tempSurname = settings.surname
+                        }
+                        textGreetings.text = String.format(getString(R.string.dasboard_greetings), tempSurname, "Morning")
+                    }
+                    if (settings.backgroundAnimationState) {
                         lottieDashboard.visibility = VISIBLE
-                        lottieDashboard.setAnimation(settings.dashboardBackground)
+                        lottieDashboard.setAnimation(settings.backgroundAnimation)
                         lottieDashboard.playAnimation()
-                        if (settings.backgroundMusicState == getString(R.string.setting_background_music_on)) {
+                        if (settings.backgroundMusicState) {
                             var fileName = ""
-                            when(settings.dashboardBackground) {
-                                Constant.DASHBOARD_BACKGROUND_AUTUMN -> {fileName = Constant.BACKGROUND_MUSIC_AUTUMN_THEME}
-                                Constant.DASHBOARD_BACKGROUND_SAKURA -> {fileName = Constant.BACKGROUND_MUSIC_SAKURA_THEME}
-                                Constant.DASHBOARD_BACKGROUND_SNOW -> {fileName = Constant.BACKGROUND_MUSIC_SNOW_THEME}
-                                Constant.DASHBOARD_BACKGROUND_SUMMER -> {fileName = Constant.BACKGROUND_MUSIC_SUMMER_THEME}
+                            when(settings.backgroundAnimation) {
+                                Constant.DASHBOARD_BACKGROUND_ANIMATION_AUTUMN -> {fileName = Constant.BACKGROUND_MUSIC_AUTUMN_THEME}
+                                Constant.DASHBOARD_BACKGROUND_ANIMATION_SAKURA -> {fileName = Constant.BACKGROUND_MUSIC_SAKURA_THEME}
+                                Constant.DASHBOARD_BACKGROUND_ANIMATION_SNOW -> {fileName = Constant.BACKGROUND_MUSIC_SNOW_THEME}
+                                Constant.DASHBOARD_BACKGROUND_ANIMATION_SUMMER -> {fileName = Constant.BACKGROUND_MUSIC_SUMMER_THEME}
                             }
                             Log.d(TAG, "checkSettings: fileName: $fileName")
                             val afd : AssetFileDescriptor = assets.openFd(fileName)
@@ -301,7 +335,9 @@ class DashboardActivity : AppCompatActivity() {
             supportFragmentManager.beginTransaction().replace(R.id.placeHolderLayout, fragment, "needs").commit()
         }
         menuHistory.setOnClickListener {
-            startActivity(Intent(this@DashboardActivity, HistoryActivity::class.java)
+            startActivity(Intent(this@DashboardActivity, HistoryDetailsActivity::class.java)
+                .putExtra("month", currentDate.split("-")[1])
+                .putExtra("year", currentDate.split("-")[2])
                 .setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP))
             finish()
         }

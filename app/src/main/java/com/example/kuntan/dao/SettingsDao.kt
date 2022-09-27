@@ -13,17 +13,19 @@ interface SettingsDao {
     suspend fun insertSetting(settings: Settings)
 
     @Query("SELECT * FROM settings_table")
-    suspend fun getSettings(): Settings
+    suspend fun getSettings(): Settings?
 
-    @Query("UPDATE settings_table SET username = :username, theme = :theme, language = :language, analogClockTheme = :analogClockTheme, backgroundAnimation = :backgroundAnimation, dashboardBackground = :dashboardBackground, backgroundMusicState = :backgroundMusicState")
+    @Query("UPDATE settings_table SET surname = :surname, applicationTheme = :applicationTheme, applicationLanguage = :applicationLanguage, clockTheme = :clockTheme, backgroundAnimation = :backgroundAnimation, surnameState = :surnameState, backgroundAnimationState = :backgroundAnimationState, backgroundMusicState = :backgroundMusicState, notificationState = :notificationState")
     suspend fun updateSetting(
-        username: String,
-        theme: String,
-        language: String,
-        analogClockTheme: String,
+        surname: String,
+        applicationTheme: String,
+        applicationLanguage: String,
+        clockTheme: String,
         backgroundAnimation: String,
-        dashboardBackground: String,
-        backgroundMusicState: String
+        surnameState: Boolean,
+        backgroundAnimationState: Boolean,
+        backgroundMusicState: Boolean,
+        notificationState: Boolean
     )
 
 }

@@ -67,12 +67,12 @@
             app:layout_constraintTop_toBottomOf="@id/lineList" />
 
         <ImageView
-            android:id="@+id/imageThreeDots"
+            android:id="@+id/imageMenu"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_marginEnd="10dp"
-            android:padding="7dp"
-            android:src="@drawable/ic_three_dots"
+            android:padding="10dp"
+            android:src="@drawable/ic_menu"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintDimensionRatio="1:1"
             app:layout_constraintRight_toRightOf="parent"
@@ -84,7 +84,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/layoutNeedsFooter"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent">
 
         <View
@@ -106,54 +106,60 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintWidth_percent=".5" />
 
-        <ImageView
-            android:id="@+id/iconSend"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginTop="6dp"
-            android:layout_marginEnd="12dp"
-            android:layout_marginBottom="6dp"
-            android:background="@drawable/selector_button_send_needs_item"
-            android:padding="10dp"
-            android:src="@drawable/ic_send"
-            android:visibility="invisible"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintDimensionRatio="1:1"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintWidth_percent=".1" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="8dp">
 
-        <EditText
-            android:id="@+id/editTextNeedsItem"
-            style="@style/TextRegularWhite16"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="6dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginBottom="20dp"
-            android:background="@drawable/background_edit_text_field_needs_item"
-            android:hint="@string/needs_hint_goods"
-            android:inputType="textEmailAddress"
-            android:maxLines="3"
-            android:textColorHint="@color/gray_semi_light"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toRightOf="@id/iconAddImage"
-            app:layout_constraintRight_toLeftOf="@id/iconSend"
-            app:layout_constraintTop_toTopOf="parent" />
+            <RelativeLayout
+                android:id="@+id/iconSend"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:gravity="center"
+                android:visibility="invisible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-        <ImageView
-            android:id="@+id/iconAddImage"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_margin="6dp"
-            android:src="@drawable/ic_add_teal"
-            android:visibility="visible"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintDimensionRatio="1:1"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintWidth_percent=".1" />
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/selector_button_send_needs_item"
+                    android:padding="8dp"
+                    android:src="@drawable/ic_send" />
+            </RelativeLayout>
+
+            <EditText
+                android:id="@+id/editTextNeedsItem"
+                style="@style/TextRegularWhite16"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/background_edit_text_field_needs_item"
+                android:hint="@string/needs_hint_goods"
+                android:inputType="textEmailAddress"
+                android:maxLines="3"
+                android:layout_marginStart="6dp"
+                android:layout_marginEnd="6dp"
+                android:textColorHint="@color/gray_semi_light"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toRightOf="@id/iconAddImage"
+                app:layout_constraintRight_toLeftOf="@id/iconSend"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/iconAddImage"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_margin="4dp"
+                android:src="@drawable/ic_add_teal"
+                android:visibility="visible"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

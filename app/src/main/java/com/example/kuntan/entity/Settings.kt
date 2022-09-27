@@ -6,11 +6,13 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "settings_table")
 data class Settings(
     @PrimaryKey(autoGenerate = true) val id: Int,
-    val username: String,
-    val theme: String,
-    val language: String,
-    val analogClockTheme: String,
+    val surname: String,
+    val applicationTheme: String,
+    val applicationLanguage: String,
+    val clockTheme: String,
     val backgroundAnimation: String,
-    val dashboardBackground: String,
-    val backgroundMusicState: String
+    val surnameState: Boolean,
+    val backgroundAnimationState: Boolean,
+    val backgroundMusicState: Boolean,
+    val notificationState: Boolean
 )

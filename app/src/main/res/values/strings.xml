@@ -24,16 +24,24 @@
     <string name="month_december">December</string>
 
     <!-- B U T T O N -->
+    <string name="button_ok">OK</string>
     <string name="button_add">Add</string>
     <string name="button_save">Save</string>
     <string name="button_cancel">Cancel</string>
     <string name="button_delete">Delete</string>
+    <string name="button_import">Import</string>
+    <string name="button_export">Export</string>
 
     <string name="method_cash">Cash</string>
     <string name="method_debit">Debit</string>
     <string name="method_transfer">Transfer</string>
 
-    <string name="analog_primary">Primary</string>
+    <string name="clock_theme_primary">Primary</string>
+    <string name="clock_theme_secondary">Secondary</string>
+    <string name="clock_theme_dark">Dark</string>
+    <string name="clock_theme_yellow">Yellow</string>
+    <string name="clock_theme_red_orange">Red Orange</string>
+    <string name="clock_theme_pink">Pink</string>
 
     <!-- C A T E G O R I E S -->
     <string name="category_title">Category</string>
@@ -62,6 +70,7 @@
 
     <!-- D A S H B O A R D -->
     <string name="dasboard">Date</string>
+    <string name="dasboard_greetings">Hi %s, good %s!</string>
     <string name="dasboard_book">Book</string>
     <string name="dasboard_identity">Identity</string>
     <string name="dasboard_needs">Needs</string>
@@ -87,25 +96,36 @@
     <string name="setting_background_animation_off">Off</string>
     <string name="setting_background_music_on">On</string>
     <string name="setting_background_music_off">Off</string>
+    <string name="setting_surname_on">On</string>
+    <string name="setting_surname_off">Off</string>
+    <string name="setting_notification_on">On</string>
+    <string name="setting_notification_off">Off</string>
     <string name="settings_title_page">Settings</string>
     <string name="settings_application_language">Application Language</string>
+    <string name="settings_clock_theme">Clock Theme</string>
     <string name="settings_background_animation">Background Animation</string>
+    <string name="settings_background_animation_information">Play an animation in the background of the screen while on the Home page</string>
+    <string name="settings_surname">Username</string>
     <string name="settings_theme_autumn">Autumn</string>
     <string name="settings_theme_sakura">Sakura</string>
     <string name="settings_theme_snow">Snow</string>
     <string name="settings_theme_summer">Summer</string>
     <string name="settings_music">Background Music Theme</string>
-    <string name="settings_surname">Show Surname</string>
+    <string name="settings_music_information">Plays background music only when on Home Page, Family Identity Page, and Needs List Page</string>
+    <string name="settings_surname_state">Show Surname</string>
     <string name="settings_hint_surname">Ex: Ocha</string>
+    <string name="settings_surname_info">The name will be displayed on the Home Page as the username and the column should be filled-in, if the column is empty it will automatically will turn off \'Show Surname\' status</string>
     <string name="settings_button_reset">Reset</string>
     <string name="settings_button_apply">Apply</string>
-    <string name="settings_text_copyright">© 2022 RRS Production</string>
+    <string name="settings_button_confirm">Confirm</string>
+    <string name="settings_text_copyright">© 2022 RRS Production\nVersion 1.0</string>
     <string name="settings_text_made_with_love">┄── Made With Love :) ──┄</string>
 
     <!-- D I A L O G -->
     <string name="dialog_title_warning">Warning!</string>
     <string name="dialog_title_information">Information!</string>
     <string name="dialog_title_delete_from_history">Remove From History?</string>
+    <string name="dialog_message_app_theme">Sorry, this feature is not ready yet</string>
     <string name="dialog_message_ask_reset">Are you sure you want to reset to default?</string>
     <string name="dialog_message_switch_language">You are detected to change the language of the application using:\n\n\"%s\"\n\nPlease click \'OK\' button to restart the application</string>
     <string name="dialog_message_delete_from_history">Are you sure you want to delete this record from history?</string>

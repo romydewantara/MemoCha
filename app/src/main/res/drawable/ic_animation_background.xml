@@ -1,0 +1,33 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="512dp"
+    android:height="512dp"
+    android:viewportWidth="512"
+    android:viewportHeight="512">
+  <path
+      android:pathData="M256.01,0.01c-0,0 -0.01,0 -0.01,0C114.84,0.01 0,114.85 0,255.99c0,141.15 114.84,255.99 256,256c0,0 0.01,0 0.01,0c38.02,0 74.12,-8.34 106.58,-23.27c14.22,-6.54 27.75,-14.35 40.43,-23.27C468.88,419.08 512,342.48 512,255.99C512,114.84 397.16,0.01 256.01,0.01z"
+      android:fillColor="@color/teal_semi_light"/>
+  <path
+      android:pathData="M256.01,511.99h232.71c12.85,0 23.27,-10.42 23.27,-23.27c0,-12.85 -10.42,-23.27 -23.27,-23.27h-85.71c-12.68,8.93 -26.21,16.73 -40.43,23.27C330.13,503.65 294.03,511.99 256.01,511.99z"
+      android:fillColor="@color/blue_navy_semi_light"/>
+  <path
+      android:pathData="M162.9,255.99m-46.54,0a46.54,46.54 0,1 1,93.09 0a46.54,46.54 0,1 1,-93.09 0"
+      android:fillColor="@color/blue_navy_semi_light"/>
+  <path
+      android:pathData="M209.46,162.91c0,25.7 20.84,46.54 46.54,46.54v-93.09C230.29,116.37 209.46,137.21 209.46,162.91z"
+      android:fillColor="@color/blue_navy_semi_light"/>
+  <path
+      android:pathData="M209.46,349.09c0,25.7 20.84,46.54 46.54,46.54v-93.09C230.29,302.54 209.46,323.38 209.46,349.09z"
+      android:fillColor="@color/blue_navy_semi_light"/>
+  <path
+      android:pathData="M302.54,349.09c0,-25.7 -20.84,-46.54 -46.54,-46.54v93.09C281.7,395.63 302.54,374.79 302.54,349.09z"
+      android:fillColor="@color/blue_navy_semi_light"/>
+  <path
+      android:pathData="M349.08,255.99m-46.54,0a46.54,46.54 0,1 1,93.09 0a46.54,46.54 0,1 1,-93.09 0"
+      android:fillColor="@color/blue_navy_semi_light"/>
+  <path
+      android:pathData="M302.54,162.91c0,-25.7 -20.84,-46.54 -46.54,-46.54v93.09C281.7,209.46 302.54,188.62 302.54,162.91z"
+      android:fillColor="@color/blue_navy_semi_light"/>
+  <path
+      android:pathData="M209.46,349.09c0,-25.7 20.84,-46.54 46.54,-46.54v-93.09c-25.7,0 -46.54,-20.84 -46.54,-46.54s20.84,-46.54 46.54,-46.54V0.01C114.84,0.01 0,114.85 0,255.99c0,141.15 114.84,255.99 256,256V395.63C230.29,395.63 209.46,374.79 209.46,349.09zM162.91,302.54c-25.7,0 -46.54,-20.84 -46.54,-46.54s20.84,-46.54 46.54,-46.54s46.54,20.84 46.54,46.54S188.62,302.54 162.91,302.54z"
+      android:fillColor="@color/teal"/>
+</vector>

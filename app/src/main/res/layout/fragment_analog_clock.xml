@@ -1,0 +1,359 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".fragment.AnalogClockFragment">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/textViewSettingLanguage"
+        style="@style/TextBoldTealDark18"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="@string/settings_clock_theme"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="15dp"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="8dp"
+        app:layout_constraintHeight_percent=".42"
+        app:layout_constraintTop_toBottomOf="@id/textViewSettingLanguage">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:weightSum="6">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/clockThemePrimary"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:background="?selectableItemBackground">
+
+                <ImageView
+                    android:id="@+id/imageIconPrimary"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginTop="6dp"
+                    android:layout_marginBottom="6dp"
+                    android:padding="5dp"
+                    android:src="@drawable/ic_clock_theme_primary"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintDimensionRatio="1:1"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintWidth_percent=".1" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/textViewPrimary"
+                    style="@style/TextRegularBlack16"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:text="@string/clock_theme_primary"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toRightOf="@id/imageIconPrimary"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/checkedPrimary"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginEnd="12dp"
+                    android:padding="10dp"
+                    android:src="@drawable/ic_checked"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="@id/imageIconPrimary"
+                    app:layout_constraintDimensionRatio="1:1"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/imageIconPrimary" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height=".1dp"
+                android:background="@color/pewter"
+                app:layout_constraintBottom_toBottomOf="parent" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/clockThemeSecondary"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:background="?selectableItemBackground">
+
+                <ImageView
+                    android:id="@+id/imageIconSecondary"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginTop="6dp"
+                    android:layout_marginBottom="6dp"
+                    android:padding="5dp"
+                    android:src="@drawable/ic_clock_theme_secondary"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintDimensionRatio="1:1"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintWidth_percent=".1" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/textViewSecondary"
+                    style="@style/TextRegularBlack16"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:text="@string/clock_theme_secondary"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toRightOf="@id/imageIconSecondary"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/checkedSecondary"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginEnd="12dp"
+                    android:padding="10dp"
+                    android:src="@drawable/ic_checked"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="@id/imageIconSecondary"
+                    app:layout_constraintDimensionRatio="1:1"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/imageIconSecondary" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height=".1dp"
+                android:background="@color/pewter"
+                app:layout_constraintBottom_toBottomOf="parent" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/clockThemeDark"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:background="?selectableItemBackground">
+
+                <ImageView
+                    android:id="@+id/imageIconDark"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginTop="6dp"
+                    android:layout_marginBottom="6dp"
+                    android:padding="5dp"
+                    android:src="@drawable/ic_clock_theme_dark"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintDimensionRatio="1:1"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintWidth_percent=".1" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/textViewDark"
+                    style="@style/TextRegularBlack16"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:text="@string/clock_theme_dark"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toRightOf="@id/imageIconDark"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/checkedDark"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginEnd="12dp"
+                    android:padding="10dp"
+                    android:src="@drawable/ic_checked"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="@id/imageIconDark"
+                    app:layout_constraintDimensionRatio="1:1"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/imageIconDark" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height=".1dp"
+                android:background="@color/pewter"
+                app:layout_constraintBottom_toBottomOf="parent" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/clockThemeYellow"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:background="?selectableItemBackground">
+
+                <ImageView
+                    android:id="@+id/imageIconYellow"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginTop="6dp"
+                    android:layout_marginBottom="6dp"
+                    android:padding="5dp"
+                    android:src="@drawable/ic_clock_theme_yellow"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintDimensionRatio="1:1"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintWidth_percent=".1" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/textViewYellow"
+                    style="@style/TextRegularBlack16"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:text="@string/clock_theme_yellow"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toRightOf="@id/imageIconYellow"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/checkedYellow"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginEnd="12dp"
+                    android:padding="10dp"
+                    android:src="@drawable/ic_checked"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="@id/imageIconYellow"
+                    app:layout_constraintDimensionRatio="1:1"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/imageIconYellow" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height=".1dp"
+                android:background="@color/pewter"
+                app:layout_constraintBottom_toBottomOf="parent" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/clockThemeRedOrange"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:background="?selectableItemBackground">
+
+                <ImageView
+                    android:id="@+id/imageIconRedOrange"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginTop="6dp"
+                    android:layout_marginBottom="6dp"
+                    android:padding="5dp"
+                    android:src="@drawable/ic_clock_theme_red_orange"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintDimensionRatio="1:1"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintWidth_percent=".1" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/textViewRedOrange"
+                    style="@style/TextRegularBlack16"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:text="@string/clock_theme_red_orange"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toRightOf="@id/imageIconRedOrange"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/checkedRedOrange"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginEnd="12dp"
+                    android:padding="10dp"
+                    android:src="@drawable/ic_checked"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="@id/imageIconRedOrange"
+                    app:layout_constraintDimensionRatio="1:1"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/imageIconRedOrange" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height=".1dp"
+                android:background="@color/pewter"
+                app:layout_constraintBottom_toBottomOf="parent" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/clockThemePink"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:background="?selectableItemBackground">
+
+                <ImageView
+                    android:id="@+id/imageIconPink"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginTop="6dp"
+                    android:layout_marginBottom="6dp"
+                    android:padding="5dp"
+                    android:src="@drawable/ic_clock_theme_pink"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintDimensionRatio="1:1"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintWidth_percent=".1" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/textViewPink"
+                    style="@style/TextRegularBlack16"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="12dp"
+                    android:text="@string/clock_theme_pink"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintLeft_toRightOf="@id/imageIconPink"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/checkedPink"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_marginEnd="12dp"
+                    android:padding="10dp"
+                    android:src="@drawable/ic_checked"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="@id/imageIconPink"
+                    app:layout_constraintDimensionRatio="1:1"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/imageIconPink" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

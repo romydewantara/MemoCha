@@ -14,6 +14,7 @@ import java.io.BufferedReader
 import java.io.File
 import java.io.FileReader
 import java.io.FileWriter
+import java.io.InputStream
 import java.io.IOException
 
 class AppUtil {
@@ -45,6 +46,21 @@ class AppUtil {
                 e.printStackTrace()
             }
             return sb.toString()
+        }
+        fun readTextFromAssets(context: Context, fileName: String): String {
+            val inputStream: InputStream
+            return try {
+                inputStream = context.assets.open(fileName)
+                val size: Int = inputStream.available()
+                val buffer = ByteArray(size)
+                inputStream.read(buffer)
+                inputStream.close()
+
+                // byte buffer into a string
+                String(buffer, charset("UTF-8"))
+            } catch (e: IOException) {
+                null.toString()
+            }
         }
         fun isKeyboardVisible(view: View) : Boolean {
             val rect = Rect()
