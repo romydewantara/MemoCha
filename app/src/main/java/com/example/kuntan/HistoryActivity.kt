@@ -12,24 +12,23 @@ import android.view.animation.AnimationUtils
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.kuntan.adapter.HistoryAdapter
-import com.example.kuntan.entity.History
 import com.example.kuntan.utility.AppUtil
-import com.example.kuntan.utility.Constant
 import com.example.kuntan.utility.KuntanRoomDatabase
 import kotlinx.android.synthetic.main.activity_history.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import java.math.BigInteger
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Calendar
 import kotlin.collections.ArrayList
 
+@SuppressLint("SimpleDateFormat", "UseCompatLoadingForDrawables")
 class HistoryActivity : AppCompatActivity(), HistoryAdapter.HistoryAdapterListener {
 
     private val database by lazy { KuntanRoomDatabase(this) }
-    @SuppressLint("SimpleDateFormat")
     private val currentMonthYear = SimpleDateFormat("MM-yyyy").format(Calendar.getInstance().time)
-    private val historyOfMonth = ArrayList<List<History>>()
     private var year = currentMonthYear.split("-")[1]
     private lateinit var historyAdapter: HistoryAdapter
 
@@ -37,19 +36,15 @@ class HistoryActivity : AppCompatActivity(), HistoryAdapter.HistoryAdapterListen
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_history)
 
-        init()
+        setupRecyclerView()
         initListener()
     }
 
     override fun onStart() {
         super.onStart()
+        fetchHistory()
         initPosition()
         slideUpHistoryLayout()
-    }
-
-    private fun init() {
-        textViewYear.text = year
-        setupRecyclerView(currentMonthYear.split("-")[0], currentMonthYear.split("-")[1])
     }
 
     private fun initPosition() {
@@ -65,11 +60,11 @@ class HistoryActivity : AppCompatActivity(), HistoryAdapter.HistoryAdapterListen
     private fun initListener() {
         nextYear.setOnClickListener {
             year = (year.toInt() + 1).toString()
-            customHistoryLayout()
+            fetchHistory()
         }
         previousYear.setOnClickListener {
             year = (year.toInt() - 1).toString()
-            customHistoryLayout()
+            fetchHistory()
         }
     }
 
@@ -102,45 +97,56 @@ class HistoryActivity : AppCompatActivity(), HistoryAdapter.HistoryAdapterListen
         }, 400)
     }
 
-    private fun setupRecyclerView(month: String, year: String) {
-        populateHistories(year)
-        historyAdapter = HistoryAdapter(applicationContext, historyOfMonth, month, year, this@HistoryActivity)
+    private fun fetchHistory() {
+        CoroutineScope(Dispatchers.IO).launch {
+            val historyOfYear = database.historyDao().getHistoryByYear(year)
+            val listOfTotal = mutableListOf<String>()
+            for (i in 0 until AppUtil.getListOfMonth(this@HistoryActivity).size) {
+                val arrayListOfTotal = arrayListOf<String>()
+                for (j in historyOfYear.indices) {
+                    if (historyOfYear[j].month == AppUtil.convertMonthCodeFromId(i) && historyOfYear[j].year == year) {
+                        arrayListOfTotal.add(historyOfYear[j].amount)
+                    }
+                }
+                val total = "Rp ${String.format("%,d", getMonthlyExpenseTotal(arrayListOfTotal))}".replace(",", ".")
+                listOfTotal.add(total)
+            }
+            withContext(Dispatchers.Main) {
+                historyAdapter.refreshData(listOfTotal, year)
+            }
+        }
+
+        if (year == currentMonthYear.split("-")[1]) {
+            layoutHistory.background = applicationContext.resources.getDrawable(R.drawable.background_page_white_rounded_top, null)
+            imageRibbon.visibility = View.VISIBLE
+            imageRibbon.startAnimation(AnimationUtils.loadAnimation(applicationContext, R.anim.fade_in))
+        } else {
+            layoutHistory.background = applicationContext.resources.getDrawable(R.drawable.background_page_gray_rounded_top, null)
+            imageRibbon.visibility = View.INVISIBLE
+        }
+        textViewYear.text = year
+    }
+
+    private fun getMonthlyExpenseTotal(arrayListOfAmount: ArrayList<String>): BigInteger {
+        var sum = BigInteger("0")
+        if (arrayListOfAmount.isNotEmpty()) {
+            for (i in 0 until arrayListOfAmount.size) {
+                val amount = arrayListOfAmount[i].replace(",", "").toBigInteger()
+                sum += amount
+            }
+        }
+        return sum
+    }
+
+    private fun setupRecyclerView() {
+        historyAdapter = HistoryAdapter(this, arrayListOf(), this)
         recyclerviewHistory.apply {
             layoutManager = LinearLayoutManager(applicationContext)
             adapter = historyAdapter
         }
     }
 
-    private fun populateHistories(year: String) {
-        historyOfMonth.clear()
-        CoroutineScope(Dispatchers.IO).launch {
-            for (i in 0 until Constant.AMOUNT_OF_MONTH) {
-                val history = database.historyDao().getHistory(year, AppUtil.convertMonthCodeFromId(i))
-                historyOfMonth.add(history)
-            }
-        }
-    }
-
-    @SuppressLint("UseCompatLoadingForDrawables")
-    private fun customHistoryLayout() {
-        var month = ""
-        if (year == currentMonthYear.split("-")[1]) {
-            month = currentMonthYear.split("-")[0]
-            layoutHistory.background = applicationContext.resources.getDrawable(
-                R.drawable.background_page_white_rounded_top, null)
-            imageRibbon.visibility = View.VISIBLE
-            imageRibbon.startAnimation(AnimationUtils.loadAnimation(applicationContext, R.anim.fade_in))
-        } else {
-            layoutHistory.background = applicationContext.resources.getDrawable(
-                R.drawable.background_page_gray_rounded_top, null)
-            imageRibbon.visibility = View.INVISIBLE
-        }
-        textViewYear.text = year
-        setupRecyclerView(month, year)
-        cardViewMonths.startAnimation(AnimationUtils.loadAnimation(applicationContext, R.anim.fade_in))
-    }
-
-    override fun onMonthSelected(month: String, history: String) {
+    override fun onMonthSelected(month: String, year: String) {
         startActivity(Intent(this@HistoryActivity, HistoryDetailsActivity::class.java)
             .putExtra("month", month).putExtra("year", year).setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP))
         finish()

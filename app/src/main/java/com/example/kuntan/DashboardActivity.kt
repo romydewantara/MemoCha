@@ -18,7 +18,6 @@ import android.view.View.INVISIBLE
 import android.view.animation.AnimationUtils
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.widget.TextViewCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -47,6 +46,8 @@ import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
 import java.util.Locale
+import java.util.Timer
+import java.util.TimerTask
 
 @SuppressLint("ClickableViewAccessibility", "UseCompatLoadingForDrawables", "SimpleDateFormat")
 class DashboardActivity : AppCompatActivity() {
@@ -61,6 +62,10 @@ class DashboardActivity : AppCompatActivity() {
     private var isMenuHidden = false
     private var isMenuAnimating = false
     private var isFragmentShown = false
+
+    private var timer: Timer? = null
+    private var task: TimerTask? = null
+    private val listOfWisdomUsed = arrayListOf<String>()
 
     //Settings
     private var surnameState = false
@@ -80,7 +85,6 @@ class DashboardActivity : AppCompatActivity() {
 
     //Schedule
     private var index = 0
-    private var isDefaultSchedule = true
     private var arrayTimes = arrayListOf(
         Times.Subuh.name,
         Times.Dzuhur.name,
@@ -89,14 +93,11 @@ class DashboardActivity : AppCompatActivity() {
         Times.Isya.name
     )
 
+    private lateinit var fragment: Fragment
     private lateinit var mediaPlayer: MediaPlayer
-    private lateinit var constraintActivityMain: ConstraintLayout
-    private lateinit var constraintMainMenu: ConstraintLayout
-    private lateinit var constraintMainMenuContainer: ConstraintLayout
     private lateinit var dashboardScheduleAdapter: DashboardScheduleAdapter
     private lateinit var paymentMethodSpinnerAdapter: PaymentMethodSpinnerAdapter
     private lateinit var selectorCategory: SelectorItemsBottomSheet
-    private lateinit var fragment: Fragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -109,12 +110,19 @@ class DashboardActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
+        startWisdomTask()
         refreshSchedule()
         adjustSettings()
     }
 
     override fun onPause() {
         super.onPause()
+        if (task != null) {
+            task?.cancel()
+            timer?.cancel()
+            task = null
+            timer = null
+        }
         lottieDashboard.cancelAnimation()
         lottieDashboard.clearAnimation()
         if (mediaPlayer.isPlaying) {
@@ -126,13 +134,12 @@ class DashboardActivity : AppCompatActivity() {
 
     private fun init() {
         mediaPlayer = MediaPlayer()
-        constraintActivityMain = findViewById(R.id.constraintActivityMain)
-        constraintMainMenu = findViewById(R.id.constraintMainMenu)
-        constraintMainMenuContainer = findViewById(R.id.constraintMainMenuContainer)
         constraintActivityMain.viewTreeObserver.addOnGlobalLayoutListener {
             if (AppUtil.isKeyboardVisible(constraintActivityMain)) {
                 iconArrows.setImageResource(R.drawable.ic_arrows_disabled)
                 iconArrows.isEnabled = false
+                loveMessage.visibility = GONE
+                layoutClock.visibility = GONE
                 hideMenu()
                 isMenuHidden = true
             } else {
@@ -141,6 +148,10 @@ class DashboardActivity : AppCompatActivity() {
                 editTextGoods.isFocusable = false
                 editTextAmount.isFocusable = false
                 editTextNote.isFocusable = false
+                loveMessage.visibility = VISIBLE
+                layoutClock.visibility = VISIBLE
+                showMenu()
+                isMenuHidden = false
             }
         }
         surname = ""
@@ -165,6 +176,8 @@ class DashboardActivity : AppCompatActivity() {
         paymentMethodSpinnerAdapter = PaymentMethodSpinnerAdapter(applicationContext, sortType)
         layoutPaymentMethod.adapter = paymentMethodSpinnerAdapter
 
+        TextViewCompat.setAutoSizeTextTypeUniformWithConfiguration(textViewWisdom, 1,
+            12, 1, TypedValue.COMPLEX_UNIT_SP)
         TextViewCompat.setAutoSizeTextTypeUniformWithConfiguration(textViewCategory, 1,
             14, 1, TypedValue.COMPLEX_UNIT_SP)
         TextViewCompat.setAutoSizeTextTypeUniformWithConfiguration(textBook, 1,
@@ -193,25 +206,19 @@ class DashboardActivity : AppCompatActivity() {
                 applicationTheme = Constant.APP_THEME_LIGHT
                 applicationLanguage = getString(R.string.setting_language_english)
                 clockTheme = Constant.DASHBOARD_CLOCK_PRIMARY
-                val defaultSetting = Settings(0, surname, applicationTheme,
-                    applicationLanguage, clockTheme, backgroundAnimation, surnameState,
-                    backgroundAnimationState, backgroundMusicState, notificationState)
-                Log.d(TAG, "adjustSetting - object: $defaultSetting")
+                val defaultSetting = Settings(0, surname, applicationTheme, applicationLanguage,
+                    clockTheme, backgroundAnimation, surnameState, backgroundAnimationState,
+                    backgroundMusicState, notificationState)
                 database.settingsDao().insertSetting(defaultSetting)
             } else {
                 runOnUiThread {
-
-                    if (settings.applicationLanguage == getString(R.string.setting_language_bahasa)) {
-                        textDate.text = SimpleDateFormat("EEEE, dd MMMM yyyy").format(Calendar.getInstance().time)
-                    }
                     analogClock.background = AppUtil.convertDrawableFromTheme(this@DashboardActivity, settings.clockTheme)
+                    if (settings.applicationLanguage == getString(R.string.setting_language_bahasa))
+                        textDate.text = SimpleDateFormat("EEEE, dd MMMM yyyy").format(Calendar.getInstance().time)
                     if (settings.surnameState) {
-                        var tempSurname = "User"
-                        if (settings.surname.isNotEmpty()) {
-                            tempSurname = settings.surname
-                        }
-                        textGreetings.text = String.format(getString(R.string.dasboard_greetings), tempSurname, "Morning")
-                    }
+                        textGreetings.text = String.format(getString(R.string.dasboard_greetings), "Morning", settings.surname)
+                        textGreetings.visibility = VISIBLE
+                    } else textGreetings.visibility = GONE
                     if (settings.backgroundAnimationState) {
                         lottieDashboard.visibility = VISIBLE
                         lottieDashboard.setAnimation(settings.backgroundAnimation)
@@ -232,12 +239,28 @@ class DashboardActivity : AppCompatActivity() {
                             mediaPlayer.prepare()
                             mediaPlayer.start()
                         }
-                    } else {
-                        lottieDashboard.visibility = GONE
-                    }
+                    } else lottieDashboard.visibility = GONE
                 }
             }
         }
+    }
+
+    private fun startWisdomTask() {
+        timer = Timer()
+        task = object : TimerTask() {
+            override fun run() {
+                runOnUiThread {
+                    textViewWisdom.visibility = GONE
+                    textViewWisdom.startAnimation(AnimationUtils.loadAnimation(applicationContext, R.anim.fade_out))
+
+                    textViewWisdom.text = AppUtil.randomWisdom(this@DashboardActivity, listOfWisdomUsed)
+                    textViewWisdom.startAnimation(AnimationUtils.loadAnimation(applicationContext, R.anim.fade_in))
+                    textViewWisdom.visibility = VISIBLE
+                    Log.d(TAG, "run")
+                }
+            }
+        }
+        timer?.scheduleAtFixedRate(task, 0L, 12000L)
     }
 
     private fun refreshSchedule() {
@@ -246,11 +269,6 @@ class DashboardActivity : AppCompatActivity() {
             Log.d(TAG, "onStart - schedules: $schedules")
             withContext(Dispatchers.Main) {
                 dashboardScheduleAdapter.setData(schedules)
-            }
-            if (schedules.isEmpty() && isDefaultSchedule) {
-
-            } else {
-
             }
         }
     }

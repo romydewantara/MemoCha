@@ -23,8 +23,6 @@ class Constant {
         const val BACKGROUND_MUSIC_SNOW_THEME = "hm_winter_theme.mp3"
         const val BACKGROUND_MUSIC_SUMMER_THEME = "hm_summer_theme.mp3"
 
-        const val AMOUNT_OF_MONTH = 12
-
         const val FOLDER_NAME_SCHEDULES = "Schedule"
         const val FOLDER_NAME_HISTORY = "History"
         const val FOLDER_ASSETS_FILE_SCHEDULE = "schedules.json"

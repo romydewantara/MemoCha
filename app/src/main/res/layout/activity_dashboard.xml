@@ -7,120 +7,135 @@
     android:layout_height="match_parent"
     tools:context=".DashboardActivity">
 
-    <ImageView
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:scaleType="centerCrop"
-        android:src="@drawable/ic_dashboard_background"
-        app:layout_constraintBottom_toTopOf="@id/layoutExpenses"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ImageView
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:rotation="30"
-        android:src="@drawable/ic_happy_color"
-        app:layout_constraintDimensionRatio="1:1"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/analogClock"
-        app:layout_constraintWidth_percent=".3" />
-
-    <ImageView
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:rotation="-25"
-        android:src="@drawable/ic_happy"
-        app:layout_constraintDimensionRatio="1:1"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintWidth_percent=".4" />
-
-    <com.airbnb.lottie.LottieAnimationView
-        android:id="@+id/lottieDashboard"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:scaleType="centerCrop"
-        android:visibility="gone"
-        app:layout_constraintBottom_toTopOf="@id/layoutExpenses"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:lottie_autoPlay="false"
-        app:lottie_fileName="autumn_fall.json"
-        app:lottie_loop="true" />
-
-    <ImageView
-        android:id="@+id/setting"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:background="?android:selectableItemBackground"
-        android:padding="8dp"
-        android:src="@drawable/ic_settings"
-        android:visibility="visible"
-        app:layout_constraintDimensionRatio="1:1"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintWidth_percent=".1" />
-
-    <com.airbnb.lottie.LottieAnimationView
-        android:id="@+id/loveMessage"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:padding="6dp"
-        android:rotation="-19"
-        android:scaleType="fitCenter"
-        app:layout_constraintDimensionRatio="1:1"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="@id/setting"
-        app:lottie_autoPlay="true"
-        app:lottie_fileName="love_message.json"
-        app:lottie_loop="true" />
-
-    <AnalogClock
-        android:id="@+id/analogClock"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/background_analog_clock_primary"
-        android:padding="20dp"
-        app:layout_constraintDimensionRatio="1:1"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintHeight_percent=".18" />
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/textDate"
-        style="@style/TextBoldDarkGrey16"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:text="Monday, 01 January, 2022"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/analogClock" />
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/textGreetings"
-        style="@style/TextBoldPinkLight16"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:visibility="gone"
-        android:text="@string/dasboard_greetings"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textDate" />
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintBottom_toTopOf="@id/layoutExpenses"
-        app:layout_constraintTop_toBottomOf="@id/textGreetings">
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_dashboard_background"
+            app:layout_constraintBottom_toTopOf="@id/layoutExpenses"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textDate" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white_88" />
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/lottieDashboard"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:scaleType="centerCrop"
+            android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@id/layoutExpenses"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:lottie_autoPlay="false"
+            app:lottie_fileName="autumn_fall.json"
+            app:lottie_loop="true" />
+
+        <ImageView
+            android:id="@+id/setting"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="?android:selectableItemBackground"
+            android:padding="8dp"
+            android:src="@drawable/ic_settings"
+            android:visibility="visible"
+            app:layout_constraintBottom_toTopOf="@id/constraintMainMenuContainer"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintWidth_percent=".1" />
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/loveMessage"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:padding="6dp"
+            android:rotation="-19"
+            android:scaleType="fitCenter"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@id/constraintMainMenuContainer"
+            app:layout_constraintWidth_percent=".1"
+            app:lottie_autoPlay="true"
+            app:lottie_fileName="love_message.json"
+            app:lottie_loop="true" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layoutClock"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/background_clock_gradient_teal_dark_rounded_bottom"
+            android:elevation="10dp"
+            app:layout_constraintHeight_percent=".35"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintWidth_percent=".33">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/textViewWisdom"
+                style="@style/TextRegularWhite12"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:autoSizeTextType="uniform"
+                android:gravity="center"
+                android:maxLines="9"
+                android:paddingStart="5dp"
+                android:paddingEnd="5dp"
+                android:text="@string/dashboard_wisdom_1"
+                app:layout_constraintBottom_toTopOf="@id/analogClock"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <AnalogClock
+                android:id="@+id/analogClock"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/background_analog_clock_primary"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textDate"
+            style="@style/TextBoldDarkGrey16"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:autoSizeTextType="uniform"
+            android:maxLines="1"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            android:text="Monday, 01 January, 2022"
+            app:layout_constraintLeft_toRightOf="@id/layoutClock"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textGreetings"
+            style="@style/TextBoldNavySemiLight16"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:autoSizeTextType="uniform"
+            android:maxLines="1"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            android:text="@string/dasboard_greetings"
+            android:visibility="visible"
+            app:layout_constraintLeft_toRightOf="@id/layoutClock"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textDate" />
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/time"
@@ -132,13 +147,13 @@
             android:text="Time"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintBottom_toTopOf="@id/layoutExpenses"
+            app:layout_constraintLeft_toRightOf="@id/previousTime" />
 
         <ImageView
             android:id="@+id/previousTime"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginEnd="15dp"
             android:background="?android:selectableItemBackground"
             android:padding="10dp"
             android:src="@drawable/ic_arrow_left"
@@ -152,7 +167,6 @@
             android:id="@+id/nextTime"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginStart="15dp"
             android:background="?android:selectableItemBackground"
             android:padding="10dp"
             android:src="@drawable/ic_arrow_right"
@@ -162,205 +176,207 @@
             app:layout_constraintTop_toTopOf="@id/time"
             app:layout_constraintWidth_percent=".1" />
 
-        <View
-            android:id="@+id/lineSchedule"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layoutSchedule"
             android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="12dp"
-            android:background="@color/pewter"
-            app:layout_constraintTop_toBottomOf="@id/time" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerviewSchedule"
-            android:layout_width="0dp"
             android:layout_height="0dp"
-            android:paddingTop="5dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/lineSchedule"
-            tools:listitem="@layout/recyclerview_dashboard_schedule" />
+            android:layout_marginTop="5dp"
+            app:layout_constraintBottom_toTopOf="@id/time"
+            app:layout_constraintTop_toBottomOf="@id/layoutClock">
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerviewSchedule"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:paddingTop="2dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:listitem="@layout/recyclerview_dashboard_schedule" />
 
-    <RelativeLayout
-        android:id="@+id/layoutExpenses"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white_soft"
-        app:layout_constraintBottom_toBottomOf="parent">
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <include layout="@layout/layout_monthly_expenses_notes" />
-    </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/layoutExpenses"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white_soft"
+            app:layout_constraintBottom_toBottomOf="parent">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintMainMenuContainer"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@id/layoutExpenses"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintWidth_percent=".25">
-
-        <ImageView
-            android:id="@+id/iconArrows"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:background="?android:selectableItemBackground"
-            android:paddingStart="10dp"
-            android:paddingEnd="10dp"
-            android:src="@drawable/ic_arrows"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintDimensionRatio="1:1"
-            app:layout_constraintRight_toLeftOf="@+id/constraintMainMenu"
-            app:layout_constraintWidth_percent=".35" />
+            <include layout="@layout/layout_monthly_expenses_notes" />
+        </RelativeLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/constraintMainMenu"
+            android:id="@+id/constraintMainMenuContainer"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:background="@drawable/background_main_menu"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@id/layoutExpenses"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintWidth_percent=".65">
+            app:layout_constraintWidth_percent=".25">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/menuBook"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/selector_background_menu_book"
-                android:padding="8dp"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <ImageView
-                    android:id="@+id/icon0"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:scaleType="fitCenter"
-                    android:src="@drawable/ic_book"
-                    app:layout_constraintDimensionRatio="1:1"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintWidth_percent=".7" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/textBook"
-                    style="@style/TextRegularWhite14"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="2dp"
-                    android:layout_weight="1"
-                    android:gravity="center"
-                    android:maxLines="1"
-                    android:text="@string/dasboard_book"
-                    app:autoSizeTextType="uniform"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/icon0" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/menuIdentity"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+            <ImageView
+                android:id="@+id/iconArrows"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
                 android:background="?android:selectableItemBackground"
-                android:padding="8dp"
-                app:layout_constraintTop_toBottomOf="@id/menuBook">
-
-                <ImageView
-                    android:id="@+id/icon1"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:scaleType="fitCenter"
-                    android:src="@drawable/ic_identity"
-                    app:layout_constraintDimensionRatio="1:1"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintWidth_percent=".7" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/textIdentity"
-                    style="@style/TextRegularWhite14"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="2dp"
-                    android:gravity="center"
-                    android:maxLines="1"
-                    android:text="@string/dasboard_identity"
-                    app:autoSizeTextType="uniform"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/icon1" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:src="@drawable/ic_arrows"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintRight_toLeftOf="@+id/constraintMainMenu"
+                app:layout_constraintWidth_percent=".35" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/menuNeeds"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="?android:selectableItemBackground"
-                android:padding="8dp"
-                app:layout_constraintTop_toBottomOf="@id/menuIdentity">
+                android:id="@+id/constraintMainMenu"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:background="@drawable/background_main_menu"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintWidth_percent=".65">
 
-                <ImageView
-                    android:id="@+id/icon2"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:scaleType="fitCenter"
-                    android:src="@drawable/ic_cart_white"
-                    app:layout_constraintDimensionRatio="1:1"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintWidth_percent=".7" />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/textNeeds"
-                    style="@style/TextRegularWhite14"
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/menuBook"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="2dp"
-                    android:gravity="center"
-                    android:maxLines="1"
-                    android:text="@string/dasboard_needs"
-                    app:autoSizeTextType="uniform"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/icon2" />
-            </androidx.constraintlayout.widget.ConstraintLayout>
+                    android:background="@drawable/selector_background_menu_book"
+                    android:padding="8dp"
+                    app:layout_constraintTop_toTopOf="parent">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/menuHistory"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="?android:selectableItemBackground"
-                android:padding="8dp"
-                app:layout_constraintTop_toBottomOf="@id/menuNeeds">
+                    <ImageView
+                        android:id="@+id/icon0"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/ic_book"
+                        app:layout_constraintDimensionRatio="1:1"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintWidth_percent=".7" />
 
-                <ImageView
-                    android:id="@+id/icon3"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:scaleType="fitCenter"
-                    android:src="@drawable/ic_history"
-                    app:layout_constraintDimensionRatio="1:1"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintWidth_percent=".7" />
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/textBook"
+                        style="@style/TextRegularWhite14"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:maxLines="1"
+                        android:text="@string/dasboard_book"
+                        app:autoSizeTextType="uniform"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/icon0" />
 
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/textHistory"
-                    style="@style/TextRegularWhite14"
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/menuIdentity"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="2dp"
-                    android:gravity="center"
-                    android:maxLines="1"
-                    android:text="@string/dasboard_history"
-                    app:autoSizeTextType="uniform"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/icon3" />
+                    android:background="?android:selectableItemBackground"
+                    android:padding="8dp"
+                    app:layout_constraintTop_toBottomOf="@id/menuBook">
+
+                    <ImageView
+                        android:id="@+id/icon1"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/ic_identity"
+                        app:layout_constraintDimensionRatio="1:1"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintWidth_percent=".7" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/textIdentity"
+                        style="@style/TextRegularWhite14"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:gravity="center"
+                        android:maxLines="1"
+                        android:text="@string/dasboard_identity"
+                        app:autoSizeTextType="uniform"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/icon1" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/menuNeeds"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?android:selectableItemBackground"
+                    android:padding="8dp"
+                    app:layout_constraintTop_toBottomOf="@id/menuIdentity">
+
+                    <ImageView
+                        android:id="@+id/icon2"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/ic_cart_white"
+                        app:layout_constraintDimensionRatio="1:1"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintWidth_percent=".7" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/textNeeds"
+                        style="@style/TextRegularWhite14"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:gravity="center"
+                        android:maxLines="1"
+                        android:text="@string/dasboard_needs"
+                        app:autoSizeTextType="uniform"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/icon2" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/menuHistory"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="?android:selectableItemBackground"
+                    android:padding="8dp"
+                    app:layout_constraintTop_toBottomOf="@id/menuNeeds">
+
+                    <ImageView
+                        android:id="@+id/icon3"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/ic_history"
+                        app:layout_constraintDimensionRatio="1:1"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintWidth_percent=".7" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/textHistory"
+                        style="@style/TextRegularWhite14"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:gravity="center"
+                        android:maxLines="1"
+                        android:text="@string/dasboard_history"
+                        app:autoSizeTextType="uniform"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintTop_toBottomOf="@id/icon3" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -386,10 +402,10 @@
         android:id="@+id/needsLoading"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:clickable="true"
-        android:visibility="gone"
         android:background="@color/black_60"
-        android:gravity="center">
+        android:clickable="true"
+        android:gravity="center"
+        android:visibility="gone">
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/textViewLoading"
@@ -398,8 +414,8 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:paddingStart="20dp"
-            android:paddingEnd="20dp"
             android:paddingTop="15dp"
+            android:paddingEnd="20dp"
             android:paddingBottom="15dp"
             android:text="Loading, please wait…" />
 

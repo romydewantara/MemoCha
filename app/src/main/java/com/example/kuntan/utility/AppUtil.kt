@@ -17,6 +17,7 @@ import java.io.FileWriter
 import java.io.InputStream
 import java.io.IOException
 
+@SuppressLint("NewApi", "ResourceType")
 class AppUtil {
     companion object {
         fun writeFileToStorage(c: Context, folderName: String, fileName: String, body: String) {
@@ -136,6 +137,16 @@ class AppUtil {
             }
             return 0
         }
+        fun getListOfMonth(c: Context) : ArrayList<String> {
+            return arrayListOf(
+                c.getString(R.string.month_january), c.getString(R.string.month_february),
+                c.getString(R.string.month_march), c.getString(R.string.month_april),
+                c.getString(R.string.month_may), c.getString(R.string.month_june),
+                c.getString(R.string.month_july), c.getString(R.string.month_august),
+                c.getString(R.string.month_september), c.getString(R.string.month_october),
+                c.getString(R.string.month_november), c.getString(R.string.month_december)
+            )
+        }
         fun convertMonthCodeFromName(context: Context, monthName: String): String {
             when (monthName) {
                 context.getString(R.string.month_january) -> { return "01" }
@@ -199,7 +210,7 @@ class AppUtil {
             return ""
         }
         fun randomIcon(context: Context, arrayListIconUsed: ArrayList<Int>): Int {
-            var icon: Int
+            val icon: Int
             val icons = arrayListOf<Int>()
             icons.add(R.mipmap.ic_needs_accordion)
             icons.add(R.mipmap.ic_needs_cactus)
@@ -226,7 +237,66 @@ class AppUtil {
             arrayListIconUsed.add(icon)
             return icon
         }
-        @SuppressLint("NewApi", "ResourceType")
+        fun randomWisdom(c: Context, arrayListWisdomUsed: ArrayList<String>): String {
+            val wisdom: String
+            val listOfWisdom = arrayListOf<String>()
+            listOfWisdom.add(c.getString(R.string.dashboard_wisdom_1))
+            listOfWisdom.add(c.getString(R.string.dashboard_wisdom_2))
+            listOfWisdom.add(c.getString(R.string.dashboard_wisdom_3))
+            listOfWisdom.add(c.getString(R.string.dashboard_wisdom_4))
+            listOfWisdom.add(c.getString(R.string.dashboard_wisdom_5))
+            listOfWisdom.add(c.getString(R.string.dashboard_wisdom_6))
+            listOfWisdom.add(c.getString(R.string.dashboard_wisdom_7))
+            listOfWisdom.add(c.getString(R.string.dashboard_wisdom_8))
+            listOfWisdom.add(c.getString(R.string.dashboard_wisdom_9))
+            listOfWisdom.add(c.getString(R.string.dashboard_wisdom_10))
+            listOfWisdom.add(c.getString(R.string.dashboard_wisdom_11))
+            listOfWisdom.add(c.getString(R.string.dashboard_wisdom_12))
+            listOfWisdom.add(c.getString(R.string.dashboard_wisdom_13))
+            listOfWisdom.add(c.getString(R.string.dashboard_wisdom_14))
+            listOfWisdom.add(c.getString(R.string.dashboard_wisdom_15))
+            listOfWisdom.add(c.getString(R.string.dashboard_wisdom_16))
+            listOfWisdom.add(c.getString(R.string.dashboard_wisdom_17))
+            listOfWisdom.add(c.getString(R.string.dashboard_wisdom_18))
+            listOfWisdom.add(c.getString(R.string.dashboard_wisdom_19))
+            listOfWisdom.add(c.getString(R.string.dashboard_wisdom_20))
+            listOfWisdom.add(c.getString(R.string.dashboard_wisdom_21))
+            listOfWisdom.add(c.getString(R.string.dashboard_wisdom_22))
+            listOfWisdom.add(c.getString(R.string.dashboard_wisdom_23))
+            listOfWisdom.add(c.getString(R.string.dashboard_wisdom_24))
+            listOfWisdom.add(c.getString(R.string.dashboard_wisdom_25))
+            listOfWisdom.add(c.getString(R.string.dashboard_wisdom_26))
+            listOfWisdom.add(c.getString(R.string.dashboard_wisdom_27))
+            listOfWisdom.add(c.getString(R.string.dashboard_wisdom_28))
+            listOfWisdom.add(c.getString(R.string.dashboard_wisdom_29))
+            listOfWisdom.add(c.getString(R.string.dashboard_wisdom_30))
+            listOfWisdom.add(c.getString(R.string.dashboard_wisdom_31))
+            listOfWisdom.add(c.getString(R.string.dashboard_wisdom_32))
+            listOfWisdom.add(c.getString(R.string.dashboard_wisdom_33))
+            listOfWisdom.add(c.getString(R.string.dashboard_wisdom_34))
+            listOfWisdom.add(c.getString(R.string.dashboard_wisdom_35))
+            listOfWisdom.add(c.getString(R.string.dashboard_wisdom_36))
+            listOfWisdom.add(c.getString(R.string.dashboard_wisdom_37))
+            listOfWisdom.add(c.getString(R.string.dashboard_wisdom_38))
+            listOfWisdom.add(c.getString(R.string.dashboard_wisdom_39))
+            listOfWisdom.add(c.getString(R.string.dashboard_wisdom_40))
+            listOfWisdom.add(c.getString(R.string.dashboard_wisdom_41))
+            listOfWisdom.add(c.getString(R.string.dashboard_wisdom_42))
+            listOfWisdom.add(c.getString(R.string.dashboard_wisdom_43))
+
+            val random = Random()
+            wisdom = listOfWisdom[random.nextInt(listOfWisdom.size)]
+            if (arrayListWisdomUsed.size >= listOfWisdom.size) arrayListWisdomUsed.clear()
+            if (arrayListWisdomUsed.isNotEmpty()) {
+                for (i in 0 until arrayListWisdomUsed.size) {
+                    if (wisdom == arrayListWisdomUsed[i]) {
+                        return randomWisdom(c, arrayListWisdomUsed)
+                    }
+                }
+            }
+            arrayListWisdomUsed.add(wisdom)
+            return wisdom
+        }
         fun border(context: Context, view: View, color: Int) {
             val border = GradientDrawable()
             border.setStroke(5, context.resources.getColor(color, null))

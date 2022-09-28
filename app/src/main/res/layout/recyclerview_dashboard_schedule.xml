@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/layoutFieldSchedule"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/mesty_blue"
@@ -11,11 +12,11 @@
         style="@style/TextRegularBlack16"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:autoSizeTextType="uniform"
         android:gravity="center"
+        android:maxLines="1"
         android:padding="10dp"
         android:text="00:00"
-        android:autoSizeTextType="uniform"
-        android:maxLines="1"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintWidth_percent=".15" />
@@ -25,8 +26,8 @@
         style="@style/TextRegularBlack14"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center"
         android:autoSizeTextType="uniform"
+        android:gravity="center"
         android:maxLines="1"
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
@@ -39,10 +40,10 @@
         style="@style/TextRegularBlack16"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:padding="10dp"
         android:autoSizeTextType="uniform"
+        android:gravity="center"
         android:maxLines="1"
+        android:padding="10dp"
         android:text="00:00"
         app:layout_constraintLeft_toRightOf="@id/textStripe"
         app:layout_constraintTop_toTopOf="parent"
@@ -50,7 +51,7 @@
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/textAction"
-        style="@style/TextBoldBlack16"
+        style="@style/TextBoldNavy16"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
@@ -58,15 +59,15 @@
         android:padding="10dp"
         android:text="Prayer"
         app:autoSizeTextType="uniform"
+        app:layout_constraintBottom_toBottomOf="@id/textEndTime"
         app:layout_constraintLeft_toRightOf="@id/textEndTime"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@id/textEndTime"
-        app:layout_constraintBottom_toBottomOf="@id/textEndTime"/>
+        app:layout_constraintTop_toTopOf="@id/textEndTime" />
 
     <View
         android:layout_width="match_parent"
         android:layout_height="0.1dp"
         android:background="@color/pewter"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        app:layout_constraintBottom_toBottomOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

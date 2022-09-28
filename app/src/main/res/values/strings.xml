@@ -27,6 +27,7 @@
     <string name="button_ok">OK</string>
     <string name="button_add">Add</string>
     <string name="button_save">Save</string>
+    <string name="button_yes">Yes</string>
     <string name="button_cancel">Cancel</string>
     <string name="button_delete">Delete</string>
     <string name="button_import">Import</string>
@@ -70,7 +71,11 @@
 
     <!-- D A S H B O A R D -->
     <string name="dasboard">Date</string>
-    <string name="dasboard_greetings">Hi %s, good %s!</string>
+    <string name="dasboard_greetings">Good %s, %s!</string>
+    <string name="dasboard_time_morning">morning</string>
+    <string name="dasboard_time_afternoon">afternoon</string>
+    <string name="dasboard_time_evening">evening</string>
+    <string name="dasboard_time_night">night</string>
     <string name="dasboard_book">Book</string>
     <string name="dasboard_identity">Identity</string>
     <string name="dasboard_needs">Needs</string>
@@ -84,6 +89,50 @@
     <string name="dasboard_expenses_hint_amount">Ex: 25.000</string>
     <string name="dasboard_expenses_hint_note">Notes (Optional)</string>
     <string name="dasboard_expenses_button_add">Add</string>
+
+    <string name="dashboard_wisdom_1">"Tiada manfaat dari uang jika tidak dibelanjakan di jalan Allah. Tiada kebaikan dalam diri seseorang jika kebodohannya mengalahkan kesabarannya."\n(Abu Bakr Ash-Shiddiq)</string>
+    <string name="dashboard_wisdom_2">"Sesama Muslim seharusnya hidup seperti layaknya saudara."\n(Abu Bakr Ash-Shiddiq)</string>
+    <string name="dashboard_wisdom_3">"Kami diuji dengan kesusahan, maka kami sabar, tetapi ketika diuji dengan kesenangan (kemewahan), hampir-hampir kami tidak sabar."\n(Abu Bakr Ash-Shiddiq)</string>
+    <string name="dashboard_wisdom_4">"Siapa yang menjauhkan diri dari sifat suka mengeluh maka berarti ia mengundang kebahagiaan."\n(Abu Bakr Ash-Shiddiq)</string>
+    <string name="dashboard_wisdom_5">"Dia yang membangun masjid di jalan Allah SWT, maka Allah SWT membangun rumah untuknya di surga."\n(Abu Bakr Ash-Shiddiq)</string>
+    <string name="dashboard_wisdom_6">"Jika nasehat yang baik tidak memberikan pengaruh bagi perubahan seseorang, maka ketahuilah bahwa hatinya itu kosong."\n(Abu Bakr Ash-Shiddiq)</string>
+    <string name="dashboard_wisdom_7">"Memang sulit untuk bersabar, tapi menyia-nyiakan pahala dari sebuah kesabaran itu jauh lebih buruk."\n(Abu Bakr Ash-Shiddiq)</string>
+    <string name="dashboard_wisdom_8">"Aku tidak pernah sekalipun menyesali diamku. Tetapi aku berkali-kali menyesali bicaraku."\n(Umar bin Khattab)</string>
+    <string name="dashboard_wisdom_9">"Jagalah salatmu. Karena saat kamu kehilangan salat, maka kamu akan kehilangan segalanya."\n(Umar bin Khattab)</string>
+    <string name="dashboard_wisdom_10">"Jagalah salatmu. Karena saat kamu kehilangan salat, maka kamu akan kehilangan segalanya."\n(Umar bin Khattab)</string>
+    <string name="dashboard_wisdom_11">"Sambutlah ajal kalian dengan amal baik yang kalian mampu."\n(Utsman bin Affan)</string>
+    <string name="dashboard_wisdom_12">"Janganlah kalian lalai terhadap Allah karena Allah tidak pernah lalai terhadap kalian."\n(Utsman bin Affan)</string>
+    <string name="dashboard_wisdom_13">"Sudah cukup nasihat orang-orang bijak."\n(Utsman bin Affan)</string>
+    <string name="dashboard_wisdom_14">"Andai hati kalian bersih, maka kalian tidak akan pernah merasa kenyang (bosan) dari membaca Alquran."\n(Utsman bin Affan)</string>
+    <string name="dashboard_wisdom_15">"(Hendaknya kita) menjaga batasan-batasan, menepati janji, rela dengan yang ada, dan bersabar atas yang hilang dari kita."\n(Utsman bin Affan)</string>
+    <string name="dashboard_wisdom_16">"Derajat keimanan yang paling tinggi adalah bahwa kamu selalu merasa berada di hadapan Allah."\n(Utsman bin Affan)</string>
+    <string name="dashboard_wisdom_17">"Buatlah tujuan untuk hidup, kemudian gunakan segenap kekuatan untuk mencapainya, kamu pasti berhasil."\n(Utsman bin Affan)</string>
+    <string name="dashboard_wisdom_18">"Di antara pendosa, yang paling buruk adalah dia yang meluangkan waktunya untuk membahas kesalahan orang lain."\n(Utsman bin Affan)</string>
+    <string name="dashboard_wisdom_19">"Aku sudah pernah merasakan semua kepahitan dalam hidup. Dan yang paling pahit ialah berharap pada manusia."\n(Ali bin Abi Thalib)</string>
+    <string name="dashboard_wisdom_20">"Balas dendam terbaik adalah dengan menjadikan dirimu lebih baik."\n(Ali bin Abi Thalib)</string>
+    <string name="dashboard_wisdom_21">"Ada dua jenis manusia: pertama mereka yang mencari tapi tidak bisa menemukan, dan kedua mereka yang menemukan tapi masih menginginkan lebih."\n(Ali bin Abi Thalib)</string>
+    <string name="dashboard_wisdom_22">"Kehidupan ini tidak lain hanyalah seperti bayangan awan, mimpinya seorang yang tertidur."\n(Ali bin Abi Thalib)</string>
+    <string name="dashboard_wisdom_23">"Banyak permasalahan pelik yang berhasil diselesaikan dengan sikap bermurah hati."\n(Ali bin Abi Thalib)</string>
+    <string name="dashboard_wisdom_24">"Berhentilah membahas apa yang tidak kamu ketahui dan membicarakan tentang apa yang tidak menjadi perhatianmu."\n(Ali bin Abi Thalib)</string>
+    <string name="dashboard_wisdom_25">"Selalu ada cahaya bagi orang yang mau melihat."\n(Ali bin Abi Thalib)</string>
+    <string name="dashboard_wisdom_26">"Lebih baik mendengarkan musuh yang bijak daripada meminta nasihat dari teman yang bodoh."\n(Ali bin Abi Thalib)</string>
+    <string name="dashboard_wisdom_27">"Aku akan terus bersabar, bahkan sampai kesabaran itu sendiri merasa lelah dengan kesabaranku."\n(Ali bin Abi Thalib)</string>
+    <string name="dashboard_wisdom_28">"Sembunyikanlah kebaikan yang kamu lakukan, dan biarkan kebaikan yang telah kamu lakukan itu hanya diketahui olehmu."\n(Ali bin Abi Thalib)</string>
+    <string name="dashboard_wisdom_29">"Memaafkan adalah kemenangan terbaik."\n(Ali bin Abi Thalib)</string>
+    <string name="dashboard_wisdom_30">"Lebih mudah mengubah gunung menjadi debu daripada menanamkan cinta di hati yang dipenuhi dengan kebencian."\n(Ali bin Abi Thalib)</string>
+    <string name="dashboard_wisdom_31">"Orang yang pesimis selalu melihat kesulitan di setiap kesempatan, tapi orang yang optimis selalu melihat kesempatan dalam setiap kesulitan."\n(Ali bin Abi Thalib)</string>
+    <string name="dashboard_wisdom_32">"Jadilah seperti bunga yg memberikan keharuman bahkan kepada tangan yang telah merusaknya."\n(Ali bin Abi Thalib)</string>
+    <string name="dashboard_wisdom_33">"Barangsiapa yang menaruh kepercayaan pada dunia, maka dunia akan mengkhianatinya."\n(Ali bin Abi Thalib)</string>
+    <string name="dashboard_wisdom_34">"Jadilah orang yang dermawan, tapi jangan menjadi pemboros. Jadilah orang yang hidup sederhana, tapi jangan menjadi orang yang kikir."\n(Ali bin Abi Thalib)</string>
+    <string name="dashboard_wisdom_35">"Janganlah engkau mengucapkan perkataan yang engkau sendiri tak suka mendengarnya jika orang lain mengucapkannya kepadamu."\n(Ali bin Abi Thalib)</string>
+    <string name="dashboard_wisdom_36">"Diam sampai engkau diminta untuk berbicara, lebih baik daripada kau terus berbicara sampai diminta untuk diam."\n(Ali bin Abi Thalib)</string>
+    <string name="dashboard_wisdom_37">"Jangan pernah merasa kesepian di atas jalan kebenaran hanya karena sedikitnya orang yang berada di sana."\n(Ali bin Abi Thalib)</string>
+    <string name="dashboard_wisdom_38">"Angin tak berhembus untuk menggoyangkan pepohonan, melainkan menguji kekuatan akarnya."\n(Ali bin Abi Thalib)</string>
+    <string name="dashboard_wisdom_39">"Orang yang suka berkata jujur mendapatkan tiga hal; kepercayaan, cinta dan rasa hormat."\n(Ali bin Abi Thalib)</string>
+    <string name="dashboard_wisdom_40">"Dirimu yang sebenarnya adalah apa yang kamu lakukan di saat tiada orang yang melihatmu."\n(Ali bin Abi Thalib)</string>
+    <string name="dashboard_wisdom_41">"Pergunjingan adalah puncak kemampuan orang-orang yang lemah."\n(Ali bin Abi Thalib)</string>
+    <string name="dashboard_wisdom_42">"Jangan menasihati orang bodoh, karena dia akan membencimu. Nasihatilah orang yang berakal, karena dia akan mencintaimu."\n(Ali bin Abi Thalib)</string>
+    <string name="dashboard_wisdom_43">"Teman sejati adalah orang yang melihat kesalahan, memberimu nasihat dan yang membelamu saat kamu tidak ada."\n(Ali bin Abi Thalib)</string>
 
     <!-- E X P E N S E   N O T E -->
     <string name="calendar_adjust">Adjust Date</string>
@@ -103,6 +152,7 @@
     <string name="settings_title_page">Settings</string>
     <string name="settings_application_language">Application Language</string>
     <string name="settings_clock_theme">Clock Theme</string>
+    <string name="settings_clock_theme_information">Your theme color choice will be applied to the clock theme color on the Home Page</string>
     <string name="settings_background_animation">Background Animation</string>
     <string name="settings_background_animation_information">Play an animation in the background of the screen while on the Home page</string>
     <string name="settings_surname">Username</string>
@@ -114,7 +164,7 @@
     <string name="settings_music_information">Plays background music only when on Home Page, Family Identity Page, and Needs List Page</string>
     <string name="settings_surname_state">Show Surname</string>
     <string name="settings_hint_surname">Ex: Ocha</string>
-    <string name="settings_surname_info">The name will be displayed on the Home Page as the username and the column should be filled-in, if the column is empty it will automatically will turn off \'Show Surname\' status</string>
+    <string name="settings_surname_info">It\'s better to use only letters or numbers, i.e: Shindra/Shindra17. The name will be displayed on the Home Page as the username and the column should be filled-in, if the column is empty it will automatically will turn off \'Show Surname\' status</string>
     <string name="settings_button_reset">Reset</string>
     <string name="settings_button_apply">Apply</string>
     <string name="settings_button_confirm">Confirm</string>
@@ -127,6 +177,7 @@
     <string name="dialog_title_delete_from_history">Remove From History?</string>
     <string name="dialog_message_app_theme">Sorry, this feature is not ready yet</string>
     <string name="dialog_message_ask_reset">Are you sure you want to reset to default?</string>
+    <string name="dialog_message_ask_before_quit">There are changes that you haven\'t applied, are you sure you want to leave this page?</string>
     <string name="dialog_message_switch_language">You are detected to change the language of the application using:\n\n\"%s\"\n\nPlease click \'OK\' button to restart the application</string>
     <string name="dialog_message_delete_from_history">Are you sure you want to delete this record from history?</string>
     <string name="dialog_button_reset">Reset</string>

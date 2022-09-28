@@ -7,8 +7,8 @@
         android:color="@color/pewter" />
     <gradient
         android:centerColor="@color/white"
-        android:centerX="95%"
-        android:centerY="-8%"
+        android:centerX="180%"
+        android:centerY="-20%"
         android:endColor="@color/gray"
         android:startColor="@color/gray"
         android:type="sweep" />

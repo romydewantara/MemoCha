@@ -25,7 +25,7 @@
         android:layout_marginEnd="15dp"
         app:cardCornerRadius="16dp"
         app:cardElevation="8dp"
-        app:layout_constraintHeight_percent=".14"
+        app:layout_constraintHeight_percent=".12"
         app:layout_constraintTop_toBottomOf="@id/textViewSettingLanguage">
 
         <LinearLayout
@@ -45,10 +45,10 @@
                     android:id="@+id/imageIconEnglish"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
-                    android:layout_marginStart="12dp"
+                    android:layout_marginStart="8dp"
                     android:layout_marginTop="6dp"
                     android:layout_marginBottom="6dp"
-                    android:padding="5dp"
+                    android:padding="6dp"
                     android:src="@drawable/ic_english"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintDimensionRatio="1:1"
@@ -58,10 +58,10 @@
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/textViewEnglish"
-                    style="@style/TextRegularBlack16"
+                    style="@style/TextRegularBlack14"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="12dp"
+                    android:layout_marginStart="6dp"
                     android:text="@string/setting_language_english"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintLeft_toRightOf="@id/imageIconEnglish"
@@ -100,10 +100,10 @@
                     android:id="@+id/imageIconBahasa"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
-                    android:layout_marginStart="12dp"
+                    android:layout_marginStart="8dp"
                     android:layout_marginTop="6dp"
                     android:layout_marginBottom="6dp"
-                    android:padding="5dp"
+                    android:padding="6dp"
                     android:src="@drawable/ic_bahasa"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintDimensionRatio="1:1"
@@ -113,10 +113,10 @@
 
                 <androidx.appcompat.widget.AppCompatTextView
                     android:id="@+id/textViewBahasa"
-                    style="@style/TextRegularBlack16"
+                    style="@style/TextRegularBlack14"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="12dp"
+                    android:layout_marginStart="6dp"
                     android:text="@string/setting_language_bahasa"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintLeft_toRightOf="@id/imageIconBahasa"

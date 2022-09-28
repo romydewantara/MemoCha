@@ -17,7 +17,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kotlinx.android.synthetic.main.layout_needs_month_chooser.view.*
 import kotlinx.android.synthetic.main.layout_needs_month_chooser_bottom_sheet.*
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Calendar
 
 @SuppressLint("SimpleDateFormat")
 class NeedsMonthChooserBottomSheet: BottomSheetDialogFragment() {
@@ -25,10 +25,6 @@ class NeedsMonthChooserBottomSheet: BottomSheetDialogFragment() {
     companion object {
         const val TAG = "NeedsMonth"
         const val GRID_COLUMNS = 3
-        val arrayListOfMonth = arrayListOf(
-            R.string.month_january, R.string.month_february, R.string.month_march, R.string.month_april,
-            R.string.month_may, R.string.month_june, R.string.month_july, R.string.month_august,
-            R.string.month_september, R.string.month_october, R.string.month_november, R.string.month_december)
     }
 
     private var year = SimpleDateFormat("yyyy").format(Calendar.getInstance().time)
@@ -87,7 +83,7 @@ class NeedsMonthChooserBottomSheet: BottomSheetDialogFragment() {
         var column = 0
         var row = 0
 
-        for (i in 0 until arrayListOfMonth.size) {
+        for (i in 0 until AppUtil.getListOfMonth(requireContext()).size) {
             if (column == GRID_COLUMNS) {
                 column = 0
                 row++
@@ -109,10 +105,10 @@ class NeedsMonthChooserBottomSheet: BottomSheetDialogFragment() {
             needsMonthChooser.layoutParams = needsMonthChooserParams
             needsMonthChooser.imageIcon.setImageResource(AppUtil.randomIcon(requireContext(), arrayListIconUsed))
             needsMonthChooser.textViewNeedsMonthCode.text = AppUtil.convertMonthCodeFromId(i)
-            needsMonthChooser.textViewNeedsMonth.text = requireContext().getString(arrayListOfMonth[i])
+            needsMonthChooser.textViewNeedsMonth.text = AppUtil.getListOfMonth(requireContext())[i]
             needsMonthChooser.setOnClickListener {
                 needsDateChooserListener.onDateSelected(year,
-                    AppUtil.convertMonthCodeFromName(requireContext(), requireContext().getString(arrayListOfMonth[i])))
+                    AppUtil.convertMonthCodeFromName(requireContext(), AppUtil.getListOfMonth(requireContext())[i]))
                 lottieHeader.cancelAnimation()
                 dismiss()
             }

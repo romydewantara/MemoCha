@@ -5,7 +5,6 @@ import android.animation.ObjectAnimator
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.animation.AnimationUtils
 import androidx.appcompat.app.AppCompatActivity
@@ -42,6 +41,7 @@ class SettingsActivity : AppCompatActivity() {
     private var isSurnameStateChanged = false
     private var isSurnameChanged = false
 
+    private var isSettingsChanged = false
     private var isReset = false
     private var isFragmentShown = false
 
@@ -159,6 +159,7 @@ class SettingsActivity : AppCompatActivity() {
                 val tempSettings = database.settingsDao().getSettings()
                 if (tempSettings != null) settings = tempSettings
                 runOnUiThread {
+                    isSettingsChanged = false
                     textViewApply.isEnabled = false
                     textViewApply.background = applicationContext.resources.getDrawable(R.drawable.background_button_apply_disabled, null)
                     checkResetButtonEnable()
@@ -170,10 +171,7 @@ class SettingsActivity : AppCompatActivity() {
         }
         textViewReset.setOnClickListener {
             val kPopupDialog = KuntanPopupDialog.newInstance().setContent(
-                getString(R.string.dialog_title_warning),
-                getString(R.string.dialog_message_ask_reset),
-                getString(R.string.dialog_button_reset),
-                getString(R.string.dialog_button_cancel),
+                getString(R.string.dialog_title_warning), getString(R.string.dialog_message_ask_reset), getString(R.string.dialog_button_reset), getString(R.string.dialog_button_cancel),
                 object : KuntanPopupDialog.KuntanPopupDialogListener {
                     override fun onNegativeButton() {
                         CoroutineScope(Dispatchers.IO).launch {
@@ -242,9 +240,11 @@ class SettingsActivity : AppCompatActivity() {
         ) {
             textViewApply.isEnabled = true
             textViewApply.background = applicationContext.resources.getDrawable(R.drawable.selector_button_apply_settings, null)
+            isSettingsChanged = true
         } else {
             textViewApply.isEnabled = false
             textViewApply.background = applicationContext.resources.getDrawable(R.drawable.background_button_apply_disabled, null)
+            isSettingsChanged = false
         }
     }
 
@@ -311,7 +311,6 @@ class SettingsActivity : AppCompatActivity() {
                 is SurnameFragment -> {
                     surnameState = (fragment as SurnameFragment).surnameState
                     surname = if ((fragment as SurnameFragment).surnameState) (fragment as SurnameFragment).surname else ""
-                    Log.d("SA", "onBackPressed - surnameState: $surnameState | surname: $surname")
                     if (surnameState) {
                         if (surname.isNotEmpty()) textViewSurname.text = surname
                         else {
@@ -327,7 +326,20 @@ class SettingsActivity : AppCompatActivity() {
             hideFragment()
             checkApplyButtonEnable()
         } else {
-            if (isReset) goToSplashActivity() else super.onBackPressed()
+            if (isSettingsChanged) {
+                val kuntanPopupDialog = KuntanPopupDialog.newInstance().setContent(getString(R.string.dialog_title_information),
+                    getString(R.string.dialog_message_ask_before_quit), getString(R.string.button_yes),
+                    getString(R.string.button_cancel), object : KuntanPopupDialog.KuntanPopupDialogListener {
+                        override fun onNegativeButton() {
+                            isSettingsChanged = false
+                            onBackPressed()
+                        }
+                        override fun onPositiveButton() {}
+                    })
+                kuntanPopupDialog.show(supportFragmentManager, kuntanPopupDialog.tag)
+            } else {
+                if (isReset) goToSplashActivity() else super.onBackPressed()
+            }
         }
     }
 
