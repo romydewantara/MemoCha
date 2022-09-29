@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.kuntan">
+    package="com.example.memocha">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -14,25 +14,25 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".SettingsActivity"
+            android:name="com.example.memocha.SettingsActivity"
             android:exported="false" />
         <activity
-            android:name=".HistoryDetailsActivity"
+            android:name="com.example.memocha.HistoryDetailsActivity"
             android:exported="false" />
         <activity
-            android:name=".HistoryActivity"
+            android:name="com.example.memocha.HistoryActivity"
             android:exported="false" />
         <activity
-            android:name=".ScheduleActivity"
+            android:name="com.example.memocha.ScheduleActivity"
             android:exported="false" />
         <activity
-            android:name=".WebViewActivity"
+            android:name="com.example.memocha.WebViewActivity"
             android:exported="false" />
         <activity
-            android:name=".DashboardActivity"
+            android:name="com.example.memocha.DashboardActivity"
             android:exported="false" />
         <activity
-            android:name=".SplashActivity"
+            android:name="com.example.memocha.SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

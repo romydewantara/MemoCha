@@ -132,7 +132,7 @@
             android:paddingStart="8dp"
             android:paddingEnd="8dp"
             android:text="@string/dasboard_greetings"
-            android:visibility="visible"
+            android:visibility="gone"
             app:layout_constraintLeft_toRightOf="@id/layoutClock"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@id/textDate" />

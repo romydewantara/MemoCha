@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application applicationTheme. -->
-    <style name="Theme.Kuntan" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="Theme.MemoCha" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/teal_semi_light</item>
         <item name="colorPrimaryVariant">@color/teal</item>
