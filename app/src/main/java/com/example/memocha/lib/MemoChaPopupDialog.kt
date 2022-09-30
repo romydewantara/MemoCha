@@ -2,10 +2,12 @@ package com.example.memocha.lib
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
+import androidx.core.widget.TextViewCompat
 import androidx.fragment.app.DialogFragment
 import com.example.memocha.R
 import kotlinx.android.synthetic.main.layout_memocha_popup_dialog.*
@@ -45,6 +47,8 @@ class MemoChaPopupDialog : DialogFragment() {
         negativeButton.text = textNegativeButton
         positiveButton.text = textPositiveButton
 
+        TextViewCompat.setAutoSizeTextTypeUniformWithConfiguration(textViewPopupTitle,
+                1, 16, 1, TypedValue.COMPLEX_UNIT_SP)
         if (textPopupTitle == "") textViewPopupTitle.visibility = View.GONE
         if (textNegativeButton.isEmpty()) negativeButton.visibility = View.GONE
         negativeButton.setOnClickListener {

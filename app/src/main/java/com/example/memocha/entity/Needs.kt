@@ -9,7 +9,7 @@ class Needs(
     @PrimaryKey(autoGenerate = true) val id: Int,
     val item: String,
     val time: String,
-    val date: String,
+    val dayOfMonth: String,
     val month: String,
     val year: String,
     var isDateShown: Boolean,

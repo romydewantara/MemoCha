@@ -3,7 +3,6 @@ package com.example.memocha.fragment
 import android.animation.ObjectAnimator
 import android.annotation.SuppressLint
 import android.app.Activity
-import android.content.Context
 import android.graphics.Rect
 import android.os.Bundle
 import android.text.Editable
@@ -37,7 +36,7 @@ import java.util.Calendar
 import java.util.Date
 
 @SuppressLint("ClickableViewAccessibility", "SimpleDateFormat")
-class NeedsScreenFragment(context: Context) : Fragment(R.layout.layout_fragment_needs) {
+class NeedsScreenFragment : Fragment(R.layout.layout_fragment_needs) {
 
     companion object {
         const val TAG = "Needs"
@@ -49,11 +48,13 @@ class NeedsScreenFragment(context: Context) : Fragment(R.layout.layout_fragment_
     private var previousTextLength = 0
     private var scrollDuration = 0L
     private var tempDate = ""
+    private var currentDay = ""
     private var currentMonth = ""
     private var currentYear = ""
     private var dataSize = 0
     private var dataSizeCount = 0
     private var isInit = true
+    private var isFirstNeedsItem = true
 
     private lateinit var invisibleBackground: View
     private lateinit var needsScreenListener: NeedsScreenListener
@@ -71,6 +72,7 @@ class NeedsScreenFragment(context: Context) : Fragment(R.layout.layout_fragment_
 
     private fun init() {
         tempDate = SimpleDateFormat("dd/MM/yyyy").format(Calendar.getInstance().time)
+        //currentDay = tempDate.split("/")[0] //currentDay must always empty at the first
         currentMonth = tempDate.split("/")[1]
         currentYear = tempDate.split("/")[2]
 
@@ -91,8 +93,8 @@ class NeedsScreenFragment(context: Context) : Fragment(R.layout.layout_fragment_
             textViewNeedsInfo,
             1, 14, 1, TypedValue.COMPLEX_UNIT_SP)
 
-        textViewNeedsDate.text = AppUtil.convertMonthNameFromCode(
-            requireContext(), SimpleDateFormat("MM").format(Calendar.getInstance().time))
+        val date = "${AppUtil.convertMonthNameFromCode(requireContext(), currentMonth)} ($currentYear)"
+        textViewNeedsDate.text = date
         hideSendButton()
     }
 
@@ -123,15 +125,17 @@ class NeedsScreenFragment(context: Context) : Fragment(R.layout.layout_fragment_
                 scrollDuration = 600L
                 val currentDate = SimpleDateFormat("dd/MM/yyyy").format(Calendar.getInstance().time)
                 val currentTime = SimpleDateFormat("HH:mm").format(Date())
+                val dayOfMonth = currentDate.split("/")[0]
+                val month = currentDate.split("/")[1]
+                val year = currentDate.split("/")[2]
                 var isDateShown = false
-                if (tempDate != currentDate) {
-                    tempDate = currentDate
+                if (dayOfMonth != currentDay) {
+                    currentDay = dayOfMonth
                     isDateShown = true
                 }
+
                 val needsObj = Needs(0, editTextNeedsItem.text.toString().trim(), currentTime,
-                    currentDate.split("/")[0], currentDate.split("/")[1],
-                    currentDate.split("/")[2], isDateShown, false, null
-                )
+                    dayOfMonth, month, year, isDateShown, false, null)
                 CoroutineScope(Dispatchers.IO).launch {
                     Log.d("Needs", "initListener - needs: ${Gson().toJson(needsObj)}")
                     database.needsDao().insert(needsObj)
@@ -157,8 +161,8 @@ class NeedsScreenFragment(context: Context) : Fragment(R.layout.layout_fragment_
             needsMonthChooserBottomSheet.addOnNeedsDateChooserListener(
                 object : NeedsMonthChooserBottomSheet.NeedsDateChooserListener {
                     override fun onDateSelected(year: String, month: String) {
-                        Log.d(TAG, "onDateSelected - month: $month | year: $year")
-                        textViewNeedsDate.text = AppUtil.convertMonthNameFromCode(requireContext(), month)
+                        val date = "${AppUtil.convertMonthNameFromCode(requireContext(), month)} ($year)"
+                        textViewNeedsDate.text = date
                         onBackPressed()
                         previousPage = DashboardActivity.PAGE_MONTH_CHOOSER
                         currentMonth = month
@@ -304,9 +308,8 @@ class NeedsScreenFragment(context: Context) : Fragment(R.layout.layout_fragment_
                 }
 
                 override fun onLongItemClicked(id: Int) {
-                    val memochaPopupDialog = MemoChaPopupDialog.newInstance().setContent("Remove \"${needs.item}\"?",
-                        "Be careful, it will be deleted permanently!",
-                        getString(R.string.button_delete), getString(R.string.button_cancel),
+                    val mcPopupDialog = MemoChaPopupDialog.newInstance().setContent(String.format(getString(R.string.dialog_title_delete_needs), needs.item),
+                        getString(R.string.dialog_message_delete_needs), getString(R.string.button_delete), getString(R.string.button_cancel),
                         object : MemoChaPopupDialog.MemoChaPopupDialogListener {
                             override fun onNegativeButton() {
                                 CoroutineScope(Dispatchers.IO).launch {
@@ -318,7 +321,7 @@ class NeedsScreenFragment(context: Context) : Fragment(R.layout.layout_fragment_
                             }
                             override fun onPositiveButton() {}
                         })
-                    memochaPopupDialog.show(childFragmentManager, memochaPopupDialog.tag)
+                    mcPopupDialog.show(childFragmentManager, mcPopupDialog.tag)
                 }
             })
 
@@ -385,8 +388,11 @@ class NeedsScreenFragment(context: Context) : Fragment(R.layout.layout_fragment_
                 if (needs.isNotEmpty()) {
                     dataSize = (needs.size - 1)
                     for (i in needs.indices) {
-                        if (tempDate != needs[i].date) {
-                            tempDate = needs[i].date
+                        Log.d(TAG, "populateNeeds - currentDay: $currentDay) vs needs.dayOfMonth: ${needs[i].dayOfMonth}")
+                        if (needs[i].dayOfMonth == currentDay) {
+                            needs[i].isDateShown = false
+                        } else {
+                            currentDay = needs[i].dayOfMonth
                             needs[i].isDateShown = true
                         }
                         generateNeedsItem(needs[i])

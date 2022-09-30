@@ -55,6 +55,14 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <!--  L O B S T E R | BLUE NAVY  -->
+    <style name="LobsterTextBoldNavy24">
+        <item name="android:fontFamily">@font/lobster_regular</item>
+        <item name="android:textColor">@color/blue_navy_semi_light</item>
+        <item name="android:textSize">24sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
     <!--  L O B S T E R | MESTY  -->
     <style name="LobsterTextBoldMesty12">
         <item name="android:fontFamily">@font/lobster_regular</item>

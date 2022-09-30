@@ -65,9 +65,8 @@ class ScheduleActivity : AppCompatActivity(), ScheduleAdapter.ScheduleAdapterLis
         imageImport.setOnClickListener {
             val kPopupDialog = MemoChaPopupDialog.newInstance()
             if (isSchedulesEmpty) {
-                kPopupDialog.setContent("Import default \"$currentTab Schedules\"?",
-                    "This action can make your list contain the default schedule",
-                    getString(R.string.button_import), getString(R.string.button_cancel),
+                kPopupDialog.setContent(String.format(getString(R.string.dialog_title_import_schedule), currentTab),
+                    getString(R.string.dialog_message_import_schedule), getString(R.string.button_import), getString(R.string.button_cancel),
                     object : MemoChaPopupDialog.MemoChaPopupDialogListener {
                         override fun onNegativeButton() {
                             //AppUtil.writeFileToStorage(this@ScheduleActivity, Constant.FOLDER_NAME_SCHEDULES, currentTab, Gson().toJson(schedules))
@@ -113,9 +112,9 @@ class ScheduleActivity : AppCompatActivity(), ScheduleAdapter.ScheduleAdapterLis
                 buttonSelectAll.visibility = View.INVISIBLE
                 buttonSelectAll.isEnabled = false
             }
-            val memochaPopupDialog = MemoChaPopupDialog.newInstance().setContent("Remove \"All Schedule\"?",
-                "If you delete the entire schedule it will be deleted permanently",
-                "Delete All", "Cancel", object : MemoChaPopupDialog.MemoChaPopupDialogListener {
+            val mcPopupDialog = MemoChaPopupDialog.newInstance().setContent(getString(R.string.dialog_title_delete_all_schedule),
+                getString(R.string.dialog_message_delete_all_schedule), getString(R.string.dialog_button_delete_all), getString(R.string.button_cancel),
+                object : MemoChaPopupDialog.MemoChaPopupDialogListener {
                     override fun onNegativeButton() {
                         CoroutineScope(Dispatchers.IO).launch {
                             database.scheduleDao().deleteAll()
@@ -127,7 +126,7 @@ class ScheduleActivity : AppCompatActivity(), ScheduleAdapter.ScheduleAdapterLis
                     }
 
                 })
-            memochaPopupDialog.show(supportFragmentManager, memochaPopupDialog.tag)
+            mcPopupDialog.show(supportFragmentManager, mcPopupDialog.tag)
         }
         buttonSubuh.setOnClickListener { navigate(Subuh) }
         buttonDzuhur.setOnClickListener { navigate(Dzuhur) }
@@ -221,7 +220,7 @@ class ScheduleActivity : AppCompatActivity(), ScheduleAdapter.ScheduleAdapterLis
             refreshSchedule(currentTab)
         }
         Snackbar.make(rootLayoutSchedule, getString(R.string.snackbar_schedule_updated), Snackbar.LENGTH_SHORT)
-            .setAction("DISMISS") {}.show()
+            .setAction(getString(R.string.snackbar_button_dismiss)) {}.show()
     }
 
     override fun onAddNewSchedule(id: Int, startTime: String, endTime: String, actions: String) {
@@ -230,7 +229,7 @@ class ScheduleActivity : AppCompatActivity(), ScheduleAdapter.ScheduleAdapterLis
             refreshSchedule(currentTab)
         }
         Snackbar.make(rootLayoutSchedule, getString(R.string.snackbar_schedule_added), Snackbar.LENGTH_SHORT)
-            .setAction("DISMISS") {}.show()
+            .setAction(getString(R.string.snackbar_button_dismiss)) {}.show()
     }
 
     override fun onDeleteSchedule(id: Int) {

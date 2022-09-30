@@ -140,6 +140,9 @@ class DashboardActivity : AppCompatActivity() {
                 iconArrows.isEnabled = false
                 loveMessage.visibility = GONE
                 layoutClock.visibility = GONE
+                time.visibility = INVISIBLE //only this view is INVISIBLE bcs give space of view to CurrentDate
+                previousTime.visibility = GONE
+                nextTime.visibility = GONE
                 hideMenu()
                 isMenuHidden = true
             } else {
@@ -150,8 +153,9 @@ class DashboardActivity : AppCompatActivity() {
                 editTextNote.isFocusable = false
                 loveMessage.visibility = VISIBLE
                 layoutClock.visibility = VISIBLE
-                showMenu()
-                isMenuHidden = false
+                time.visibility = VISIBLE
+                previousTime.visibility = VISIBLE
+                nextTime.visibility = VISIBLE
             }
         }
         surname = ""
@@ -256,7 +260,6 @@ class DashboardActivity : AppCompatActivity() {
                     textViewWisdom.text = AppUtil.randomWisdom(this@DashboardActivity, listOfWisdomUsed)
                     textViewWisdom.startAnimation(AnimationUtils.loadAnimation(applicationContext, R.anim.fade_in))
                     textViewWisdom.visibility = VISIBLE
-                    Log.d(TAG, "run")
                 }
             }
         }
@@ -266,7 +269,10 @@ class DashboardActivity : AppCompatActivity() {
     private fun refreshSchedule() {
         CoroutineScope(Dispatchers.IO).launch {
             val schedules = database.scheduleDao().getSchedule(arrayTimes[index])
-            Log.d(TAG, "onStart - schedules: $schedules")
+            runOnUiThread {
+                if (schedules.isEmpty()) textViewEmptySchedule.visibility = VISIBLE
+                else textViewEmptySchedule.visibility = GONE
+            }
             withContext(Dispatchers.Main) {
                 dashboardScheduleAdapter.setData(schedules)
             }
@@ -325,7 +331,7 @@ class DashboardActivity : AppCompatActivity() {
             isFragmentShown = true
             showOverlayLayout()
             placeHolderLayout.x = resources.displayMetrics.widthPixels.toFloat()
-            fragment = NeedsScreenFragment(applicationContext)
+            fragment = NeedsScreenFragment()
                 .addOnNeedScreenListener(object : NeedsScreenFragment.NeedsScreenListener {
                     override fun onScreenCreated() {
                         placeHolderLayout.visibility = VISIBLE
@@ -398,7 +404,7 @@ class DashboardActivity : AppCompatActivity() {
                     textViewCategory.text = getString(R.string.category_others)
                     layoutPaymentMethod.setSelection(0)
                     Snackbar.make(constraintActivityMain, getString(R.string.snackbar_monthly_expenses_added),
-                        Snackbar.LENGTH_LONG).setAction("DISMISS") {}.show()
+                        Snackbar.LENGTH_LONG).setAction(getString(R.string.snackbar_button_dismiss)) {}.show()
                 }
             }
         }
@@ -566,23 +572,40 @@ class DashboardActivity : AppCompatActivity() {
         overlayLayout.visibility = GONE
     }
 
+    private fun hidePlaceHolderLayout() {
+        val objectAnimator = ObjectAnimator.ofFloat(
+            placeHolderLayout, "translationX", resources.displayMetrics.widthPixels.toFloat())
+        objectAnimator.duration = 500L
+        objectAnimator.addListener(object : Animator.AnimatorListener {
+            override fun onAnimationStart(animation: Animator?) {
+                hideOverlayLayout()
+            }
+            override fun onAnimationEnd(animation: Animator?) {}
+            override fun onAnimationCancel(animation: Animator?) {}
+            override fun onAnimationRepeat(animation: Animator?) {}
+        })
+        objectAnimator.start()
+    }
+
     override fun onBackPressed() {
         if (isFragmentShown) {
-            isFragmentShown = false
-            if (fragment is NeedsScreenFragment) (fragment as NeedsScreenFragment).removeListener()
-
-            val objectAnimator = ObjectAnimator.ofFloat(
-                placeHolderLayout, "translationX", resources.displayMetrics.widthPixels.toFloat())
-            objectAnimator.duration = 500L
-            objectAnimator.addListener(object : Animator.AnimatorListener {
-                override fun onAnimationStart(animation: Animator?) {
-                    hideOverlayLayout()
+            when(fragment) {
+                is IdentityScreenFragment -> {
+                    val frag = (fragment as IdentityScreenFragment)
+                    if (frag.isContainerShown) {
+                        frag.isContainerShown = false
+                        frag.hideContainerIdentity()
+                    } else {
+                        isFragmentShown = false
+                        hidePlaceHolderLayout()
+                    }
                 }
-                override fun onAnimationEnd(animation: Animator?) {}
-                override fun onAnimationCancel(animation: Animator?) {}
-                override fun onAnimationRepeat(animation: Animator?) {}
-            })
-            objectAnimator.start()
+                is NeedsScreenFragment -> {
+                    (fragment as NeedsScreenFragment).removeListener()
+                    isFragmentShown = false
+                    hidePlaceHolderLayout()
+                }
+            }
         } else {
             super.onBackPressed()
         }

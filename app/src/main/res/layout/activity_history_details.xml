@@ -8,45 +8,30 @@
     tools:context=".HistoryDetailsActivity">
 
     <ImageView
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:src="@drawable/ic_mountain"
         android:scaleType="centerCrop"
-        android:src="@drawable/ic_wave"
-        app:layout_constraintBottom_toTopOf="@+id/layoutPaymentDetail"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/layoutPaymentDetail"/>
 
     <ImageView
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:paddingStart="10dp"
+        app:layout_constraintWidth_percent=".2"
+        app:layout_constraintDimensionRatio="1:1"
+        android:padding="5dp"
+        android:src="@drawable/ic_eagle"
         android:scaleType="centerCrop"
-        android:src="@drawable/ic_dollar_tree"
-        app:layout_constraintBottom_toTopOf="@+id/layoutPaymentDetail"
-        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintWidth_percent=".35"
-        tools:ignore="RtlSymmetry" />
-
-    <ImageView
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:paddingStart="10dp"
-        android:scaleType="centerCrop"
-        android:scaleX="-1"
-        android:src="@drawable/ic_dollar_tree"
-        app:layout_constraintBottom_toTopOf="@+id/layoutPaymentDetail"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintWidth_percent=".35"
-        tools:ignore="RtlSymmetry" />
+        app:layout_constraintLeft_toLeftOf="parent"/>
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/textViewMonthName"
         style="@style/TextBoldWhite22"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
         android:text="Month"
         app:layout_constraintBottom_toBottomOf="@id/imageMenu"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -54,32 +39,85 @@
         app:layout_constraintTop_toTopOf="@id/imageMenu" />
 
     <LinearLayout
-        android:id="@+id/layoutExport"
+        android:id="@+id/layoutExportImport"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:background="@drawable/selector_text_general"
-        android:clickable="true"
-        android:focusable="true"
-        android:gravity="center"
-        android:padding="6dp"
-        app:layout_constraintLeft_toLeftOf="@id/textViewMonthName"
-        app:layout_constraintRight_toRightOf="@id/textViewMonthName"
+        android:layout_marginTop="12dp"
+        android:orientation="horizontal"
+        android:weightSum="2"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/textViewMonthName">
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/textViewExport"
-            style="@style/TextRegularWhite14"
-            android:layout_width="wrap_content"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layoutExport"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/history_detail_export" />
+            android:layout_marginEnd="8dp"
+            android:layout_weight="1">
 
-        <ImageView
-            android:id="@+id/iconExport"
-            android:layout_width="16dp"
-            android:layout_height="16dp"
-            android:layout_marginStart="2dp"
-            android:src="@drawable/ic_export" />
+            <ImageView
+                android:id="@+id/imageExport"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_margin="8dp"
+                android:padding="10dp"
+                android:background="@drawable/selector_button_export"
+                android:src="@drawable/ic_export"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/textViewExport"
+                style="@style/TextRegularWhite12"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:autoSizeTextType="uniform"
+                android:maxLines="1"
+                android:text="Export"
+                android:gravity="center"
+                app:layout_constraintTop_toBottomOf="@id/imageExport"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layoutImport"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="8dp"
+            android:layout_weight="1">
+
+            <ImageView
+                android:id="@+id/imageImport"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_margin="8dp"
+                android:padding="10dp"
+                android:background="@drawable/selector_button_export"
+                android:src="@drawable/ic_import_teal_dark"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/textViewImport"
+                style="@style/TextRegularWhite12"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:autoSizeTextType="uniform"
+                android:maxLines="1"
+                android:text="Import"
+                android:gravity="center"
+                app:layout_constraintTop_toBottomOf="@id/imageImport"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </LinearLayout>
 
@@ -88,11 +126,11 @@
         style="@style/TextRegularWhite12"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="12dp"
         android:text="@string/history_detail_monthly_expenses"
         app:layout_constraintLeft_toLeftOf="@id/textViewMonthName"
         app:layout_constraintRight_toRightOf="@id/textViewMonthName"
-        app:layout_constraintTop_toBottomOf="@id/layoutExport" />
+        app:layout_constraintTop_toBottomOf="@id/layoutExportImport" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/textViewAmount"
@@ -118,13 +156,13 @@
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintWidth_percent=".1" />
+        app:layout_constraintWidth_percent=".11" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/layoutPaymentDetail"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="12dp"
         android:background="@drawable/background_page_white_rounded_top"
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -196,7 +234,7 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <RelativeLayout
-        android:id="@+id/layoutMonthlyExpensesEditor"
+        android:id="@+id/layoutHistoryDetailsEditor"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:background="@color/black_60"
@@ -205,4 +243,5 @@
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

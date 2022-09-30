@@ -18,6 +18,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/cardViewApplicationLanguage"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginStart="15dp"
@@ -140,5 +141,19 @@
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/textViewApplicationLanguageInfo"
+        style="@style/TextRegularGrey12"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp"
+        android:text="@string/settings_application_language_information"
+        android:visibility="visible"
+        app:layout_constraintLeft_toLeftOf="@id/cardViewApplicationLanguage"
+        app:layout_constraintRight_toRightOf="@id/cardViewApplicationLanguage"
+        app:layout_constraintTop_toBottomOf="@id/cardViewApplicationLanguage" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

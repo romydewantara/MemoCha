@@ -2,8 +2,9 @@
 <resources>
     <color name="transparent">#00000000</color>
     <color name="transparent_50">#80FFFFFF</color>
+    <color name="transparent_85">#D9FFFFFF</color>
     <color name="teal_extra_dark">#006868</color>
-    <color name="teal_dark">#FF018786</color>
+    <color name="teal_dark">#018786</color>
     <color name="teal">#29A0B1</color>
     <color name="teal_semi_light">#00C4CC</color>
     <color name="teal_light">#FF03DAC5</color>
@@ -28,6 +29,7 @@
     <color name="gray_light_20">#BECACACA</color>
     <color name="gray_light">#D8FCFCFC</color>
     <color name="mesty_blue">#E3E8E9</color>
+    <color name="mesty_blue_10">#4DE3E8E9</color>
     <color name="pewter">#B9B7BD</color>
     <color name="blue">#0000FF</color>
     <color name="blue_navy">#053D57</color>

@@ -23,9 +23,9 @@
             android:id="@+id/imageWhiteBackgroundIcon"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:scaleY="-1"
-            android:scaleX="-1"
             android:background="@drawable/background_needs_month_item_gradient_white"
+            android:scaleX="-1"
+            android:scaleY="-1"
             app:layout_constraintHeight_percent=".8"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
@@ -75,6 +75,23 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textViewPending"
+            style="@style/TextBoldWhite16"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@drawable/background_button_delete_circle_red"
+            android:gravity="center"
+            android:text="10"
+            android:maxLines="1"
+            android:autoSizeTextType="uniform"
+            android:padding="2dp"
+            android:visibility="invisible"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintWidth_percent=".25" />
+
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/textViewNeedsMonth"
             style="@style/LobsterTextBoldWhite16"
             android:layout_width="wrap_content"
@@ -83,8 +100,8 @@
             android:gravity="center"
             android:maxLines="1"
             android:text="@string/month_january"
-            app:layout_constraintHeight_percent=".2"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintHeight_percent=".2"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@id/imageWhiteBackgroundIcon" />

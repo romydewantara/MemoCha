@@ -72,11 +72,11 @@ class NeedsItem(context: Context) : LinearLayout(context) {
         textTime = AppCompatTextView(context)
         val textTimeParams = LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT)
         textTimeParams.setMargins(
-            AppUtil.dpToPx(context, 0f), AppUtil.dpToPx(context, 5f),
+            AppUtil.dpToPx(context, 0f), AppUtil.dpToPx(context, 2.5f),
             AppUtil.dpToPx(context, 0f), AppUtil.dpToPx(context, 0f)
         )
         textTime.layoutParams = textTimeParams
-        TextViewCompat.setTextAppearance(textTime, R.style.TextRegularDarkGrey14)
+        TextViewCompat.setTextAppearance(textTime, R.style.TextRegularDarkGrey12)
         textTime.text = needs.time
 
         textGroupLayout = LinearLayout(context)
@@ -172,7 +172,7 @@ class NeedsItem(context: Context) : LinearLayout(context) {
         textDate.background =
             resources.getDrawable(R.drawable.background_needs_text_date_teal_dark, null)
         TextViewCompat.setTextAppearance(textDate, R.style.TextBoldWhite12)
-        val date = "${needs.date}/${needs.month}/${needs.year}"
+        val date = "${needs.dayOfMonth}/${needs.month}/${needs.year}"
         textDate.text = date
         if (needs.isDateShown) textDate.visibility =
             View.VISIBLE else textDate.visibility = View.GONE

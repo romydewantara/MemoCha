@@ -11,11 +11,11 @@ interface NeedsDao {
     @Insert
     suspend fun insert(needs: Needs)
 
-    @Query("SELECT * FROM needs_table WHERE month = :month AND year = :year")
+    @Query("SELECT * FROM needs_table WHERE month = :month AND year = :year ORDER BY dayOfMonth ASC")
     suspend fun getNeeds(month: String, year: String) : List<Needs>
 
-    @Query("UPDATE needs_table SET item = :item, date = :date, time = :time, checked = :checked WHERE id = :id")
-    suspend fun updateNeeds(id: Int, item: String, date: String, time: String, checked: Boolean)
+    @Query("UPDATE needs_table SET item = :item, dayOfMonth = :dayOfMonth, time = :time, checked = :checked WHERE id = :id")
+    suspend fun updateNeeds(id: Int, item: String, dayOfMonth: String, time: String, checked: Boolean)
 
     @Query("UPDATE needs_table SET checked = :checked WHERE id = :id")
     suspend fun updateChecked(id: Int, checked: Boolean)

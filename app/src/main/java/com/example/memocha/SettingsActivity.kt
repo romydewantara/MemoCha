@@ -94,26 +94,21 @@ class SettingsActivity : AppCompatActivity() {
         backgroundAnimation = settings.backgroundAnimation
         surname = settings.surname
 
-        textViewAnimation.text = if (backgroundAnimationState) getBackgroundAnimationName(backgroundAnimation) else
-            getString(R.string.setting_background_animation_off)
-
-        textViewSurname.text = if (surnameState) settings.surname else
-            getString(R.string.setting_surname_off)
-
-        textViewNotification.text = if (notificationState) getString(R.string.setting_notification_on) else
-            getString(R.string.setting_notification_off)
+        textViewAnimation.text = if (backgroundAnimationState) getBackgroundAnimationName(backgroundAnimation) else getString(R.string.setting_background_animation_off)
+        textViewSurname.text = if (surnameState) settings.surname else getString(R.string.setting_surname_off)
+        textViewNotification.text = if (notificationState) getString(R.string.setting_notification_on) else getString(R.string.setting_notification_off)
     }
 
     @SuppressLint("UseCompatLoadingForDrawables", "ClickableViewAccessibility")
     private fun initListener() {
         settingAppTheme.setOnClickListener {
-            val memochaPopupDialog = MemoChaPopupDialog.newInstance().setContent("",
+            val mcPopupDialog = MemoChaPopupDialog.newInstance().setContent("",
                 getString(R.string.dialog_message_app_theme), "", getString(R.string.button_ok),
                 object : MemoChaPopupDialog.MemoChaPopupDialogListener {
                     override fun onNegativeButton() {}
                     override fun onPositiveButton() {}
                 })
-            memochaPopupDialog.show(supportFragmentManager, memochaPopupDialog.tag)
+            mcPopupDialog.show(supportFragmentManager, mcPopupDialog.tag)
         }
         setting1.setOnClickListener {
             fragment = ApplicationLanguageFragment(applicationLanguage)
@@ -163,7 +158,7 @@ class SettingsActivity : AppCompatActivity() {
                     textViewApply.isEnabled = false
                     textViewApply.background = applicationContext.resources.getDrawable(R.drawable.background_button_apply_disabled, null)
                     checkResetButtonEnable()
-                    Snackbar.make(rootLayoutSetting, getString(R.string.snackbar_setting_applied), Snackbar.LENGTH_SHORT).setAction("DISMISS") {}.show()
+                    Snackbar.make(rootLayoutSetting, getString(R.string.snackbar_setting_applied), Snackbar.LENGTH_SHORT).setAction(getString(R.string.snackbar_button_dismiss)) {}.show()
                     if (isApplicationLanguageChanged)
                         showRestartAppDialog(String.format(getString(R.string.dialog_message_switch_language), settings.applicationLanguage))
                 }
@@ -327,7 +322,7 @@ class SettingsActivity : AppCompatActivity() {
             checkApplyButtonEnable()
         } else {
             if (isSettingsChanged) {
-                val memochaPopupDialog = MemoChaPopupDialog.newInstance().setContent(getString(R.string.dialog_title_information),
+                val mcPopupDialog = MemoChaPopupDialog.newInstance().setContent(getString(R.string.dialog_title_information),
                     getString(R.string.dialog_message_ask_before_quit), getString(R.string.button_yes),
                     getString(R.string.button_cancel), object : MemoChaPopupDialog.MemoChaPopupDialogListener {
                         override fun onNegativeButton() {
@@ -336,7 +331,7 @@ class SettingsActivity : AppCompatActivity() {
                         }
                         override fun onPositiveButton() {}
                     })
-                memochaPopupDialog.show(supportFragmentManager, memochaPopupDialog.tag)
+                mcPopupDialog.show(supportFragmentManager, mcPopupDialog.tag)
             } else {
                 if (isReset) goToSplashActivity() else super.onBackPressed()
             }
@@ -344,14 +339,14 @@ class SettingsActivity : AppCompatActivity() {
     }
 
     private fun showRestartAppDialog(message: String) {
-        val memochaPopupDialog = MemoChaPopupDialog.newInstance().setContent(getString(R.string.dialog_title_information),
-            message, "", "OK", object : MemoChaPopupDialog.MemoChaPopupDialogListener {
+        val mcPopupDialog = MemoChaPopupDialog.newInstance().setContent(getString(R.string.dialog_title_information),
+            message, "", getString(R.string.button_ok), object : MemoChaPopupDialog.MemoChaPopupDialogListener {
                 override fun onNegativeButton() {}
                 override fun onPositiveButton() {
                     goToSplashActivity()
                 }
             })
-        memochaPopupDialog.show(supportFragmentManager, memochaPopupDialog.tag)
+        mcPopupDialog.show(supportFragmentManager, mcPopupDialog.tag)
     }
 
     private fun goToSplashActivity() {

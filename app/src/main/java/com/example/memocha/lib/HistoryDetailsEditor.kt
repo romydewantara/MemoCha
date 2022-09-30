@@ -24,7 +24,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 @SuppressLint("ViewConstructor", "UseCompatLoadingForDrawables", "ClickableViewAccessibility", "NewApi", "SimpleDateFormat")
-class MonthlyExpensesEditor(
+class HistoryDetailsEditor(
     context: Context, private val history: History, private val fragmentManager: FragmentManager
 ): RelativeLayout(context) {
 
@@ -61,14 +61,14 @@ class MonthlyExpensesEditor(
             override fun onGlobalLayout() {
                 globalLayoutListener = this
 
-                view.y = (this@MonthlyExpensesEditor.height - view.measuredHeight).toFloat()
+                view.y = (this@HistoryDetailsEditor.height - view.measuredHeight).toFloat()
                 if (isInit) {
                     editTextGoods.requestFocus()
                     editTextGoods.setSelection(history.goods.length)
                     AppUtil.showSoftKeyboard(editTextGoods, context)
                     isInit = false
                 }
-                if (!AppUtil.isKeyboardVisible(this@MonthlyExpensesEditor)) {
+                if (!AppUtil.isKeyboardVisible(this@HistoryDetailsEditor)) {
                     editTextGoods.isFocusable = false
                     editTextAmount.isFocusable = false
                     editTextNote.isFocusable = false
@@ -96,16 +96,17 @@ class MonthlyExpensesEditor(
         imageDelete.isEnabled = true
 
         imageDelete.setOnClickListener {
-            val memochaPopupDialog = MemoChaPopupDialog.newInstance().setContent(context.getString(R.string.dialog_title_delete_from_history),
-                context.getString(R.string.dialog_message_delete_from_history), "OK", context.getString(R.string.button_cancel), object : MemoChaPopupDialog.MemoChaPopupDialogListener {
+            val mcPopupDialog = MemoChaPopupDialog.newInstance().setContent(context.getString(R.string.dialog_title_delete_from_history),
+                context.getString(R.string.dialog_message_delete_from_history), context.getString(R.string.button_ok), context.getString(R.string.button_cancel),
+                object : MemoChaPopupDialog.MemoChaPopupDialogListener {
                     override fun onNegativeButton() {
                         monthlyExpensesEditorListener.onDeleteClicked(history.id)
-                        Snackbar.make(this@MonthlyExpensesEditor, context.getString(R.string.snackbar_monthly_expenses_deleted),
-                            Snackbar.LENGTH_SHORT).setAction("DISMISS") {}.show()
+                        Snackbar.make(this@HistoryDetailsEditor, context.getString(R.string.snackbar_monthly_expenses_deleted),
+                            Snackbar.LENGTH_SHORT).setAction(context.getString(R.string.snackbar_button_dismiss)) {}.show()
                     }
                     override fun onPositiveButton() {}
                 })
-            memochaPopupDialog.show(fragmentManager, memochaPopupDialog.tag)
+            mcPopupDialog.show(fragmentManager, mcPopupDialog.tag)
             AppUtil.hideSoftKeyboard(this, context)
         }
         imageAdd.setOnClickListener {
@@ -125,8 +126,8 @@ class MonthlyExpensesEditor(
 
                 textViewCategory.text = context.getString(R.string.category_others)
                 layoutPaymentMethod.setSelection(0)
-                Snackbar.make(this@MonthlyExpensesEditor, context.getString(R.string.snackbar_monthly_expenses_updated), Snackbar.LENGTH_SHORT)
-                    .setAction("DISMISS") {}.show()
+                Snackbar.make(this@HistoryDetailsEditor, context.getString(R.string.snackbar_monthly_expenses_updated), Snackbar.LENGTH_SHORT)
+                    .setAction(context.getString(R.string.snackbar_button_dismiss)) {}.show()
                 monthlyExpensesEditorListener.onSaveClicked(history.id, history)
             }
         }
@@ -219,9 +220,9 @@ class MonthlyExpensesEditor(
         }
     }
 
-    fun addMonthlyExpensesEditorListener(monthlyExpensesEditorListener: MonthlyExpensesEditorListener): MonthlyExpensesEditor {
+    fun addMonthlyExpensesEditorListener(monthlyExpensesEditorListener: MonthlyExpensesEditorListener): HistoryDetailsEditor {
         this.monthlyExpensesEditorListener = monthlyExpensesEditorListener
-        return this@MonthlyExpensesEditor
+        return this@HistoryDetailsEditor
     }
 
     interface MonthlyExpensesEditorListener {

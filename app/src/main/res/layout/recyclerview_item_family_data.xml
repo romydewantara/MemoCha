@@ -1,160 +1,297 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="12dp"
-    android:background="@color/white">
+    android:layout_marginStart="10dp"
+    android:layout_marginTop="12dp"
+    android:layout_marginEnd="10dp"
+    android:background="@color/white"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="10dp">
 
-    <View
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:background="@color/mesty_blue"
-        app:layout_constraintBottom_toBottomOf="@id/textViewName"
-        app:layout_constraintLeft_toLeftOf="@id/textViewName"
-        app:layout_constraintRight_toRightOf="@id/textViewName"
-        app:layout_constraintTop_toTopOf="@id/textViewName" />
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/textViewName"
-        style="@style/TextBoldNavy14"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="?selectableItemBackground"
-        android:clickable="true"
-        android:drawableEnd="@drawable/ic_arrow_right"
-        android:enabled="true"
-        android:focusable="true"
-        android:gravity="center_vertical"
-        android:paddingStart="10dp"
-        android:paddingTop="15dp"
-        android:paddingEnd="10dp"
-        android:paddingBottom="15dp"
-        android:text="Romy Dewantara"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_height="wrap_content">
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/textViewIdTitle"
-        style="@style/TextRegularBlack14"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:paddingStart="10dp"
-        android:paddingTop="15dp"
-        android:paddingEnd="10dp"
-        android:paddingBottom="15dp"
-        android:text="NIK"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textViewName"
-        app:layout_constraintWidth_percent=".2" />
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="@color/mesty_blue"
+            app:layout_constraintBottom_toBottomOf="@id/textViewName"
+            app:layout_constraintLeft_toLeftOf="@id/textViewName"
+            app:layout_constraintRight_toRightOf="@id/textViewName"
+            app:layout_constraintTop_toTopOf="@id/textViewName" />
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/textViewAddressTitle"
-        style="@style/TextRegularBlack14"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:paddingStart="10dp"
-        android:paddingTop="15dp"
-        android:paddingEnd="10dp"
-        android:paddingBottom="15dp"
-        android:text="Address"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textViewIdTitle"
-        app:layout_constraintWidth_percent=".2" />
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textViewName"
+            style="@style/TextBoldNavy14"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?selectableItemBackground"
+            android:clickable="true"
+            android:drawableEnd="@drawable/ic_arrow_right"
+            android:enabled="true"
+            android:focusable="true"
+            android:gravity="center_vertical"
+            android:paddingStart="10dp"
+            android:paddingTop="15dp"
+            android:paddingEnd="10dp"
+            android:paddingBottom="15dp"
+            android:text="Romy Dewantara"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/textViewColonId"
-        style="@style/TextRegularBlack14"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:paddingStart="10dp"
-        android:paddingTop="15dp"
-        android:paddingEnd="10dp"
-        android:paddingBottom="15dp"
-        android:text=":"
-        app:layout_constraintLeft_toRightOf="@id/textViewIdTitle"
-        app:layout_constraintTop_toBottomOf="@id/textViewName"
-        app:layout_constraintWidth_percent=".1" />
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textViewIdTitle"
+            style="@style/TextRegularBlack14"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:paddingStart="10dp"
+            android:paddingTop="15dp"
+            android:paddingEnd="10dp"
+            android:paddingBottom="15dp"
+            android:text="NIK"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textViewName"
+            app:layout_constraintWidth_percent=".2" />
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/textViewColonAddress"
-        style="@style/TextRegularBlack14"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:paddingStart="10dp"
-        android:paddingTop="15dp"
-        android:paddingEnd="10dp"
-        android:paddingBottom="15dp"
-        android:text=":"
-        app:layout_constraintLeft_toRightOf="@id/textViewIdTitle"
-        app:layout_constraintTop_toBottomOf="@id/textViewId"
-        app:layout_constraintWidth_percent=".1" />
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textViewColonId"
+            style="@style/TextRegularBlack14"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:paddingStart="10dp"
+            android:paddingTop="15dp"
+            android:paddingEnd="10dp"
+            android:paddingBottom="15dp"
+            android:text=":"
+            app:layout_constraintLeft_toRightOf="@id/textViewIdTitle"
+            app:layout_constraintTop_toBottomOf="@id/textViewName"
+            app:layout_constraintWidth_percent=".1" />
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/textViewId"
-        style="@style/TextRegularBlack14"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:paddingStart="10dp"
-        android:paddingTop="15dp"
-        android:paddingEnd="10dp"
-        android:paddingBottom="15dp"
-        android:text="317320321xxx"
-        app:layout_constraintLeft_toRightOf="@id/textViewColonId"
-        app:layout_constraintTop_toBottomOf="@id/textViewName"
-        app:layout_constraintWidth_percent=".7" />
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textViewId"
+            style="@style/TextRegularBlack14"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:paddingStart="10dp"
+            android:paddingTop="15dp"
+            android:paddingEnd="10dp"
+            android:paddingBottom="15dp"
+            android:text="317320321xxx"
+            app:layout_constraintLeft_toRightOf="@id/textViewColonId"
+            app:layout_constraintTop_toBottomOf="@id/textViewName"
+            app:layout_constraintWidth_percent=".7" />
 
-    <ImageView
-        android:id="@+id/imageCopyId"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginEnd="10dp"
-        android:padding="4dp"
-        android:src="@drawable/ic_copy"
-        app:layout_constraintBottom_toBottomOf="@id/textViewId"
-        app:layout_constraintDimensionRatio="1:1"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@id/textViewId"
-        app:layout_constraintWidth_percent=".06" />
+        <ImageView
+            android:id="@+id/imageCopyId"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:padding="12dp"
+            android:src="@drawable/ic_copy"
+            app:layout_constraintBottom_toBottomOf="@id/textViewId"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@id/textViewId" />
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/textViewAddress"
-        style="@style/TextRegularBlack14"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:paddingStart="10dp"
-        android:paddingTop="15dp"
-        android:paddingEnd="10dp"
-        android:paddingBottom="15dp"
-        android:text="Jakarta, Indonesia"
-        app:layout_constraintLeft_toRightOf="@id/textViewColonAddress"
-        app:layout_constraintTop_toBottomOf="@id/textViewId"
-        app:layout_constraintWidth_percent=".7" />
+        <View
+            android:id="@+id/lineId"
+            android:layout_width="match_parent"
+            android:layout_height=".1dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:background="@color/pewter"
+            app:layout_constraintTop_toBottomOf="@id/textViewIdTitle" />
 
-    <ImageView
-        android:id="@+id/imageCopyAddress"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginEnd="10dp"
-        android:padding="4dp"
-        android:src="@drawable/ic_copy"
-        app:layout_constraintBottom_toBottomOf="@id/textViewAddress"
-        app:layout_constraintDimensionRatio="1:1"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@id/textViewAddress"
-        app:layout_constraintWidth_percent=".06" />
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textViewAddressTitle"
+            style="@style/TextRegularBlack14"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:paddingStart="10dp"
+            android:paddingTop="15dp"
+            android:paddingEnd="10dp"
+            android:paddingBottom="15dp"
+            android:text="Address"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/lineId"
+            app:layout_constraintWidth_percent=".2" />
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height=".1dp"
-        android:background="@color/pewter"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
-        app:layout_constraintTop_toBottomOf="@id/textViewIdTitle"/>
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textViewColonAddress"
+            style="@style/TextRegularBlack14"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:paddingStart="10dp"
+            android:paddingTop="15dp"
+            android:paddingEnd="10dp"
+            android:paddingBottom="15dp"
+            android:text=":"
+            app:layout_constraintLeft_toRightOf="@id/textViewAddressTitle"
+            app:layout_constraintTop_toBottomOf="@id/textViewId"
+            app:layout_constraintWidth_percent=".1" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textViewAddress"
+            style="@style/TextRegularBlack14"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:paddingStart="10dp"
+            android:paddingTop="15dp"
+            android:paddingEnd="10dp"
+            android:paddingBottom="15dp"
+            android:text="Jakarta, Indonesia"
+            app:layout_constraintLeft_toRightOf="@id/textViewColonAddress"
+            app:layout_constraintTop_toBottomOf="@id/textViewId"
+            app:layout_constraintWidth_percent=".7" />
+
+        <ImageView
+            android:id="@+id/imageCopyAddress"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:padding="12dp"
+            android:src="@drawable/ic_copy"
+            app:layout_constraintBottom_toBottomOf="@id/textViewAddress"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@id/textViewAddress" />
+
+        <View
+            android:id="@+id/lineAddress"
+            android:layout_width="match_parent"
+            android:layout_height=".1dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:background="@color/pewter"
+            app:layout_constraintTop_toBottomOf="@id/textViewAddressTitle" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textViewBODTitle"
+            style="@style/TextRegularBlack14"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:paddingStart="10dp"
+            android:paddingTop="15dp"
+            android:paddingEnd="10dp"
+            android:paddingBottom="15dp"
+            android:text="Birth"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/lineAddress"
+            app:layout_constraintWidth_percent=".2" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textViewColonBOD"
+            style="@style/TextRegularBlack14"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:paddingStart="10dp"
+            android:paddingTop="15dp"
+            android:paddingEnd="10dp"
+            android:paddingBottom="15dp"
+            android:text=":"
+            app:layout_constraintLeft_toRightOf="@id/textViewBODTitle"
+            app:layout_constraintTop_toBottomOf="@id/lineAddress"
+            app:layout_constraintWidth_percent=".1" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textViewBOD"
+            style="@style/TextRegularBlack14"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:paddingStart="10dp"
+            android:paddingTop="15dp"
+            android:paddingEnd="10dp"
+            android:paddingBottom="15dp"
+            android:text="17/10/1995 (27th)"
+            app:layout_constraintLeft_toRightOf="@id/textViewColonPhone"
+            app:layout_constraintTop_toBottomOf="@id/lineAddress"
+            app:layout_constraintWidth_percent=".7" />
+
+        <ImageView
+            android:id="@+id/imageCopyBOD"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:padding="12dp"
+            android:src="@drawable/ic_copy"
+            app:layout_constraintBottom_toBottomOf="@id/textViewPhone"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@id/textViewPhone" />
+
+        <View
+            android:id="@+id/lineBOD"
+            android:layout_width="match_parent"
+            android:layout_height=".1dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:background="@color/pewter"
+            app:layout_constraintTop_toBottomOf="@id/textViewBODTitle" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textViewPhoneTitle"
+            style="@style/TextRegularBlack14"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:paddingStart="10dp"
+            android:paddingTop="15dp"
+            android:paddingEnd="10dp"
+            android:paddingBottom="15dp"
+            android:text="Phone"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/lineBOD"
+            app:layout_constraintWidth_percent=".2" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textViewColonPhone"
+            style="@style/TextRegularBlack14"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:paddingStart="10dp"
+            android:paddingTop="15dp"
+            android:paddingEnd="10dp"
+            android:paddingBottom="15dp"
+            android:text=":"
+            app:layout_constraintLeft_toRightOf="@id/textViewIdTitle"
+            app:layout_constraintTop_toBottomOf="@id/lineBOD"
+            app:layout_constraintWidth_percent=".1" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textViewPhone"
+            style="@style/TextRegularBlack14"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:paddingStart="10dp"
+            android:paddingTop="15dp"
+            android:paddingEnd="10dp"
+            android:paddingBottom="15dp"
+            android:text="08129136081xx"
+            app:layout_constraintLeft_toRightOf="@id/textViewColonPhone"
+            app:layout_constraintTop_toBottomOf="@id/lineBOD"
+            app:layout_constraintWidth_percent=".7" />
+
+        <ImageView
+            android:id="@+id/imageCopyPhone"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:padding="12dp"
+            android:src="@drawable/ic_copy"
+            app:layout_constraintBottom_toBottomOf="@id/textViewPhone"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@id/textViewPhone" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>

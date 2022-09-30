@@ -12,7 +12,7 @@
             android:id="@+id/needsLayoutDateHeader"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            app:layout_constraintHeight_percent=".35"
+            app:layout_constraintHeight_percent=".32"
             app:layout_constraintTop_toTopOf="parent">
 
             <View
@@ -21,21 +21,6 @@
                 android:background="@drawable/background_layout_teal_dark"
                 android:scaleY="-1"
                 android:visibility="visible" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/textViewHeader"
-                style="@style/TextBoldWhite16"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:autoSizeTextType="uniform"
-                android:gravity="center"
-                android:maxLines="9"
-                android:padding="16dp"
-                android:text="@string/needs_date_chooser_text_header"
-                app:layout_constraintBottom_toTopOf="@id/layoutYearSelection"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toLeftOf="@id/lottieHeader"
-                app:layout_constraintTop_toTopOf="parent" />
 
             <com.airbnb.lottie.LottieAnimationView
                 android:id="@+id/lottieHeader"
@@ -46,17 +31,32 @@
                 app:layout_constraintDimensionRatio="1:1"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintWidth_percent=".45"
                 app:lottie_autoPlay="false"
                 app:lottie_fileName="woman.json"
                 app:lottie_loop="true" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/textViewHeader"
+                style="@style/TextBoldWhite16"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:autoSizeTextType="uniform"
+                android:gravity="center"
+                android:maxLines="9"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:text="@string/needs_date_chooser_text_header"
+                app:layout_constraintBottom_toBottomOf="@id/lottieHeader"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@id/lottieHeader"
+                app:layout_constraintTop_toTopOf="@id/lottieHeader" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/layoutYearSelection"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintHeight_percent=".15">
+                app:layout_constraintHeight_percent=".18">
 
                 <ImageView
                     android:layout_width="0dp"
@@ -83,6 +83,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="?android:selectableItemBackground"
+                    android:gravity="center"
                     android:padding="10dp"
                     android:text="2022"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -129,7 +130,7 @@
             android:background="@drawable/background_needs_month_list_gradient_dark_to_light"
             android:scrollbars="none"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintHeight_percent=".65"
+            app:layout_constraintHeight_percent=".68"
             app:layout_constraintTop_toBottomOf="@id/needsLayoutDateHeader">
 
             <RelativeLayout

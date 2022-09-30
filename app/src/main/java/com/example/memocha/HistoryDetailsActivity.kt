@@ -12,7 +12,8 @@ import androidx.core.widget.TextViewCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.memocha.adapter.HistoryDetailAdapter
 import com.example.memocha.entity.History
-import com.example.memocha.lib.MonthlyExpensesEditor
+import com.example.memocha.lib.HistoryDetailsEditor
+import com.example.memocha.lib.MemoChaPopupDialog
 import com.example.memocha.utility.AppUtil
 import com.example.memocha.utility.MemoChaRoomDatabase
 import kotlinx.android.synthetic.main.activity_history_details.*
@@ -26,10 +27,10 @@ import java.math.BigInteger
 class HistoryDetailsActivity : AppCompatActivity() {
 
     companion object {
-        const val TAG = "HistoryDetailsActivity"
+        const val TAG = "HistoryDetailsAct"
     }
     private val database by lazy { MemoChaRoomDatabase(this) }
-    private var monthlyExpensesEditor: MonthlyExpensesEditor? = null
+    private var historyDetailsEditor: HistoryDetailsEditor? = null
 
     private lateinit var month: String
     private lateinit var year: String
@@ -41,6 +42,13 @@ class HistoryDetailsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_history_details)
+
+        init()
+        initListener()
+        fetchHistoryDetails()
+    }
+
+    private fun init() {
         month = intent.extras?.getString("month").toString()
         year = intent.extras?.getString("year").toString()
         rootHistory.viewTreeObserver.addOnGlobalLayoutListener {
@@ -48,22 +56,75 @@ class HistoryDetailsActivity : AppCompatActivity() {
         }
 
         textViewMonthName.text = AppUtil.convertMonthNameFromCode(this, month)
-        TextViewCompat.setAutoSizeTextTypeUniformWithConfiguration(
-            textViewAmount, 1, 26, 1, TypedValue.COMPLEX_UNIT_SP)
-
+        TextViewCompat.setAutoSizeTextTypeUniformWithConfiguration(textViewAmount,
+                1, 26, 1, TypedValue.COMPLEX_UNIT_SP)
+        TextViewCompat.setAutoSizeTextTypeUniformWithConfiguration(textViewImport,
+                1, 12, 1, TypedValue.COMPLEX_UNIT_SP)
+        TextViewCompat.setAutoSizeTextTypeUniformWithConfiguration(textViewExport,
+                1, 12, 1, TypedValue.COMPLEX_UNIT_SP)
         setupRecyclerView()
-        init()
-        initListener()
     }
 
-    private fun init() {
+    private fun initListener() {
+        imageMenu.setOnClickListener {
+            startActivity(Intent(this@HistoryDetailsActivity, HistoryActivity::class.java)
+                    .setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP))
+            finish()
+        }
+        imageImport.setOnClickListener {
+            val mcPopupDialog = MemoChaPopupDialog.newInstance()
+            mcPopupDialog.setContent(getString(R.string.dialog_title_information), getString(R.string.dialog_message_import_history),
+                    getString(R.string.button_yes), getString(R.string.button_cancel), object : MemoChaPopupDialog.MemoChaPopupDialogListener {
+                        override fun onNegativeButton() {
+
+                        }
+                        override fun onPositiveButton() {}
+                    })
+            mcPopupDialog.show(supportFragmentManager, mcPopupDialog.tag)
+        }
+        imageExport.setOnClickListener {
+            val mcPopupDialog = MemoChaPopupDialog.newInstance()
+            mcPopupDialog.setContent(String.format(getString(R.string.dialog_title_export_history),
+                    AppUtil.convertMonthNameFromCode(this@HistoryDetailsActivity, month)),
+                    getString(R.string.dialog_message_export_history), getString(R.string.button_yes), getString(R.string.button_cancel),
+                    object : MemoChaPopupDialog.MemoChaPopupDialogListener {
+                        override fun onNegativeButton() {
+
+                        }
+                        override fun onPositiveButton() {}
+                    })
+            mcPopupDialog.show(supportFragmentManager, mcPopupDialog.tag)
+        }
+        editTextSearch.setOnTouchListener { _, _ ->
+            editTextSearch.isFocusableInTouchMode = true
+            false
+        }
+        historyDetailAdapter.addOnHistoryDetailListener(
+                object : HistoryDetailAdapter.HistoryDetailListener {
+                    override fun onItemExpensesClicked(history: History) {
+                        showEditor(history)
+                    }
+                }
+        )
+    }
+
+    private fun setupRecyclerView() {
+        historyDetailAdapter = HistoryDetailAdapter(this, arrayListOf())
+        recyclerviewPaymentDetail.apply {
+            layoutManager = LinearLayoutManager(this@HistoryDetailsActivity)
+            adapter = historyDetailAdapter
+        }
+    }
+
+    private fun fetchHistoryDetails() {
         CoroutineScope(Dispatchers.IO).launch {
             history = database.historyDao().getHistory(year, month)
-            Log.d(TAG, "getHistoryDetails - histories: $history")
             if (history.isNotEmpty()) {
                 withContext(Dispatchers.Main) {
                     historyDetailAdapter.setData(history)
                     runOnUiThread {
+                        enableExportButton()
+                        disableImportButton()
                         var sum = BigInteger("0")
                         for (i in history.indices) {
                             val amount: BigInteger = history[i].amount.replace(",", "").toBigInteger()
@@ -76,14 +137,8 @@ class HistoryDetailsActivity : AppCompatActivity() {
                 }
             } else {
                 runOnUiThread {
-                    layoutExport.background =
-                        resources.getDrawable(R.drawable.background_text_export_disabled, null)
-                    layoutExport.isEnabled = false
-                    layoutExport.isFocusable = false
-                    layoutExport.isClickable = false
-                    iconExport.setImageResource(R.drawable.ic_export_gray)
-                    TextViewCompat.setTextAppearance(textViewExport, R.style.TextRegularGrey14)
-
+                    disableExportButton()
+                    enableImportButton()
                     val zero = "Rp 0"
                     textViewAmount.text = zero
                     editTextSearch.background =
@@ -95,6 +150,75 @@ class HistoryDetailsActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    private fun disableExportButton() {
+        imageExport.background =
+                resources.getDrawable(R.drawable.background_button_export_circle_pressed, null)
+        imageExport.isEnabled = false
+        imageExport.isFocusable = false
+        imageExport.isClickable = false
+        imageExport.setImageResource(R.drawable.ic_export_white)
+        TextViewCompat.setTextAppearance(textViewExport, R.style.TextRegularGrey12)
+    }
+
+    private fun disableImportButton() {
+        imageImport.background =
+                resources.getDrawable(R.drawable.background_button_export_circle_pressed, null)
+        imageImport.isEnabled = false
+        imageImport.isFocusable = false
+        imageImport.isClickable = false
+        imageImport.setImageResource(R.drawable.ic_import_white)
+        TextViewCompat.setTextAppearance(textViewImport, R.style.TextRegularGrey12)
+    }
+
+    private fun enableExportButton() {
+        imageExport.background =
+                resources.getDrawable(R.drawable.selector_button_export, null)
+        imageExport.isEnabled = true
+        imageExport.isFocusable = true
+        imageExport.isClickable = true
+        imageExport.setImageResource(R.drawable.ic_export)
+        TextViewCompat.setTextAppearance(textViewExport, R.style.TextRegularWhite12)
+    }
+
+    private fun enableImportButton() {
+        imageImport.background =
+                resources.getDrawable(R.drawable.selector_button_export, null)
+        imageImport.isEnabled = true
+        imageImport.isFocusable = true
+        imageImport.isClickable = true
+        imageImport.setImageResource(R.drawable.ic_import_teal_dark)
+        TextViewCompat.setTextAppearance(textViewImport, R.style.TextRegularWhite12)
+    }
+
+    private fun showEditor(history: History) {
+        isEditing = true
+        historyDetailsEditor = HistoryDetailsEditor(this@HistoryDetailsActivity, history, supportFragmentManager)
+                .addMonthlyExpensesEditorListener(object : HistoryDetailsEditor.MonthlyExpensesEditorListener {
+                    override fun onSaveClicked(id: Int, history: History) {
+                        updateHistory(id, history)
+                        closeEditorLayout()
+                    }
+                    override fun onDeleteClicked(id: Int) {
+                        deleteFromHistory(id)
+                        closeEditorLayout()
+                    }
+                })
+        layoutHistoryDetailsEditor.removeAllViews()
+        layoutHistoryDetailsEditor.addView(historyDetailsEditor)
+        layoutHistoryDetailsEditor.visibility = View.VISIBLE
+        layoutHistoryDetailsEditor.startAnimation(AnimationUtils.loadAnimation(applicationContext, R.anim.fade_in))
+        layoutHistoryDetailsEditor.setOnClickListener {
+            AppUtil.hideSoftKeyboard(layoutHistoryDetailsEditor, this@HistoryDetailsActivity)
+        }
+    }
+
+    private fun closeEditorLayout() {
+        isEditing = false
+        layoutHistoryDetailsEditor.visibility = View.GONE
+        layoutHistoryDetailsEditor.startAnimation(AnimationUtils.loadAnimation(applicationContext, R.anim.fade_out))
+        historyDetailsEditor = null
     }
 
     private fun updateHistory(id: Int, history: History) {
@@ -111,74 +235,15 @@ class HistoryDetailsActivity : AppCompatActivity() {
                 history.category,
                 history.method
             )
-            init()
+            fetchHistoryDetails()
         }
     }
 
     private fun deleteFromHistory(id: Int) {
         CoroutineScope(Dispatchers.IO).launch {
             database.historyDao().deleteFromHistory(id)
-            init()
+            fetchHistoryDetails()
         }
-    }
-
-    private fun initListener() {
-        historyDetailAdapter.addOnHistoryDetailListener(
-            object : HistoryDetailAdapter.HistoryDetailListener {
-                override fun onItemExpensesClicked(history: History) {
-                    showEditor(history)
-                }
-            }
-        )
-        imageMenu.setOnClickListener {
-            startActivity(Intent(this@HistoryDetailsActivity, HistoryActivity::class.java)
-                .setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP))
-            finish()
-        }
-        editTextSearch.setOnTouchListener { _, _ ->
-            editTextSearch.isFocusableInTouchMode = true
-            false
-        }
-        layoutExport.setOnClickListener {
-            //preview bottom sheet
-        }
-    }
-
-    private fun showEditor(history: History) {
-        isEditing = true
-        monthlyExpensesEditor = MonthlyExpensesEditor(this@HistoryDetailsActivity, history, supportFragmentManager)
-            .addMonthlyExpensesEditorListener(object : MonthlyExpensesEditor.MonthlyExpensesEditorListener {
-                override fun onSaveClicked(id: Int, history: History) {
-                    updateHistory(id, history)
-                    closeEditorLayout()
-                }
-                override fun onDeleteClicked(id: Int) {
-                    deleteFromHistory(id)
-                    closeEditorLayout()
-                }
-            })
-        layoutMonthlyExpensesEditor.removeAllViews()
-        layoutMonthlyExpensesEditor.addView(monthlyExpensesEditor)
-        layoutMonthlyExpensesEditor.visibility = View.VISIBLE
-        layoutMonthlyExpensesEditor.startAnimation(AnimationUtils.loadAnimation(applicationContext, R.anim.fade_in))
-        layoutMonthlyExpensesEditor.setOnClickListener {
-            AppUtil.hideSoftKeyboard(layoutMonthlyExpensesEditor, this@HistoryDetailsActivity)
-        }
-    }
-
-    private fun setupRecyclerView() {
-        historyDetailAdapter = HistoryDetailAdapter(this, arrayListOf())
-        recyclerviewPaymentDetail.apply {
-            layoutManager = LinearLayoutManager(this@HistoryDetailsActivity)
-            adapter = historyDetailAdapter
-        }
-    }
-
-    private fun closeEditorLayout() {
-        isEditing = false
-        layoutMonthlyExpensesEditor.visibility = View.GONE
-        layoutMonthlyExpensesEditor.startAnimation(AnimationUtils.loadAnimation(applicationContext, R.anim.fade_out))
-        monthlyExpensesEditor = null
     }
 
     override fun onBackPressed() {
@@ -186,7 +251,7 @@ class HistoryDetailsActivity : AppCompatActivity() {
             closeEditorLayout()
         } else {
             startActivity(Intent(this@HistoryDetailsActivity, DashboardActivity::class.java)
-                .setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP))
+                    .setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP))
             finish()
         }
     }

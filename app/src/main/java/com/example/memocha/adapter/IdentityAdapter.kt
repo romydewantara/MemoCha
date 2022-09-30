@@ -1,5 +1,6 @@
 package com.example.memocha.adapter
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -9,6 +10,7 @@ import com.example.memocha.R
 import com.example.memocha.entity.Identity
 import kotlinx.android.synthetic.main.recyclerview_item_family_data.view.*
 
+@SuppressLint("NotifyDataSetChanged")
 class IdentityAdapter(
     private val context: Context,
     private val listOfIdentity: ArrayList<Identity>,
@@ -36,6 +38,12 @@ class IdentityAdapter(
     }
 
     override fun getItemCount(): Int = listOfIdentity.size
+
+    fun setData(list: List<Identity>) {
+        listOfIdentity.clear()
+        listOfIdentity.addAll(list)
+        notifyDataSetChanged()
+    }
 
     class IdentityViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
 

@@ -15,7 +15,9 @@
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/textViewPopupTitle"
             style="@style/TextBoldBlack16"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
+            android:autoSizeTextType="uniform"
+            android:maxLines="2"
             android:layout_height="wrap_content"
             android:paddingStart="25dp"
             android:paddingEnd="25dp"

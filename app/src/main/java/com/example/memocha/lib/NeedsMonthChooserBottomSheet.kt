@@ -1,6 +1,7 @@
 package com.example.memocha.lib
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.app.Dialog
 import android.content.DialogInterface
 import android.os.Bundle
@@ -12,10 +13,14 @@ import android.widget.RelativeLayout
 import androidx.core.widget.TextViewCompat
 import com.example.memocha.R
 import com.example.memocha.utility.AppUtil
+import com.example.memocha.utility.MemoChaRoomDatabase
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kotlinx.android.synthetic.main.layout_needs_month_chooser.view.*
 import kotlinx.android.synthetic.main.layout_needs_month_chooser_bottom_sheet.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Calendar
 
@@ -26,7 +31,7 @@ class NeedsMonthChooserBottomSheet: BottomSheetDialogFragment() {
         const val TAG = "NeedsMonth"
         const val GRID_COLUMNS = 3
     }
-
+    private val database by lazy { MemoChaRoomDatabase(requireContext()) }
     private var year = SimpleDateFormat("yyyy").format(Calendar.getInstance().time)
     private val arrayListIconUsed = arrayListOf<Int>()
 
@@ -41,6 +46,9 @@ class NeedsMonthChooserBottomSheet: BottomSheetDialogFragment() {
 
         TextViewCompat.setAutoSizeTextTypeUniformWithConfiguration(
             textViewHeader, 1, 16,
+            1, TypedValue.COMPLEX_UNIT_SP)
+        TextViewCompat.setAutoSizeTextTypeUniformWithConfiguration(
+            textYear, 1, 16,
             1, TypedValue.COMPLEX_UNIT_SP)
         initListener()
     }
@@ -90,7 +98,7 @@ class NeedsMonthChooserBottomSheet: BottomSheetDialogFragment() {
             }
 
             val needsMonthChooserParams = GridLayout.LayoutParams()
-            needsMonthChooserParams.width = ((resources.displayMetrics.widthPixels / 3) - AppUtil.getWidthPercent(requireContext(), 3.5f)).toInt()
+            needsMonthChooserParams.width = ((resources.displayMetrics.widthPixels / 3) - AppUtil.getWidthPercent(requireContext(), 3.4f)).toInt()
             needsMonthChooserParams.height = ((resources.displayMetrics.heightPixels / 4)  - AppUtil.getHeightPercent(requireContext(), 2.0f)).toInt()
             needsMonthChooserParams.setGravity(Gravity.CENTER)
             needsMonthChooserParams.columnSpec = GridLayout.spec(column)
@@ -106,14 +114,34 @@ class NeedsMonthChooserBottomSheet: BottomSheetDialogFragment() {
             needsMonthChooser.imageIcon.setImageResource(AppUtil.randomIcon(requireContext(), arrayListIconUsed))
             needsMonthChooser.textViewNeedsMonthCode.text = AppUtil.convertMonthCodeFromId(i)
             needsMonthChooser.textViewNeedsMonth.text = AppUtil.getListOfMonth(requireContext())[i]
+            CoroutineScope(Dispatchers.IO).launch {
+                val needs = database.needsDao().getNeeds(AppUtil.convertMonthCodeFromId(i), year)
+                (requireContext() as Activity).runOnUiThread {
+                    if (needs.isNotEmpty()) {
+                        var pendingNeeds = 0
+                        for (j in needs.indices) {
+                            if (!needs[j].checked) {
+                                pendingNeeds++
+                            }
+                        }
+                        if (pendingNeeds > 0) {
+                            needsMonthChooser.textViewPending.visibility = View.VISIBLE
+                            needsMonthChooser.textViewPending.text = pendingNeeds.toString()
+                        }
+                    }
+                }
+            }
+            TextViewCompat.setAutoSizeTextTypeUniformWithConfiguration(needsMonthChooser.textViewNeedsMonth,
+                1, 16, 1, TypedValue.COMPLEX_UNIT_SP)
+            TextViewCompat.setAutoSizeTextTypeUniformWithConfiguration(needsMonthChooser.textViewPending,
+                1, 16, 1, TypedValue.COMPLEX_UNIT_SP)
+
             needsMonthChooser.setOnClickListener {
-                needsDateChooserListener.onDateSelected(year,
-                    AppUtil.convertMonthCodeFromName(requireContext(), AppUtil.getListOfMonth(requireContext())[i]))
+                needsDateChooserListener.onDateSelected(year, AppUtil.convertMonthCodeFromName(
+                    requireContext(), AppUtil.getListOfMonth(requireContext())[i]))
                 lottieHeader.cancelAnimation()
                 dismiss()
             }
-            TextViewCompat.setAutoSizeTextTypeUniformWithConfiguration(
-                needsMonthChooser.textViewNeedsMonth, 1, 16, 1, TypedValue.COMPLEX_UNIT_SP)
 
             needsGridLayout.viewTreeObserver.addOnGlobalLayoutListener(
                 object : ViewTreeObserver.OnGlobalLayoutListener {

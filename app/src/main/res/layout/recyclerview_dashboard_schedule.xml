@@ -4,7 +4,7 @@
     android:id="@+id/layoutFieldSchedule"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/mesty_blue"
+    android:background="@color/mesty_blue_10"
     android:orientation="vertical">
 
     <androidx.appcompat.widget.AppCompatTextView

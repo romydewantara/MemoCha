@@ -145,10 +145,9 @@
             android:background="?android:selectableItemBackground"
             android:padding="10dp"
             android:text="Time"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintBottom_toTopOf="@id/layoutExpenses"
-            app:layout_constraintLeft_toRightOf="@id/previousTime" />
+            app:layout_constraintLeft_toRightOf="@id/previousTime"
+            app:layout_constraintRight_toLeftOf="@id/nextTime"
+            app:layout_constraintTop_toBottomOf="@id/layoutClock" />
 
         <ImageView
             android:id="@+id/previousTime"
@@ -159,9 +158,8 @@
             android:src="@drawable/ic_arrow_left"
             app:layout_constraintBottom_toBottomOf="@id/time"
             app:layout_constraintDimensionRatio="1:1"
-            app:layout_constraintRight_toLeftOf="@id/time"
-            app:layout_constraintTop_toTopOf="@id/time"
-            app:layout_constraintWidth_percent=".1" />
+            app:layout_constraintLeft_toLeftOf="@id/layoutClock"
+            app:layout_constraintTop_toTopOf="@id/time" />
 
         <ImageView
             android:id="@+id/nextTime"
@@ -172,28 +170,33 @@
             android:src="@drawable/ic_arrow_right"
             app:layout_constraintBottom_toBottomOf="@id/time"
             app:layout_constraintDimensionRatio="1:1"
-            app:layout_constraintLeft_toRightOf="@id/time"
-            app:layout_constraintTop_toTopOf="@id/time"
-            app:layout_constraintWidth_percent=".1" />
+            app:layout_constraintRight_toRightOf="@id/layoutClock"
+            app:layout_constraintTop_toTopOf="@id/time" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layoutSchedule"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginTop="5dp"
-            app:layout_constraintBottom_toTopOf="@id/time"
-            app:layout_constraintTop_toBottomOf="@id/layoutClock">
+            app:layout_constraintBottom_toTopOf="@id/layoutExpenses"
+            app:layout_constraintTop_toBottomOf="@id/time">
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerviewSchedule"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:paddingTop="2dp"
+                android:visibility="visible"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:listitem="@layout/recyclerview_dashboard_schedule" />
+
+            <TextView
+                android:id="@+id/textViewEmptySchedule"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="@string/schedule_empty_list"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
