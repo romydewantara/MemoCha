@@ -113,6 +113,10 @@
     <string name="settings_background_animation">Background Animation</string>
     <string name="settings_background_animation_information">Play an animation in the background of the screen while on the Home page</string>
     <string name="settings_surname">Username</string>
+    <string name="settings_notification">Notification</string>
+    <string name="settings_notification_state">Allow Notification</string>
+    <string name="settings_notification_info">You will get a notification as a reminder to record your monthly expense</string>
+    <string name="settings_badge_state">Badge</string>
     <string name="settings_theme_autumn">Autumn</string>
     <string name="settings_theme_sakura">Sakura</string>
     <string name="settings_theme_snow">Snow</string>

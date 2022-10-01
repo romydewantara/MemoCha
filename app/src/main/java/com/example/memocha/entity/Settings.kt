@@ -14,5 +14,6 @@ data class Settings(
     val surnameState: Boolean,
     val backgroundAnimationState: Boolean,
     val backgroundMusicState: Boolean,
-    val notificationState: Boolean
+    val notificationState: Boolean,
+    val badgeState: Boolean
 )

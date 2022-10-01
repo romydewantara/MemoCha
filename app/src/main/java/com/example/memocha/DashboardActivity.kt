@@ -72,6 +72,7 @@ class DashboardActivity : AppCompatActivity() {
     private var backgroundAnimationState = false
     private var backgroundMusicState = false
     private var notificationState = false
+    private var badgeState = false
     private var surname = ""
     private var applicationTheme = ""
     private var applicationLanguage = ""
@@ -212,7 +213,7 @@ class DashboardActivity : AppCompatActivity() {
                 clockTheme = Constant.DASHBOARD_CLOCK_PRIMARY
                 val defaultSetting = Settings(0, surname, applicationTheme, applicationLanguage,
                     clockTheme, backgroundAnimation, surnameState, backgroundAnimationState,
-                    backgroundMusicState, notificationState)
+                    backgroundMusicState, notificationState, badgeState)
                 database.settingsDao().insertSetting(defaultSetting)
             } else {
                 runOnUiThread {

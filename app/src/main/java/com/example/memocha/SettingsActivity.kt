@@ -15,14 +15,11 @@ import com.example.memocha.fragment.AnalogClockFragment
 import com.example.memocha.fragment.ApplicationLanguageFragment
 import com.example.memocha.fragment.BackgroundAnimationFragment
 import com.example.memocha.fragment.SurnameFragment
+import com.example.memocha.fragment.NotificationPermissionFragment
 import com.example.memocha.lib.MemoChaPopupDialog
 import com.example.memocha.utility.Constant
 import com.example.memocha.utility.MemoChaRoomDatabase
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.activity_settings.rootLayoutSetting
-import kotlinx.android.synthetic.main.activity_settings.textViewApply
-import kotlinx.android.synthetic.main.activity_settings.textViewLanguage
-import kotlinx.android.synthetic.main.activity_settings.textViewReset
 import kotlinx.android.synthetic.main.layout_settings.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -40,6 +37,8 @@ class SettingsActivity : AppCompatActivity() {
     private var isBackgroundMusicStateChanged = false
     private var isSurnameStateChanged = false
     private var isSurnameChanged = false
+    private var isNotificationChanged = false
+    private var isBadgeChanged = false
 
     private var isSettingsChanged = false
     private var isReset = false
@@ -54,6 +53,7 @@ class SettingsActivity : AppCompatActivity() {
     private var backgroundAnimationState = false
     private var backgroundMusicState = false
     private var notificationState = false
+    private var badgeState = false
     private var surnameState = false
 
     private lateinit var settings: Settings
@@ -88,6 +88,7 @@ class SettingsActivity : AppCompatActivity() {
         textViewAnalogClock.text = clockTheme
 
         notificationState = settings.notificationState
+        badgeState = settings.badgeState
         backgroundAnimationState = settings.backgroundAnimationState
         backgroundMusicState = settings.backgroundMusicState
         surnameState = settings.surnameState
@@ -146,11 +147,20 @@ class SettingsActivity : AppCompatActivity() {
             showFragment()
         }
 
+        setting5.setOnClickListener {
+            fragment = NotificationPermissionFragment(notificationState, badgeState)
+            supportFragmentManager
+                .beginTransaction()
+                .replace(R.id.containerSetting, fragment, fragment.tag)
+                .commit()
+            showFragment()
+        }
+
         textViewApply.setOnClickListener {
             CoroutineScope(Dispatchers.IO).launch {
                 database.settingsDao().updateSetting(surname, applicationTheme, applicationLanguage,
                     clockTheme, backgroundAnimation, surnameState, backgroundAnimationState,
-                    backgroundMusicState, notificationState)
+                    backgroundMusicState, notificationState, badgeState)
                 val tempSettings = database.settingsDao().getSettings()
                 if (tempSettings != null) settings = tempSettings
                 runOnUiThread {
@@ -181,7 +191,7 @@ class SettingsActivity : AppCompatActivity() {
                             notificationState = false
                             database.settingsDao().updateSetting(surname, applicationTheme, applicationLanguage,
                                 clockTheme, backgroundAnimation, surnameState, backgroundAnimationState,
-                                backgroundMusicState, notificationState)
+                                backgroundMusicState, notificationState, badgeState)
                             val tempSettings = database.settingsDao().getSettings()
                             if (tempSettings != null) settings = tempSettings
                             runOnUiThread {
@@ -230,9 +240,8 @@ class SettingsActivity : AppCompatActivity() {
     @SuppressLint("UseCompatLoadingForDrawables")
     private fun checkApplyButtonEnable() {
         if (isApplicationThemeChanged || isApplicationLanguageChanged || isClockThemeChanged ||
-            isBackgroundAnimationStateChanged || isBackgroundAnimationChanged ||
-            isBackgroundMusicStateChanged || isSurnameStateChanged || isSurnameChanged
-        ) {
+            isBackgroundAnimationStateChanged || isBackgroundAnimationChanged || isBackgroundMusicStateChanged ||
+            isSurnameStateChanged || isSurnameChanged || isNotificationChanged || isBadgeChanged) {
             textViewApply.isEnabled = true
             textViewApply.background = applicationContext.resources.getDrawable(R.drawable.selector_button_apply_settings, null)
             isSettingsChanged = true
@@ -316,6 +325,17 @@ class SettingsActivity : AppCompatActivity() {
                     isSurnameStateChanged = surnameState != settings.surnameState
                     isSurnameChanged = surname != settings.surname
                     (fragment as SurnameFragment).removeTextChangedListener()
+                }
+                is NotificationPermissionFragment -> {
+                    notificationState = (fragment as NotificationPermissionFragment).isNotificationAllowed
+                    badgeState = (fragment as NotificationPermissionFragment).isBadgeAllowed
+                    if (notificationState) {
+                        textViewNotification.text = getString(R.string.setting_notification_on)
+                        isBadgeChanged = badgeState != settings.badgeState
+                    } else {
+                        textViewNotification.text = getString(R.string.setting_notification_off)
+                    }
+                    isNotificationChanged = notificationState != settings.notificationState
                 }
             }
             hideFragment()

@@ -114,6 +114,10 @@
     <string name="settings_background_animation">Animasi Latar Belakang</string>
     <string name="settings_background_animation_information">Memainkan animasi di latar belakang layar saat berada di Halaman Utama</string>
     <string name="settings_surname">Nama Pengguna</string>
+    <string name="settings_notification">Notifikasi</string>
+    <string name="settings_notification_state">Nyalakan Notifikasi</string>
+    <string name="settings_notification_info">Kamu akan dapat notifikasi sebagai pengingat buat rutin mencatat pengeluaran bulananmu</string>
+    <string name="settings_badge_state">Pin Notifikasi</string>
     <string name="settings_theme_autumn">Musim Gugur</string>
     <string name="settings_theme_sakura">Bunga Sakura</string>
     <string name="settings_theme_snow">Salju</string>
