@@ -76,7 +76,7 @@
                 android:layout_marginTop="3dp"
                 android:autoSizeTextType="uniform"
                 android:maxLines="1"
-                android:text="Export"
+                android:text="@string/button_export"
                 android:gravity="center"
                 app:layout_constraintTop_toBottomOf="@id/imageExport"
                 app:layout_constraintLeft_toLeftOf="parent"
@@ -111,7 +111,7 @@
                 android:layout_marginTop="3dp"
                 android:autoSizeTextType="uniform"
                 android:maxLines="1"
-                android:text="Import"
+                android:text="@string/button_import"
                 android:gravity="center"
                 app:layout_constraintTop_toBottomOf="@id/imageImport"
                 app:layout_constraintLeft_toLeftOf="parent"
@@ -243,5 +243,27 @@
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <RelativeLayout
+        android:id="@+id/historyDetailsLoading"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/black_60"
+        android:clickable="true"
+        android:gravity="center"
+        android:visibility="gone">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textViewLoading"
+            style="@style/TextRegularWhite14"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingStart="20dp"
+            android:paddingTop="15dp"
+            android:paddingEnd="20dp"
+            android:paddingBottom="15dp"
+            android:text="@string/loading" />
+    </RelativeLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

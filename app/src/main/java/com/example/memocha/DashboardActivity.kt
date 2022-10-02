@@ -141,6 +141,7 @@ class DashboardActivity : AppCompatActivity() {
                 iconArrows.isEnabled = false
                 loveMessage.visibility = GONE
                 layoutClock.visibility = GONE
+                textGreetings.visibility = INVISIBLE
                 time.visibility = INVISIBLE //only this view is INVISIBLE bcs give space of view to CurrentDate
                 previousTime.visibility = GONE
                 nextTime.visibility = GONE
@@ -154,6 +155,7 @@ class DashboardActivity : AppCompatActivity() {
                 editTextNote.isFocusable = false
                 loveMessage.visibility = VISIBLE
                 layoutClock.visibility = VISIBLE
+                textGreetings.visibility = VISIBLE
                 time.visibility = VISIBLE
                 previousTime.visibility = VISIBLE
                 nextTime.visibility = VISIBLE
@@ -221,7 +223,7 @@ class DashboardActivity : AppCompatActivity() {
                     if (settings.applicationLanguage == getString(R.string.setting_language_bahasa))
                         textDate.text = SimpleDateFormat("EEEE, dd MMMM yyyy").format(Calendar.getInstance().time)
                     if (settings.surnameState) {
-                        textGreetings.text = String.format(getString(R.string.dasboard_greetings), "Morning", settings.surname)
+                        textGreetings.text = String.format(getString(R.string.dasboard_greetings), AppUtil.getTimesName(this@DashboardActivity), settings.surname)
                         textGreetings.visibility = VISIBLE
                     } else textGreetings.visibility = GONE
                     if (settings.backgroundAnimationState) {
@@ -377,7 +379,6 @@ class DashboardActivity : AppCompatActivity() {
             //placeHolderLayout.visibility = VISIBLE
         }
         imageAdd.setOnClickListener {
-            AppUtil.hideSoftKeyboard(constraintActivityMain, applicationContext)
             CoroutineScope(Dispatchers.IO).launch {
                 database.historyDao().insert(
                     History(
@@ -404,8 +405,11 @@ class DashboardActivity : AppCompatActivity() {
                     editTextNote.setText("")
                     textViewCategory.text = getString(R.string.category_others)
                     layoutPaymentMethod.setSelection(0)
+                    editTextGoods.requestFocus()
                     Snackbar.make(constraintActivityMain, getString(R.string.snackbar_monthly_expenses_added),
-                        Snackbar.LENGTH_LONG).setAction(getString(R.string.snackbar_button_dismiss)) {}.show()
+                        Snackbar.LENGTH_LONG).setAction(getString(R.string.snackbar_button_dismiss)) {
+                            AppUtil.hideSoftKeyboard(constraintActivityMain, this@DashboardActivity)
+                    }.show()
                 }
             }
         }

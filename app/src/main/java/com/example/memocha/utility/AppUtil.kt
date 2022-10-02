@@ -5,23 +5,28 @@ import android.content.Context
 import android.graphics.Rect
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.GradientDrawable
+import android.util.Log
 import android.util.TypedValue
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import com.example.memocha.R
-import java.util.Random
 import java.io.BufferedReader
 import java.io.File
 import java.io.FileReader
 import java.io.FileWriter
 import java.io.InputStream
 import java.io.IOException
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Random
+import kotlin.collections.ArrayList
 
-@SuppressLint("NewApi", "ResourceType")
+@SuppressLint("NewApi", "ResourceType", "SimpleDateFormat")
 class AppUtil {
     companion object {
-        fun writeFileToStorage(c: Context, folderName: String, fileName: String, body: String) {
+        fun writeFileToStorage(c: Context, folderName: String, fileName: String, body: String) : String {
             val dir = File(c.externalCacheDir?.path + File.separator + folderName + File.separator)
+            Log.d("external", "writeFileToStorage - ${c.externalCacheDir?.path}")
             if (!dir.exists()) {
                 dir.mkdir()
             }
@@ -31,9 +36,11 @@ class AppUtil {
                 fileWriter.append(body)
                 fileWriter.flush()
                 fileWriter.close()
+                return dir.toString()
             } catch (e: Exception) {
                 e.printStackTrace()
             }
+            return ""
         }
         fun readFileFromStorage(c: Context, folderName: String, fileName: String): String {
             val file = File(c.externalCacheDir?.path + File.separator + folderName + File.separator, "$fileName.txt")
@@ -209,6 +216,15 @@ class AppUtil {
         fun convertCardinalNumber(number: String): String {
             return ""
         }
+        fun getTimesName(c: Context): String {
+            val sdf = SimpleDateFormat("HH:mm").format(Calendar.getInstance().time).toString()
+            return when (sdf.split(":")[0].toInt()) {
+                in 0..8 -> { c.getString(R.string.dasboard_time_morning) }
+                in 9..14 -> { c.getString(R.string.dasboard_time_afternoon) }
+                in 15..18 -> { c.getString(R.string.dasboard_time_evening) }
+                else -> c.getString(R.string.dasboard_time_night)
+            }
+        }
         fun randomIcon(context: Context, arrayListIconUsed: ArrayList<Int>): Int {
             val icon: Int
             val icons = arrayListOf<Int>()
@@ -240,6 +256,16 @@ class AppUtil {
         fun randomWisdom(c: Context, arrayListWisdomUsed: ArrayList<String>): String {
             val wisdom: String
             val listOfWisdom = arrayListOf<String>()
+            listOfWisdom.add(c.getString(R.string.dashboard_wisdom_index_0))
+            listOfWisdom.add(c.getString(R.string.dashboard_wisdom_index_1))
+            listOfWisdom.add(c.getString(R.string.dashboard_wisdom_index_2))
+            listOfWisdom.add(c.getString(R.string.dashboard_wisdom_index_3))
+            listOfWisdom.add(c.getString(R.string.dashboard_wisdom_index_4))
+            listOfWisdom.add(c.getString(R.string.dashboard_wisdom_index_5))
+            listOfWisdom.add(c.getString(R.string.dashboard_wisdom_index_6))
+            listOfWisdom.add(c.getString(R.string.dashboard_wisdom_index_7))
+            listOfWisdom.add(c.getString(R.string.dashboard_wisdom_index_8))
+            listOfWisdom.add(c.getString(R.string.dashboard_wisdom_index_9))
             listOfWisdom.add(c.getString(R.string.dashboard_wisdom_1))
             listOfWisdom.add(c.getString(R.string.dashboard_wisdom_2))
             listOfWisdom.add(c.getString(R.string.dashboard_wisdom_3))
@@ -286,7 +312,7 @@ class AppUtil {
 
             val random = Random()
             wisdom = listOfWisdom[random.nextInt(listOfWisdom.size)]
-            if (arrayListWisdomUsed.size >= listOfWisdom.size) arrayListWisdomUsed.clear()
+            if (arrayListWisdomUsed.size == listOfWisdom.size) arrayListWisdomUsed.clear()
             if (arrayListWisdomUsed.isNotEmpty()) {
                 for (i in 0 until arrayListWisdomUsed.size) {
                     if (wisdom == arrayListWisdomUsed[i]) {

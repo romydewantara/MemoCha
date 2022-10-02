@@ -8,6 +8,7 @@
     <!-- C O M M O N -->
     <string name="button_retry">Retry</string>
     <string name="webview_error_load">Please check your internet connection and reload the page.\nError code: %s - %s</string>
+    <string name="loading">Loading, please wait…</string>
 
     <!-- M O N T H S -->
     <string name="month_january">January</string>
@@ -28,6 +29,7 @@
     <string name="button_add">Add</string>
     <string name="button_save">Save</string>
     <string name="button_yes">Yes</string>
+    <string name="button_no_thanks">No, thanks</string>
     <string name="button_cancel">Cancel</string>
     <string name="button_delete">Delete</string>
     <string name="button_import">Import</string>
@@ -85,8 +87,8 @@
     <string name="dasboard_expenses_category_item">Others</string>
     <string name="dasboard_expenses_title_goods">Goods or Service</string>
     <string name="dasboard_expenses_title_amount">Price</string>
-    <string name="dasboard_expenses_hint_goods">Ex: Herbs, Service, etc…</string>
-    <string name="dasboard_expenses_hint_amount">Ex: 25.000</string>
+    <string name="dasboard_expenses_hint_goods">e.g: Herbs, Service, etc…</string>
+    <string name="dasboard_expenses_hint_amount">e.g: 25.000</string>
     <string name="dasboard_expenses_hint_note">Notes (Optional)</string>
     <string name="dasboard_expenses_button_add">Add</string>
 
@@ -124,7 +126,7 @@
     <string name="settings_music">Background Music Theme</string>
     <string name="settings_music_information">Plays background music only when on Home Page, Family Identity Page, and Needs List Page</string>
     <string name="settings_surname_state">Show Surname</string>
-    <string name="settings_hint_surname">Ex: Ocha</string>
+    <string name="settings_hint_surname">e.g: Rosyadah Assa\'diyah</string>
     <string name="settings_surname_info">It\'s better to use only letters or numbers, i.e: Shindra/Shindra17. The name will be displayed on the Home Page as the username and the column should be filled-in, if the column is empty it will automatically will turn off \'Show Surname\' status</string>
     <string name="settings_button_reset">Reset</string>
     <string name="settings_button_apply">Apply</string>
@@ -134,16 +136,18 @@
 
     <!-- D I A L O G -->
     <string name="dialog_title_warning">Warning!</string>
-    <string name="dialog_title_information">Information!</string>
+    <string name="dialog_title_information">Information</string>
     <string name="dialog_title_delete_from_history">Remove From History?</string>
     <string name="dialog_title_delete_all_schedule">Remove All Schedule?</string>
     <string name="dialog_title_delete_needs">Remove \"%s\"?</string>
     <string name="dialog_title_import_schedule">Import default \"%s Schedules\"?</string>
-    <string name="dialog_title_export_history">Export %s\' Expense History?</string>
+    <string name="dialog_title_export_history">Export %s\'s Expense History?</string>
+    <string name="dialog_message_permission">Some in-app features may not work properly because they contain denied permissions</string>
+    <string name="dialog_message_schedule_filled">You can only import the default schedule only if your schedule list is empty</string>
     <string name="dialog_message_delete_all_schedule">If you delete the entire schedule it will be deleted permanently</string>
     <string name="dialog_message_delete_needs">Be careful, it will be deleted permanently!</string>
     <string name="dialog_message_import_schedule">This action can make your list contain the default schedule</string>
-    <string name="dialog_message_import_history">This action can make your list contain the custom history details</string>
+    <string name="dialog_message_import_history">It needs a file containing text with a JSON structure format so that it can be applied to your expense list history</string>
     <string name="dialog_message_export_history">Are you sure want to export this record?</string>
     <string name="dialog_message_app_theme">Sorry, this feature is not ready yet</string>
     <string name="dialog_message_ask_reset">Are you sure you want to reset to default?</string>
@@ -161,6 +165,10 @@
     <string name="snackbar_monthly_expenses_added">New data has been added to monthly expense history</string>
     <string name="snackbar_monthly_expenses_updated">Data has been updated</string>
     <string name="snackbar_monthly_expenses_deleted">Data has been deleted from history</string>
+    <string name="snackbar_monthly_expenses_exported">%s\' expenses has been exported to %s</string>
+    <string name="snackbar_monthly_expenses_exported_failed">Failed to exported %s\'s expenses to %s</string>
+    <string name="snackbar_monthly_expenses_imported">Data successfully imported</string>
+    <string name="snackbar_button_open">OPEN</string>
     <string name="snackbar_button_dismiss">DISMISS</string>
 
     <string name="needs_date_chooser_text_header">\"Dan janganlah kamu menghambur–hamburkan (hartamu) secara boros. Sesungguhnya pemboros-pemboros itu adalah saudara-saudara syaitan dan syaitan itu adalah sangat ingkar kepada Tuhannya\". (QS. 17: 26─27)</string>
@@ -170,7 +178,7 @@
     <string name="needs_notification_page">Needs list items outside of the current month should not be added new item.</string>
     <string name="needs_date">@string/secret_letter_calendar</string>
     <string name="needs_today_list">Total of Needs: %s</string>
-    <string name="needs_hint_goods">Ex: Ice Cream, Glass, etc…</string>
+    <string name="needs_hint_goods">e.g: Ice Cream, Glass, etc…</string>
     <string name="needs_text_length_limit">Text length has reached the maximum limit (max. 400 characters), your text length: %s</string>
 
     <!-- I D E N T I T Y -->
@@ -210,6 +218,16 @@
     <string name="schedule_bs_action_list">Action List</string>
     <string name="schedule_bs_type_here">Type here…</string>
 
+    <string name="dashboard_wisdom_index_0">"Sesungguhnya setiap agama memiliki akhlak, dan akhlak Islami adalah rasa malu." (HR. Ibnu Majah)</string>
+    <string name="dashboard_wisdom_index_1">"Sesungguhnya Allah Maha Pemurah menyukai kedermawanan dan akhlak yang mulia serta membenci akhlak yang rendah/hina." (HR. Bukhari &amp; Muslim)</string>
+    <string name="dashboard_wisdom_index_2">"Sesungguhnya yang terbaik di antara kalian adalah yang paling baik akhlaknya." (HR. Ahmad)</string>
+    <string name="dashboard_wisdom_index_3">"Sesungguhnya kelembutan itu tidak berada pada sesuatu kecuali menghiasinya dan tidak dicabut dari sesuatu kecuali memperburuknya." (HR. Muslim)</string>
+    <string name="dashboard_wisdom_index_4">"Sesungguhnya seorang mukmin akan mendapatkan kedudukan ahli puasa dan shalat dengan ahlak baiknya." (HR. Abu Daud)</string>
+    <string name="dashboard_wisdom_index_5">"Tidaklah seorang diantara kalian dikatakan beriman hingga ia mencintai untuk saudaranya apa-apa yang ia sukai untuk dirinya sendiri." (HR. Bukhari)</string>
+    <string name="dashboard_wisdom_index_6">"Rasulullah shallallahu ‘alaihi wasallam bersabda: Perbanyaklah mengingat pemutuskan kelezatan, yaitu kematian…" (HR. Ibnu Hibban)</string>
+    <string name="dashboard_wisdom_index_7">"Kematian mendadak adalah istirahat bagi mukmin dan penyesalan bagi orang kafir." (HR. Ahmad)</string>
+    <string name="dashboard_wisdom_index_8">"Jika ada orang yang meninggal dunia, malaikat berkata apa yang telah lalu(amal), sedangkan manusia membicarakan apa yang ia tinggalkan(warisan)." (HR. Imam Baihaqi)</string>
+    <string name="dashboard_wisdom_index_9">"Janganlah seseorang di antara kalian meninggal dunia, kecuali dalam keadaan berbaik sangka terhadap Allah." (HR. Muslim)</string>
     <string name="dashboard_wisdom_1">"Tiada manfaat dari uang jika tidak dibelanjakan di jalan Allah. Tiada kebaikan dalam diri seseorang jika kebodohannya mengalahkan kesabarannya."\n(Abu Bakr Ash-Shiddiq)</string>
     <string name="dashboard_wisdom_2">"Sesama Muslim seharusnya hidup seperti layaknya saudara."\n(Abu Bakr Ash-Shiddiq)</string>
     <string name="dashboard_wisdom_3">"Kami diuji dengan kesusahan, maka kami sabar, tetapi ketika diuji dengan kesenangan (kemewahan), hampir-hampir kami tidak sabar."\n(Abu Bakr Ash-Shiddiq)</string>

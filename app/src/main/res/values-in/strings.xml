@@ -8,6 +8,7 @@
     <!-- C O M M O N -->
     <string name="button_retry">Coba Ulangi</string>
     <string name="webview_error_load">Silakan periksa koneksi internet kamu dan muat ulang halaman ini.\nKode kesalahan: %s - %s</string>
+    <string name="loading">Lagi memuat, tunggu sebentar ya…</string>
 
     <!-- M O N T H S -->
     <string name="month_january">Januari</string>
@@ -28,6 +29,7 @@
     <string name="button_add">Tambah</string>
     <string name="button_save">Simpan</string>
     <string name="button_yes">Ya</string>
+    <string name="button_no_thanks">Tidak, terima kasih</string>
     <string name="button_cancel">Batal</string>
     <string name="button_delete">Hapus</string>
     <string name="button_import">Impor</string>
@@ -72,11 +74,11 @@
 
     <!-- D A S H B O A R D -->
     <string name="dasboard">Tanggal</string>
-    <string name="dasboard_greetings">Selamat %s, %s!</string>
+    <string name="dasboard_greetings">Met %s, %s!</string>
     <string name="dasboard_time_morning">pagi</string>
     <string name="dasboard_time_afternoon">siang</string>
     <string name="dasboard_time_evening">sore</string>
-    <string name="dasboard_time_night">malam</string>
+    <string name="dasboard_time_night">malem</string>
     <string name="dasboard_book">Buku</string>
     <string name="dasboard_identity">Identitas</string>
     <string name="dasboard_needs">Kebutuhan</string>
@@ -125,7 +127,7 @@
     <string name="settings_music">Tema Musik Latar Belakang</string>
     <string name="settings_music_information">Menyetel musik latar belakang hanya saat berada di Halaman Utama, Halaman Identitas Keluarga, dan Halaman Daftar Kebutuhan</string>
     <string name="settings_surname_state">Tampilkan Nama Panggilanmu</string>
-    <string name="settings_hint_surname">Contoh: Ocha</string>
+    <string name="settings_hint_surname">Contoh: Rosyadah Assa\'diyah</string>
     <string name="settings_surname_info">Sebaiknya gunakan huruf atau angka aja ya, contoh: Shindra/Shindra17. Nama diatas akan ditampilin di Halaman Utama sebagai nama pengguna dan kolom harus diisi, kalau kolom kamu kosong maka status \'Tampilan Nama Panggilanmu\' secara otomatis akan dimatikan</string>
     <string name="settings_button_reset">Atur Ulang</string>
     <string name="settings_button_apply">Terapkan</string>
@@ -139,12 +141,14 @@
     <string name="dialog_title_delete_from_history">Hapus dari Riwayat?</string>
     <string name="dialog_title_delete_all_schedule">Remove All Schedule?</string>
     <string name="dialog_title_delete_needs">Hapus \"%s\"?</string>
-    <string name="dialog_title_import_schedule">Impor Jadwal Default \"%s\"?</string>
+    <string name="dialog_title_import_schedule">Impor Jadwal Bawaan \"%s\"?</string>
     <string name="dialog_title_export_history">Ekspor Pengeluaran Bulan %s?</string>
+    <string name="dialog_message_permission">Beberapa fitur dalam aplikasi mungkin tidak berfungsi dengan benar karena berisi izin yang ditolak</string>
+    <string name="dialog_message_schedule_filled">Kamu hanya bisa melakukan impor jadwal bawaan hanya saat daftar jadwalmu masih kosong</string>
     <string name="dialog_message_delete_all_schedule">If you delete the entire schedule it will be deleted permanently</string>
     <string name="dialog_message_delete_needs">Hati-hati, ini akan menghapus item kamu secara permanen!</string>
-    <string name="dialog_message_import_schedule">Aksi ini bisa membuat daftarmu berisi jadwal default</string>
-    <string name="dialog_message_import_history">Dibutuhin file dengan struktur teks JSON buat aksi ini</string>
+    <string name="dialog_message_import_schedule">Aksi ini bisa membuat daftarmu berisi jadwal bawaan</string>
+    <string name="dialog_message_import_history">Dibutuhin file berisi teks dengan format struktur JSON supaya bisa diterapin ke daftar riwayat pengeluaranmu</string>
     <string name="dialog_message_export_history">File hasil ekspor akan masuk ke folder Memori Internal kamu</string>
     <string name="dialog_message_app_theme">Sorry, fitur ini belum siap</string>
     <string name="dialog_message_ask_reset">Apa kamu yakin mau kembali ke pengaturan awal?</string>
@@ -161,6 +165,10 @@
     <string name="snackbar_monthly_expenses_added">Data baru udah ditambahin ke riwayat pengeluaran bulanan</string>
     <string name="snackbar_monthly_expenses_updated">Data udah dirubah</string>
     <string name="snackbar_monthly_expenses_deleted">Data udah dihapus dari riwayat</string>
+    <string name="snackbar_monthly_expenses_exported">Pengeluaran bulan %s udah diekspor ke %s</string>
+    <string name="snackbar_monthly_expenses_exported_failed">Gagal ekspor pengeluaran bulan %s ke %s</string>
+    <string name="snackbar_monthly_expenses_imported">Data berhasil diimpor</string>
+    <string name="snackbar_button_open">BUKA</string>
     <string name="snackbar_button_dismiss">TUTUP</string>
 
     <string name="needs_date_chooser_text_header">\"Dan janganlah kamu menghambur–hamburkan (hartamu) secara boros. Sesungguhnya pemboros-pemboros itu adalah saudara-saudara syaitan dan syaitan itu adalah sangat ingkar kepada Tuhannya\". (QS. 17: 26─27)</string>
@@ -210,6 +218,16 @@
     <string name="schedule_bs_action_list">Daftar Aktivitas</string>
     <string name="schedule_bs_type_here">Ketik disini…</string>
 
+    <string name="dashboard_wisdom_index_0">"Sesungguhnya setiap agama memiliki akhlak, dan akhlak Islami adalah rasa malu." (HR. Ibnu Majah)</string>
+    <string name="dashboard_wisdom_index_1">"Sesungguhnya Allah Maha Pemurah menyukai kedermawanan dan akhlak yang mulia serta membenci akhlak yang rendah/hina." (HR. Bukhari &amp; Muslim)</string>
+    <string name="dashboard_wisdom_index_2">"Sesungguhnya yang terbaik di antara kalian adalah yang paling baik akhlaknya." (HR. Ahmad)</string>
+    <string name="dashboard_wisdom_index_3">"Sesungguhnya kelembutan itu tidak berada pada sesuatu kecuali menghiasinya dan tidak dicabut dari sesuatu kecuali memperburuknya." (HR. Muslim)</string>
+    <string name="dashboard_wisdom_index_4">"Sesungguhnya seorang mukmin akan mendapatkan kedudukan ahli puasa dan shalat dengan ahlak baiknya." (HR. Abu Daud)</string>
+    <string name="dashboard_wisdom_index_5">"Tidaklah seorang diantara kalian dikatakan beriman hingga ia mencintai untuk saudaranya apa-apa yang ia sukai untuk dirinya sendiri." (HR. Bukhari)</string>
+    <string name="dashboard_wisdom_index_6">"Rasulullah shallallahu ‘alaihi wasallam bersabda: Perbanyaklah mengingat pemutuskan kelezatan, yaitu kematian…" (HR. Ibnu Hibban)</string>
+    <string name="dashboard_wisdom_index_7">"Kematian mendadak adalah istirahat bagi mukmin dan penyesalan bagi orang kafir." (HR. Ahmad)</string>
+    <string name="dashboard_wisdom_index_8">"Jika ada orang yang meninggal dunia, malaikat berkata apa yang telah lalu(amal), sedangkan manusia membicarakan apa yang ia tinggalkan(warisan)." (HR. Imam Baihaqi)</string>
+    <string name="dashboard_wisdom_index_9">"Janganlah seseorang di antara kalian meninggal dunia, kecuali dalam keadaan berbaik sangka terhadap Allah." (HR. Muslim)</string>
     <string name="dashboard_wisdom_1">"Tiada manfaat dari uang jika tidak dibelanjakan di jalan Allah. Tiada kebaikan dalam diri seseorang jika kebodohannya mengalahkan kesabarannya."\n(Abu Bakr Ash-Shiddiq)</string>
     <string name="dashboard_wisdom_2">"Sesama Muslim seharusnya hidup seperti layaknya saudara."\n(Abu Bakr Ash-Shiddiq)</string>
     <string name="dashboard_wisdom_3">"Kami diuji dengan kesusahan, maka kami sabar, tetapi ketika diuji dengan kesenangan (kemewahan), hampir-hampir kami tidak sabar."\n(Abu Bakr Ash-Shiddiq)</string>

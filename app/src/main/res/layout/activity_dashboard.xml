@@ -420,7 +420,7 @@
             android:paddingTop="15dp"
             android:paddingEnd="20dp"
             android:paddingBottom="15dp"
-            android:text="Loading, please wait…" />
+            android:text="@string/loading" />
 
     </RelativeLayout>
 

@@ -39,6 +39,8 @@ class HistoryDetailAdapter(
             context.getString(R.string.method_debit) -> { holder.itemView.iconMethod.setImageResource(R.drawable.ic_debit) }
             context.getString(R.string.method_transfer) -> { holder.itemView.iconMethod.setImageResource(R.drawable.ic_transfer) }
         }
+        if (histories[position].description.isEmpty()) holder.itemView.textViewDescription.visibility = View.GONE
+        else holder.itemView.textViewDescription.visibility = View.VISIBLE
         TextViewCompat.setAutoSizeTextTypeUniformWithConfiguration(
             holder.itemView.textViewGoods, 1, 14, 1, TypedValue.COMPLEX_UNIT_SP)
         TextViewCompat.setAutoSizeTextTypeUniformWithConfiguration(

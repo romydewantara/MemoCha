@@ -46,9 +46,9 @@
     <View
         android:id="@+id/popupUpperLine"
         android:layout_width="match_parent"
-        android:layout_height=".5dp"
+        android:layout_height=".4dp"
         android:layout_below="@id/upper"
-        android:background="@color/gray" />
+        android:background="@color/pewter" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/negativeButton"
@@ -67,9 +67,9 @@
     <View
         android:id="@+id/negativeButtonLine"
         android:layout_width="match_parent"
-        android:layout_height=".5dp"
+        android:layout_height=".4dp"
         android:layout_below="@id/negativeButton"
-        android:background="@color/gray" />
+        android:background="@color/pewter" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/positiveButton"

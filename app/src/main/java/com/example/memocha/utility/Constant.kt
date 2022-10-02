@@ -18,7 +18,7 @@ class Constant {
         const val DASHBOARD_CLOCK_RED_ORANGE = "Red Orange"
         const val DASHBOARD_CLOCK_PINK = "Pink"
 
-        const val BACKGROUND_MUSIC_AUTUMN_THEME = "hm_sakura_theme.mp3" //change this
+        const val BACKGROUND_MUSIC_AUTUMN_THEME = "hm_autumn_theme.mp3"
         const val BACKGROUND_MUSIC_SAKURA_THEME = "hm_sakura_theme.mp3"
         const val BACKGROUND_MUSIC_SNOW_THEME = "hm_winter_theme.mp3"
         const val BACKGROUND_MUSIC_SUMMER_THEME = "hm_summer_theme.mp3"

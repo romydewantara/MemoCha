@@ -69,7 +69,6 @@ class ScheduleActivity : AppCompatActivity(), ScheduleAdapter.ScheduleAdapterLis
                     getString(R.string.dialog_message_import_schedule), getString(R.string.button_import), getString(R.string.button_cancel),
                     object : MemoChaPopupDialog.MemoChaPopupDialogListener {
                         override fun onNegativeButton() {
-                            //AppUtil.writeFileToStorage(this@ScheduleActivity, Constant.FOLDER_NAME_SCHEDULES, currentTab, Gson().toJson(schedules))
                             val defSchedule = AppUtil.readTextFromAssets(this@ScheduleActivity, Constant.FOLDER_ASSETS_FILE_SCHEDULE)
                             val schedules = JSONObject(defSchedule).getJSONObject(SCHEDULES)
                             val array = schedules.getJSONArray(currentTab)
@@ -92,7 +91,7 @@ class ScheduleActivity : AppCompatActivity(), ScheduleAdapter.ScheduleAdapterLis
                         override fun onPositiveButton() {}
                     })
             } else {
-                kPopupDialog.setContent("", "Your \"$currentTab Schedules\" is already filled with schedule",
+                kPopupDialog.setContent("", getString(R.string.dialog_message_schedule_filled),
                     "", getString(R.string.button_ok), object : MemoChaPopupDialog.MemoChaPopupDialogListener {
                         override fun onNegativeButton() {}
                         override fun onPositiveButton() {}
