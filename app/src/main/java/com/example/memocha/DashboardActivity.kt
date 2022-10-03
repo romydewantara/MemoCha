@@ -248,7 +248,6 @@ class DashboardActivity : AppCompatActivity() {
                                 Constant.DASHBOARD_BACKGROUND_ANIMATION_SNOW -> {fileName = Constant.BACKGROUND_MUSIC_SNOW_THEME}
                                 Constant.DASHBOARD_BACKGROUND_ANIMATION_SUMMER -> {fileName = Constant.BACKGROUND_MUSIC_SUMMER_THEME}
                             }
-                            Log.d(TAG, "checkSettings: fileName: $fileName")
                             val afd : AssetFileDescriptor = assets.openFd(fileName)
                             mediaPlayer.setDataSource(afd.fileDescriptor, afd.startOffset, afd.length)
                             mediaPlayer.setVolume(1f, 1f)

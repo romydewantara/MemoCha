@@ -5,7 +5,6 @@ import android.content.Context
 import android.graphics.Rect
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.GradientDrawable
-import android.util.Log
 import android.util.TypedValue
 import android.view.View
 import android.view.inputmethod.InputMethodManager
@@ -26,7 +25,6 @@ class AppUtil {
     companion object {
         fun writeFileToStorage(c: Context, folderName: String, fileName: String, body: String) : String {
             val dir = File(c.externalCacheDir?.path + File.separator + folderName + File.separator)
-            Log.d("external", "writeFileToStorage - ${c.externalCacheDir?.path}")
             if (!dir.exists()) {
                 dir.mkdir()
             }

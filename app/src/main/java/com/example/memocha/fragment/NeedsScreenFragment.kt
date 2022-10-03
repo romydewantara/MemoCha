@@ -7,7 +7,6 @@ import android.graphics.Rect
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.util.TypedValue
 import android.view.View
 import android.view.ViewTreeObserver
@@ -26,7 +25,6 @@ import com.example.memocha.lib.NeedsItem
 import com.example.memocha.lib.NeedsMonthChooserBottomSheet
 import com.example.memocha.utility.AppUtil
 import com.example.memocha.utility.MemoChaRoomDatabase
-import com.google.gson.Gson
 import kotlinx.android.synthetic.main.layout_fragment_needs.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -37,10 +35,6 @@ import java.util.Date
 
 @SuppressLint("ClickableViewAccessibility", "SimpleDateFormat")
 class NeedsScreenFragment : Fragment(R.layout.layout_fragment_needs) {
-
-    companion object {
-        const val TAG = "Needs"
-    }
 
     private val database by lazy { MemoChaRoomDatabase(requireContext()) }
     private var previousYLayout = 0
@@ -54,7 +48,6 @@ class NeedsScreenFragment : Fragment(R.layout.layout_fragment_needs) {
     private var dataSize = 0
     private var dataSizeCount = 0
     private var isInit = true
-    private var isFirstNeedsItem = true
 
     private lateinit var invisibleBackground: View
     private lateinit var needsScreenListener: NeedsScreenListener
@@ -137,7 +130,6 @@ class NeedsScreenFragment : Fragment(R.layout.layout_fragment_needs) {
                 val needsObj = Needs(0, editTextNeedsItem.text.toString().trim(), currentTime,
                     dayOfMonth, month, year, isDateShown, false, null)
                 CoroutineScope(Dispatchers.IO).launch {
-                    Log.d("Needs", "initListener - needs: ${Gson().toJson(needsObj)}")
                     database.needsDao().insert(needsObj)
                     val needs = database.needsDao().getNeeds(currentMonth, currentYear)
                     (requireContext() as Activity).runOnUiThread {
@@ -153,7 +145,7 @@ class NeedsScreenFragment : Fragment(R.layout.layout_fragment_needs) {
             editTextNeedsItem.setText("")
         }
         iconAddImage.setOnClickListener {
-            //editTextNeedsItem.setText(Constant.TEST_TEXT)
+            Toast.makeText(context, getString(R.string.dialog_message_app_theme), Toast.LENGTH_SHORT).show()
         }
         imageMenu.setOnClickListener {
             needsOverlayLayout.visibility = View.VISIBLE
@@ -161,7 +153,6 @@ class NeedsScreenFragment : Fragment(R.layout.layout_fragment_needs) {
             needsMonthChooserBottomSheet.addOnNeedsDateChooserListener(
                 object : NeedsMonthChooserBottomSheet.NeedsDateChooserListener {
                     override fun onDateSelected(year: String, month: String) {
-                        currentDay = ""
                         val date = "${AppUtil.convertMonthNameFromCode(requireContext(), month)} ($year)"
                         textViewNeedsDate.text = date
                         onBackPressed()
@@ -216,12 +207,10 @@ class NeedsScreenFragment : Fragment(R.layout.layout_fragment_needs) {
     }
 
     private fun setScrollViewNeedsObserver() {
-        Log.d(TAG, "setScrollViewNeedsObserver")
         scrollViewNeeds.setOnTouchListener { _, _ -> false }
         scrollViewNeeds.viewTreeObserver.addOnScrollChangedListener(object : ViewTreeObserver.OnScrollChangedListener {
             override fun onScrollChanged() {
                 val view = scrollViewNeeds.getChildAt(scrollViewNeeds.childCount - 1)
-                Log.d(TAG, "setScrollViewNeedsObserver - view height: ${view.height} | params: ${view.layoutParams.height}")
                 if (view.height > resources.displayMetrics.heightPixels) {
                     val topDetector = scrollViewNeeds.scrollY
                     val bottomDetector: Int = view.bottom - (scrollViewNeeds.height + scrollViewNeeds.scrollY)
@@ -292,6 +281,7 @@ class NeedsScreenFragment : Fragment(R.layout.layout_fragment_needs) {
         needsContainerHeight = 0
         previousTextLength = 0
         scrollDuration = 0L
+        currentDay = ""
 
         //reset container height size
         containerNeedsContent.removeAllViews()
@@ -301,7 +291,6 @@ class NeedsScreenFragment : Fragment(R.layout.layout_fragment_needs) {
     }
 
     private fun generateNeedsItem(needs: Needs) {
-        Log.d(TAG, "generateNeedsItem - needs: ${Gson().toJson(needs)}")
         val needsItem = NeedsItem(requireContext()).getInstance(needs,
             object : NeedsItem.NeedsItemListener {
                 override fun onChecked(id: Int, checked: Boolean) {
@@ -339,14 +328,12 @@ class NeedsScreenFragment : Fragment(R.layout.layout_fragment_needs) {
                     val containerParams = FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT)
                     containerParams.height = needsContainerHeight + AppUtil.dpToPx(requireContext(), 10f)
                     containerNeedsContent.layoutParams = containerParams
-                    Log.d(TAG, "onGlobalLayout - container height: ${containerNeedsContent.height} | params: ${containerNeedsContent.layoutParams.height} | measured: ${containerNeedsContent.measuredHeight}")
 
                     val scrollBounds = Rect()
                     scrollViewNeeds.getHitRect(scrollBounds)
                     val invisibleBackgroundParams = RelativeLayout.LayoutParams(0, (containerNeedsContent.layoutParams.height / 2))
                     invisibleBackground.layoutParams = invisibleBackgroundParams
 
-                    Log.d(TAG, "onGlobalLayout - isInit: $isInit | dataSizeCount: $dataSizeCount | dataSize: $dataSize")
                     if (isInit) {
                         if (dataSizeCount < dataSize) {
                             dataSizeCount++
@@ -383,13 +370,11 @@ class NeedsScreenFragment : Fragment(R.layout.layout_fragment_needs) {
 
         CoroutineScope(Dispatchers.IO).launch {
             val needs = database.needsDao().getNeeds(currentMonth, currentYear)
-            Log.d(TAG, "populateNeeds - data: ${Gson().toJson(needs)}")
             (requireContext() as Activity).runOnUiThread {
                 val amount = if (needs.isNotEmpty()) needs.size else 0
                 if (needs.isNotEmpty()) {
                     dataSize = (needs.size - 1)
                     for (i in needs.indices) {
-                        Log.d(TAG, "populateNeeds - currentDay: $currentDay) vs needs.dayOfMonth: ${needs[i].dayOfMonth}")
                         if (needs[i].dayOfMonth == currentDay) {
                             needs[i].isDateShown = false
                         } else {

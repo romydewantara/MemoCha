@@ -1,7 +1,6 @@
 package com.example.memocha.fragment
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
 import com.example.memocha.R
@@ -39,7 +38,6 @@ class AnalogClockFragment(private val mClockTheme: String) : Fragment(R.layout.f
     private fun setChecked(checkedTheme: View) {
         val viewArray = arrayListOf(checkedPrimary, checkedSecondary, checkedDark, checkedYellow, checkedRedOrange, checkedPink)
         for (i in 0 until viewArray.size) {
-            Log.d("ACF", "setChecked - i: $i checked: $checkedTheme")
             if (viewArray[i] == checkedTheme) viewArray[i].visibility = View.VISIBLE
             else viewArray[i].visibility = View.GONE
         }
