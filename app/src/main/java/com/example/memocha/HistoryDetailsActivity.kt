@@ -117,7 +117,12 @@ class HistoryDetailsActivity : AppCompatActivity() {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
             override fun afterTextChanged(s: Editable?) {
-
+                if (s.toString().isNotEmpty()) {
+                    searchingHistory(s.toString())
+                } else {
+                    textViewSearchEmpty.visibility = View.GONE
+                    historyDetailAdapter.setData(history)
+                }
             }
         })
         historyDetailAdapter.addOnHistoryDetailListener(
@@ -227,6 +232,22 @@ class HistoryDetailsActivity : AppCompatActivity() {
                     cardViewPaymentDetail.visibility = View.GONE
                 }
             }
+        }
+    }
+
+    private fun searchingHistory(query: String) {
+        if (history.isNotEmpty()) {
+            val temporaryList = arrayListOf<History>()
+            for (i in history.indices) {
+                if (history[i].amount.lowercase().contains(query.trim().lowercase()) ||
+                    history[i].goods.lowercase().contains(query.trim().lowercase()) ||
+                    history[i].description.lowercase().contains(query.trim().lowercase())) {
+                    temporaryList.add(history[i])
+                }
+            }
+            if (temporaryList.isEmpty()) textViewSearchEmpty.visibility = View.VISIBLE
+            else textViewSearchEmpty.visibility = View.GONE
+            historyDetailAdapter.setData(temporaryList)
         }
     }
 

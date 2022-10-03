@@ -6,7 +6,6 @@ import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.memocha.Times.*
 import com.example.memocha.adapter.ScheduleAdapter
 import com.example.memocha.entity.Schedule
 import com.example.memocha.lib.MemoChaPopupDialog
@@ -23,20 +22,22 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.json.JSONObject
 
-enum class Times {
-    Subuh, Dzuhur, Ashar, Maghrib, Isya
-}
-
 class ScheduleActivity : AppCompatActivity(), ScheduleAdapter.ScheduleAdapterListener, ScheduleEditorBottomSheet.ScheduleEditorListener {
 
     companion object {
         const val TAG = "ScheduleActivity"
         const val SCHEDULES = "schedules"
+
+        const val subuh = "Subuh"
+        const val dzuhur = "Dzuhur"
+        const val ashar = "Ashar"
+        const val maghrib = "Maghrib"
+        const val isya = "Isya"
     }
 
     private val database by lazy { MemoChaRoomDatabase(this) }
     private lateinit var scheduleAdapter: ScheduleAdapter
-    private var currentTab = Subuh.name
+    private var currentTab = subuh
     private var isDelete = false
     private var isSchedulesEmpty = true
 
@@ -53,11 +54,11 @@ class ScheduleActivity : AppCompatActivity(), ScheduleAdapter.ScheduleAdapterLis
     override fun onStart() {
         super.onStart()
         when(currentTab) {
-            Subuh.name -> navigate(Subuh)
-            Dzuhur.name -> navigate(Dzuhur)
-            Ashar.name -> navigate(Ashar)
-            Maghrib.name -> navigate(Maghrib)
-            Isya.name -> navigate(Isya)
+            subuh -> navigate(subuh)
+            dzuhur -> navigate(dzuhur)
+            ashar -> navigate(ashar)
+            maghrib -> navigate(maghrib)
+            isya -> navigate(isya)
         }
     }
 
@@ -78,14 +79,7 @@ class ScheduleActivity : AppCompatActivity(), ScheduleAdapter.ScheduleAdapterLis
                                     Log.d(TAG, "onNegativeButton - jObject: $jsonObject")
                                     database.scheduleDao().insert(Gson().fromJson(jsonObject.toString(), Schedule::class.java))
                                 }
-                                val list = database.scheduleDao().getSchedule(currentTab)
-                                Log.d(TAG, "onNegativeButton - list: $list")
-                                withContext(Dispatchers.Main) {
-                                    scheduleAdapter.setData(list)
-                                    runOnUiThread {
-                                        refreshSchedule(currentTab)
-                                    }
-                                }
+                                refreshSchedule(currentTab) //after import
                             }
                         }
                         override fun onPositiveButton() {}
@@ -117,7 +111,7 @@ class ScheduleActivity : AppCompatActivity(), ScheduleAdapter.ScheduleAdapterLis
                     override fun onNegativeButton() {
                         CoroutineScope(Dispatchers.IO).launch {
                             database.scheduleDao().deleteAll()
-                            refreshSchedule(currentTab)
+                            refreshSchedule(currentTab) //delete all, not used
                         }
                     }
                     override fun onPositiveButton() {
@@ -127,11 +121,11 @@ class ScheduleActivity : AppCompatActivity(), ScheduleAdapter.ScheduleAdapterLis
                 })
             mcPopupDialog.show(supportFragmentManager, mcPopupDialog.tag)
         }
-        buttonSubuh.setOnClickListener { navigate(Subuh) }
-        buttonDzuhur.setOnClickListener { navigate(Dzuhur) }
-        buttonAshar.setOnClickListener { navigate(Ashar) }
-        buttonMaghrib.setOnClickListener { navigate(Maghrib) }
-        buttonIsya.setOnClickListener { navigate(Isya) }
+        buttonSubuh.setOnClickListener { navigate(subuh) }
+        buttonDzuhur.setOnClickListener { navigate(dzuhur) }
+        buttonAshar.setOnClickListener { navigate(ashar) }
+        buttonMaghrib.setOnClickListener { navigate(maghrib) }
+        buttonIsya.setOnClickListener { navigate(isya) }
     }
 
     private fun refreshSchedule(time: String) {
@@ -156,35 +150,35 @@ class ScheduleActivity : AppCompatActivity(), ScheduleAdapter.ScheduleAdapterLis
     private fun setupRecyclerView() {
         scheduleAdapter = ScheduleAdapter(arrayListOf(), this)
         recyclerviewSchedule.apply {
-            layoutManager = LinearLayoutManager(applicationContext)
+            layoutManager = LinearLayoutManager(this@ScheduleActivity)
             adapter = scheduleAdapter
         }
     }
 
-    private fun navigate(time: Times) {
+    private fun navigate(time: String) {
         when (time) {
-            Subuh -> {
+            subuh -> {
                 buttonSubuh.isChecked = true
-                currentTab = Subuh.name
+                currentTab = subuh
             }
-            Dzuhur -> {
+            dzuhur -> {
                 buttonDzuhur.isChecked = true
-                currentTab = Dzuhur.name
+                currentTab = dzuhur
             }
-            Ashar -> {
+            ashar -> {
                 buttonAshar.isChecked = true
-                currentTab = Ashar.name
+                currentTab = ashar
             }
-            Maghrib -> {
+            maghrib -> {
                 buttonMaghrib.isChecked = true
-                currentTab = Maghrib.name
+                currentTab = maghrib
             }
-            Isya -> {
+            isya -> {
                 buttonIsya.isChecked = true
-                currentTab = Isya.name
+                currentTab = isya
             }
         }
-        refreshSchedule(currentTab)
+        refreshSchedule(currentTab) //navigate
     }
 
     private fun showScheduleEditorBottomSheet(
@@ -216,7 +210,7 @@ class ScheduleActivity : AppCompatActivity(), ScheduleAdapter.ScheduleAdapterLis
     override fun onEditSchedule(id: Int, startTime: String, endTime: String, actions: String) {
         CoroutineScope(Dispatchers.IO).launch {
             database.scheduleDao().updateSchedule(id, startTime, endTime, actions)
-            refreshSchedule(currentTab)
+            refreshSchedule(currentTab) //after edit schedule
         }
         Snackbar.make(rootLayoutSchedule, getString(R.string.snackbar_schedule_updated), Snackbar.LENGTH_SHORT)
             .setAction(getString(R.string.snackbar_button_dismiss)) {}.show()
@@ -225,7 +219,7 @@ class ScheduleActivity : AppCompatActivity(), ScheduleAdapter.ScheduleAdapterLis
     override fun onAddNewSchedule(id: Int, startTime: String, endTime: String, actions: String) {
         CoroutineScope(Dispatchers.IO).launch {
             database.scheduleDao().insert(Schedule(id, currentTab, startTime, endTime, actions))
-            refreshSchedule(currentTab)
+            refreshSchedule(currentTab) //after add new schedule
         }
         Snackbar.make(rootLayoutSchedule, getString(R.string.snackbar_schedule_added), Snackbar.LENGTH_SHORT)
             .setAction(getString(R.string.snackbar_button_dismiss)) {}.show()
@@ -234,7 +228,7 @@ class ScheduleActivity : AppCompatActivity(), ScheduleAdapter.ScheduleAdapterLis
     override fun onDeleteSchedule(id: Int) {
         CoroutineScope(Dispatchers.IO).launch {
             database.scheduleDao().deleteSchedule(id)
-            refreshSchedule(currentTab)
+            refreshSchedule(currentTab) //after delete schedule
         }
     }
 }

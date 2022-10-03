@@ -3,7 +3,7 @@
     <string name="secret_letter_title">Secret Letter</string>
     <string name="secret_letter_content">\t\t\tSecret Letter Content In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content</string>
     <string name="secret_letter_calendar">Ahad, 10 Januari 2021</string>
-    <string name="secret_letter_coming_soon">Surat rahasia, sedang disiapin…</string>
+    <string name="secret_letter_coming_soon">i love you :)</string>
 
     <!-- C O M M O N -->
     <string name="button_retry">Coba Ulangi</string>
@@ -197,6 +197,7 @@
     <string name="history_detail_monthly_expenses">Total pengeluaran di Bulan ini:</string>
     <string name="history_detail_transaction">Transaksi</string>
     <string name="history_detail_search">Cari</string>
+    <string name="history_detail_search_empty">Oops… item yang kamu cari ngga ada nih</string>
     <string name="history_detail_empty">Riwayat pengeluaran di bulan ini kosong</string>
 
     <string name="history_edited_text">─ Dirubah</string>

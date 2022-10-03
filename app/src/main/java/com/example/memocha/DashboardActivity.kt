@@ -45,6 +45,7 @@ import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
+import java.util.GregorianCalendar
 import java.util.Locale
 import java.util.Timer
 import java.util.TimerTask
@@ -85,14 +86,11 @@ class DashboardActivity : AppCompatActivity() {
     private var paymentMethod = ""
 
     //Schedule
+    private var formatHour = SimpleDateFormat("HH")
+    private var currentHour = ""
     private var index = 0
-    private var arrayTimes = arrayListOf(
-        Times.Subuh.name,
-        Times.Dzuhur.name,
-        Times.Ashar.name,
-        Times.Maghrib.name,
-        Times.Isya.name
-    )
+    private var arrayTimes = arrayListOf(ScheduleActivity.subuh, ScheduleActivity.dzuhur,
+        ScheduleActivity.ashar, ScheduleActivity.maghrib, ScheduleActivity.isya)
 
     private lateinit var fragment: Fragment
     private lateinit var mediaPlayer: MediaPlayer
@@ -113,6 +111,7 @@ class DashboardActivity : AppCompatActivity() {
         super.onStart()
         startWisdomTask()
         refreshSchedule()
+        setCurrentTime()
         adjustSettings()
     }
 
@@ -141,7 +140,7 @@ class DashboardActivity : AppCompatActivity() {
                 iconArrows.isEnabled = false
                 loveMessage.visibility = GONE
                 layoutClock.visibility = GONE
-                textGreetings.visibility = INVISIBLE
+                textGreetings.visibility = GONE
                 time.visibility = INVISIBLE //only this view is INVISIBLE bcs give space of view to CurrentDate
                 previousTime.visibility = GONE
                 nextTime.visibility = GONE
@@ -154,8 +153,8 @@ class DashboardActivity : AppCompatActivity() {
                 editTextAmount.isFocusable = false
                 editTextNote.isFocusable = false
                 loveMessage.visibility = VISIBLE
+                if (surnameState) textGreetings.visibility = VISIBLE
                 layoutClock.visibility = VISIBLE
-                textGreetings.visibility = VISIBLE
                 time.visibility = VISIBLE
                 previousTime.visibility = VISIBLE
                 nextTime.visibility = VISIBLE
@@ -198,7 +197,7 @@ class DashboardActivity : AppCompatActivity() {
     }
 
     private fun setupRecyclerView() {
-        dashboardScheduleAdapter = DashboardScheduleAdapter(arrayListOf())
+        dashboardScheduleAdapter = DashboardScheduleAdapter(this, arrayListOf())
         recyclerviewSchedule.apply {
             layoutManager = LinearLayoutManager(applicationContext)
             adapter = dashboardScheduleAdapter
@@ -219,20 +218,31 @@ class DashboardActivity : AppCompatActivity() {
                 database.settingsDao().insertSetting(defaultSetting)
             } else {
                 runOnUiThread {
-                    analogClock.background = AppUtil.convertDrawableFromTheme(this@DashboardActivity, settings.clockTheme)
-                    if (settings.applicationLanguage == getString(R.string.setting_language_bahasa))
+                    surnameState = settings.surnameState
+                    backgroundAnimationState = settings.backgroundAnimationState
+                    backgroundMusicState = settings.backgroundMusicState
+                    notificationState = settings.notificationState
+                    badgeState = settings.badgeState
+                    surname = settings.surname
+                    applicationTheme = settings.applicationTheme
+                    applicationLanguage = settings.applicationLanguage
+                    clockTheme = settings.clockTheme
+                    backgroundAnimation = settings.backgroundAnimation
+
+                    analogClock.background = AppUtil.convertDrawableFromTheme(this@DashboardActivity, clockTheme)
+                    if (applicationLanguage == getString(R.string.setting_language_bahasa))
                         textDate.text = SimpleDateFormat("EEEE, dd MMMM yyyy").format(Calendar.getInstance().time)
-                    if (settings.surnameState) {
-                        textGreetings.text = String.format(getString(R.string.dasboard_greetings), AppUtil.getTimesName(this@DashboardActivity), settings.surname)
+                    if (surnameState) {
+                        textGreetings.text = String.format(getString(R.string.dasboard_greetings), AppUtil.getTimesName(this@DashboardActivity), surname)
                         textGreetings.visibility = VISIBLE
                     } else textGreetings.visibility = GONE
-                    if (settings.backgroundAnimationState) {
+                    if (backgroundAnimationState) {
                         lottieDashboard.visibility = VISIBLE
-                        lottieDashboard.setAnimation(settings.backgroundAnimation)
+                        lottieDashboard.setAnimation(backgroundAnimation)
                         lottieDashboard.playAnimation()
-                        if (settings.backgroundMusicState) {
+                        if (backgroundMusicState) {
                             var fileName = ""
-                            when(settings.backgroundAnimation) {
+                            when(backgroundAnimation) {
                                 Constant.DASHBOARD_BACKGROUND_ANIMATION_AUTUMN -> {fileName = Constant.BACKGROUND_MUSIC_AUTUMN_THEME}
                                 Constant.DASHBOARD_BACKGROUND_ANIMATION_SAKURA -> {fileName = Constant.BACKGROUND_MUSIC_SAKURA_THEME}
                                 Constant.DASHBOARD_BACKGROUND_ANIMATION_SNOW -> {fileName = Constant.BACKGROUND_MUSIC_SNOW_THEME}
@@ -270,6 +280,7 @@ class DashboardActivity : AppCompatActivity() {
     }
 
     private fun refreshSchedule() {
+        currentHour = formatHour.format(GregorianCalendar.getInstance().time)
         CoroutineScope(Dispatchers.IO).launch {
             val schedules = database.scheduleDao().getSchedule(arrayTimes[index])
             runOnUiThread {
@@ -277,9 +288,20 @@ class DashboardActivity : AppCompatActivity() {
                 else textViewEmptySchedule.visibility = GONE
             }
             withContext(Dispatchers.Main) {
-                dashboardScheduleAdapter.setData(schedules)
+                dashboardScheduleAdapter.setData(currentHour, schedules)
             }
         }
+    }
+
+    private fun setCurrentTime() {
+        when(currentHour.toInt()) {
+            in 5..11 -> {index = 0}
+            in 12..14 -> {index = 1}
+            in 15..17 -> {index = 2}
+            in 18..18 -> {index = 3}
+            else -> {index = 4}
+        }
+        time.text = arrayTimes[index]
     }
 
     private fun initListener() {

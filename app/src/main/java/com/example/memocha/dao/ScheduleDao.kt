@@ -15,7 +15,7 @@ interface ScheduleDao {
     @Query("SELECT * FROM schedule_table")
     suspend fun getSchedule() : List<Schedule>
 
-    @Query("SELECT * FROM schedule_table WHERE time = :time ORDER BY id DESC")
+    @Query("SELECT * FROM schedule_table WHERE time = :time")
     suspend fun getSchedule(time: String) : List<Schedule>
 
     @Query("DELETE FROM schedule_table")

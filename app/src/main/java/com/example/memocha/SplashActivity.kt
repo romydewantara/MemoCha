@@ -16,9 +16,12 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.util.Locale
 
-const val WRITE_EXTERNAL_STORAGE_REQUEST_CODE = 101
 @SuppressLint("MissingSuperCall")
 class SplashActivity : AppCompatActivity() {
+
+    companion object {
+        const val WRITE_EXTERNAL_STORAGE_REQUEST_CODE = 101
+    }
 
     private val database by lazy { MemoChaRoomDatabase(this) }
 

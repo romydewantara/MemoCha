@@ -161,6 +161,7 @@ class NeedsScreenFragment : Fragment(R.layout.layout_fragment_needs) {
             needsMonthChooserBottomSheet.addOnNeedsDateChooserListener(
                 object : NeedsMonthChooserBottomSheet.NeedsDateChooserListener {
                     override fun onDateSelected(year: String, month: String) {
+                        currentDay = ""
                         val date = "${AppUtil.convertMonthNameFromCode(requireContext(), month)} ($year)"
                         textViewNeedsDate.text = date
                         onBackPressed()
