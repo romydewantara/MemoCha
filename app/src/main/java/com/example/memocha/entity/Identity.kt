@@ -7,8 +7,8 @@ import androidx.room.PrimaryKey
 class Identity(
     @PrimaryKey(autoGenerate = true) val id: Int,
     val idNumber: String,
-    val name: String,
-    val address: String,
-    val dob: String,
-    val phone: String
+    var name: String,
+    var address: String,
+    var dob: String,
+    var phone: String
 )

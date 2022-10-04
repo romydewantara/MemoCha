@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/rootIdentity"
     android:background="@drawable/background_layout_teal_dark">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -61,21 +62,6 @@
                     app:layout_constraintBottom_toBottomOf="@id/textSubtitleIdentity"
                     app:layout_constraintTop_toTopOf="@id/textSubtitleIdentity"/>
 
-                <ImageView
-                    android:id="@+id/imageHamburgerMenu"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:layout_marginEnd="16dp"
-                    android:background="?android:selectableItemBackground"
-                    android:paddingTop="9dp"
-                    android:visibility="gone"
-                    android:paddingBottom="9dp"
-                    android:src="@drawable/ic_burger_menu"
-                    app:layout_constraintDimensionRatio="1:1"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toTopOf="@id/textTitleIdentity"
-                    app:layout_constraintBottom_toBottomOf="@id/textTitleIdentity"/>
-
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -104,7 +90,7 @@
             android:focusable="true"
             app:cardBackgroundColor="@color/white"
             app:cardCornerRadius="45dp"
-            app:cardElevation="8dp"
+            app:cardElevation="12dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintDimensionRatio="1:1"
             app:layout_constraintRight_toRightOf="parent"
@@ -131,27 +117,34 @@
         android:id="@+id/containerIdentity"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        android:background="@mipmap/background"
-        android:visibility="visible">
+        android:visibility="visible"
+        android:background="@color/white">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/background_identity_form_gradient">
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_birds"
+                app:layout_constraintTop_toTopOf="parent"/>
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/textViewIdentityFormTitle"
                 style="@style/LobsterTextBoldNavy24"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
-                android:text="Tambah Data Baru"
+                android:layout_marginTop="20dp"
+                android:text="@string/identity_title_add_data"
+                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintBottom_toTopOf="@id/cardViewIdentityForm"/>
+                app:layout_constraintRight_toRightOf="parent" />
 
             <androidx.cardview.widget.CardView
                 android:id="@+id/cardViewIdentityForm"
@@ -159,11 +152,11 @@
                 android:layout_height="0dp"
                 android:layout_marginStart="20dp"
                 android:layout_marginEnd="20dp"
+                android:layout_marginTop="10dp"
                 app:cardCornerRadius="16dp"
                 app:cardElevation="8dp"
                 app:layout_constraintHeight_percent=".38"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent">
+                app:layout_constraintTop_toBottomOf="@id/textViewIdentityFormTitle">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -201,11 +194,11 @@
                         android:layout_weight="1"
                         android:background="@drawable/background_edit_text_search"
                         android:digits="1234567890"
-                        android:drawableStart="@drawable/ic_profile"
+                        android:drawableStart="@drawable/ic_id_card"
                         android:drawablePadding="6dp"
                         android:hint="Nomor KTP"
                         android:imeOptions="actionNext"
-                        android:inputType="number"
+                        android:inputType="phone"
                         android:maxLines="1"
                         android:padding="8dp" />
 
@@ -219,12 +212,11 @@
                         android:layout_marginEnd="15dp"
                         android:layout_weight="1"
                         android:background="@drawable/background_edit_text_search"
-                        android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890 "
-                        android:drawableStart="@drawable/ic_profile"
+                        android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890.,/ "
+                        android:drawableStart="@drawable/ic_house"
                         android:drawablePadding="6dp"
                         android:hint="Alamat"
-                        android:imeOptions="actionNext"
-                        android:inputType="textEmailAddress"
+                        android:inputType="text"
                         android:maxLines="1"
                         android:padding="8dp" />
 
@@ -239,7 +231,7 @@
                         android:layout_weight="1"
                         android:background="@drawable/background_edit_text_search"
                         android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890 "
-                        android:drawableStart="@drawable/ic_profile"
+                        android:drawableStart="@drawable/ic_baby"
                         android:drawablePadding="6dp"
                         android:hint="Tanggal Lahir"
                         android:imeOptions="actionNext"
@@ -258,12 +250,12 @@
                         android:layout_marginBottom="15dp"
                         android:layout_weight="1"
                         android:background="@drawable/background_edit_text_search"
-                        android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890 "
-                        android:drawableStart="@drawable/ic_profile"
+                        android:digits="1234567890"
+                        android:drawableStart="@drawable/ic_handphone"
                         android:drawablePadding="6dp"
                         android:hint="Nomor Handphone"
                         android:imeOptions="actionNext"
-                        android:inputType="textEmailAddress"
+                        android:inputType="phone"
                         android:maxLines="1"
                         android:padding="8dp" />
 
@@ -271,22 +263,34 @@
 
             </androidx.cardview.widget.CardView>
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/textViewAdd"
-                style="@style/TextBoldWhite16"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:layout_marginBottom="25dp"
-                android:background="@drawable/background_button_apply_disabled"
-                android:paddingLeft="30dp"
-                android:paddingTop="12dp"
-                android:paddingRight="30dp"
-                android:paddingBottom="12dp"
-                android:text="@string/button_add"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/cardViewIdentityForm" />
+            <ImageView
+                android:id="@+id/imageSubmit"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginTop="15dp"
+                android:background="@drawable/background_button_send_disabled"
+                android:clickable="false"
+                android:padding="10dp"
+                android:src="@drawable/ic_send"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintRight_toRightOf="@id/cardViewIdentityForm"
+                app:layout_constraintTop_toBottomOf="@id/cardViewIdentityForm"
+                app:layout_constraintWidth_percent=".1" />
+
+            <ImageView
+                android:id="@+id/imageDelete"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginEnd="10dp"
+                android:background="@drawable/selector_button_delete"
+                android:clickable="false"
+                android:padding="4dp"
+                android:src="@drawable/ic_trash_red_white"
+                android:visibility="gone"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintRight_toLeftOf="@id/imageSubmit"
+                app:layout_constraintTop_toTopOf="@id/imageSubmit"
+                app:layout_constraintWidth_percent=".1" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

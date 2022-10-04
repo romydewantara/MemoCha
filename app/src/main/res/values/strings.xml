@@ -140,12 +140,14 @@
     <string name="dialog_title_delete_from_history">Remove From History?</string>
     <string name="dialog_title_delete_all_schedule">Remove All Schedule?</string>
     <string name="dialog_title_delete_needs">Remove \"%s\"?</string>
+    <string name="dialog_title_delete_identity">Delete %s\'s data?</string>
     <string name="dialog_title_import_schedule">Import default \"%s Schedules\"?</string>
     <string name="dialog_title_export_history">Export %s\'s Expense History?</string>
     <string name="dialog_message_permission">Some in-app features may not work properly because they contain denied permissions</string>
     <string name="dialog_message_schedule_filled">You can only import the default schedule only if your schedule list is empty</string>
     <string name="dialog_message_delete_all_schedule">If you delete the entire schedule it will be deleted permanently</string>
     <string name="dialog_message_delete_needs">Be careful, it will be deleted permanently!</string>
+    <string name="dialog_message_delete_identity">Your data will be deleted permanently</string>
     <string name="dialog_message_import_schedule">This action can make your list contain the default schedule</string>
     <string name="dialog_message_import_history">It needs a file containing text with a JSON structure format so that it can be applied to your expense list history</string>
     <string name="dialog_message_export_history">Are you sure want to export this record?</string>
@@ -168,6 +170,9 @@
     <string name="snackbar_monthly_expenses_exported">%s\' expenses has been exported to %s</string>
     <string name="snackbar_monthly_expenses_exported_failed">Failed to exported %s\'s expenses to %s</string>
     <string name="snackbar_monthly_expenses_imported">Data successfully imported</string>
+    <string name="snackbar_identity_added">New identity data has been added</string>
+    <string name="snackbar_identity_updated">The identity data successfully updated</string>
+    <string name="snackbar_identity_deleted">The data has been deleted</string>
     <string name="snackbar_button_open">OPEN</string>
     <string name="snackbar_button_dismiss">DISMISS</string>
 
@@ -182,9 +187,12 @@
     <string name="needs_text_length_limit">Text length has reached the maximum limit (max. 400 characters), your text length: %s</string>
 
     <!-- I D E N T I T Y -->
-    <string name="identity_title_page">Family Data Information</string>
-    <string name="identity_subtitle_page">Family Data Information</string>
+    <string name="identity_title_page">Data Information</string>
+    <string name="identity_title_add_data">Add New Data</string>
+    <string name="identity_title_update_data">Update Data</string>
+    <string name="identity_subtitle_page">List of people\'s identity cards data</string>
     <string name="identity_address">Address</string>
+    <string name="identity_text_copied">Copied to the clipboard</string>
 
     <!-- H I S T O R Y -->
     <string name="history_title_page">History\t</string>

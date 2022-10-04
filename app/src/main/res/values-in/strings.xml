@@ -141,12 +141,14 @@
     <string name="dialog_title_delete_from_history">Hapus dari Riwayat?</string>
     <string name="dialog_title_delete_all_schedule">Remove All Schedule?</string>
     <string name="dialog_title_delete_needs">Hapus \"%s\"?</string>
+    <string name="dialog_title_delete_identity">Hapus data %s?</string>
     <string name="dialog_title_import_schedule">Impor Jadwal Bawaan \"%s\"?</string>
     <string name="dialog_title_export_history">Ekspor Pengeluaran Bulan %s?</string>
     <string name="dialog_message_permission">Beberapa fitur dalam aplikasi mungkin tidak berfungsi dengan benar karena berisi izin yang ditolak</string>
     <string name="dialog_message_schedule_filled">Kamu hanya bisa melakukan impor jadwal bawaan hanya saat daftar jadwalmu masih kosong</string>
     <string name="dialog_message_delete_all_schedule">If you delete the entire schedule it will be deleted permanently</string>
     <string name="dialog_message_delete_needs">Hati-hati, ini akan menghapus item kamu secara permanen!</string>
+    <string name="dialog_message_delete_identity">Data yang kamu hapus ga bisa dikembalikan lagi (permanen)</string>
     <string name="dialog_message_import_schedule">Aksi ini bisa membuat daftarmu berisi jadwal bawaan</string>
     <string name="dialog_message_import_history">Dibutuhin file berisi teks dengan format struktur JSON supaya bisa diterapin ke daftar riwayat pengeluaranmu</string>
     <string name="dialog_message_export_history">File hasil ekspor akan masuk ke folder Memori Internal kamu</string>
@@ -168,6 +170,9 @@
     <string name="snackbar_monthly_expenses_exported">Pengeluaran bulan %s udah diekspor ke %s</string>
     <string name="snackbar_monthly_expenses_exported_failed">Gagal ekspor pengeluaran bulan %s ke %s</string>
     <string name="snackbar_monthly_expenses_imported">Data berhasil diimpor</string>
+    <string name="snackbar_identity_added">Data identitas baru udah ditambahkan</string>
+    <string name="snackbar_identity_updated">Data identitas berhasil diubah</string>
+    <string name="snackbar_identity_deleted">Data udah dihapus</string>
     <string name="snackbar_button_open">BUKA</string>
     <string name="snackbar_button_dismiss">TUTUP</string>
 
@@ -182,9 +187,12 @@
     <string name="needs_text_length_limit">Yah, panjang teks udah mencapai batas limit (maksimal 400 karakter), panjang teks kamu: %s</string>
 
     <!-- I D E N T I T Y -->
-    <string name="identity_title_page">Informasi Data Keluarga</string>
-    <string name="identity_subtitle_page">Daftar kartu berisi data personal</string>
+    <string name="identity_title_page">Informasi Data</string>
+    <string name="identity_title_add_data">Tambah Data Baru</string>
+    <string name="identity_title_update_data">Ubah Data</string>
+    <string name="identity_subtitle_page">Daftar data kartu identitas orang</string>
     <string name="identity_address">Alamat</string>
+    <string name="identity_text_copied">Disalin ke papan klip</string>
 
     <!-- H I S T O R Y -->
     <string name="history_title_page">Riwayat\t</string>

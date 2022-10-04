@@ -15,9 +15,9 @@ interface IdentityDao {
     @Query("SELECT * FROM identity_table")
     suspend fun getIdentity(): List<Identity>
 
-    @Query("UPDATE identity_table SET idNumber = :idNumber, name = :name, address = :address WHERE id = :id")
-    suspend fun updateIdentity(id: Int, idNumber: String, name: String, address: String)
+    @Query("UPDATE identity_table SET idNumber = :idNumber, name = :name, address = :address, dob = :dob, phone = :phone WHERE idNumber = :idNumber")
+    suspend fun updateIdentity(idNumber: String, name: String, address: String, dob: String, phone: String)
 
-    @Query("DELETE FROM identity_table WHERE id = :id")
-    suspend fun deleteIdentity(id: Int)
+    @Query("DELETE FROM identity_table WHERE idNumber = :idNumber")
+    suspend fun deleteIdentity(idNumber: String)
 }

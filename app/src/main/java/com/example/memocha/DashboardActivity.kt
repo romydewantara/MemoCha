@@ -231,7 +231,8 @@ class DashboardActivity : AppCompatActivity() {
 
                     analogClock.background = AppUtil.convertDrawableFromTheme(this@DashboardActivity, clockTheme)
                     if (applicationLanguage == getString(R.string.setting_language_bahasa))
-                        textDate.text = SimpleDateFormat("EEEE, dd MMMM yyyy").format(Calendar.getInstance().time)
+                        textDate.text = SimpleDateFormat("EEEE, dd MMMM yyyy", Locale("id")).
+                        format(Calendar.getInstance().time)
                     if (surnameState) {
                         textGreetings.text = String.format(getString(R.string.dasboard_greetings), AppUtil.getTimesName(this@DashboardActivity), surname)
                         textGreetings.visibility = VISIBLE
@@ -619,7 +620,6 @@ class DashboardActivity : AppCompatActivity() {
                 is IdentityScreenFragment -> {
                     val frag = (fragment as IdentityScreenFragment)
                     if (frag.isContainerShown) {
-                        frag.isContainerShown = false
                         frag.hideContainerIdentity()
                     } else {
                         isFragmentShown = false

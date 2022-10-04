@@ -1,6 +1,8 @@
 package com.example.memocha.utility
 
 import android.annotation.SuppressLint
+import android.content.ClipData
+import android.content.ClipboardManager
 import android.content.Context
 import android.graphics.Rect
 import android.graphics.drawable.Drawable
@@ -8,6 +10,7 @@ import android.graphics.drawable.GradientDrawable
 import android.util.TypedValue
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import androidx.core.content.ContextCompat
 import com.example.memocha.R
 import java.io.BufferedReader
 import java.io.File
@@ -91,6 +94,11 @@ class AppUtil {
         fun hideSoftKeyboard(view: View, context: Context) {
             val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
             imm.hideSoftInputFromWindow(view.windowToken, 0)
+        }
+        fun copyTextToClipboard(c: Context, text: String) {
+            val clipboard: ClipboardManager? = ContextCompat.getSystemService(c, ClipboardManager::class.java)
+            val clip = ClipData.newPlainText("MemoCha\'s Label", text)
+            clipboard?.setPrimaryClip(clip)
         }
         fun dpToPx(c: Context, dipValue: Float): Int {
             val metrics = c.resources.displayMetrics
