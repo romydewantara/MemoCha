@@ -18,8 +18,8 @@ interface HistoryDao {
     @Query("SELECT * FROM history_table WHERE year = :year AND month = :month ORDER BY id ASC")
     suspend fun getHistory(year: String, month: String): List<History>
 
-    @Query("UPDATE history_table SET yearEdited = :yearEdited, monthEdited = :monthEdited, dateEdited = :dateEdited, timeEdited = :timeEdited, goods = :goods, amount = :amount, description = :description, category = :category, method = :method WHERE id = :id")
-    suspend fun updateHistory(id: Int, yearEdited: String, monthEdited: String, dateEdited: String, timeEdited: String, goods: String, amount: String, description: String, category: String, method: String)
+    @Query("UPDATE history_table SET yearEdited = :yearEdited, monthEdited = :monthEdited, dateEdited = :dateEdited, timeEdited = :timeEdited, goods = :goods, amount = :amount, description = :description, category = :category, method = :method, isEdited = :isEdited WHERE id = :id")
+    suspend fun updateHistory(id: Int, yearEdited: String, monthEdited: String, dateEdited: String, timeEdited: String, goods: String, amount: String, description: String, category: String, method: String, isEdited: Boolean)
 
     @Query("DELETE FROM history_table WHERE id = :id")
     suspend fun deleteFromHistory(id: Int)

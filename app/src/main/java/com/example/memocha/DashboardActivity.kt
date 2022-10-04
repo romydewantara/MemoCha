@@ -408,16 +408,20 @@ class DashboardActivity : AppCompatActivity() {
                         customDate.split("-")[2],
                         customDate.split("-")[1],
                         customDate.split("-")[0],
+                        AppUtil.convertDayNameToCode(this@DashboardActivity,
+                            SimpleDateFormat("EEEE").format(Date())),
                         SimpleDateFormat("HH:mm").format(Date()),
                         customDate.split("-")[2],
                         customDate.split("-")[1],
                         customDate.split("-")[0],
+                        AppUtil.convertDayNameToCode(this@DashboardActivity,
+                            SimpleDateFormat("EEEE").format(Date())),
                         SimpleDateFormat("HH:mm").format(Date()),
                         editTextGoods.text.toString().trim(),
                         editTextAmount.text.toString().trim(),
                         editTextNote.text.toString().trim(),
                         textViewCategory.text.toString(),
-                        paymentMethod
+                        paymentMethod, false, false
                     )
                 )
                 runOnUiThread {

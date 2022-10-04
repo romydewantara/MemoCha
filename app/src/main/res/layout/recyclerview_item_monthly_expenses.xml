@@ -6,167 +6,234 @@
     android:layout_height="wrap_content"
     android:background="?selectableItemBackground"
     android:clickable="true"
-    android:focusable="true"
-    android:paddingLeft="12dp"
-    android:paddingTop="9dp"
-    android:paddingRight="12dp">
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/textViewDate"
-        style="@style/TextRegularDarkGrey14"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="01 Sep 2022"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/textViewTime"
-        style="@style/TextRegularGrey14"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:text="00:00"
-        app:layout_constraintLeft_toRightOf="@id/textViewDate"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/textViewEdited"
-        style="@style/TextRegularGrey14"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="5dp"
-        android:text="@string/history_edited_text"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@id/textViewTime"
-        app:layout_constraintLeft_toRightOf="@id/textViewTime"
-        app:layout_constraintTop_toTopOf="@id/textViewTime" />
-
-    <ImageView
-        android:id="@+id/iconInfo"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginStart="5dp"
-        android:src="@drawable/ic_info"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@id/textViewEdited"
-        app:layout_constraintDimensionRatio="1:1"
-        app:layout_constraintLeft_toRightOf="@id/textViewEdited"
-        app:layout_constraintTop_toTopOf="@id/textViewEdited"
-        app:layout_constraintWidth_percent=".04" />
+    android:focusable="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/layoutInfo"
-        android:layout_width="200dp"
-        android:layout_height="0dp"
-        android:visibility="gone"
-        app:layout_constraintHeight_percent=".5"
-        app:layout_constraintLeft_toLeftOf="@id/iconInfo"
-        app:layout_constraintRight_toRightOf="@id/iconInfo"
-        app:layout_constraintTop_toBottomOf="@id/iconInfo">
-
-        <ImageView
-            android:id="@+id/imageBubble"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:scaleY="-1"
-            android:src="@drawable/ic_bubble_dialog" />
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingLeft="12dp"
+        android:paddingTop="9dp"
+        android:paddingRight="12dp">
 
         <androidx.appcompat.widget.AppCompatTextView
-            style="@style/TextRegularGrey12"
+            android:id="@+id/textViewDate"
+            style="@style/TextRegularDarkGrey14"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:paddingTop="17dp"
-            android:text="Date Added:\n01 Sep 2022"
-            app:autoSizeTextType="uniform"
-            app:layout_constraintBottom_toBottomOf="@id/imageBubble"
-            app:layout_constraintLeft_toLeftOf="@id/imageBubble"
-            app:layout_constraintRight_toRightOf="@id/imageBubble"
-            app:layout_constraintTop_toTopOf="@id/imageBubble" />
+            android:text="01 Sep 2022"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textViewTime"
+            style="@style/TextRegularGrey14"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:text="00:00"
+            app:layout_constraintLeft_toRightOf="@id/textViewDate"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layoutEdited"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:visibility="gone"
+            app:layout_constraintTop_toTopOf="@id/textViewTime"
+            app:layout_constraintBottom_toBottomOf="@id/textViewTime"
+            app:layout_constraintLeft_toRightOf="@id/textViewTime">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/textViewEdited"
+                style="@style/TextRegularGrey12"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginStart="5dp"
+                android:gravity="center_vertical"
+                android:text="@string/history_edited_text"
+                app:layout_constraintLeft_toLeftOf="parent"/>
+
+            <ImageView
+                android:id="@+id/iconInfo"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="5dp"
+                android:src="@drawable/ic_info"
+                app:layout_constraintLeft_toRightOf="@id/textViewEdited"
+                app:layout_constraintDimensionRatio="1:1"
+                app:layout_constraintWidth_percent=".04" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <ImageView
+            android:id="@+id/iconMethod"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginTop="8dp"
+            android:src="@drawable/ic_cash"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textViewDate"
+            app:layout_constraintWidth_percent=".08" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textViewMethod"
+            style="@style/TextBoldTeal14"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:text="Cash"
+            app:layout_constraintBottom_toBottomOf="@id/iconMethod"
+            app:layout_constraintLeft_toRightOf="@id/iconMethod"
+            app:layout_constraintTop_toTopOf="@id/iconMethod" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textViewAmount"
+            style="@style/TextBoldBlack16"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:autoSizeTextType="uniform"
+            android:gravity="end"
+            android:maxLines="1"
+            android:text="Rp 10.000"
+            app:layout_constraintBottom_toBottomOf="@id/iconMethod"
+            app:layout_constraintLeft_toRightOf="@id/textViewMethod"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@id/iconMethod" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textViewGoods"
+            style="@style/TextRegularBlack14"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="20dp"
+            android:autoSizeTextType="uniform"
+            android:gravity="start"
+            android:maxLines="2"
+            android:text="Meja"
+            app:layout_constraintLeft_toRightOf="@id/iconMethod"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/iconMethod" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textViewDescription"
+            style="@style/TextRegularGrey14"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:text="Belanja Keperluan Rumah Tangga"
+            app:layout_constraintLeft_toRightOf="@id/iconMethod"
+            app:layout_constraintTop_toBottomOf="@id/textViewGoods" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textViewCategory"
+            style="@style/TextRegularGrey14"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:text="Fashion"
+            app:layout_constraintBottom_toTopOf="@id/textViewAmount"
+            app:layout_constraintRight_toRightOf="@id/textViewAmount" />
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0.1dp"
+            android:layout_marginTop="25dp"
+            android:background="@color/pewter"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/textViewDescription"
+            app:layout_constraintWidth_percent=".85" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <ImageView
-        android:id="@+id/iconMethod"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/layoutInfo"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="8dp"
-        android:src="@drawable/ic_cash"
-        app:layout_constraintDimensionRatio="1:1"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textViewDate"
-        app:layout_constraintWidth_percent=".08" />
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/textViewMethod"
-        style="@style/TextBoldTeal14"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:text="Cash"
-        app:layout_constraintBottom_toBottomOf="@id/iconMethod"
-        app:layout_constraintLeft_toRightOf="@id/iconMethod"
-        app:layout_constraintTop_toTopOf="@id/iconMethod" />
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/textViewAmount"
-        style="@style/TextBoldBlack16"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:autoSizeTextType="uniform"
-        android:gravity="end"
-        android:maxLines="1"
-        android:text="Rp 10.000"
-        app:layout_constraintBottom_toBottomOf="@id/iconMethod"
-        app:layout_constraintLeft_toRightOf="@id/textViewMethod"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@id/iconMethod" />
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/textViewGoods"
-        style="@style/TextRegularBlack14"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="20dp"
-        android:autoSizeTextType="uniform"
-        android:gravity="start"
-        android:maxLines="2"
-        android:text="Meja"
-        app:layout_constraintLeft_toRightOf="@id/iconMethod"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/iconMethod" />
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/textViewDescription"
-        style="@style/TextRegularGrey14"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:text="Belanja Keperluan Rumah Tangga"
-        app:layout_constraintLeft_toRightOf="@id/iconMethod"
-        app:layout_constraintTop_toBottomOf="@id/textViewGoods" />
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/textViewCategory"
-        style="@style/TextRegularGrey14"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:text="Fashion"
-        app:layout_constraintBottom_toTopOf="@id/textViewAmount"
-        app:layout_constraintRight_toRightOf="@id/textViewAmount" />
-
-    <View
-        android:layout_width="0dp"
-        android:layout_height="0.1dp"
-        android:layout_marginTop="25dp"
-        android:background="@color/pewter"
+        android:visibility="gone"
+        android:background="@color/white_88"
+        android:paddingTop="9dp"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textViewDescription"
-        app:layout_constraintWidth_percent=".85" />
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textViewDateAddedTitle"
+            style="@style/TextRegularBlack14"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/history_detail_info_added"
+            app:autoSizeTextType="uniform"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textViewDateAdded"
+            style="@style/TextRegularBlack14"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical|end"
+            android:maxLines="1"
+            android:text="17/10/2021"
+            android:autoSizeTextType="uniform"
+            app:autoSizeTextType="uniform"
+            app:layout_constraintWidth_percent=".65"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintRight_toRightOf="parent"/>
+
+        <View
+            android:id="@+id/viewDateAddSeparator"
+            android:layout_width="0dp"
+            android:layout_height="0.3dp"
+            android:layout_marginTop="5dp"
+            android:background="@color/pewter"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="@id/textViewDateAdded"
+            app:layout_constraintTop_toBottomOf="@id/textViewDateAdded" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textViewDateModifiedTitle"
+            style="@style/TextRegularBlack14"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginTop="5dp"
+            android:text="@string/history_detail_info_modified"
+            app:autoSizeTextType="uniform"
+            app:layout_constraintTop_toBottomOf="@id/viewDateAddSeparator"
+            app:layout_constraintLeft_toLeftOf="parent"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textViewDateModified"
+            style="@style/TextRegularBlack14"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical|end"
+            android:maxLines="1"
+            android:autoSizeTextType="uniform"
+            android:layout_marginTop="5dp"
+            android:text="17/10/2021"
+            app:autoSizeTextType="uniform"
+            app:layout_constraintWidth_percent=".65"
+            app:layout_constraintTop_toBottomOf="@id/viewDateAddSeparator"
+            app:layout_constraintRight_toRightOf="parent"/>
+
+        <View
+            android:id="@+id/viewDateModifiedSeparator"
+            android:layout_width="0dp"
+            android:layout_height="0.3dp"
+            android:layout_marginTop="5dp"
+            android:background="@color/pewter"
+            app:layout_constraintRight_toRightOf="@id/textViewDateModified"
+            app:layout_constraintTop_toBottomOf="@id/textViewDateModified" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

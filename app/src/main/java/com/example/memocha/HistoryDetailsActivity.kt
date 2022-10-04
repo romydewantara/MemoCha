@@ -165,18 +165,9 @@ class HistoryDetailsActivity : AppCompatActivity() {
 
     private fun updateHistory(id: Int, history: History) {
         CoroutineScope(Dispatchers.IO).launch {
-            database.historyDao().updateHistory(
-                id,
-                history.yearEdited,
-                history.monthEdited,
-                history.dateEdited,
-                history.timeEdited,
-                history.goods,
-                history.amount,
-                history.description,
-                history.category,
-                history.method
-            )
+            database.historyDao().updateHistory(id, history.yearEdited, history.monthEdited,
+                history.dateEdited, history.timeEdited, history.goods, history.amount,
+                history.description, history.category, history.method, true)
             fetchHistoryDetails()
         }
     }
@@ -239,9 +230,11 @@ class HistoryDetailsActivity : AppCompatActivity() {
         if (history.isNotEmpty()) {
             val temporaryList = arrayListOf<History>()
             for (i in history.indices) {
-                if (history[i].amount.lowercase().contains(query.trim().lowercase()) ||
+                if (history[i].amount.replace(",", "").lowercase().contains(query.trim().lowercase()) ||
                     history[i].goods.lowercase().contains(query.trim().lowercase()) ||
-                    history[i].description.lowercase().contains(query.trim().lowercase())) {
+                    history[i].description.lowercase().contains(query.trim().lowercase()) ||
+                    history[i].method.lowercase().contains(query.trim().lowercase()) ||
+                    history[i].date.lowercase().contains(query.trim().lowercase())) {
                     temporaryList.add(history[i])
                 }
             }

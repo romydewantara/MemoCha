@@ -10,6 +10,15 @@
     <string name="webview_error_load">Please check your internet connection and reload the page.\nError code: %s - %s</string>
     <string name="loading">Loading, please wait…</string>
 
+    <!-- D A Y -->
+    <string name="day_sunday">Sunday</string>
+    <string name="day_monday">Monday</string>
+    <string name="day_tuesday">Tuesday</string>
+    <string name="day_wednesday">Wednesday</string>
+    <string name="day_thursday">Thursday</string>
+    <string name="day_friday">Friday</string>
+    <string name="day_saturday">Saturday</string>
+
     <!-- M O N T H S -->
     <string name="month_january">January</string>
     <string name="month_february">February</string>
@@ -206,6 +215,8 @@
     <string name="history_detail_transaction">Transaction</string>
     <string name="history_detail_search">Search</string>
     <string name="history_detail_search_empty">Oops… Your search item is not found</string>
+    <string name="history_detail_info_added">Date added:</string>
+    <string name="history_detail_info_modified">Date modified:</string>
     <string name="history_detail_empty">Monthly expense history for this month is empty</string>
 
     <string name="history_edited_text">─ Edited</string>

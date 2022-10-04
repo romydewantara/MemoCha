@@ -2,7 +2,6 @@
 <resources>
     <color name="transparent">#00000000</color>
     <color name="transparent_50">#80FFFFFF</color>
-    <color name="transparent_85">#D9FFFFFF</color>
     <color name="teal_extra_dark">#006868</color>
     <color name="teal_dark">#018786</color>
     <color name="teal">#29A0B1</color>
@@ -11,7 +10,6 @@
     <color name="teal_extra_light">#B6E2D3</color>
     <color name="green">#00FF00</color>
     <color name="green_lime">#32CD30</color>
-    <color name="green_dark">#2C5E1A</color>
     <color name="teal_dark_5">#0D018786</color>
     <color name="teal_5">#0D29A0B1</color>
     <color name="black">#FF000000</color>
@@ -31,7 +29,6 @@
     <color name="mesty_blue">#E3E8E9</color>
     <color name="mesty_blue_10">#4DE3E8E9</color>
     <color name="pewter">#B9B7BD</color>
-    <color name="blue">#0000FF</color>
     <color name="blue_navy">#053D57</color>
     <color name="blue_navy_semi_light">#006884</color>
     <color name="blue_navy_extra_light">#97BCC7</color>
@@ -50,8 +47,6 @@
     <color name="pink_extra_light">#FFE6E7</color>
     <color name="rose">#F1CED4</color>
     <color name="gold">#FFD743</color>
-    <color name="yellow_dark">#A3A300</color>
-    <color name="yellow_semi_dark">#D1D100</color>
     <color name="yellow">#FFFF00</color>
     <color name="yellow_orange">#FFE97A</color>
 </resources>

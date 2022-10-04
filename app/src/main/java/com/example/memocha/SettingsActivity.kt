@@ -20,7 +20,7 @@ import com.example.memocha.lib.MemoChaPopupDialog
 import com.example.memocha.utility.Constant
 import com.example.memocha.utility.MemoChaRoomDatabase
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.layout_settings.*
+import kotlinx.android.synthetic.main.activity_settings.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -60,7 +60,7 @@ class SettingsActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.layout_settings)
+        setContentView(R.layout.activity_settings)
 
         init()
         initListener()

@@ -19,14 +19,14 @@ import com.example.memocha.entity.Identity
 import com.example.memocha.lib.MemoChaPopupDialog
 import com.example.memocha.utility.MemoChaRoomDatabase
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.layout_identity_screen.*
+import kotlinx.android.synthetic.main.fragment_identity_screen.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 @SuppressLint("ClickableViewAccessibility", "UseCompatLoadingForDrawables")
-class IdentityScreenFragment(context: Context) : Fragment(R.layout.layout_identity_screen) {
+class IdentityScreenFragment(context: Context) : Fragment(R.layout.fragment_identity_screen) {
 
     private val database by lazy { MemoChaRoomDatabase(context) }
     private lateinit var identityListener: IdentityListener

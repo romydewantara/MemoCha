@@ -25,7 +25,7 @@ import com.example.memocha.lib.NeedsItem
 import com.example.memocha.lib.NeedsMonthChooserBottomSheet
 import com.example.memocha.utility.AppUtil
 import com.example.memocha.utility.MemoChaRoomDatabase
-import kotlinx.android.synthetic.main.layout_fragment_needs.*
+import kotlinx.android.synthetic.main.fragment_needs_screen.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -34,7 +34,7 @@ import java.util.Calendar
 import java.util.Date
 
 @SuppressLint("ClickableViewAccessibility", "SimpleDateFormat")
-class NeedsScreenFragment : Fragment(R.layout.layout_fragment_needs) {
+class NeedsScreenFragment : Fragment(R.layout.fragment_needs_screen) {
 
     private val database by lazy { MemoChaRoomDatabase(requireContext()) }
     private var previousYLayout = 0

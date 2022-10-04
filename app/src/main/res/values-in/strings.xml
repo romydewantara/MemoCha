@@ -10,6 +10,15 @@
     <string name="webview_error_load">Silakan periksa koneksi internet kamu dan muat ulang halaman ini.\nKode kesalahan: %s - %s</string>
     <string name="loading">Lagi memuat, tunggu sebentar ya…</string>
 
+    <!-- D A Y -->
+    <string name="day_sunday">Minggu</string>
+    <string name="day_monday">Senin</string>
+    <string name="day_tuesday">Selasa</string>
+    <string name="day_wednesday">Rabu</string>
+    <string name="day_thursday">Kamis</string>
+    <string name="day_friday">Jumat</string>
+    <string name="day_saturday">Sabtu</string>
+
     <!-- M O N T H S -->
     <string name="month_january">Januari</string>
     <string name="month_february">Februari</string>
@@ -165,7 +174,7 @@
     <string name="snackbar_schedule_added">Jadwal baru udah ditambahkan</string>
     <string name="snackbar_schedule_updated">Jadwal udah diubah</string>
     <string name="snackbar_monthly_expenses_added">Data baru udah ditambahin ke riwayat pengeluaran bulanan</string>
-    <string name="snackbar_monthly_expenses_updated">Data udah dirubah</string>
+    <string name="snackbar_monthly_expenses_updated">Data udah diubah</string>
     <string name="snackbar_monthly_expenses_deleted">Data udah dihapus dari riwayat</string>
     <string name="snackbar_monthly_expenses_exported">Pengeluaran bulan %s udah diekspor ke %s</string>
     <string name="snackbar_monthly_expenses_exported_failed">Gagal ekspor pengeluaran bulan %s ke %s</string>
@@ -206,9 +215,11 @@
     <string name="history_detail_transaction">Transaksi</string>
     <string name="history_detail_search">Cari</string>
     <string name="history_detail_search_empty">Oops… item yang kamu cari ngga ada nih</string>
+    <string name="history_detail_info_added">Tanggal dibuat:</string>
+    <string name="history_detail_info_modified">Tanggal diubah:</string>
     <string name="history_detail_empty">Riwayat pengeluaran di bulan ini kosong</string>
 
-    <string name="history_edited_text">─ Dirubah</string>
+    <string name="history_edited_text">─ Diubah</string>
     <string name="history_edit_monthly_expenses">Ubah</string>
 
     <!-- S C H E D U L E -->
