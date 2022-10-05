@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.example.memocha.lib.MemoChaPopupDialog
+import com.example.memocha.utility.Constant
 import com.example.memocha.utility.MemoChaRoomDatabase
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -79,8 +80,8 @@ class SplashActivity : AppCompatActivity() {
 
     private fun setApplicationLanguage(language: String) {
         var languageCode = Locale.getDefault().language
-        if (language == getString(R.string.setting_language_bahasa)) languageCode = "id"
-        else if (languageCode == getString(R.string.setting_language_english)) languageCode = "en"
+        if (language == getString(R.string.setting_language_bahasa)) languageCode = Constant.APP_LANG_INDONESIA
+        else if (languageCode == getString(R.string.setting_language_english)) languageCode = Constant.APP_LANG_ENGLISH
         val locale= Locale(languageCode)
         Locale.setDefault(locale)
         val config = Configuration()

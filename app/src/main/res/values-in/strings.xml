@@ -104,7 +104,7 @@
 
     <!-- E X P E N S E   N O T E -->
     <string name="calendar_adjust">Sesuaikan Tanggal</string>
-    <string name="calendar_adjust_info">Tanggal yang kamu pilih bakal menyesuaikan catatan waktu laporan pengeluaranmu saat ini</string>
+    <string name="calendar_adjust_info">Tanggal yang kamu pilih akan menyesuaikan catatan waktu laporan pengeluaranmu saat ini</string>
 
     <!-- S E T T I N G S -->
     <string name="setting_language_english">English (United States)</string>

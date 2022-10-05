@@ -11,16 +11,21 @@ import androidx.core.widget.TextViewCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.memocha.R
 import com.example.memocha.entity.History
-import com.example.memocha.utility.AppUtil
 import kotlinx.android.synthetic.main.recyclerview_item_monthly_expenses.view.*
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
+import kotlin.collections.ArrayList
 
-@SuppressLint("SetTextI18n", "NotifyDataSetChanged")
+@SuppressLint("SetTextI18n", "NotifyDataSetChanged", "NewApi")
 class HistoryDetailAdapter(
     private val context: Context,
     private val histories: ArrayList<History>
 ) : RecyclerView.Adapter<HistoryDetailAdapter.ExpensesDetailViewHolder>() {
 
     private lateinit var historyDetailListener: HistoryDetailListener
+    private val locale = context.resources.configuration.locales[0].language
+    private val formatDay = SimpleDateFormat("EEEE", Locale(locale))
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ExpensesDetailViewHolder {
         return ExpensesDetailViewHolder(LayoutInflater.from(parent.context)
@@ -28,9 +33,16 @@ class HistoryDetailAdapter(
     }
 
     override fun onBindViewHolder(holder: ExpensesDetailViewHolder, position: Int) {
-        val dateAdded = "${histories[position].date}/${histories[position].month}/${histories[position].year}"
-        val dateModified = "${histories[position].dateEdited}/${histories[position].monthEdited}/${histories[position].yearEdited}"
-        holder.itemView.textViewDate.text = dateAdded
+        val textAdded = "${histories[position].date}/${histories[position].month}/${histories[position].year}"
+        val textModified = "${histories[position].dateEdited}/${histories[position].monthEdited}/${histories[position].yearEdited}"
+        val dateAdded = SimpleDateFormat("dd/MM/yyyy", Locale(locale)).parse(textAdded) as Date
+        val dateModified = SimpleDateFormat("dd/MM/yyyy", Locale(locale)).parse(textModified) as Date
+        val dayAdded = formatDay.format(dateAdded)
+        val dayModified = formatDay.format(dateModified)
+        val textDateAdded = "$dayAdded, $textAdded (${histories[position].time})"
+        val textDateModified = "$dayModified, $textModified (${histories[position].timeEdited})"
+
+        holder.itemView.textViewDate.text = textAdded
         holder.itemView.textViewTime.text = "(${histories[position].time})"
         holder.itemView.textViewMethod.text = histories[position].method
         holder.itemView.textViewCategory.text = histories[position].category
@@ -39,8 +51,8 @@ class HistoryDetailAdapter(
         holder.itemView.textViewDescription.text = histories[position].description
 
         holder.itemView.layoutEdited.visibility = if (histories[position].isEdited) View.VISIBLE else View.GONE
-        holder.itemView.textViewDateAdded.text = "${AppUtil.convertDayCodeToName(context, histories[position].day)}, $dateAdded (${histories[position].time})"
-        holder.itemView.textViewDateModified.text = "${AppUtil.convertDayCodeToName(context, histories[position].dayEdited)}, $dateModified (${histories[position].timeEdited})"
+        holder.itemView.textViewDateAdded.text = textDateAdded
+        holder.itemView.textViewDateModified.text = textDateModified
         holder.itemView.layoutInfo.visibility = if (histories[position].isShownInfo) View.VISIBLE else View.GONE
 
         when (histories[position].method) {

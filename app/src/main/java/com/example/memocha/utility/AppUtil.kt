@@ -151,36 +151,9 @@ class AppUtil {
             return 0
         }
         fun getListOfMonth(c: Context) : ArrayList<String> {
-            return arrayListOf(
-                c.getString(R.string.month_january), c.getString(R.string.month_february),
-                c.getString(R.string.month_march), c.getString(R.string.month_april),
-                c.getString(R.string.month_may), c.getString(R.string.month_june),
-                c.getString(R.string.month_july), c.getString(R.string.month_august),
-                c.getString(R.string.month_september), c.getString(R.string.month_october),
-                c.getString(R.string.month_november), c.getString(R.string.month_december)
+            return arrayListOf(c.getString(R.string.month_january), c.getString(R.string.month_february), c.getString(R.string.month_march), c.getString(R.string.month_april), c.getString(R.string.month_may), c.getString(R.string.month_june),
+                c.getString(R.string.month_july), c.getString(R.string.month_august), c.getString(R.string.month_september), c.getString(R.string.month_october), c.getString(R.string.month_november), c.getString(R.string.month_december)
             )
-        }
-        fun convertDayNameToCode(c: Context, dayOfMonth: String): String {
-            return when (dayOfMonth) {
-                c.getString(R.string.day_sunday) -> "0"
-                c.getString(R.string.day_monday) -> "1"
-                c.getString(R.string.day_tuesday) -> "2"
-                c.getString(R.string.day_wednesday) -> "3"
-                c.getString(R.string.day_thursday) -> "4"
-                c.getString(R.string.day_friday) -> "5"
-                else -> "6"
-            }
-        }
-        fun convertDayCodeToName(c: Context, dayOfMonth: String): String {
-            return when (dayOfMonth) {
-                "0" -> c.getString(R.string.day_sunday)
-                "1" -> c.getString(R.string.day_monday)
-                "2" -> c.getString(R.string.day_tuesday)
-                "3" -> c.getString(R.string.day_wednesday)
-                "4" -> c.getString(R.string.day_thursday)
-                "5" -> c.getString(R.string.day_friday)
-                else -> c.getString(R.string.day_saturday)
-            }
         }
         fun convertMonthCodeFromName(context: Context, monthName: String): String {
             when (monthName) {

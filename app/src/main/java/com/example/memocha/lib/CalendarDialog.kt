@@ -11,9 +11,10 @@ import androidx.fragment.app.DialogFragment
 import com.example.memocha.R
 import kotlinx.android.synthetic.main.layout_dialog_calendar.*
 import java.text.SimpleDateFormat
+import java.util.Date
 import java.util.Locale
 
-@SuppressLint("UseCompatLoadingForDrawables", "StaticFieldLeak")
+@SuppressLint("UseCompatLoadingForDrawables", "StaticFieldLeak", "SimpleDateFormat", "NewApi")
 class CalendarDialog : DialogFragment(R.layout.layout_dialog_calendar) {
 
     companion object {
@@ -45,8 +46,10 @@ class CalendarDialog : DialogFragment(R.layout.layout_dialog_calendar) {
         if (dialog != null && dialog?.window != null) {
             dialog?.window?.setBackgroundDrawable(Companion.context.resources.getDrawable(R.drawable.background_calendar_dialog_rounded, null))
         }
-        val dateSelected = SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH).parse(mDate)
-        calendarView.setDate(dateSelected!!.time, true, true)
+
+        val locale = requireContext().resources.configuration.locales[0].language
+        val currentDate = SimpleDateFormat("dd-MM-yyyy", Locale(locale)).parse(mDate) as Date
+        calendarView.setDate(currentDate.time, true, true)
         calendarView.setOnDateChangeListener { _, year, month, dayOfMonth ->
             dateChangeListener.onDateChanges("${String.format("%02d", dayOfMonth)}-${String.format("%02d", month+1)}-$year")
             this.dismiss()

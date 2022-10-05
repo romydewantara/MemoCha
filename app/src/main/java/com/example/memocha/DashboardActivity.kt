@@ -44,13 +44,12 @@ import java.text.DecimalFormat
 import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.Calendar
-import java.util.Date
 import java.util.GregorianCalendar
 import java.util.Locale
 import java.util.Timer
 import java.util.TimerTask
 
-@SuppressLint("ClickableViewAccessibility", "UseCompatLoadingForDrawables", "SimpleDateFormat")
+@SuppressLint("ClickableViewAccessibility", "UseCompatLoadingForDrawables", "SimpleDateFormat", "NewApi")
 class DashboardActivity : AppCompatActivity() {
 
     companion object {
@@ -60,10 +59,8 @@ class DashboardActivity : AppCompatActivity() {
     }
 
     private val database by lazy { MemoChaRoomDatabase(this) }
-    private var isMenuHidden = false
-    private var isMenuAnimating = false
-    private var isFragmentShown = false
 
+    //Wisdom Text
     private var timer: Timer? = null
     private var task: TimerTask? = null
     private val listOfWisdomUsed = arrayListOf<String>()
@@ -82,28 +79,43 @@ class DashboardActivity : AppCompatActivity() {
 
     //History
     private var currentDate = ""
+    private var currentDay = ""
+    private var currentTime = ""
     private var customDate = ""
     private var paymentMethod = ""
 
     //Schedule
-    private var formatHour = SimpleDateFormat("HH")
-    private var currentHour = ""
-    private var index = 0
-    private var arrayTimes = arrayListOf(ScheduleActivity.subuh, ScheduleActivity.dzuhur,
-        ScheduleActivity.ashar, ScheduleActivity.maghrib, ScheduleActivity.isya)
+    private var timeId = 0
+    private var timeList = arrayListOf(
+        ScheduleActivity.subuh,
+        ScheduleActivity.dzuhur,
+        ScheduleActivity.ashar,
+        ScheduleActivity.maghrib,
+        ScheduleActivity.isya
+    )
 
+    //Dashboard Flags
+    private var isMenuHidden = false
+    private var isMenuAnimating = false
+    private var isFragmentShown = false
+
+    //Common of Dashboard Environment
     private lateinit var fragment: Fragment
     private lateinit var mediaPlayer: MediaPlayer
     private lateinit var dashboardScheduleAdapter: DashboardScheduleAdapter
     private lateinit var paymentMethodSpinnerAdapter: PaymentMethodSpinnerAdapter
     private lateinit var selectorCategory: SelectorItemsBottomSheet
 
+    //Simple Date Format
+    private lateinit var formatDate: SimpleDateFormat
+    private lateinit var formatDay: SimpleDateFormat
+    private lateinit var formatTime: SimpleDateFormat
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dashboard)
 
         init()
-        setupRecyclerView()
         initListener()
     }
 
@@ -111,7 +123,7 @@ class DashboardActivity : AppCompatActivity() {
         super.onStart()
         startWisdomTask()
         refreshSchedule()
-        setCurrentTime()
+        findCurrentScheduleTime()
         adjustSettings()
     }
 
@@ -133,9 +145,20 @@ class DashboardActivity : AppCompatActivity() {
     }
 
     private fun init() {
+        /** init settings **/
         mediaPlayer = MediaPlayer()
-        constraintActivityMain.viewTreeObserver.addOnGlobalLayoutListener {
-            if (AppUtil.isKeyboardVisible(constraintActivityMain)) {
+        surname = ""
+        applicationTheme = Constant.APP_THEME_LIGHT
+        applicationLanguage = getString(R.string.setting_language_english)
+        clockTheme = getString(R.string.clock_theme_primary)
+        backgroundAnimation = Constant.DASHBOARD_BACKGROUND_ANIMATION_AUTUMN
+        surnameState = false
+        backgroundAnimationState = false
+        backgroundMusicState = false
+
+        /** add global layout listener to root layout **/
+        rootDashboardLayout.viewTreeObserver.addOnGlobalLayoutListener {
+            if (AppUtil.isKeyboardVisible(rootDashboardLayout)) {
                 iconArrows.setImageResource(R.drawable.ic_arrows_disabled)
                 iconArrows.isEnabled = false
                 loveMessage.visibility = GONE
@@ -160,27 +183,17 @@ class DashboardActivity : AppCompatActivity() {
                 nextTime.visibility = VISIBLE
             }
         }
-        surname = ""
-        applicationTheme = Constant.APP_THEME_LIGHT
-        applicationLanguage = getString(R.string.setting_language_english)
-        clockTheme = getString(R.string.clock_theme_primary)
-        backgroundAnimation = Constant.DASHBOARD_BACKGROUND_ANIMATION_AUTUMN
-        surnameState = false
-        backgroundAnimationState = false
-        backgroundMusicState = false
 
+        /** init simple date format **/
         val calendar = Calendar.getInstance() //English: Friday, September 16th 2022 | Indonesia: Jum\'at, 16 September 2022
-        currentDate = SimpleDateFormat("dd-MM-yyyy").format(calendar.time)
-        customDate = SimpleDateFormat("dd-MM-yyyy").format(calendar.time)
-        textDate.text = SimpleDateFormat("EEEE, MMMM dd yyyy").format(calendar.time)
-        textViewCalendar.text = SimpleDateFormat("dd/MM/yyyy").format(calendar.time)
-        time.text = arrayTimes[index]
-        layoutCalendar.visibility = VISIBLE
-        textViewCalendar.text = currentDate.replace("-","/")
+        formatDate = SimpleDateFormat("dd-MM-yyyy", Locale(resources.configuration.locales[0].language))
+        formatDay = SimpleDateFormat("EEEE", Locale(resources.configuration.locales[0].language))
+        formatTime = SimpleDateFormat("HH:mm", Locale(resources.configuration.locales[0].language))
 
-        val sortType = arrayListOf(getString(R.string.method_cash), getString(R.string.method_debit), getString(R.string.method_transfer))
-        paymentMethodSpinnerAdapter = PaymentMethodSpinnerAdapter(applicationContext, sortType)
-        layoutPaymentMethod.adapter = paymentMethodSpinnerAdapter
+        currentDate = formatDate.format(calendar.time)
+        currentDay = formatDay.format(calendar.time)
+        currentTime = formatTime.format(calendar.time)
+        customDate = currentDate
 
         TextViewCompat.setAutoSizeTextTypeUniformWithConfiguration(textViewWisdom, 1,
             12, 1, TypedValue.COMPLEX_UNIT_SP)
@@ -194,9 +207,19 @@ class DashboardActivity : AppCompatActivity() {
             14, 1, TypedValue.COMPLEX_UNIT_SP)
         TextViewCompat.setAutoSizeTextTypeUniformWithConfiguration(textHistory, 1,
             14, 1, TypedValue.COMPLEX_UNIT_SP)
-    }
 
-    private fun setupRecyclerView() {
+        val mTextDate = "$currentDay, ${AppUtil.convertMonthNameFromCode(this, currentDate.
+        split("-")[1])} ${currentDate.split("-")[0]} ${currentDate.split("-")[2]}"
+
+        textDate.text = mTextDate
+        time.text = timeList[timeId]
+        textViewCalendar.text = currentDate.replace("-","/")
+        layoutCalendar.visibility = VISIBLE
+
+        val sortType = arrayListOf(getString(R.string.method_cash), getString(R.string.method_debit), getString(R.string.method_transfer))
+        paymentMethodSpinnerAdapter = PaymentMethodSpinnerAdapter(applicationContext, sortType)
+        layoutPaymentMethod.adapter = paymentMethodSpinnerAdapter
+
         dashboardScheduleAdapter = DashboardScheduleAdapter(this, arrayListOf())
         recyclerviewSchedule.apply {
             layoutManager = LinearLayoutManager(applicationContext)
@@ -280,28 +303,29 @@ class DashboardActivity : AppCompatActivity() {
     }
 
     private fun refreshSchedule() {
-        currentHour = formatHour.format(GregorianCalendar.getInstance().time)
+        val currentHour = formatTime.format(GregorianCalendar.getInstance().time)
         CoroutineScope(Dispatchers.IO).launch {
-            val schedules = database.scheduleDao().getSchedule(arrayTimes[index])
+            val schedules = database.scheduleDao().getSchedule(timeList[timeId])
             runOnUiThread {
                 if (schedules.isEmpty()) textViewEmptySchedule.visibility = VISIBLE
                 else textViewEmptySchedule.visibility = GONE
             }
             withContext(Dispatchers.Main) {
-                dashboardScheduleAdapter.setData(currentHour, schedules)
+                dashboardScheduleAdapter.setData(currentHour.split(":")[0], schedules)
             }
         }
     }
 
-    private fun setCurrentTime() {
-        when(currentHour.toInt()) {
-            in 5..11 -> {index = 0}
-            in 12..14 -> {index = 1}
-            in 15..17 -> {index = 2}
-            in 18..18 -> {index = 3}
-            else -> {index = 4}
+    private fun findCurrentScheduleTime() {
+        val currentHour = formatTime.format(GregorianCalendar.getInstance().time)
+        timeId = when(currentHour.split(":")[0].toInt()) {
+            in 5..11 -> { 0 }
+            in 12..14 -> { 1 }
+            in 15..17 -> { 2 }
+            in 18..18 -> { 3 }
+            else -> { 4 }
         }
-        time.text = arrayTimes[index]
+        time.text = timeList[timeId]
     }
 
     private fun initListener() {
@@ -311,18 +335,18 @@ class DashboardActivity : AppCompatActivity() {
         }
         time.setOnClickListener {
             startActivity(Intent(this@DashboardActivity, ScheduleActivity::class.java)
-                .putExtra("time", arrayTimes[index]).setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP))
+                .putExtra("time", timeList[timeId]).setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP))
         }
         previousTime.setOnClickListener {
-            index--
-            if (index < 0) index = arrayTimes.size - 1
-            time.text = arrayTimes[index]
+            timeId--
+            if (timeId < 0) timeId = timeList.size - 1
+            time.text = timeList[timeId]
             refreshSchedule()
         }
         nextTime.setOnClickListener {
-            index++
-            if (index >= arrayTimes.size) index = 0
-            time.text = arrayTimes[index]
+            timeId++
+            if (timeId >= timeList.size) timeId = 0
+            time.text = timeList[timeId]
             refreshSchedule()
         }
         menuBook.setOnClickListener {
@@ -408,15 +432,11 @@ class DashboardActivity : AppCompatActivity() {
                         customDate.split("-")[2],
                         customDate.split("-")[1],
                         customDate.split("-")[0],
-                        AppUtil.convertDayNameToCode(this@DashboardActivity,
-                            SimpleDateFormat("EEEE").format(Date())),
-                        SimpleDateFormat("HH:mm").format(Date()),
+                        currentTime,
                         customDate.split("-")[2],
                         customDate.split("-")[1],
                         customDate.split("-")[0],
-                        AppUtil.convertDayNameToCode(this@DashboardActivity,
-                            SimpleDateFormat("EEEE").format(Date())),
-                        SimpleDateFormat("HH:mm").format(Date()),
+                        currentTime,
                         editTextGoods.text.toString().trim(),
                         editTextAmount.text.toString().trim(),
                         editTextNote.text.toString().trim(),
@@ -432,9 +452,9 @@ class DashboardActivity : AppCompatActivity() {
                     textViewCategory.text = getString(R.string.category_others)
                     layoutPaymentMethod.setSelection(0)
                     editTextGoods.requestFocus()
-                    Snackbar.make(constraintActivityMain, getString(R.string.snackbar_monthly_expenses_added),
+                    Snackbar.make(rootDashboardLayout, getString(R.string.snackbar_monthly_expenses_added),
                         Snackbar.LENGTH_LONG).setAction(getString(R.string.snackbar_button_dismiss)) {
-                            AppUtil.hideSoftKeyboard(constraintActivityMain, this@DashboardActivity)
+                            AppUtil.hideSoftKeyboard(rootDashboardLayout, this@DashboardActivity)
                     }.show()
                 }
             }
@@ -551,7 +571,7 @@ class DashboardActivity : AppCompatActivity() {
 
     private fun showMenu() {
         if (!isMenuAnimating) {
-            val xTarget = constraintActivityMain.x
+            val xTarget = rootDashboardLayout.x
             val objectAnimator =
                 ObjectAnimator.ofFloat(constraintMainMenuContainer, "translationX", xTarget)
                     .setDuration(200)
@@ -573,7 +593,7 @@ class DashboardActivity : AppCompatActivity() {
 
     private fun hideMenu() {
         if (!isMenuAnimating) {
-            val xTarget = constraintActivityMain.x + constraintMainMenu.width
+            val xTarget = rootDashboardLayout.x + constraintMainMenu.width
             val objectAnimator =
                 ObjectAnimator.ofFloat(constraintMainMenuContainer, "translationX", xTarget)
                     .setDuration(300)

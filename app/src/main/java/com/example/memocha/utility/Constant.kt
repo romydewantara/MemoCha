@@ -6,6 +6,9 @@ class Constant {
         const val APP_THEME_LIGHT = "Light"
         const val APP_THEME_DARK = "Dark"
 
+        const val APP_LANG_ENGLISH = "EN"
+        const val APP_LANG_INDONESIA = "ID"
+
         const val DASHBOARD_BACKGROUND_ANIMATION_AUTUMN = "autumn_fall.json"
         const val DASHBOARD_BACKGROUND_ANIMATION_SAKURA = "sakura_fall.json"
         const val DASHBOARD_BACKGROUND_ANIMATION_SNOW = "snow_fall.json"
