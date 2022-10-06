@@ -188,14 +188,9 @@ class NeedsScreenFragment : Fragment(R.layout.fragment_needs_screen) {
                 if (s != null && s.isNotEmpty()) {
                     if (s.isNotEmpty() && previousTextLength < 1) {
                         showSendButton()
-                        if (s.length > 400) {
+                        if (s.length == 180) {
                             editTextNeedsItem.removeTextChangedListener(this)
-                            try {
-                                Toast.makeText(requireContext(), String.format(getString(R.string.needs_text_length_limit), s.length), Toast.LENGTH_LONG).show()
-                                editTextNeedsItem.setText(s.toString())
-                            } catch (nfe: NumberFormatException) {
-                                nfe.printStackTrace()
-                            }
+                            Toast.makeText(requireContext(), String.format(getString(R.string.needs_text_length_limit), s.length), Toast.LENGTH_LONG).show()
                             editTextNeedsItem.addTextChangedListener(this)
                         }
                     }

@@ -139,6 +139,7 @@
                 android:hint="@string/needs_hint_goods"
                 android:inputType="textEmailAddress"
                 android:maxLines="3"
+                android:maxLength="180"
                 android:layout_marginStart="6dp"
                 android:layout_marginEnd="6dp"
                 android:textColorHint="@color/gray_semi_light"

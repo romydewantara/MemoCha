@@ -192,7 +192,6 @@ class DashboardActivity : AppCompatActivity() {
 
         currentDate = formatDate.format(calendar.time)
         currentDay = formatDay.format(calendar.time)
-        currentTime = formatTime.format(calendar.time)
         customDate = currentDate
 
         TextViewCompat.setAutoSizeTextTypeUniformWithConfiguration(textViewWisdom, 1,
@@ -254,8 +253,9 @@ class DashboardActivity : AppCompatActivity() {
 
                     analogClock.background = AppUtil.convertDrawableFromTheme(this@DashboardActivity, clockTheme)
                     if (applicationLanguage == getString(R.string.setting_language_bahasa))
-                        textDate.text = SimpleDateFormat("EEEE, dd MMMM yyyy", Locale("id")).
-                        format(Calendar.getInstance().time)
+                        textDate.text = String.format("$currentDay, ${currentDate.split("-")[0]} ${
+                            AppUtil.convertMonthNameFromCode(this@DashboardActivity, currentDate.
+                            split("-")[1])} ${currentDate.split("-")[2]}")
                     if (surnameState) {
                         textGreetings.text = String.format(getString(R.string.dasboard_greetings), AppUtil.getTimesName(this@DashboardActivity), surname)
                         textGreetings.visibility = VISIBLE
@@ -303,7 +303,7 @@ class DashboardActivity : AppCompatActivity() {
     }
 
     private fun refreshSchedule() {
-        val currentHour = formatTime.format(GregorianCalendar.getInstance().time)
+        currentTime = formatTime.format(Calendar.getInstance().time)
         CoroutineScope(Dispatchers.IO).launch {
             val schedules = database.scheduleDao().getSchedule(timeList[timeId])
             runOnUiThread {
@@ -311,7 +311,7 @@ class DashboardActivity : AppCompatActivity() {
                 else textViewEmptySchedule.visibility = GONE
             }
             withContext(Dispatchers.Main) {
-                dashboardScheduleAdapter.setData(currentHour.split(":")[0], schedules)
+                dashboardScheduleAdapter.setData(currentTime.split(":")[0], schedules)
             }
         }
     }
@@ -352,6 +352,7 @@ class DashboardActivity : AppCompatActivity() {
         menuBook.setOnClickListener {
             startActivity(Intent(this@DashboardActivity, WebViewActivity::class.java)
                 .setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP))
+            finish()
         }
         menuIdentity.setOnClickListener {
             isFragmentShown = true
@@ -426,6 +427,7 @@ class DashboardActivity : AppCompatActivity() {
         }
         imageAdd.setOnClickListener {
             CoroutineScope(Dispatchers.IO).launch {
+                currentTime = formatTime.format(Calendar.getInstance().time)
                 database.historyDao().insert(
                     History(
                         0,

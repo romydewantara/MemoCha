@@ -6,6 +6,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
 import android.view.ViewTreeObserver
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.memocha.R
 import com.example.memocha.utility.AppUtil
@@ -63,7 +64,14 @@ class SurnameFragment(private val mSurnameState: Boolean, private val mSurname: 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
             override fun afterTextChanged(s: Editable?) {
-                if (s != null && s.isNotEmpty()) surname = s.toString().trim() else surname = ""
+                if (s != null && s.isNotEmpty()) {
+                    surname = s.toString().trim()
+                    if (s.length == 35) {
+                        editTextSurname.removeTextChangedListener(this)
+                        Toast.makeText(requireContext(), getString(R.string.settings_surname_reach_length), Toast.LENGTH_LONG).show()
+                        editTextSurname.addTextChangedListener(this)
+                    }
+                } else surname = ""
             }
         }
         return textWatcher

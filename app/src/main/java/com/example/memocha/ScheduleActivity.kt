@@ -96,31 +96,6 @@ class ScheduleActivity : AppCompatActivity(), ScheduleAdapter.ScheduleAdapterLis
         add.setOnClickListener {
             showScheduleEditorBottomSheet(0, "00", "00", "00", "00", "",false)
         }
-        trash.setOnClickListener {
-            isDelete = false //isDelete = !isDelete //not used yet… o_0
-            if (isDelete) {
-                buttonSelectAll.visibility = View.VISIBLE
-                buttonSelectAll.isEnabled = true
-            } else {
-                buttonSelectAll.visibility = View.INVISIBLE
-                buttonSelectAll.isEnabled = false
-            }
-            val mcPopupDialog = MemoChaPopupDialog.newInstance().setContent(getString(R.string.dialog_title_delete_all_schedule),
-                getString(R.string.dialog_message_delete_all_schedule), getString(R.string.dialog_button_delete_all), getString(R.string.button_cancel),
-                object : MemoChaPopupDialog.MemoChaPopupDialogListener {
-                    override fun onNegativeButton() {
-                        CoroutineScope(Dispatchers.IO).launch {
-                            database.scheduleDao().deleteAll()
-                            refreshSchedule(currentTab) //delete all, not used
-                        }
-                    }
-                    override fun onPositiveButton() {
-
-                    }
-
-                })
-            mcPopupDialog.show(supportFragmentManager, mcPopupDialog.tag)
-        }
         buttonSubuh.setOnClickListener { navigate(subuh) }
         buttonDzuhur.setOnClickListener { navigate(dzuhur) }
         buttonAshar.setOnClickListener { navigate(ashar) }

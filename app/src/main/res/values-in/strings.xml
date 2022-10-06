@@ -125,6 +125,7 @@
     <string name="settings_background_animation">Animasi Latar Belakang</string>
     <string name="settings_background_animation_information">Memainkan animasi di latar belakang layar saat berada di Halaman Utama</string>
     <string name="settings_surname">Nama Pengguna</string>
+    <string name="settings_surname_reach_length">Panjang Nama maksimal 30 karakter</string>
     <string name="settings_notification">Notifikasi</string>
     <string name="settings_notification_state">Nyalakan Notifikasi</string>
     <string name="settings_notification_info">Kamu akan dapat notifikasi sebagai pengingat buat rutin mencatat pengeluaran bulananmu</string>
@@ -148,14 +149,12 @@
     <string name="dialog_title_warning">Peringatan!</string>
     <string name="dialog_title_information">Informasi</string>
     <string name="dialog_title_delete_from_history">Hapus dari Riwayat?</string>
-    <string name="dialog_title_delete_all_schedule">Remove All Schedule?</string>
     <string name="dialog_title_delete_needs">Hapus \"%s\"?</string>
     <string name="dialog_title_delete_identity">Hapus data %s?</string>
     <string name="dialog_title_import_schedule">Impor Jadwal Bawaan \"%s\"?</string>
     <string name="dialog_title_export_history">Ekspor Pengeluaran Bulan %s?</string>
     <string name="dialog_message_permission">Beberapa fitur dalam aplikasi mungkin tidak berfungsi dengan benar karena berisi izin yang ditolak</string>
     <string name="dialog_message_schedule_filled">Kamu hanya bisa melakukan impor jadwal bawaan hanya saat daftar jadwalmu masih kosong</string>
-    <string name="dialog_message_delete_all_schedule">If you delete the entire schedule it will be deleted permanently</string>
     <string name="dialog_message_delete_needs">Hati-hati, ini akan menghapus item kamu secara permanen!</string>
     <string name="dialog_message_delete_identity">Data yang kamu hapus ga bisa dikembalikan lagi (permanen)</string>
     <string name="dialog_message_import_schedule">Aksi ini bisa membuat daftarmu berisi jadwal bawaan</string>
@@ -166,7 +165,6 @@
     <string name="dialog_message_ask_before_quit">Ada perubahan yang belum kamu terapkan nih, apa kamu yakin mau tinggalin halaman ini?</string>
     <string name="dialog_message_switch_language">Kamu terdeteksi mengubah bahasa aplikasi pakai:\n\n\"%s\"\n\nSegera klik tombol \'OK\' buat memulai ulang aplikasi</string>
     <string name="dialog_message_delete_from_history">Apa kamu yakin mau menghapus data ini dari riwayat?</string>
-    <string name="dialog_button_delete_all">Hapus Semua</string>
     <string name="dialog_button_reset">Atur Ulang</string>
     <string name="dialog_button_cancel">Batal</string>
     <!-- S N A C K B A R -->
@@ -193,7 +191,7 @@
     <string name="needs_date">@string/secret_letter_calendar</string>
     <string name="needs_today_list">Jumlah Kebutuhanmu: %s</string>
     <string name="needs_hint_goods">Contoh: Eskrim, Gelas, dll…</string>
-    <string name="needs_text_length_limit">Yah, panjang teks udah mencapai batas limit (maksimal 400 karakter), panjang teks kamu: %s</string>
+    <string name="needs_text_length_limit">Yah, panjang teks udah mencapai batas limit (maksimal 180 karakter), panjang teks kamu: %s</string>
 
     <!-- I D E N T I T Y -->
     <string name="identity_title_page">Informasi Data</string>
