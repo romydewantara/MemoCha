@@ -7,6 +7,7 @@ import android.content.Context
 import android.graphics.Rect
 import android.graphics.drawable.Drawable
 import android.graphics.drawable.GradientDrawable
+import android.os.Environment
 import android.util.TypedValue
 import android.view.View
 import android.view.inputmethod.InputMethodManager
@@ -26,8 +27,9 @@ import kotlin.collections.ArrayList
 @SuppressLint("NewApi", "ResourceType", "SimpleDateFormat")
 class AppUtil {
     companion object {
-        fun writeFileToStorage(c: Context, folderName: String, fileName: String, body: String) : String {
-            val dir = File(c.externalCacheDir?.path + File.separator + folderName + File.separator)
+        fun writeFileToStorage(fileName: String, body: String) : String {
+            //val dir = File(c.externalCacheDir?.path + File.separator + folderName + File.separator)
+            val dir = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).path)
             if (!dir.exists()) {
                 dir.mkdir()
             }

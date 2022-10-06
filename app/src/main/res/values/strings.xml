@@ -42,6 +42,7 @@
     <string name="button_cancel">Cancel</string>
     <string name="button_delete">Delete</string>
     <string name="button_import">Import</string>
+    <string name="button_try_again">Try Again</string>
     <string name="button_export">Export</string>
 
     <string name="method_cash">Cash</string>
@@ -147,6 +148,7 @@
     <!-- D I A L O G -->
     <string name="dialog_title_warning">Warning!</string>
     <string name="dialog_title_information">Information</string>
+    <string name="dialog_title_data_error">Data Error</string>
     <string name="dialog_title_delete_from_history">Remove From History?</string>
     <string name="dialog_title_delete_needs">Remove \"%s\"?</string>
     <string name="dialog_title_delete_identity">Delete %s\'s data?</string>
@@ -157,6 +159,7 @@
     <string name="dialog_message_delete_needs">Be careful, it will be deleted permanently!</string>
     <string name="dialog_message_delete_identity">Your data will be deleted permanently</string>
     <string name="dialog_message_import_schedule">This action can make your list contain the default schedule</string>
+    <string name="dialog_message_data_error">An error occurred while trying to import %s monthly expense data into %s expense data</string>
     <string name="dialog_message_import_history">It needs a file containing text with a JSON structure format so that it can be applied to your expense list history</string>
     <string name="dialog_message_export_history">Are you sure want to export this record?</string>
     <string name="dialog_message_app_theme">Sorry, this feature is not ready yet</string>
@@ -175,15 +178,16 @@
     <string name="snackbar_monthly_expenses_updated">Data has been updated</string>
     <string name="snackbar_monthly_expenses_deleted">Data has been deleted from history</string>
     <string name="snackbar_monthly_expenses_exported">%s\' expenses has been exported to %s</string>
-    <string name="snackbar_monthly_expenses_exported_failed">Failed to exported %s\'s expenses to %s</string>
+    <string name="snackbar_monthly_expenses_exported_failed">Failed to exported %s\'s expenses</string>
     <string name="snackbar_monthly_expenses_imported">Data successfully imported</string>
+    <string name="snackbar_monthly_expenses_canceled">You have canceled the monthly expense data import action for the month of %s</string>
     <string name="snackbar_identity_added">New identity data has been added</string>
     <string name="snackbar_identity_updated">The identity data successfully updated</string>
     <string name="snackbar_identity_deleted">The data has been deleted</string>
     <string name="snackbar_button_open">OPEN</string>
     <string name="snackbar_button_dismiss">DISMISS</string>
 
-    <string name="needs_date_chooser_text_header">\"Dan janganlah kamu menghambur–hamburkan (hartamu) secara boros. Sesungguhnya pemboros-pemboros itu adalah saudara-saudara syaitan dan syaitan itu adalah sangat ingkar kepada Tuhannya\". (QS. 17: 26─27)</string>
+    <string name="needs_date_chooser_text_header">\"Dan janganlah kamu menghambur–hamburkan (hartamu) secara boros. Sesungguhnya pemboros-pemboros itu adalah saudara-saudara syaitan dan syaitan itu adalah sangat ingkar kepada Tuhannya.\" (QS. 17: 26─27)</string>
 
     <!-- N E E D S -->
     <string name="needs_title_page">Need List</string>

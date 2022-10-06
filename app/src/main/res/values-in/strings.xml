@@ -42,6 +42,7 @@
     <string name="button_cancel">Batal</string>
     <string name="button_delete">Hapus</string>
     <string name="button_import">Impor</string>
+    <string name="button_try_again">Coba Lagi</string>
     <string name="button_export">Ekspor</string>
 
     <string name="method_cash">Cash</string>
@@ -148,6 +149,7 @@
     <!-- D I A L O G -->
     <string name="dialog_title_warning">Peringatan!</string>
     <string name="dialog_title_information">Informasi</string>
+    <string name="dialog_title_data_error">Kesalahan Data</string>
     <string name="dialog_title_delete_from_history">Hapus dari Riwayat?</string>
     <string name="dialog_title_delete_needs">Hapus \"%s\"?</string>
     <string name="dialog_title_delete_identity">Hapus data %s?</string>
@@ -158,6 +160,7 @@
     <string name="dialog_message_delete_needs">Hati-hati, ini akan menghapus item kamu secara permanen!</string>
     <string name="dialog_message_delete_identity">Data yang kamu hapus ga bisa dikembalikan lagi (permanen)</string>
     <string name="dialog_message_import_schedule">Aksi ini bisa membuat daftarmu berisi jadwal bawaan</string>
+    <string name="dialog_message_data_error">Terjadi kesalahan saat coba mengimpor data pengeluaran bulanan %s ke data pengeluaran bulan %s</string>
     <string name="dialog_message_import_history">Dibutuhin file berisi teks dengan format struktur JSON supaya bisa diterapin ke daftar riwayat pengeluaranmu</string>
     <string name="dialog_message_export_history">File hasil ekspor akan masuk ke folder Memori Internal kamu</string>
     <string name="dialog_message_app_theme">Sorry, fitur ini belum siap</string>
@@ -175,15 +178,16 @@
     <string name="snackbar_monthly_expenses_updated">Data udah diubah</string>
     <string name="snackbar_monthly_expenses_deleted">Data udah dihapus dari riwayat</string>
     <string name="snackbar_monthly_expenses_exported">Pengeluaran bulan %s udah diekspor ke %s</string>
-    <string name="snackbar_monthly_expenses_exported_failed">Gagal ekspor pengeluaran bulan %s ke %s</string>
+    <string name="snackbar_monthly_expenses_exported_failed">Gagal ekspor pengeluaran bulan %s</string>
     <string name="snackbar_monthly_expenses_imported">Data berhasil diimpor</string>
+    <string name="snackbar_monthly_expenses_canceled">Kamu udah membatalkan aksi impor data pengeluaran untuk bulan %s</string>
     <string name="snackbar_identity_added">Data identitas baru udah ditambahkan</string>
     <string name="snackbar_identity_updated">Data identitas berhasil diubah</string>
     <string name="snackbar_identity_deleted">Data udah dihapus</string>
     <string name="snackbar_button_open">BUKA</string>
     <string name="snackbar_button_dismiss">TUTUP</string>
 
-    <string name="needs_date_chooser_text_header">\"Dan janganlah kamu menghambur–hamburkan (hartamu) secara boros. Sesungguhnya pemboros-pemboros itu adalah saudara-saudara syaitan dan syaitan itu adalah sangat ingkar kepada Tuhannya\". (QS. 17: 26─27)</string>
+    <string name="needs_date_chooser_text_header">\"Dan janganlah kamu menghambur–hamburkan (hartamu) secara boros. Sesungguhnya pemboros-pemboros itu adalah saudara-saudara syaitan dan syaitan itu adalah sangat ingkar kepada Tuhannya.\" (QS. 17: 26─27)</string>
 
     <!-- N E E D S -->
     <string name="needs_title_page">Daftar\nKebutuhan</string>

@@ -2,17 +2,19 @@ package com.example.memocha
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.app.DownloadManager
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.util.TypedValue
 import android.view.View
 import android.view.animation.AnimationUtils
 import android.widget.TextView
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.AppCompatTextView
 import androidx.core.widget.TextViewCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.memocha.adapter.HistoryDetailAdapter
@@ -20,7 +22,6 @@ import com.example.memocha.entity.History
 import com.example.memocha.lib.HistoryDetailsEditor
 import com.example.memocha.lib.MemoChaPopupDialog
 import com.example.memocha.utility.AppUtil
-import com.example.memocha.utility.Constant
 import com.example.memocha.utility.MemoChaRoomDatabase
 import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
@@ -30,18 +31,18 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.json.JSONArray
-import java.io.IOException
 import java.io.BufferedReader
+import java.io.IOException
 import java.io.InputStreamReader
 import java.math.BigInteger
-import java.util.Objects
+import java.util.*
+
 
 @SuppressLint("UseCompatLoadingForDrawables", "ClickableViewAccessibility", "InlinedApi")
 class HistoryDetailsActivity : AppCompatActivity() {
 
     companion object {
         const val TAG = "HistoryDetailsAct"
-        const val PICK_TEXT_FILE = 2
     }
     private val database by lazy { MemoChaRoomDatabase(this) }
     private var historyDetailsEditor: HistoryDetailsEditor? = null
@@ -134,59 +135,6 @@ class HistoryDetailsActivity : AppCompatActivity() {
         )
     }
 
-    private fun showEditor(history: History) {
-        isEditing = true
-        historyDetailsEditor = HistoryDetailsEditor(this@HistoryDetailsActivity, history, supportFragmentManager)
-                .addMonthlyExpensesEditorListener(object : HistoryDetailsEditor.MonthlyExpensesEditorListener {
-                    override fun onSaveClicked(id: Int, history: History) {
-                        updateHistory(id, history)
-                        closeEditorLayout()
-                    }
-                    override fun onDeleteClicked(id: Int) {
-                        deleteFromHistory(id)
-                        closeEditorLayout()
-                    }
-                })
-        layoutHistoryDetailsEditor.removeAllViews()
-        layoutHistoryDetailsEditor.addView(historyDetailsEditor)
-        layoutHistoryDetailsEditor.visibility = View.VISIBLE
-        layoutHistoryDetailsEditor.startAnimation(AnimationUtils.loadAnimation(applicationContext, R.anim.fade_in))
-        layoutHistoryDetailsEditor.setOnClickListener {
-            AppUtil.hideSoftKeyboard(layoutHistoryDetailsEditor, this@HistoryDetailsActivity)
-        }
-    }
-
-    private fun closeEditorLayout() {
-        isEditing = false
-        layoutHistoryDetailsEditor.visibility = View.GONE
-        layoutHistoryDetailsEditor.startAnimation(AnimationUtils.loadAnimation(applicationContext, R.anim.fade_out))
-        historyDetailsEditor = null
-    }
-
-    private fun updateHistory(id: Int, history: History) {
-        CoroutineScope(Dispatchers.IO).launch {
-            database.historyDao().updateHistory(id, history.yearEdited, history.monthEdited,
-                history.dateEdited, history.timeEdited, history.goods, history.amount,
-                history.description, history.category, history.method, true)
-            fetchHistoryDetails()
-        }
-    }
-
-    private fun deleteFromHistory(id: Int) {
-        CoroutineScope(Dispatchers.IO).launch {
-            database.historyDao().deleteFromHistory(id)
-            fetchHistoryDetails()
-        }
-    }
-
-    private fun setupRecyclerView() {
-        historyDetailAdapter = HistoryDetailAdapter(this, arrayListOf())
-        recyclerviewPaymentDetail.apply {
-            layoutManager = LinearLayoutManager(this@HistoryDetailsActivity)
-            adapter = historyDetailAdapter
-        }
-    }
-
     private fun fetchHistoryDetails() {
         CoroutineScope(Dispatchers.IO).launch {
             history = database.historyDao().getHistory(year, month)
@@ -223,6 +171,59 @@ class HistoryDetailsActivity : AppCompatActivity() {
                     cardViewPaymentDetail.visibility = View.GONE
                 }
             }
+        }
+    }
+
+    private fun showEditor(history: History) {
+        isEditing = true
+        historyDetailsEditor = HistoryDetailsEditor(this@HistoryDetailsActivity, history, supportFragmentManager)
+                .addMonthlyExpensesEditorListener(object : HistoryDetailsEditor.MonthlyExpensesEditorListener {
+                    override fun onSaveClicked(id: Int, history: History) {
+                        updateHistory(id, history)
+                        closeEditorLayout()
+                    }
+                    override fun onDeleteClicked(id: Int) {
+                        deleteFromHistory(id)
+                        closeEditorLayout()
+                    }
+                })
+        layoutHistoryDetailsEditor.removeAllViews()
+        layoutHistoryDetailsEditor.addView(historyDetailsEditor)
+        layoutHistoryDetailsEditor.visibility = View.VISIBLE
+        layoutHistoryDetailsEditor.startAnimation(AnimationUtils.loadAnimation(applicationContext, R.anim.fade_in))
+        layoutHistoryDetailsEditor.setOnClickListener {
+            AppUtil.hideSoftKeyboard(layoutHistoryDetailsEditor, this@HistoryDetailsActivity)
+        }
+    }
+
+    private fun closeEditorLayout() {
+        isEditing = false
+        layoutHistoryDetailsEditor.visibility = View.GONE
+        layoutHistoryDetailsEditor.startAnimation(AnimationUtils.loadAnimation(applicationContext, R.anim.fade_out))
+        historyDetailsEditor = null
+    }
+
+    private fun setupRecyclerView() {
+        historyDetailAdapter = HistoryDetailAdapter(this, arrayListOf())
+        recyclerviewPaymentDetail.apply {
+            layoutManager = LinearLayoutManager(this@HistoryDetailsActivity)
+            adapter = historyDetailAdapter
+        }
+    }
+
+    private fun updateHistory(id: Int, history: History) {
+        CoroutineScope(Dispatchers.IO).launch {
+            database.historyDao().updateHistory(id, history.yearEdited, history.monthEdited,
+                history.dateEdited, history.timeEdited, history.goods, history.amount,
+                history.description, history.category, history.method, true)
+            fetchHistoryDetails()
+        }
+    }
+
+    private fun deleteFromHistory(id: Int) {
+        CoroutineScope(Dispatchers.IO).launch {
+            database.historyDao().deleteFromHistory(id)
+            fetchHistoryDetails()
         }
     }
 
@@ -285,18 +286,16 @@ class HistoryDetailsActivity : AppCompatActivity() {
     }
 
     private fun exportFile() {
-        val fileName = "monthly_expenses_${AppUtil.convertMonthNameFromCode(this, month).lowercase()}"
-        val path = AppUtil.writeFileToStorage(this@HistoryDetailsActivity, Constant.FOLDER_NAME_HISTORY, fileName, Gson().toJson(history))
+        val fileName = "${AppUtil.convertMonthNameFromCode(this, month).lowercase()}_monthly_expenses"
+        val path = AppUtil.writeFileToStorage(fileName, Gson().toJson(history))
         val message = if (path.isNotEmpty()) String.format(getString(R.string.snackbar_monthly_expenses_exported),
             AppUtil.convertMonthNameFromCode(this@HistoryDetailsActivity, month), path)
         else String.format(getString(R.string.snackbar_monthly_expenses_exported_failed),
-            AppUtil.convertMonthNameFromCode(this@HistoryDetailsActivity, month), path)
+            AppUtil.convertMonthNameFromCode(this@HistoryDetailsActivity, month))
         val snackBar = Snackbar.make(rootHistory, message, 6500).setAction(getString(R.string.snackbar_button_open)) {
             //action to open folder based on path
-            /*val intent = Intent(Intent.ACTION_GET_CONTENT)
-            val uri = Uri.parse(path)
-            intent.setDataAndType(uri, "text/csv")
-            startActivity(intent)*/
+            val intent = Intent(DownloadManager.ACTION_VIEW_DOWNLOADS)
+            startActivity(intent)
         }
         val view = snackBar.view
         val snackBarTextView = view.findViewById(com.google.android.material.R.id.snackbar_text) as TextView
@@ -305,10 +304,35 @@ class HistoryDetailsActivity : AppCompatActivity() {
     }
 
     private fun importFile() {
-        val intent = Intent(Intent.ACTION_GET_CONTENT).apply {
+        resultLauncher.launch(Intent(Intent.ACTION_GET_CONTENT).apply { 
             type = "text/plain"
-        }
-        startActivityForResult(intent, PICK_TEXT_FILE)
+        })
+    }
+
+    private fun showWrongMonthData(monthImported: String) {
+        val mcPopupDialog = MemoChaPopupDialog.newInstance()
+        mcPopupDialog.setContent(getString(R.string.dialog_title_data_error), String.
+        format(getString(R.string.dialog_message_data_error, monthImported, AppUtil.
+        convertMonthNameFromCode(this@HistoryDetailsActivity, month))),
+            getString(R.string.button_try_again), getString(R.string.button_cancel),
+            object : MemoChaPopupDialog.MemoChaPopupDialogListener {
+                override fun onNegativeButton() {
+                    importFile()
+                }
+                override fun onPositiveButton() {
+                    val snackBar = Snackbar.make(rootHistory, String.
+                    format(getString(R.string.snackbar_monthly_expenses_canceled), AppUtil.
+                    convertMonthNameFromCode(this@HistoryDetailsActivity, month)), 6500).
+                    setAction(getString(R.string.snackbar_button_dismiss)) {}
+                    val view = snackBar.view
+                    val snackBarTextView = view.findViewById(com.google.android.material.R.id.snackbar_text) as AppCompatTextView
+                    TextViewCompat.setAutoSizeTextTypeUniformWithConfiguration(snackBarTextView,
+                        1, 14, 1, TypedValue.COMPLEX_UNIT_SP)
+                    snackBarTextView.maxLines = 2
+                    snackBar.show()
+                }
+            })
+        mcPopupDialog.show(supportFragmentManager, mcPopupDialog.tag)
     }
 
     @Throws(IOException::class)
@@ -324,29 +348,30 @@ class HistoryDetailsActivity : AppCompatActivity() {
                 }
             }
         }
-        Log.d(TAG, "readTextFromUri - string: $stringBuilder")
         return stringBuilder.toString()
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, resultData: Intent?) {
-        super.onActivityResult(requestCode, resultCode, resultData)
-        if (requestCode == PICK_TEXT_FILE && resultCode == Activity.RESULT_OK) {
-            val uri = resultData?.data as Uri
+    private val resultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+        if (it.resultCode == Activity.RESULT_OK) {
+            val uri = it.data?.data as Uri
             val result = readTextFromUri(uri)
             val array = JSONArray(result)
             if (array.length() > 0) {
-                historyDetailsLoading.visibility = View.VISIBLE
-                CoroutineScope(Dispatchers.IO).launch {
-                    for (i in 0 until array.length()) {
-                        database.historyDao().insert(Gson().fromJson(array[i].toString(), History::class.java))
-                        if (i == array.length() - 1) {
-                            runOnUiThread {
-                                historyDetailsLoading.visibility = View.GONE
+                if (Gson().fromJson(array[0].toString(), History::class.java).month == month) {
+                    historyDetailsLoading.visibility = View.VISIBLE
+                    CoroutineScope(Dispatchers.IO).launch {
+                        for (i in 0 until array.length()) {
+                            database.historyDao().insert(Gson().fromJson(array[i].toString(), History::class.java))
+                            if (i == array.length() - 1) {
+                                runOnUiThread {
+                                    historyDetailsLoading.visibility = View.GONE
+                                }
                             }
                         }
+                        fetchHistoryDetails()
                     }
-                    fetchHistoryDetails()
-                }
+                } else showWrongMonthData(AppUtil.convertMonthNameFromCode(this@HistoryDetailsActivity,
+                    Gson().fromJson(array[0].toString(), History::class.java).month))
             }
         }
     }
