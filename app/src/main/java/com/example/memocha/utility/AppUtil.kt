@@ -273,8 +273,8 @@ class AppUtil {
             arrayListIconUsed.add(icon)
             return icon
         }
-        fun randomWisdom(c: Context, arrayListWisdomUsed: ArrayList<String>): String {
-            val wisdom: String
+        fun randomWisdom(c: Context, arrayListWisdomUsed: ArrayList<Int>): String {
+            val wisdomId: Int
             val listOfWisdom = arrayListOf<String>()
             listOfWisdom.add(c.getString(R.string.dashboard_wisdom_index_0))
             listOfWisdom.add(c.getString(R.string.dashboard_wisdom_index_1))
@@ -331,17 +331,17 @@ class AppUtil {
             listOfWisdom.add(c.getString(R.string.dashboard_wisdom_43))
 
             val random = Random()
-            wisdom = listOfWisdom[random.nextInt(listOfWisdom.size)]
+            wisdomId = random.nextInt(listOfWisdom.size)
             if (arrayListWisdomUsed.size == listOfWisdom.size) arrayListWisdomUsed.clear()
             if (arrayListWisdomUsed.isNotEmpty()) {
                 for (i in 0 until arrayListWisdomUsed.size) {
-                    if (wisdom == arrayListWisdomUsed[i]) {
+                    if (wisdomId == arrayListWisdomUsed[i]) {
                         return randomWisdom(c, arrayListWisdomUsed)
                     }
                 }
             }
-            arrayListWisdomUsed.add(wisdom)
-            return wisdom
+            arrayListWisdomUsed.add(wisdomId)
+            return listOfWisdom[wisdomId]
         }
         fun border(context: Context, view: View, color: Int) {
             val border = GradientDrawable()

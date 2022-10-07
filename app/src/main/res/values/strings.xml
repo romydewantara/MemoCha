@@ -159,7 +159,7 @@
     <string name="dialog_message_delete_needs">Be careful, it will be deleted permanently!</string>
     <string name="dialog_message_delete_identity">Your data will be deleted permanently</string>
     <string name="dialog_message_import_schedule">This action can make your list contain the default schedule</string>
-    <string name="dialog_message_data_error">An error occurred while trying to import %s monthly expense data into %s expense data</string>
+    <string name="dialog_message_data_error">An error occurred while trying to import %s monthly expense data into %s\'s page expense history</string>
     <string name="dialog_message_import_history">It needs a file containing text with a JSON structure format so that it can be applied to your expense list history</string>
     <string name="dialog_message_export_history">Are you sure want to export this record?</string>
     <string name="dialog_message_app_theme">Sorry, this feature is not ready yet</string>

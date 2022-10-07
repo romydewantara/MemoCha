@@ -63,7 +63,7 @@ class DashboardActivity : AppCompatActivity() {
     //Wisdom Text
     private var timer: Timer? = null
     private var task: TimerTask? = null
-    private val listOfWisdomUsed = arrayListOf<String>()
+    private val listOfWisdomUsed = arrayListOf<Int>()
 
     //Settings
     private var surnameState = false
@@ -606,11 +606,13 @@ class DashboardActivity : AppCompatActivity() {
     private fun showOverlayLayout() {
         overlayLayout.startAnimation(AnimationUtils.loadAnimation(applicationContext, R.anim.white_overlay_fade_in))
         overlayLayout.visibility = VISIBLE
+        timer?.cancel()
     }
 
     private fun hideOverlayLayout() {
         overlayLayout.startAnimation(AnimationUtils.loadAnimation(applicationContext, R.anim.white_overlay_fade_out))
         overlayLayout.visibility = GONE
+        startWisdomTask()
     }
 
     private fun hidePlaceHolderLayout() {

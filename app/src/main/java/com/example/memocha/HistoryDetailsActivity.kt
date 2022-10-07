@@ -138,6 +138,7 @@ class HistoryDetailsActivity : AppCompatActivity() {
         CoroutineScope(Dispatchers.IO).launch {
             history = database.historyDao().getHistory(year, month)
             if (history.isNotEmpty()) {
+                isExport = true
                 withContext(Dispatchers.Main) {
                     historyDetailAdapter.setData(history)
                     val date = "${history[0].month}${history[0].year}"
@@ -159,6 +160,7 @@ class HistoryDetailsActivity : AppCompatActivity() {
                     }
                 }
             } else {
+                isExport = false
                 runOnUiThread {
                     setAsImport()
                     val zero = "Rp 0"
