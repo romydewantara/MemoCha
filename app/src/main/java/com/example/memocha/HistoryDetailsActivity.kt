@@ -22,6 +22,7 @@ import com.example.memocha.entity.History
 import com.example.memocha.lib.HistoryDetailsEditor
 import com.example.memocha.lib.MemoChaPopupDialog
 import com.example.memocha.utility.AppUtil
+import com.example.memocha.utility.Constant
 import com.example.memocha.utility.MemoChaRoomDatabase
 import com.google.android.material.snackbar.Snackbar
 import com.google.gson.Gson
@@ -139,6 +140,8 @@ class HistoryDetailsActivity : AppCompatActivity() {
             if (history.isNotEmpty()) {
                 withContext(Dispatchers.Main) {
                     historyDetailAdapter.setData(history)
+                    val date = "${history[0].month}${history[0].year}"
+                    AppUtil.writeFileToCache(this@HistoryDetailsActivity, Constant.FOLDER_NAME_HISTORY, "backup_$date", Gson().toJson(history))
                     runOnUiThread {
                         setAsExport()
                         var sum = BigInteger("0")
@@ -253,7 +256,7 @@ class HistoryDetailsActivity : AppCompatActivity() {
 
     private fun exportFile() {
         val fileName = "${AppUtil.convertMonthNameFromCode(this, month).lowercase()}_monthly_expenses"
-        val path = AppUtil.writeFileToStorage(fileName, Gson().toJson(history))
+        val path = AppUtil.writeFileToDownloadsFolder(fileName, Gson().toJson(history))
         val message = if (path.isNotEmpty()) String.format(getString(R.string.snackbar_monthly_expenses_exported),
             AppUtil.convertMonthNameFromCode(this@HistoryDetailsActivity, month), path)
         else String.format(getString(R.string.snackbar_monthly_expenses_exported_failed),

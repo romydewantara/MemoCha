@@ -27,7 +27,24 @@ import kotlin.collections.ArrayList
 @SuppressLint("NewApi", "ResourceType", "SimpleDateFormat")
 class AppUtil {
     companion object {
-        fun writeFileToStorage(fileName: String, body: String) : String {
+        fun writeFileToCache(c: Context, folderName: String, fileName: String, body: String) : String {
+            val dir = File(c.externalCacheDir?.path + File.separator + folderName + File.separator)
+            if (!dir.exists()) {
+                dir.mkdir()
+            }
+            try {
+                val file = File(dir, "$fileName.txt")
+                val fileWriter = FileWriter(file)
+                fileWriter.append(body)
+                fileWriter.flush()
+                fileWriter.close()
+                return dir.toString()
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+            return ""
+        }
+        fun writeFileToDownloadsFolder(fileName: String, body: String) : String {
             //val dir = File(c.externalCacheDir?.path + File.separator + folderName + File.separator)
             val dir = File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).path)
             if (!dir.exists()) {

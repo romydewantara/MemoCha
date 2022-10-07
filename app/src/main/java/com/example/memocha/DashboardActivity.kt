@@ -35,6 +35,7 @@ import com.example.memocha.utility.AppUtil
 import com.example.memocha.utility.Constant
 import com.example.memocha.utility.MemoChaRoomDatabase
 import com.google.android.material.snackbar.Snackbar
+import com.google.gson.Gson
 import kotlinx.android.synthetic.main.activity_dashboard.*
 import kotlinx.android.synthetic.main.layout_monthly_expenses_notes.*
 import kotlinx.coroutines.CoroutineScope
@@ -446,6 +447,10 @@ class DashboardActivity : AppCompatActivity() {
                         paymentMethod, false, false
                     )
                 )
+                val year = customDate.split("-")[2]
+                val month = customDate.split("-")[1]
+                val history = database.historyDao().getHistory(year, month)
+                AppUtil.writeFileToCache(this@DashboardActivity, Constant.FOLDER_NAME_HISTORY, "backup_$month$year", Gson().toJson(history))
                 runOnUiThread {
                     //Reset form
                     editTextGoods.setText("")
