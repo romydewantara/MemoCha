@@ -28,7 +28,6 @@ import java.util.Calendar
 class NeedsMonthChooserBottomSheet: BottomSheetDialogFragment() {
 
     companion object {
-        const val TAG = "NeedsMonth"
         const val GRID_COLUMNS = 3
     }
     private val database by lazy { MemoChaRoomDatabase(requireContext()) }

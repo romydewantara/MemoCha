@@ -2,7 +2,6 @@ package com.example.memocha.lib
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.util.Log
 import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
@@ -18,10 +17,6 @@ import com.example.memocha.utility.AppUtil
 
 @SuppressLint("UseCompatLoadingForDrawables")
 class NeedsItem(context: Context) : LinearLayout(context) {
-
-    companion object {
-        const val TAG = "NeedsItem"
-    }
 
     private lateinit var needs: Needs
     private lateinit var textItem: AppCompatTextView
@@ -120,7 +115,6 @@ class NeedsItem(context: Context) : LinearLayout(context) {
                 lottieChecked.playAnimation()
             }
             needsItemListener.onChecked(needs.id, checked)
-            Log.d(TAG, "LottieChecked - checked: ${checked}")
         }
 
         textGroupAndImageLayout = LinearLayout(context)

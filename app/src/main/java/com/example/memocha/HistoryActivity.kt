@@ -131,7 +131,7 @@ class HistoryActivity : AppCompatActivity(), HistoryAdapter.HistoryAdapterListen
         var sum = BigInteger("0")
         if (arrayListOfAmount.isNotEmpty()) {
             for (i in 0 until arrayListOfAmount.size) {
-                val amount = arrayListOfAmount[i].replace(",", "").toBigInteger()
+                val amount = arrayListOfAmount[i].replace(".", "").toBigInteger()
                 sum += amount
             }
         }

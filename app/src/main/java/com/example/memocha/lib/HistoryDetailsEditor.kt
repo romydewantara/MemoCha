@@ -18,21 +18,14 @@ import com.example.memocha.entity.History
 import com.example.memocha.utility.AppUtil
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.layout_monthly_expenses_notes.view.*
-import java.text.DecimalFormat
-import java.text.NumberFormat
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Calendar
+import java.util.Date
 
-@SuppressLint("ViewConstructor", "UseCompatLoadingForDrawables", "ClickableViewAccessibility", "NewApi", "SimpleDateFormat")
+@SuppressLint("ViewConstructor", "UseCompatLoadingForDrawables", "ClickableViewAccessibility", "NewApi", "SimpleDateFormat", "SetTextI18n")
 class HistoryDetailsEditor(
     context: Context, private val history: History, private val fragmentManager: FragmentManager
 ): RelativeLayout(context) {
-
-    companion object {
-        const val EDIT_TEXT_GOODS = "GOODS"
-        const val EDIT_TEXT_AMOUNT = "AMOUNT"
-        const val EDIT_TEXT_NOTE = "NOTE"
-    }
 
     init {
         onCreateView()
@@ -90,7 +83,7 @@ class HistoryDetailsEditor(
         imageAdd.background = context.resources.getDrawable(R.drawable.background_button_send_disabled, null)
         textViewCategory.text = history.category
         editTextGoods.setText(history.goods)
-        editTextAmount.setText(history.amount)
+        editTextAmount.setText("Rp ${history.amount}")
         editTextNote.setText(history.description)
         imageDelete.visibility = View.VISIBLE
         imageDelete.isEnabled = true
@@ -115,7 +108,7 @@ class HistoryDetailsEditor(
                 val currentDate = SimpleDateFormat("dd-MM-yyyy").format(Calendar.getInstance().time)
                 val currentTime = SimpleDateFormat("HH:mm").format(Date())
                 history.goods = editTextGoods.text.toString().trim()
-                history.amount = editTextAmount.text.toString().trim()
+                history.amount = editTextAmount.text.toString().replace("Rp ", "").trim()
                 history.description = editTextNote.text.toString().trim()
                 history.category = textViewCategory.text.toString()
                 history.method = paymentMethod
@@ -144,17 +137,17 @@ class HistoryDetailsEditor(
             )
             selectorItemsBottomSheet.show(fragmentManager, "selector_bottom_sheet")
         }
-        editTextGoods.addTextChangedListener(onTextChangedListener(EDIT_TEXT_GOODS))
+        editTextGoods.addTextChangedListener(onTextChangedListener())
         editTextGoods.setOnTouchListener { _, _ ->
             editTextGoods.isFocusableInTouchMode = true
             false
         }
-        editTextAmount.addTextChangedListener(onTextChangedListener(EDIT_TEXT_AMOUNT))
+        editTextAmount.addTextChangedListener(HistoryEditorMoneyTextWatcher(context, editTextAmount))
         editTextAmount.setOnTouchListener { _, _ ->
             editTextAmount.isFocusableInTouchMode = true
             false
         }
-        editTextNote.addTextChangedListener(onTextChangedListener(EDIT_TEXT_NOTE))
+        editTextNote.addTextChangedListener(onTextChangedListener())
         editTextNote.setOnTouchListener { _, _ ->
             editTextNote.isFocusableInTouchMode = true
             false
@@ -163,51 +156,30 @@ class HistoryDetailsEditor(
             object : PaymentMethodSpinnerAdapter.ItemSelectedListener {
             override fun onItemSelected(selectedItem: String) {
                 paymentMethod = selectedItem
-                Log.d("MEE", "onItemSelected - selItem: $selectedItem | method: ${history.method}")
                 isPaymentMethodChanged = selectedItem != history.method
                 setSaveButtonEnable(isGoodsChanged || isAmountChanged || isNoteChanged || isCategoryChanged || isPaymentMethodChanged)
             }
         })
     }
 
-    private fun onTextChangedListener(type: String) : TextWatcher {
+    private fun onTextChangedListener() : TextWatcher {
         return object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
             override fun afterTextChanged(s: Editable?) {
-                when(type) {
-                    EDIT_TEXT_GOODS -> {
-
-                    }
-                    EDIT_TEXT_AMOUNT -> {
-                        editTextAmount.removeTextChangedListener(this)
-                        try {
-                            var originalString = s.toString()
-                            if (originalString.contains(",")) originalString = originalString.replace(",", "")
-                            val longValue: Long = java.lang.Long.parseLong(originalString)
-                            val formatter = NumberFormat.getInstance(Locale.US) as DecimalFormat
-                            formatter.applyPattern("#,###,###,###")
-                            val formattedString = formatter.format(longValue)
-                            editTextAmount.setText(formattedString)
-                            editTextAmount.setSelection(editTextAmount.text.length)
-
-                        } catch (nfe: NumberFormatException) {
-                            nfe.printStackTrace()
-                        }
-                        editTextAmount.addTextChangedListener(this)
-                    }
-                    EDIT_TEXT_NOTE -> {}
-                }
-
-                val goodsValue = editTextGoods.text.toString().trim()
-                val amountValue = editTextAmount.text.toString().trim()
-                val noteValue = editTextNote.text.toString().trim()
-                isGoodsChanged = goodsValue != history.goods
-                isAmountChanged = amountValue != history.amount
-                isNoteChanged = noteValue != history.description
-                setSaveButtonEnable((isGoodsChanged || isAmountChanged || isNoteChanged) && (goodsValue.isNotEmpty() && amountValue.isNotEmpty()))
+                checkSaveButtonEnable()
             }
         }
+    }
+
+    fun checkSaveButtonEnable() {
+        val goodsValue = editTextGoods.text.toString().trim()
+        val amountValue = editTextAmount.text.toString().replace("Rp ", "").trim()
+        val noteValue = editTextNote.text.toString().trim()
+        isGoodsChanged = goodsValue != history.goods
+        isAmountChanged = amountValue != history.amount
+        isNoteChanged = noteValue != history.description
+        setSaveButtonEnable((isGoodsChanged || isAmountChanged || isNoteChanged) && (goodsValue.isNotEmpty() && amountValue.isNotEmpty()))
     }
 
     private fun setSaveButtonEnable(isEnable: Boolean) {

@@ -99,7 +99,7 @@
     <string name="dasboard_expenses_title_goods">Barang atau Jasa</string>
     <string name="dasboard_expenses_title_amount">Harga</string>
     <string name="dasboard_expenses_hint_goods">Contoh: Bumbu Dapur, Servis, dll…</string>
-    <string name="dasboard_expenses_hint_amount">Contoh: 25.000</string>
+    <string name="dasboard_expenses_hint_amount">Rp 0</string>
     <string name="dasboard_expenses_hint_note">Catatan (Opsional)</string>
     <string name="dasboard_expenses_button_add">Tambah</string>
 

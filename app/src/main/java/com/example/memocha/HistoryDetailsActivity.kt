@@ -35,22 +35,19 @@ import java.io.BufferedReader
 import java.io.IOException
 import java.io.InputStreamReader
 import java.math.BigInteger
-import java.util.*
+import java.util.Objects
 
 
 @SuppressLint("UseCompatLoadingForDrawables", "ClickableViewAccessibility", "InlinedApi")
 class HistoryDetailsActivity : AppCompatActivity() {
 
-    companion object {
-        const val TAG = "HistoryDetailsAct"
-    }
     private val database by lazy { MemoChaRoomDatabase(this) }
-    private var historyDetailsEditor: HistoryDetailsEditor? = null
 
     private lateinit var month: String
     private lateinit var year: String
     private lateinit var history: List<History>
     private lateinit var historyDetailAdapter: HistoryDetailAdapter
+    var historyDetailsEditor: HistoryDetailsEditor? = null
 
     private var isEditing = false
 
@@ -146,7 +143,7 @@ class HistoryDetailsActivity : AppCompatActivity() {
                         disableImportButton()
                         var sum = BigInteger("0")
                         for (i in history.indices) {
-                            val amount: BigInteger = history[i].amount.replace(",", "").toBigInteger()
+                            val amount: BigInteger = history[i].amount.replace(".", "").toBigInteger()
                             sum += amount
                         }
                         val summary = "Rp ${String.format("%,d", sum)}"
@@ -231,7 +228,7 @@ class HistoryDetailsActivity : AppCompatActivity() {
         if (history.isNotEmpty()) {
             val temporaryList = arrayListOf<History>()
             for (i in history.indices) {
-                if (history[i].amount.replace(",", "").lowercase().contains(query.trim().lowercase()) ||
+                if (history[i].amount.replace(".", "").lowercase().contains(query.trim().lowercase()) ||
                     history[i].goods.lowercase().contains(query.trim().lowercase()) ||
                     history[i].description.lowercase().contains(query.trim().lowercase()) ||
                     history[i].method.lowercase().contains(query.trim().lowercase()) ||

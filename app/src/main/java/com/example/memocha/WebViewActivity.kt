@@ -76,19 +76,4 @@ class WebViewActivity : AppCompatActivity() {
             finish()
         }
     }
-
-    override fun onResume() {
-        super.onResume()
-        Log.d("WebView", "onResume")
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        Log.d("WebView", "onDestroy")
-    }
-
-    override fun onPause() {
-        super.onPause()
-        Log.d("WebView", "onPause")
-    }
 }

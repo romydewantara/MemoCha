@@ -46,7 +46,7 @@ class HistoryDetailAdapter(
         holder.itemView.textViewTime.text = "(${histories[position].time})"
         holder.itemView.textViewMethod.text = histories[position].method
         holder.itemView.textViewCategory.text = histories[position].category
-        holder.itemView.textViewAmount.text = "Rp ${histories[position].amount.replace(",", ".")}"
+        holder.itemView.textViewAmount.text = "Rp ${histories[position].amount}"
         holder.itemView.textViewGoods.text = histories[position].goods
         holder.itemView.textViewDescription.text = histories[position].description
 

@@ -29,6 +29,7 @@ import com.example.memocha.entity.Settings
 import com.example.memocha.fragment.IdentityScreenFragment
 import com.example.memocha.fragment.NeedsScreenFragment
 import com.example.memocha.lib.CalendarDialog
+import com.example.memocha.lib.DashboardMoneyTextWatcher
 import com.example.memocha.lib.SelectorItemsBottomSheet
 import com.example.memocha.utility.AppUtil
 import com.example.memocha.utility.Constant
@@ -40,8 +41,6 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.text.DecimalFormat
-import java.text.NumberFormat
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.GregorianCalendar
@@ -319,7 +318,7 @@ class DashboardActivity : AppCompatActivity() {
     private fun findCurrentScheduleTime() {
         val currentHour = formatTime.format(GregorianCalendar.getInstance().time)
         timeId = when(currentHour.split(":")[0].toInt()) {
-            in 5..11 -> { 0 }
+            in 3..11 -> { 0 }
             in 12..14 -> { 1 }
             in 15..17 -> { 2 }
             in 18..18 -> { 3 }
@@ -440,7 +439,7 @@ class DashboardActivity : AppCompatActivity() {
                         customDate.split("-")[0],
                         currentTime,
                         editTextGoods.text.toString().trim(),
-                        editTextAmount.text.toString().trim(),
+                        editTextAmount.text.toString().replace("Rp ", "").trim(),
                         editTextNote.text.toString().trim(),
                         textViewCategory.text.toString(),
                         paymentMethod, false, false
@@ -471,7 +470,14 @@ class DashboardActivity : AppCompatActivity() {
             }))
             selectorCategory.show(supportFragmentManager, "selector_bottom_sheet")
         }
-        editTextGoods.addTextChangedListener(onTextChangedListener(false))
+        editTextAmount.addTextChangedListener(DashboardMoneyTextWatcher(this, editTextAmount))
+        editTextGoods.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+            override fun afterTextChanged(s: Editable?) {
+                checkSendButtonEnable()
+            }
+        })
         editTextGoods.setOnTouchListener { _, _ ->
             editTextGoods.isFocusableInTouchMode = true
             false
@@ -484,7 +490,6 @@ class DashboardActivity : AppCompatActivity() {
             editTextNote.isFocusableInTouchMode = true
             false
         }
-        editTextAmount.addTextChangedListener(onTextChangedListener(true))
         paymentMethodSpinnerAdapter.addOnPaymentMethodListener(
             object : PaymentMethodSpinnerAdapter.ItemSelectedListener {
             override fun onItemSelected(selectedItem: String) {
@@ -505,36 +510,13 @@ class DashboardActivity : AppCompatActivity() {
         }
     }
 
-    private fun onTextChangedListener(isAmount: Boolean) : TextWatcher {
-        return object : TextWatcher {
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
-            override fun afterTextChanged(s: Editable?) {
-                if (isAmount) {
-                    editTextAmount.removeTextChangedListener(this)
-                    try {
-                        var originalString = s.toString()
-                        if (originalString.contains(",")) originalString = originalString.replace(",", "")
-                        val longValue: Long = java.lang.Long.parseLong(originalString)
-                        val formatter = NumberFormat.getInstance(Locale.US) as DecimalFormat
-                        formatter.applyPattern("#,###,###,###")
-                        val formattedString = formatter.format(longValue)
-                        editTextAmount.setText(formattedString)
-                        editTextAmount.setSelection(editTextAmount.text.length)
-
-                    } catch (nfe: NumberFormatException) {
-                        nfe.printStackTrace()
-                    }
-                    editTextAmount.addTextChangedListener(this)
-                }
-                if (editTextGoods.text.toString().isNotEmpty() && editTextAmount.text.toString().isNotEmpty()) {
-                    imageAdd.isEnabled = true
-                    imageAdd.background = applicationContext.resources.getDrawable(R.drawable.selector_button_send_needs_item, null)
-                } else {
-                    imageAdd.isEnabled = false
-                    imageAdd.background = applicationContext.resources.getDrawable(R.drawable.background_button_send_disabled, null)
-                }
-            }
+    fun checkSendButtonEnable() {
+        if (editTextGoods.text.toString().isNotEmpty() && editTextAmount.text.toString().isNotEmpty()) {
+            imageAdd.isEnabled = true
+            imageAdd.background = applicationContext.resources.getDrawable(R.drawable.selector_button_send_needs_item, null)
+        } else {
+            imageAdd.isEnabled = false
+            imageAdd.background = applicationContext.resources.getDrawable(R.drawable.background_button_send_disabled, null)
         }
     }
 
