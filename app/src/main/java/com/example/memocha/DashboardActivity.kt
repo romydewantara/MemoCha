@@ -122,8 +122,8 @@ class DashboardActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
         startWisdomTask()
-        refreshSchedule()
         findCurrentScheduleTime()
+        refreshSchedule()
         adjustSettings()
     }
 
@@ -311,7 +311,7 @@ class DashboardActivity : AppCompatActivity() {
                 else textViewEmptySchedule.visibility = GONE
             }
             withContext(Dispatchers.Main) {
-                dashboardScheduleAdapter.setData(currentTime.split(":")[0], schedules)
+                dashboardScheduleAdapter.setData(currentTime, schedules)
             }
         }
     }

@@ -46,7 +46,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="@string/identity_title_page"
+                    android:text="@string/identity_subtitle_page"
                     android:layout_marginStart="6dp"
                     app:layout_constraintLeft_toRightOf="@id/iconSubtitle"
                     app:layout_constraintTop_toBottomOf="@id/textTitleIdentity" />

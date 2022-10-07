@@ -1,7 +1,7 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <string name="app_name">MemoCha</string>
     <string name="secret_letter_title">Secret Letter</string>
-    <string name="secret_letter_content">\t\t\tSecret Letter Content In publishing and graphic design, Lorem ipsum is a placeholder text commonly used to demonstrate the visual form of a document or a typeface without relying on meaningful content</string>
+    <string name="secret_letter_content">Don\'t let the past bother you, You\'ve missed the good stuff.\nLife is short, If you don\'t pay attention once in a while, you might miss it.\nSome people make your life happy, just by their presence in the world.\nTrue love "never" ends, love will be like that forever.\nDon\'t frown. You never know who will fall in love with your smile.\nWhat do you do when the only person who can make you stop crying turns out to be making you cry?\nEverything was fine in the end. If it\'s not like that, then it\'s not the end</string>
     <string name="secret_letter_calendar">Sunday, 10 January 2021</string>
     <string name="secret_letter_coming_soon">i love you :)</string>
 
