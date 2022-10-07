@@ -38,7 +38,7 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="@id/imageMenu" />
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/layoutExportImport"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -49,77 +49,33 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/textViewMonthName">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/layoutExport"
+        <ImageView
+            android:id="@+id/imageExportImport"
             android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_margin="8dp"
+            android:padding="10dp"
+            android:background="@drawable/selector_button_export"
+            android:src="@drawable/ic_export"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/textViewExportImport"
+            style="@style/TextRegularWhite12"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:layout_weight="1">
+            android:layout_marginTop="3dp"
+            android:autoSizeTextType="uniform"
+            android:maxLines="1"
+            android:text="@string/button_export"
+            android:gravity="center"
+            app:layout_constraintTop_toBottomOf="@id/imageExportImport"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"/>
 
-            <ImageView
-                android:id="@+id/imageExport"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_margin="8dp"
-                android:padding="10dp"
-                android:background="@drawable/selector_button_export"
-                android:src="@drawable/ic_export"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/textViewExport"
-                style="@style/TextRegularWhite12"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="3dp"
-                android:autoSizeTextType="uniform"
-                android:maxLines="1"
-                android:text="@string/button_export"
-                android:gravity="center"
-                app:layout_constraintTop_toBottomOf="@id/imageExport"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"/>
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/layoutImport"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginStart="8dp"
-            android:layout_weight="1">
-
-            <ImageView
-                android:id="@+id/imageImport"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_margin="8dp"
-                android:padding="10dp"
-                android:background="@drawable/selector_button_export"
-                android:src="@drawable/ic_import_teal_dark"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/textViewImport"
-                style="@style/TextRegularWhite12"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="3dp"
-                android:autoSizeTextType="uniform"
-                android:maxLines="1"
-                android:text="@string/button_import"
-                android:gravity="center"
-                app:layout_constraintTop_toBottomOf="@id/imageImport"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"/>
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/textViewAmountTitle"

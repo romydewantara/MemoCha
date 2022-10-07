@@ -50,6 +50,7 @@ class HistoryDetailsActivity : AppCompatActivity() {
     var historyDetailsEditor: HistoryDetailsEditor? = null
 
     private var isEditing = false
+    private var isExport = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -70,9 +71,7 @@ class HistoryDetailsActivity : AppCompatActivity() {
         textViewMonthName.text = AppUtil.convertMonthNameFromCode(this, month)
         TextViewCompat.setAutoSizeTextTypeUniformWithConfiguration(textViewAmount,
                 1, 26, 1, TypedValue.COMPLEX_UNIT_SP)
-        TextViewCompat.setAutoSizeTextTypeUniformWithConfiguration(textViewImport,
-                1, 12, 1, TypedValue.COMPLEX_UNIT_SP)
-        TextViewCompat.setAutoSizeTextTypeUniformWithConfiguration(textViewExport,
+        TextViewCompat.setAutoSizeTextTypeUniformWithConfiguration(textViewExportImport,
                 1, 12, 1, TypedValue.COMPLEX_UNIT_SP)
         setupRecyclerView()
     }
@@ -83,20 +82,11 @@ class HistoryDetailsActivity : AppCompatActivity() {
                     .setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP))
             finish()
         }
-        imageImport.setOnClickListener {
-            val mcPopupDialog = MemoChaPopupDialog.newInstance()
-            mcPopupDialog.setContent(getString(R.string.dialog_title_information), getString(R.string.dialog_message_import_history),
-                    getString(R.string.button_yes), getString(R.string.button_cancel), object : MemoChaPopupDialog.MemoChaPopupDialogListener {
-                        override fun onNegativeButton() {
-                            importFile()
-                        }
-                        override fun onPositiveButton() {}
-                    })
-            mcPopupDialog.show(supportFragmentManager, mcPopupDialog.tag)
-        }
-        imageExport.setOnClickListener {
-            val mcPopupDialog = MemoChaPopupDialog.newInstance()
-            mcPopupDialog.setContent(String.format(getString(R.string.dialog_title_export_history),
+        layoutExportImport.setOnClickListener {
+            imageExportImport.startAnimation(AnimationUtils.loadAnimation(this@HistoryDetailsActivity, R.anim.bounched_show))
+            if (isExport) {
+                val mcPopupDialog = MemoChaPopupDialog.newInstance()
+                mcPopupDialog.setContent(String.format(getString(R.string.dialog_title_export_history),
                     AppUtil.convertMonthNameFromCode(this@HistoryDetailsActivity, month)),
                     getString(R.string.dialog_message_export_history), getString(R.string.button_yes), getString(R.string.button_cancel),
                     object : MemoChaPopupDialog.MemoChaPopupDialogListener {
@@ -105,7 +95,18 @@ class HistoryDetailsActivity : AppCompatActivity() {
                         }
                         override fun onPositiveButton() {}
                     })
-            mcPopupDialog.show(supportFragmentManager, mcPopupDialog.tag)
+                mcPopupDialog.show(supportFragmentManager, mcPopupDialog.tag)
+            } else {
+                val mcPopupDialog = MemoChaPopupDialog.newInstance()
+                mcPopupDialog.setContent(getString(R.string.dialog_title_information), getString(R.string.dialog_message_import_history),
+                    getString(R.string.button_yes), getString(R.string.button_cancel), object : MemoChaPopupDialog.MemoChaPopupDialogListener {
+                        override fun onNegativeButton() {
+                            importFile()
+                        }
+                        override fun onPositiveButton() {}
+                    })
+                mcPopupDialog.show(supportFragmentManager, mcPopupDialog.tag)
+            }
         }
         editTextSearch.setOnTouchListener { _, _ ->
             editTextSearch.isFocusableInTouchMode = true
@@ -139,8 +140,7 @@ class HistoryDetailsActivity : AppCompatActivity() {
                 withContext(Dispatchers.Main) {
                     historyDetailAdapter.setData(history)
                     runOnUiThread {
-                        enableExportButton()
-                        disableImportButton()
+                        setAsExport()
                         var sum = BigInteger("0")
                         for (i in history.indices) {
                             val amount: BigInteger = history[i].amount.replace(".", "").toBigInteger()
@@ -157,8 +157,7 @@ class HistoryDetailsActivity : AppCompatActivity() {
                 }
             } else {
                 runOnUiThread {
-                    disableExportButton()
-                    enableImportButton()
+                    setAsImport()
                     val zero = "Rp 0"
                     textViewAmount.text = zero
                     editTextSearch.background = resources.getDrawable(R.drawable.background_edit_text_search_disabled, null)
@@ -242,44 +241,14 @@ class HistoryDetailsActivity : AppCompatActivity() {
         }
     }
 
-    private fun disableExportButton() {
-        imageExport.background =
-            resources.getDrawable(R.drawable.background_button_export_circle_pressed, null)
-        imageExport.isEnabled = false
-        imageExport.isFocusable = false
-        imageExport.isClickable = false
-        imageExport.setImageResource(R.drawable.ic_export_white)
-        TextViewCompat.setTextAppearance(textViewExport, R.style.TextRegularGrey12)
+    private fun setAsImport() {
+        imageExportImport.setImageResource(R.drawable.ic_import_teal_dark)
+        textViewExportImport.text = getString(R.string.button_import)
     }
 
-    private fun disableImportButton() {
-        imageImport.background =
-            resources.getDrawable(R.drawable.background_button_export_circle_pressed, null)
-        imageImport.isEnabled = false
-        imageImport.isFocusable = false
-        imageImport.isClickable = false
-        imageImport.setImageResource(R.drawable.ic_import_white)
-        TextViewCompat.setTextAppearance(textViewImport, R.style.TextRegularGrey12)
-    }
-
-    private fun enableExportButton() {
-        imageExport.background =
-            resources.getDrawable(R.drawable.selector_button_export, null)
-        imageExport.isEnabled = true
-        imageExport.isFocusable = true
-        imageExport.isClickable = true
-        imageExport.setImageResource(R.drawable.ic_export)
-        TextViewCompat.setTextAppearance(textViewExport, R.style.TextRegularWhite12)
-    }
-
-    private fun enableImportButton() {
-        imageImport.background =
-            resources.getDrawable(R.drawable.selector_button_export, null)
-        imageImport.isEnabled = true
-        imageImport.isFocusable = true
-        imageImport.isClickable = true
-        imageImport.setImageResource(R.drawable.ic_import_teal_dark)
-        TextViewCompat.setTextAppearance(textViewImport, R.style.TextRegularWhite12)
+    private fun setAsExport() {
+        imageExportImport.setImageResource(R.drawable.ic_export)
+        textViewExportImport.text = getString(R.string.button_export)
     }
 
     private fun exportFile() {

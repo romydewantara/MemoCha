@@ -81,6 +81,7 @@ class HistoryDetailsEditor(
         textViewNotes.text = context.getString(R.string.history_edit_monthly_expenses)
         imageAdd.setImageResource(R.drawable.ic_save)
         imageAdd.background = context.resources.getDrawable(R.drawable.background_button_send_disabled, null)
+        setSaveButtonEnable(false)
         textViewCategory.text = history.category
         editTextGoods.setText(history.goods)
         editTextAmount.setText("Rp ${history.amount}")

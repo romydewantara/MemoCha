@@ -124,6 +124,7 @@ class DashboardActivity : AppCompatActivity() {
         findCurrentScheduleTime()
         refreshSchedule()
         adjustSettings()
+        checkSendButtonEnable()
     }
 
     override fun onPause() {
