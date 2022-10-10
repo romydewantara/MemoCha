@@ -319,7 +319,7 @@ class HistoryDetailsActivity : AppCompatActivity() {
     }
 
     private fun exportFile() {
-        val fileName = "${AppUtil.convertMonthNameFromCode(this, month).lowercase()}_monthly_expenses"
+        val fileName = "${year}_${AppUtil.convertMonthNameFromCode(this, month).lowercase()}_report"
         val path = AppUtil.writeFileToDownloadsFolder(fileName, Gson().toJson(history))
         val message = if (path.isNotEmpty()) String.format(getString(R.string.snackbar_monthly_expenses_exported),
             AppUtil.convertMonthNameFromCode(this@HistoryDetailsActivity, month), path)
@@ -342,13 +342,11 @@ class HistoryDetailsActivity : AppCompatActivity() {
         })
     }
 
-    private fun showWrongMonthData(monthImported: String) {
+    private fun showWrongMonthData(monthImported: String, yearImported: String) {
         val mcPopupDialog = MemoChaPopupDialog.newInstance()
-        mcPopupDialog.setContent(getString(R.string.dialog_title_data_error), String.
-        format(getString(R.string.dialog_message_data_error, monthImported, AppUtil.
-        convertMonthNameFromCode(this@HistoryDetailsActivity, month))),
-            getString(R.string.button_try_again), getString(R.string.button_cancel),
-            object : MemoChaPopupDialog.MemoChaPopupDialogListener {
+        mcPopupDialog.setContent(getString(R.string.dialog_title_data_error), String.format(getString(R.string.dialog_message_data_error,
+            monthImported, yearImported, AppUtil.convertMonthNameFromCode(this@HistoryDetailsActivity, month), year)),
+            getString(R.string.button_try_again), getString(R.string.button_cancel), object : MemoChaPopupDialog.MemoChaPopupDialogListener {
                 override fun onNegativeButton() {
                     importFile()
                 }
@@ -405,7 +403,8 @@ class HistoryDetailsActivity : AppCompatActivity() {
                         fetchHistoryDetails()
                     }
                 } else showWrongMonthData(AppUtil.convertMonthNameFromCode(this@HistoryDetailsActivity,
-                    Gson().fromJson(array[0].toString(), History::class.java).month))
+                    Gson().fromJson(array[0].toString(), History::class.java).month),
+                    Gson().fromJson(array[0].toString(), History::class.java).year)
             }
         }
     }

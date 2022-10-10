@@ -160,7 +160,7 @@
     <string name="dialog_message_delete_needs">Hati-hati, ini akan menghapus item kamu secara permanen!</string>
     <string name="dialog_message_delete_identity">Data yang kamu hapus ga bisa dikembalikan lagi (permanen)</string>
     <string name="dialog_message_import_schedule">Aksi ini bisa membuat daftarmu berisi jadwal bawaan</string>
-    <string name="dialog_message_data_error">Terjadi kesalahan saat coba mengimpor data pengeluaran bulanan %s ke halaman riwayat pengeluaran bulan %s</string>
+    <string name="dialog_message_data_error">Terjadi kesalahan saat coba mengimpor data pengeluaran bulanan %s %s ke halaman riwayat pengeluaran bulan %s %s</string>
     <string name="dialog_message_import_history">Dibutuhin file berisi teks dengan format struktur JSON supaya bisa diterapin ke daftar riwayat pengeluaranmu</string>
     <string name="dialog_message_export_history">File hasil ekspor akan masuk ke folder Memori Internal kamu</string>
     <string name="dialog_message_delete_all_history">Kamu yakin mau menghapus semua catatan pengeluaran di bulan %s?</string>
