@@ -1,5 +1,6 @@
 package com.example.memocha
 
+import android.animation.ObjectAnimator
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.DownloadManager
@@ -42,6 +43,10 @@ import java.util.Objects
 @SuppressLint("UseCompatLoadingForDrawables", "ClickableViewAccessibility", "InlinedApi")
 class HistoryDetailsActivity : AppCompatActivity() {
 
+    companion object {
+        const val TYPE_LAYOUT = "layout"
+        const val TYPE_IMAGE = "image"
+    }
     private val database by lazy { MemoChaRoomDatabase(this) }
 
     private lateinit var month: String
@@ -52,6 +57,10 @@ class HistoryDetailsActivity : AppCompatActivity() {
 
     private var isEditing = false
     private var isExport = false
+    private var isDeleteSliderShown = false
+
+    private var layoutSliderWidth = 0f
+    private var imageSlideWidth = 0f
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -70,6 +79,8 @@ class HistoryDetailsActivity : AppCompatActivity() {
         }
 
         textViewMonthName.text = AppUtil.convertMonthNameFromCode(this, month)
+        layoutDeleteSlider.post { onLayoutDrawn(TYPE_LAYOUT, layoutDeleteSlider.width.toFloat()) }
+        imageSlide.post { onLayoutDrawn(TYPE_IMAGE, imageSlide.width.toFloat()) }
         TextViewCompat.setAutoSizeTextTypeUniformWithConfiguration(textViewAmount,
                 1, 26, 1, TypedValue.COMPLEX_UNIT_SP)
         TextViewCompat.setAutoSizeTextTypeUniformWithConfiguration(textViewExportImport,
@@ -108,6 +119,31 @@ class HistoryDetailsActivity : AppCompatActivity() {
                     })
                 mcPopupDialog.show(supportFragmentManager, mcPopupDialog.tag)
             }
+        }
+        layoutDeleteSlider.setOnClickListener {
+            if (!isDeleteSliderShown) showLayoutClear() else hideLayoutClear()
+        }
+        textViewDeleteAll.setOnClickListener {
+            textViewDeleteAll.startAnimation(AnimationUtils.loadAnimation(this@HistoryDetailsActivity, R.anim.bounched_show))
+            val memoChaPopupDialog = MemoChaPopupDialog.newInstance()
+            memoChaPopupDialog.setContent(getString(R.string.dialog_title_warning),
+                String.format(getString(R.string.dialog_message_delete_all_history),
+                    AppUtil.convertMonthNameFromCode(this@HistoryDetailsActivity, month)),
+                getString(R.string.button_yes), getString(R.string.button_cancel), object : MemoChaPopupDialog.MemoChaPopupDialogListener {
+                    override fun onNegativeButton() {
+                        CoroutineScope(Dispatchers.IO).launch {
+                            database.historyDao().deleteAllFromHistory(year, month)
+                            fetchHistoryDetails()
+                        }
+                    }
+                    override fun onPositiveButton() {
+                        Snackbar.make(rootHistory, String.format(getString(R.string.snackbar_monthly_expenses_delete_all_canceled),
+                            AppUtil.convertMonthNameFromCode(this@HistoryDetailsActivity, month)), 4000)
+                            .setAction(getString(R.string.snackbar_button_dismiss)) {}.show()
+                        hideLayoutClear()
+                    }
+                })
+            memoChaPopupDialog.show(supportFragmentManager, memoChaPopupDialog.tag)
         }
         editTextSearch.setOnTouchListener { _, _ ->
             editTextSearch.isFocusableInTouchMode = true
@@ -155,6 +191,7 @@ class HistoryDetailsActivity : AppCompatActivity() {
                         editTextSearch.background = resources.getDrawable(R.drawable.background_edit_text_search, null)
                         editTextSearch.isEnabled = true
                         editTextSearch.isFocusable = true
+                        layoutDeleteSlider.visibility = View.VISIBLE
                         textViewHistoryEmpty.visibility = View.GONE
                         cardViewPaymentDetail.visibility = View.VISIBLE
                     }
@@ -168,11 +205,36 @@ class HistoryDetailsActivity : AppCompatActivity() {
                     editTextSearch.background = resources.getDrawable(R.drawable.background_edit_text_search_disabled, null)
                     editTextSearch.isEnabled = false
                     editTextSearch.isFocusable = false
+                    layoutDeleteSlider.visibility = View.GONE
                     textViewHistoryEmpty.visibility = View.VISIBLE
                     cardViewPaymentDetail.visibility = View.GONE
                 }
             }
         }
+    }
+
+    private fun onLayoutDrawn(type: String, width: Float) {
+        when(type) {
+            TYPE_LAYOUT -> layoutSliderWidth = width
+            TYPE_IMAGE -> imageSlideWidth = width
+        }
+        if (layoutSliderWidth > 0 && imageSlideWidth > 0) hideLayoutClear()
+    }
+
+    private fun hideLayoutClear() {
+        isDeleteSliderShown = false
+        val xTarget = layoutSliderWidth - imageSlideWidth
+        val objectAnimator = ObjectAnimator.ofFloat(layoutDeleteSlider, "translationX", xTarget)
+        objectAnimator.duration = 350L
+        objectAnimator.start()
+    }
+
+    private fun showLayoutClear() {
+        isDeleteSliderShown = true
+        val xTarget = 0F
+        val objectAnimator = ObjectAnimator.ofFloat(layoutDeleteSlider, "translationX", xTarget)
+        objectAnimator.duration = 500L
+        objectAnimator.start()
     }
 
     private fun showEditor(history: History) {
@@ -328,7 +390,8 @@ class HistoryDetailsActivity : AppCompatActivity() {
             val result = readTextFromUri(uri)
             val array = JSONArray(result)
             if (array.length() > 0) {
-                if (Gson().fromJson(array[0].toString(), History::class.java).month == month) {
+                if (Gson().fromJson(array[0].toString(), History::class.java).month == month &&
+                    Gson().fromJson(array[0].toString(), History::class.java).year == year) {
                     historyDetailsLoading.visibility = View.VISIBLE
                     CoroutineScope(Dispatchers.IO).launch {
                         for (i in 0 until array.length()) {

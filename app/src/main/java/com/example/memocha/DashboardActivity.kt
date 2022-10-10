@@ -300,7 +300,7 @@ class DashboardActivity : AppCompatActivity() {
                 }
             }
         }
-        timer?.scheduleAtFixedRate(task, 0L, 12000L)
+        timer?.scheduleAtFixedRate(task, 0L, 15500L)
     }
 
     private fun refreshSchedule() {

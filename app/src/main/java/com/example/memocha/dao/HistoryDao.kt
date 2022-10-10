@@ -24,4 +24,7 @@ interface HistoryDao {
     @Query("DELETE FROM history_table WHERE id = :id")
     suspend fun deleteFromHistory(id: Int)
 
+    @Query("DELETE FROM history_table WHERE year = :year AND month = :month")
+    suspend fun deleteAllFromHistory(year: String, month: String)
+
 }

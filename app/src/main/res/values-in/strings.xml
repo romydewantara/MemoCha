@@ -163,6 +163,7 @@
     <string name="dialog_message_data_error">Terjadi kesalahan saat coba mengimpor data pengeluaran bulanan %s ke halaman riwayat pengeluaran bulan %s</string>
     <string name="dialog_message_import_history">Dibutuhin file berisi teks dengan format struktur JSON supaya bisa diterapin ke daftar riwayat pengeluaranmu</string>
     <string name="dialog_message_export_history">File hasil ekspor akan masuk ke folder Memori Internal kamu</string>
+    <string name="dialog_message_delete_all_history">Kamu yakin mau menghapus semua catatan pengeluaran di bulan %s?</string>
     <string name="dialog_message_app_theme">Sorry, fitur ini belum siap</string>
     <string name="dialog_message_ask_reset">Apa kamu yakin mau kembali ke pengaturan awal?</string>
     <string name="dialog_message_ask_before_quit">Ada perubahan yang belum kamu terapkan nih, apa kamu yakin mau tinggalin halaman ini?</string>
@@ -180,7 +181,8 @@
     <string name="snackbar_monthly_expenses_exported">Pengeluaran bulan %s udah diekspor ke %s</string>
     <string name="snackbar_monthly_expenses_exported_failed">Gagal ekspor pengeluaran bulan %s</string>
     <string name="snackbar_monthly_expenses_imported">Data berhasil diimpor</string>
-    <string name="snackbar_monthly_expenses_canceled">Kamu udah membatalkan aksi impor data pengeluaran untuk bulan %s</string>
+    <string name="snackbar_monthly_expenses_canceled">Kamu membatalkan aksi impor data pengeluaran untuk bulan %s</string>
+    <string name="snackbar_monthly_expenses_delete_all_canceled">Kamu membatalkan hapus riwayat pengeluaran bulanan untuk bulan %s</string>
     <string name="snackbar_identity_added">Data identitas baru udah ditambahkan</string>
     <string name="snackbar_identity_updated">Data identitas berhasil diubah</string>
     <string name="snackbar_identity_deleted">Data udah dihapus</string>
@@ -215,6 +217,7 @@
     <string name="history_detail_export">Ekspor Rekapitulasi</string>
     <string name="history_detail_monthly_expenses">Total pengeluaran di Bulan ini:</string>
     <string name="history_detail_transaction">Transaksi</string>
+    <string name="history_detail_delete_all">Hapus Semua</string>
     <string name="history_detail_search">Cari</string>
     <string name="history_detail_search_empty">Oops… item yang kamu cari ngga ada nih</string>
     <string name="history_detail_info_added">Tanggal dibuat:</string>

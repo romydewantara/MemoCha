@@ -162,6 +162,7 @@
     <string name="dialog_message_data_error">An error occurred while trying to import %s monthly expense data into %s\'s page expense history</string>
     <string name="dialog_message_import_history">It needs a file containing text with a JSON structure format so that it can be applied to your expense list history</string>
     <string name="dialog_message_export_history">Are you sure want to export this record?</string>
+    <string name="dialog_message_delete_all_history">Are you sure you want to delete all %s monthly expense records?</string>
     <string name="dialog_message_app_theme">Sorry, this feature is not ready yet</string>
     <string name="dialog_message_ask_reset">Are you sure you want to reset to default?</string>
     <string name="dialog_message_ask_before_quit">There are changes that you haven\'t applied, are you sure you want to leave this page?</string>
@@ -181,6 +182,7 @@
     <string name="snackbar_monthly_expenses_exported_failed">Failed to exported %s\'s expenses</string>
     <string name="snackbar_monthly_expenses_imported">Data successfully imported</string>
     <string name="snackbar_monthly_expenses_canceled">You have canceled the monthly expense data import action for the month of %s</string>
+    <string name="snackbar_monthly_expenses_delete_all_canceled">You have canceled delete monthly expense report in %s</string>
     <string name="snackbar_identity_added">New identity data has been added</string>
     <string name="snackbar_identity_updated">The identity data successfully updated</string>
     <string name="snackbar_identity_deleted">The data has been deleted</string>
@@ -215,6 +217,7 @@
     <string name="history_detail_export">Export Recapitulation</string>
     <string name="history_detail_monthly_expenses">Total expenses in this Month:</string>
     <string name="history_detail_transaction">Transaction</string>
+    <string name="history_detail_delete_all">Delete All</string>
     <string name="history_detail_search">Search</string>
     <string name="history_detail_search_empty">Oops… Your search item is not found</string>
     <string name="history_detail_info_added">Date added:</string>
