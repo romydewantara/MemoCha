@@ -15,7 +15,7 @@
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:scaleType="fitCenter"
-            android:src="@drawable/ic_dashboard_background"
+            android:src="@drawable/ic_world"
             app:layout_constraintBottom_toTopOf="@id/layoutExpenses"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
@@ -24,7 +24,7 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/white_88" />
+            android:background="@color/white_15" />
 
         <com.airbnb.lottie.LottieAnimationView
             android:id="@+id/lottieDashboard"
